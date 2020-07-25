@@ -1,15 +1,17 @@
+import 'package:beet/screens/drawer_screen.dart';
+import 'package:beet/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatelessWidget {
-  final List<String> plans = <String>['A', 'B', 'C'];
+class MyPageScreen extends StatelessWidget {
+  final List<String> schedules = <String>['A', 'B', 'C'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      drawer: DrawerScreen(),
       appBar: AppBar(
         title: Text(
-          'beet',
+          'べーたな',
           style: TextStyle(
             fontWeight: FontWeight.normal,
           ),
@@ -20,7 +22,13 @@ class MainScreen extends StatelessWidget {
               Icons.settings,
             ),
             onPressed: () {
-              // TODO 設定画面を表示
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingScreen(),
+                  fullscreenDialog: true,
+                ),
+              );
             },
           ),
         ],
@@ -31,7 +39,7 @@ class MainScreen extends StatelessWidget {
             left: 16.0,
             right: 16.0,
           ),
-          itemCount: plans.length,
+          itemCount: schedules.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.all(2.0),
@@ -43,7 +51,7 @@ class MainScreen extends StatelessWidget {
                   fontSize: 30.0,
                 ),
                 color: Colors.grey,
-                child: Center(child: Text('sample ${plans[index]}')),
+                child: Center(child: Text('sample ${schedules[index]}')),
               ),
             );
           }),

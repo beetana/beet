@@ -56,6 +56,7 @@ class MyPageScreen extends StatelessWidget {
             );
           }),
       bottomNavigationBar: BottomNavigationBar(
+        // TODO 画面の切り替え
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

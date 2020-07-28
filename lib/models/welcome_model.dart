@@ -21,12 +21,10 @@ class WelcomeModel extends ChangeNotifier {
         password: password,
       ))
           .user;
-      Firestore.instance.collection('users').add(
-        {
-          'email': user.email,
-          'createdAt': Timestamp.now(),
-        },
-      );
+      await Firestore.instance.collection('users').document(user.uid).setData({
+        'email': user.email,
+        'createdAt': Timestamp.now(),
+      });
     } catch (e) {
       throw (_convertErrorMessage(e.code));
     }

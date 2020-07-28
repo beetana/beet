@@ -1,3 +1,4 @@
+import 'package:beet/screens/add_group_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/screens/my_page_screen.dart';
 import 'package:beet/screens/group_screen.dart';
@@ -6,8 +7,8 @@ class DrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+      child: Column(
+//        padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
             accountName: Text("べーたな"),
@@ -38,10 +39,17 @@ class DrawerScreen extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            title: Text('Salmon Sperm Sparx'),
-            onTap: () {},
-          ),
+          RaisedButton(
+            child: Text('グループを追加'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddGroupScreen(),
+                ),
+              );
+            },
+          )
         ],
       ),
     );

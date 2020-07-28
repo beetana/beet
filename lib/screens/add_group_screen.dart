@@ -21,6 +21,7 @@ class AddGroupScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextField(
+                  controller: groupNameController,
                   decoration: InputDecoration(hintText: 'グループ名'),
                   onChanged: (text) {
                     model.groupName = text;
@@ -43,7 +44,7 @@ class AddGroupScreen extends StatelessWidget {
                         ),
                       );
                     } catch (e) {
-                      _showTextDialog(context, 'エラーです。もう一度やり直してください。');
+                      _showTextDialog(context, e.toString());
                     }
                   },
                 )

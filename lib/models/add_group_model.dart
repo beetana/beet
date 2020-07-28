@@ -8,5 +8,13 @@ class AddGroupModel extends ChangeNotifier {
     if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
+    try {
+      await Firestore.instance.collection('groups').add({
+        'name': groupName,
+        'createdAt': Timestamp.now(),
+      });
+    } catch (e) {
+      throw ('追加できませんでした。やり直してください。');
+    }
   }
 }

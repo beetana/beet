@@ -1,3 +1,4 @@
+import 'package:beet/screens/set_name_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -29,7 +30,12 @@ class SettingScreen extends StatelessWidget {
             child: ListTile(
               title: Text('名前の変更'),
               trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SetNameScreen()),
+                );
+              },
             ),
           ),
           Divider(

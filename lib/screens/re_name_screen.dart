@@ -1,19 +1,19 @@
-import 'package:beet/models/set_name_model.dart';
+import 'package:beet/models/re_name_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SetNameScreen extends StatelessWidget {
+class ReNameScreen extends StatelessWidget {
   final userNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SetNameModel>(
-      create: (_) => SetNameModel(),
+    return ChangeNotifierProvider<ReNameModel>(
+      create: (_) => ReNameModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('名前の変更'),
+          title: Text('アカウント名を変更'),
         ),
-        body: Consumer<SetNameModel>(builder: (context, model, child) {
+        body: Consumer<ReNameModel>(builder: (context, model, child) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
@@ -21,7 +21,7 @@ class SetNameScreen extends StatelessWidget {
               children: <Widget>[
                 TextField(
                   controller: userNameController,
-                  decoration: InputDecoration(hintText: '名前'),
+                  decoration: InputDecoration(hintText: 'アカウント名'),
                   onChanged: (text) {
                     model.newName = text;
                   },
@@ -33,8 +33,8 @@ class SetNameScreen extends StatelessWidget {
                   child: Text('追加'),
                   onPressed: () async {
                     try {
-                      await model.setName();
-                      await _showTextDialog(context, '名前を変更しました');
+                      await model.reName();
+                      await _showTextDialog(context, '変更しました');
                       Navigator.pop(context);
                     } catch (e) {
                       _showTextDialog(context, e.toString());

@@ -3,11 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class WelcomeModel extends ChangeNotifier {
+  String name = '';
   String email = '';
   String password = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future signUp() async {
+  Future register() async {
+    if (name.isEmpty) {
+      throw ('アカウント名を入力してください');
+    }
     if (email.isEmpty) {
       throw ('メールアドレスを入力してください');
     }
@@ -22,7 +26,8 @@ class WelcomeModel extends ChangeNotifier {
       ))
           .user;
       await Firestore.instance.collection('users').document(user.uid).setData({
-        'email': user.email,
+        'name': name,
+        'email': email,
         'createdAt': Timestamp.now(),
       });
     } catch (e) {

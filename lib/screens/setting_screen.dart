@@ -1,4 +1,4 @@
-import 'package:beet/screens/set_name_screen.dart';
+import 'package:beet/screens/re_name_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -33,7 +33,7 @@ class SettingScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SetNameScreen()),
+                  MaterialPageRoute(builder: (context) => ReNameScreen()),
                 );
               },
             ),

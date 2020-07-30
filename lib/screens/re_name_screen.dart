@@ -30,7 +30,7 @@ class ReNameScreen extends StatelessWidget {
                   height: 24.0,
                 ),
                 RaisedButton(
-                  child: Text('追加'),
+                  child: Text('OK'),
                   onPressed: () async {
                     try {
                       await model.reName();

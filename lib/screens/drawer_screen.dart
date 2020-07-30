@@ -1,6 +1,6 @@
 import 'package:beet/screens/add_group_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:beet/screens/my_page_screen.dart';
+import 'package:beet/screens/main_screen.dart';
 import 'package:beet/screens/group_screen.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -8,7 +8,6 @@ class DrawerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
-//        padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
             accountName: Text("べーたな"),
@@ -23,7 +22,7 @@ class DrawerScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPageScreen(),
+                  builder: (context) => MainScreen(),
                 ),
               );
             },

@@ -1,4 +1,4 @@
-import 'package:beet/screens/my_page_screen.dart';
+import 'package:beet/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beet/models/welcome_model.dart';
@@ -17,7 +17,6 @@ class RegisterScreen extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   flex: 3,
@@ -66,12 +65,14 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   onPressed: () async {
                     try {
-                      await model.register();
+                      final user = await model.register();
                       await _showTextDialog(context, '登録しました');
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => MyPageScreen(),
+                          builder: (BuildContext context) => MainScreen(
+                            user: user,
+                          ),
                         ),
                       );
                     } catch (e) {

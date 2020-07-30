@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beet/models/add_group_model.dart';
-import 'package:beet/screens/my_page_screen.dart';
+import 'package:beet/screens/main_screen.dart';
 
 class AddGroupScreen extends StatelessWidget {
   final groupNameController = TextEditingController();
@@ -40,7 +40,7 @@ class AddGroupScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           // TODO 追加したグループのページへ遷移
-                          builder: (BuildContext context) => MyPageScreen(),
+                          builder: (BuildContext context) => MainScreen(),
                         ),
                       );
                     } catch (e) {

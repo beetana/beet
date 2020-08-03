@@ -30,7 +30,6 @@ class WelcomeModel extends ChangeNotifier {
         'email': email,
         'createdAt': Timestamp.now(),
       });
-      return user;
     } catch (e) {
       throw (_convertErrorMessage(e.code));
     }
@@ -45,11 +44,10 @@ class WelcomeModel extends ChangeNotifier {
     }
 
     try {
-      final AuthResult result = await _auth.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return result.user;
     } catch (e) {
       throw (_convertErrorMessage(e.code));
     }

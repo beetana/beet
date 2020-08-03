@@ -4,7 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReNameModel extends ChangeNotifier {
   String newName = '';
+  bool isLoading = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  startLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+
+  endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
 
   Future reName() async {
     if (newName.isEmpty) {
@@ -19,7 +30,17 @@ class ReNameModel extends ChangeNotifier {
         'name': newName,
       });
     } catch (e) {
-      throw ('変更できませんでした。やり直してください。');
+      print(e);
+      throw (_convertErrorMessage(e.code));
     }
+  }
+}
+
+String _convertErrorMessage(e) {
+  switch (e) {
+    case 'Error 5':
+      return '変更先のデータが見つかりませんでした';
+    default:
+      return '不明なエラーです';
   }
 }

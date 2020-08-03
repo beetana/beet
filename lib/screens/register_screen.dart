@@ -23,6 +23,7 @@ class RegisterScreen extends StatelessWidget {
                   child: (Container()),
                 ),
                 TextField(
+                  maxLength: 20,
                   controller: nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -65,18 +66,16 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   onPressed: () async {
                     try {
-                      final user = await model.register();
+                      await model.register();
                       await _showTextDialog(context, '登録しました');
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => MainScreen(
-                            user: user,
-                          ),
+                          builder: (BuildContext context) => MainScreen(),
                         ),
                       );
                     } catch (e) {
-                      _showTextDialog(context, e.toString());
+                      _showTextDialog(context, e);
                     }
                   },
                 ),

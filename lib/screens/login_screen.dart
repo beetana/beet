@@ -1,6 +1,5 @@
 import 'package:beet/screens/main_screen.dart';
 import 'package:beet/screens/register_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beet/models/welcome_model.dart';
@@ -56,17 +55,15 @@ class LoginScreen extends StatelessWidget {
                   ),
                   onPressed: () async {
                     try {
-                      final FirebaseUser user = await model.login();
+                      await model.login();
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => MainScreen(
-                            user: user,
-                          ),
+                          builder: (BuildContext context) => MainScreen(),
                         ),
                       );
                     } catch (e) {
-                      _showTextDialog(context, e.toString());
+                      _showTextDialog(context, e);
                     }
                   },
                 ),

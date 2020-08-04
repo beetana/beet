@@ -93,9 +93,9 @@ class SettingScreen extends StatelessWidget {
                   onTap: () {},
                 ),
               ),
-//              Divider(
-//                height: 0.5,
-//              ),
+              Divider(
+                height: 0.5,
+              ),
               Container(
                 color: Colors.white,
                 child: ListTile(

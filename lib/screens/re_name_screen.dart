@@ -26,8 +26,19 @@ class ReNameScreen extends StatelessWidget {
                   children: <Widget>[
                     TextField(
                       controller: userNameController,
-                      decoration: InputDecoration(hintText: 'アカウント名'),
                       autofocus: true,
+                      decoration: InputDecoration(
+                        hintText: 'アカウント名',
+                        suffix: IconButton(
+                          icon: Icon(
+                            Icons.clear,
+                            color: Colors.black54,
+                          ),
+                          onPressed: () {
+                            userNameController.clear();
+                          },
+                        ),
+                      ),
                       onChanged: (text) {
                         model.newName = text;
                       },

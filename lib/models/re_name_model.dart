@@ -30,17 +30,8 @@ class ReNameModel extends ChangeNotifier {
         'name': newName,
       });
     } catch (e) {
-      print(e);
-      throw (_convertErrorMessage(e.code));
+      print(e.toString());
+      throw ('エラーが発生しました');
     }
-  }
-}
-
-String _convertErrorMessage(e) {
-  switch (e) {
-    case 'Error 5':
-      return '変更先のデータが見つかりませんでした';
-    default:
-      return '不明なエラーです';
   }
 }

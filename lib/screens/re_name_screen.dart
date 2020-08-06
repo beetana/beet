@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ReNameScreen extends StatelessWidget {
-  ReNameScreen({this.newName});
-  final String newName;
+  ReNameScreen({this.userName});
+  final String userName;
   final userNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    userNameController.text = newName;
+    userNameController.text = userName;
     return ChangeNotifierProvider<ReNameModel>(
       create: (_) => ReNameModel(),
       child: Scaffold(

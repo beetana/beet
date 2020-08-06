@@ -21,27 +21,32 @@ class DrawerScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                 ),
               ),
-              ListTile(
-                title: Text('マイページ'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MainScreen(),
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                title: Text('宇宙ネコ子'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => GroupScreen(),
-                    ),
-                  );
-                },
+              Flexible(
+                child: ListView.builder(
+                    physics: const ScrollPhysics(),
+                    itemCount: model.groups.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text(model.groups[index]),
+                        onTap: () {
+                          if (model.groups[index] == model.groups[0]) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainScreen(),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GroupScreen(),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    }),
               ),
               RaisedButton(
                 child: Text('グループを追加'),

@@ -3,6 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddGroupModel extends ChangeNotifier {
   String groupName = '';
+  bool isLoading = false;
+
+  startLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+
+  endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
 
   Future addGroup() async {
     if (groupName.isEmpty) {
@@ -14,7 +25,7 @@ class AddGroupModel extends ChangeNotifier {
         'createdAt': Timestamp.now(),
       });
     } catch (e) {
-      throw ('追加できませんでした。やり直してください。');
+      throw ('エラーが発生しました');
     }
   }
 }

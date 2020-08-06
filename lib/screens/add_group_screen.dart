@@ -15,41 +15,55 @@ class AddGroupScreen extends StatelessWidget {
           title: Text('グループを追加'),
         ),
         body: Consumer<AddGroupModel>(builder: (context, model, child) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextField(
-                  controller: groupNameController,
-                  decoration: InputDecoration(hintText: 'グループ名'),
-                  onChanged: (text) {
-                    model.groupName = text;
-                  },
+          return Stack(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    TextField(
+                      controller: groupNameController,
+                      decoration: InputDecoration(hintText: 'グループ名'),
+                      onChanged: (text) {
+                        model.groupName = text;
+                      },
+                    ),
+                    SizedBox(
+                      height: 24.0,
+                    ),
+                    RaisedButton(
+                      child: Text('追加'),
+                      onPressed: () async {
+                        model.startLoading();
+                        try {
+                          await model.addGroup();
+                          await _showTextDialog(context, '追加しました');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              // TODO 追加したグループのページへ遷移
+                              builder: (BuildContext context) => MainScreen(),
+                            ),
+                          );
+                        } catch (e) {
+                          _showTextDialog(context, e.toString());
+                        }
+                        model.endLoading();
+                      },
+                    )
+                  ],
                 ),
-                SizedBox(
-                  height: 24.0,
-                ),
-                RaisedButton(
-                  child: Text('追加'),
-                  onPressed: () async {
-                    try {
-                      await model.addGroup();
-                      await _showTextDialog(context, '追加しました');
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          // TODO 追加したグループのページへ遷移
-                          builder: (BuildContext context) => MainScreen(),
-                        ),
-                      );
-                    } catch (e) {
-                      _showTextDialog(context, e.toString());
-                    }
-                  },
-                )
-              ],
-            ),
+              ),
+              model.isLoading
+                  ? Container(
+                      color: Colors.black.withOpacity(0.3),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : SizedBox()
+            ],
           );
         }),
       ),

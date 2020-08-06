@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatelessWidget {
-  final List<String> schedules = <String>['A', 'B', 'C'];
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MainModel>(
@@ -56,7 +54,7 @@ class MainScreen extends StatelessWidget {
                     left: 16.0,
                     right: 16.0,
                   ),
-                  itemCount: schedules.length,
+                  itemCount: model.schedules.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.all(2.0),
@@ -68,8 +66,8 @@ class MainScreen extends StatelessWidget {
                           fontSize: 30.0,
                         ),
                         color: Colors.grey,
-                        child:
-                            Center(child: Text('sample ${schedules[index]}')),
+                        child: Center(
+                            child: Text('sample ${model.schedules[index]}')),
                       ),
                     );
                   }),

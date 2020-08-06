@@ -41,7 +41,7 @@ class SettingScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ReNameScreen(
-                          newName: model.userName,
+                          userName: model.userName,
                         ),
                       ),
                     );

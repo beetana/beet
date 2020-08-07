@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ReNameModel extends ChangeNotifier {
-  String newName = '';
+class GroupNameUpdateModel extends ChangeNotifier {
+  String newGroupName = '';
   bool isLoading = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   startLoading() {
     isLoading = true;
@@ -17,17 +15,16 @@ class ReNameModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future reName() async {
-    if (newName.isEmpty) {
-      throw ('名前を入力してください');
+  Future updateGroupName(groupID) async {
+    if (newGroupName.isEmpty) {
+      throw ('グループ名を入力してください');
     }
     try {
-      final user = await _auth.currentUser();
       await Firestore.instance
-          .collection('users')
-          .document(user.uid)
+          .collection('groups')
+          .document(groupID)
           .updateData({
-        'name': newName,
+        'groupName': newGroupName,
       });
     } catch (e) {
       print(e.toString());

@@ -1,4 +1,4 @@
-import 'package:beet/models/gtoup_main_model.dart';
+import 'package:beet/models/group_models/group_main_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

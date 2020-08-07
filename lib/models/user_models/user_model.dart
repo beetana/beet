@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class MainModel extends ChangeNotifier {
+class UserModel extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  int currentIndex = 0;
   String userName;
-  List<String> schedules = <String>['A', 'B', 'C'];
 
   Future init() async {
     FirebaseUser currentUser = await auth.currentUser();
@@ -14,6 +14,11 @@ class MainModel extends ChangeNotifier {
         .document(currentUser.uid)
         .get();
     userName = userDoc['name'];
+    notifyListeners();
+  }
+
+  void onTabTapped(int index) {
+    currentIndex = index;
     notifyListeners();
   }
 }

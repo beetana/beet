@@ -5,7 +5,7 @@ class GroupModel extends ChangeNotifier {
   int currentIndex = 0;
   String groupName;
 
-  Future init(String groupID) async {
+  Future init({String groupID}) async {
     DocumentSnapshot groupDoc =
         await Firestore.instance.collection('groups').document(groupID).get();
     groupName = groupDoc['groupName'];

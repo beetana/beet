@@ -15,41 +15,52 @@ class DrawerScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountName: Text(model.name),
+                accountName: Text(model.userName),
                 accountEmail: Text(model.email),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
                 ),
               ),
+              ListTile(
+                title: Text('マイページ'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MainScreen(),
+                    ),
+                  );
+                },
+              ),
               Flexible(
                 child: ListView.builder(
                     physics: const ScrollPhysics(),
-                    itemCount: model.groups.length,
+                    itemCount: model.groupName.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
-                        title: Text(model.groups[index]),
+                        title: Text(model.groupName[index]),
                         onTap: () {
-                          if (model.groups[index] == model.groups[0]) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MainScreen(),
-                              ),
-                            );
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => GroupScreen(),
-                              ),
-                            );
-                          }
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => GroupScreen(),
+                            ),
+                          );
                         },
                       );
                     }),
               ),
-              RaisedButton(
-                child: Text('グループを追加'),
+              FlatButton(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.add,
+                      color: Colors.black54,
+                    ),
+                    Text('グループを追加'),
+                  ],
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddGroupModel extends ChangeNotifier {
   String groupName = '';
+  String groupID = '';
   bool isLoading = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -27,11 +28,12 @@ class AddGroupModel extends ChangeNotifier {
         'createdAt': Timestamp.now(),
       });
       final FirebaseUser user = await _auth.currentUser();
+      groupID = newGroup.documentID;
       await Firestore.instance
           .collection('users')
           .document(user.uid)
           .collection('joiningGroup')
-          .document(newGroup.documentID)
+          .document(groupID)
           .setData({'joinedAt': Timestamp.now()});
     } catch (e) {
       throw ('エラーが発生しました');

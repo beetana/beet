@@ -1,9 +1,9 @@
-import 'package:beet/models/group_model.dart';
+import 'package:beet/models/group_models/group_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
-import 'package:beet/screens/group_calendar_screen.dart';
-import 'package:beet/screens/group_main_screen.dart';
-import 'package:beet/screens/group_song_list_screen.dart';
-import 'package:beet/screens/setting_screen.dart';
+import 'package:beet/screens/group_screens/group_calendar_screen.dart';
+import 'package:beet/screens/group_screens/group_main_screen.dart';
+import 'package:beet/screens/setting_screens/group_setting_screen.dart';
+import 'package:beet/screens/group_screens/group_song_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class GroupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupModel>(
-      create: (_) => GroupModel()..init(groupID),
+      create: (_) => GroupModel()..init(groupID: groupID),
       child: Consumer<GroupModel>(builder: (context, model, child) {
         return Scaffold(
           drawer: DrawerScreen(),
@@ -30,14 +30,16 @@ class GroupScreen extends StatelessWidget {
                 icon: Icon(
                   Icons.settings,
                 ),
-                onPressed: () {
-                  Navigator.push(
+                onPressed: () async {
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SettingScreen(),
+                      builder: (context) =>
+                          GroupSettingScreen(groupID: groupID),
                       fullscreenDialog: true,
                     ),
                   );
+                  model.init(groupID: groupID);
                 },
               ),
             ],

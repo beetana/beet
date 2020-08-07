@@ -1,18 +1,18 @@
-import 'package:beet/models/setting_model.dart';
-import 'package:beet/screens/re_name_screen.dart';
+import 'package:beet/models/setting_models/user_setting_model.dart';
+import 'package:beet/screens/setting_screens/user_name_update_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SettingScreen extends StatelessWidget {
+class UserSettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => SettingModel()..init(),
+      create: (_) => UserSettingModel()..init(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('設定'),
         ),
-        body: Consumer<SettingModel>(builder: (context, model, child) {
+        body: Consumer<UserSettingModel>(builder: (context, model, child) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -40,7 +40,7 @@ class SettingScreen extends StatelessWidget {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ReNameScreen(
+                        builder: (context) => UserNameUpdateScreen(
                           userName: model.userName,
                         ),
                       ),

@@ -1,20 +1,22 @@
-import 'package:beet/screens/group_screens/group_screen.dart';
+import 'package:beet/models/setting_models/user_name_update_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:beet/models/add_group_model.dart';
 
-class AddGroupScreen extends StatelessWidget {
-  final groupNameController = TextEditingController();
+class UserNameUpdateScreen extends StatelessWidget {
+  UserNameUpdateScreen({this.userName});
+  final String userName;
+  final userNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AddGroupModel>(
-      create: (_) => AddGroupModel(),
+    userNameController.text = userName;
+    return ChangeNotifierProvider<UserNameUpdateModel>(
+      create: (_) => UserNameUpdateModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('グループを追加'),
+          title: Text('アカウント名を変更'),
         ),
-        body: Consumer<AddGroupModel>(builder: (context, model, child) {
+        body: Consumer<UserNameUpdateModel>(builder: (context, model, child) {
           return Stack(
             children: <Widget>[
               Padding(
@@ -23,31 +25,35 @@ class AddGroupScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     TextField(
-                      controller: groupNameController,
-                      decoration: InputDecoration(hintText: 'グループ名'),
+                      controller: userNameController,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        hintText: 'アカウント名',
+                        suffix: IconButton(
+                          icon: Icon(
+                            Icons.clear,
+                            color: Colors.black54,
+                          ),
+                          onPressed: () {
+                            userNameController.clear();
+                          },
+                        ),
+                      ),
                       onChanged: (text) {
-                        model.groupName = text;
+                        model.newName = text;
                       },
                     ),
                     SizedBox(
                       height: 24.0,
                     ),
                     RaisedButton(
-                      child: Text('追加'),
+                      child: Text('OK'),
                       onPressed: () async {
                         model.startLoading();
                         try {
-                          await model.addGroup();
-                          await _showTextDialog(context, '追加しました');
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              // TODO 追加したグループのページへ遷移
-                              builder: (BuildContext context) => GroupScreen(
-                                groupID: model.groupID,
-                              ),
-                            ),
-                          );
+                          await model.reName();
+                          await _showTextDialog(context, '変更しました');
+                          Navigator.pop(context);
                         } catch (e) {
                           _showTextDialog(context, e.toString());
                         }

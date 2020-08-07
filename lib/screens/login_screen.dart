@@ -1,5 +1,5 @@
-import 'package:beet/screens/main_screen.dart';
 import 'package:beet/screens/register_screen.dart';
+import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beet/models/welcome_model.dart';
@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => MainScreen(),
+                          builder: (BuildContext context) => UserScreen(),
                         ),
                       );
                     } catch (e) {

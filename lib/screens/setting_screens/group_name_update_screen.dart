@@ -1,22 +1,23 @@
-import 'package:beet/models/re_name_model.dart';
+import 'package:beet/models/setting_models/group_name_update_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ReNameScreen extends StatelessWidget {
-  ReNameScreen({this.userName});
-  final String userName;
-  final userNameController = TextEditingController();
+class GroupNameUpdateScreen extends StatelessWidget {
+  GroupNameUpdateScreen({this.groupID, this.groupName});
+  final String groupID;
+  final String groupName;
+  final groupNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    userNameController.text = userName;
-    return ChangeNotifierProvider<ReNameModel>(
-      create: (_) => ReNameModel(),
+    groupNameController.text = groupName;
+    return ChangeNotifierProvider<GroupNameUpdateModel>(
+      create: (_) => GroupNameUpdateModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('アカウント名を変更'),
+          title: Text('グループ名を変更'),
         ),
-        body: Consumer<ReNameModel>(builder: (context, model, child) {
+        body: Consumer<GroupNameUpdateModel>(builder: (context, model, child) {
           return Stack(
             children: <Widget>[
               Padding(
@@ -25,22 +26,22 @@ class ReNameScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     TextField(
-                      controller: userNameController,
+                      controller: groupNameController,
                       autofocus: true,
                       decoration: InputDecoration(
-                        hintText: 'アカウント名',
+                        hintText: 'グループ名',
                         suffix: IconButton(
                           icon: Icon(
                             Icons.clear,
                             color: Colors.black54,
                           ),
                           onPressed: () {
-                            userNameController.clear();
+                            groupNameController.clear();
                           },
                         ),
                       ),
                       onChanged: (text) {
-                        model.newName = text;
+                        model.newGroupName = text;
                       },
                     ),
                     SizedBox(
@@ -51,7 +52,7 @@ class ReNameScreen extends StatelessWidget {
                       onPressed: () async {
                         model.startLoading();
                         try {
-                          await model.reName();
+                          await model.updateGroupName(groupID);
                           await _showTextDialog(context, '変更しました');
                           Navigator.pop(context);
                         } catch (e) {

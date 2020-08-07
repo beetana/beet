@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CalendarScreen extends StatelessWidget {
-  // TODO table_calendarを使ってカレンダー画面のUI作成
+class GroupSongListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('カレンダー'),
+        title: Text('持ち曲一覧'),
       ),
       body: Container(),
     );

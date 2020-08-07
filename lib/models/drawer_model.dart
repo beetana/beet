@@ -16,15 +16,14 @@ class DrawerModel extends ChangeNotifier {
         .document(currentUser.uid)
         .get();
 
-    userName = userData['name'];
-    email = userData['email'];
-
     var joiningGroup = await Firestore.instance
         .collection('users')
         .document(currentUser.uid)
         .collection('joiningGroup')
         .getDocuments();
 
+    userName = userData['name'];
+    email = userData['email'];
     groupID = (joiningGroup.documents.map((doc) => doc.documentID).toList());
 
     for (String id in groupID) {
@@ -32,7 +31,6 @@ class DrawerModel extends ChangeNotifier {
           await Firestore.instance.collection('groups').document(id).get();
       groupName.add(groupDoc['groupName'].toString());
     }
-
     notifyListeners();
   }
 }

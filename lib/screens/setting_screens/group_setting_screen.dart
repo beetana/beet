@@ -26,7 +26,7 @@ class GroupSettingScreen extends StatelessWidget {
                   bottom: 8.0,
                 ),
                 child: Text(
-                  'ユーザー設定',
+                  'グループ設定',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -36,7 +36,7 @@ class GroupSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('名前の変更'),
+                  title: Text('グループ名の変更'),
                   subtitle: Text(model.groupName),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () async {

@@ -33,7 +33,7 @@ class UserSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('名前の変更'),
+                  title: Text('アカウント名の変更'),
                   subtitle: Text(model.userName),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () async {

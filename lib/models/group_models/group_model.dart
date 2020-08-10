@@ -24,16 +24,4 @@ class GroupModel extends ChangeNotifier {
     currentIndex = index;
     notifyListeners();
   }
-
-  Widget switchFAB(int index) {
-    if (index == 0) {
-      return null;
-    } else {
-      return FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blueGrey,
-        onPressed: () {},
-      );
-    }
-  }
 }

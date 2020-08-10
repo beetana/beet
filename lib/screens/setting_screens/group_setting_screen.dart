@@ -10,7 +10,7 @@ class GroupSettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => GroupSettingModel()..init(groupID),
+      create: (_) => GroupSettingModel()..init(groupID: groupID),
       child: Scaffold(
         appBar: AppBar(
           title: Text('設定'),
@@ -47,7 +47,7 @@ class GroupSettingScreen extends StatelessWidget {
                             groupID: groupID, groupName: model.groupName),
                       ),
                     );
-                    model.init(groupID);
+                    model.init(groupID: groupID);
                   },
                 ),
               ),

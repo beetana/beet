@@ -17,7 +17,7 @@ class UserNameUpdateModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future reName() async {
+  Future updateUserName() async {
     if (newName.isEmpty) {
       throw ('名前を入力してください');
     }

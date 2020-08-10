@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class UserModel extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   int currentIndex = 0;
-  String userName;
+  String userName = '';
 
   Future init() async {
     FirebaseUser currentUser = await auth.currentUser();

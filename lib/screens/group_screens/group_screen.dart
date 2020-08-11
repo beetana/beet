@@ -1,6 +1,5 @@
 import 'package:beet/models/group_models/group_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
-import 'package:beet/screens/group_screens/add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_calendar_screen.dart';
 import 'package:beet/screens/group_screens/group_main_screen.dart';
 import 'package:beet/screens/group_screens/group_song_list_screen.dart';
@@ -19,26 +18,6 @@ class GroupScreen extends StatelessWidget {
       GroupCalendarScreen(),
       GroupSongListScreen(groupID: groupID),
     ];
-
-    Widget switchFAB(int index) {
-      if (index == 0) {
-        return null;
-      } else {
-        return FloatingActionButton(
-          child: Icon(Icons.add),
-          backgroundColor: Colors.blueGrey,
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddSongScreen(groupID: groupID),
-                fullscreenDialog: true,
-              ),
-            );
-          },
-        );
-      }
-    }
 
     return ChangeNotifierProvider<GroupModel>(
       create: (_) => GroupModel()..init(groupID: groupID),
@@ -86,7 +65,6 @@ class GroupScreen extends StatelessWidget {
                 ),
               ],
             ),
-            floatingActionButton: switchFAB(model.currentIndex),
           );
         } else {
           return Scaffold(

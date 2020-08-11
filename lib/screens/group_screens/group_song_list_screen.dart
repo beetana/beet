@@ -1,4 +1,5 @@
 import 'package:beet/models/group_models/group_song_list_model.dart';
+import 'package:beet/screens/group_screens/add_song_screen.dart';
 import 'package:beet/screens/group_screens/set_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,6 +45,37 @@ class GroupSongListScreen extends StatelessWidget {
                       onTap: () {},
                     );
                   }),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: RawMaterialButton(
+                    elevation: 6.0,
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    constraints: BoxConstraints.tightFor(
+                      width: 56.0,
+                      height: 56.0,
+                    ),
+                    shape: CircleBorder(),
+                    fillColor: Colors.blueGrey,
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddSongScreen(groupID: groupID),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                      model.getSongList(groupID);
+                    },
+                  ),
+                ),
+              ],
             ),
           ],
         );

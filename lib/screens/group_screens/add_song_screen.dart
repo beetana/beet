@@ -1,4 +1,5 @@
 import 'package:beet/models/group_models/add_song_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,6 +33,40 @@ class AddSongScreen extends StatelessWidget {
                       onChanged: (text) {
                         model.songTitle = text;
                       },
+                    ),
+                    SizedBox(
+                      height: 32.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 40.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text(
+                            '演奏時間',
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                          Container(
+                            height: 96.0,
+                            width: 56.0,
+                            child: CupertinoPicker(
+                              itemExtent: 32.0,
+                              magnification: 1.2,
+                              useMagnifier: true,
+                              onSelectedItemChanged: (index) {
+                                model.playingTime = model.playingTimes[index];
+                              },
+                              children: model.playingTimes
+                                  .map((value) => Text('$value'))
+                                  .toList(),
+                            ),
+                          ),
+                          Text(
+                            '分',
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 24.0,

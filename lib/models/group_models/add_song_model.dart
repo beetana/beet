@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AddSongModel extends ChangeNotifier {
   String songTitle = '';
   bool isLoading = false;
+  int playingTime = 0;
+  final List<int> playingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   startLoading() {
     isLoading = true;
@@ -24,7 +26,10 @@ class AddSongModel extends ChangeNotifier {
           .collection('groups')
           .document(groupID)
           .collection('songs')
-          .add({'title': songTitle});
+          .add({
+        'title': songTitle,
+        'minute': playingTime,
+      });
     } catch (e) {
       print(e.toString());
       throw ('エラーが発生しました');

@@ -1,6 +1,9 @@
 import 'package:beet/models/group_models/group_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
 import 'package:beet/screens/group_screens/add_song_screen.dart';
+import 'package:beet/screens/group_screens/group_calendar_screen.dart';
+import 'package:beet/screens/group_screens/group_main_screen.dart';
+import 'package:beet/screens/group_screens/group_song_list_screen.dart';
 import 'package:beet/screens/setting_screens/group_setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +14,12 @@ class GroupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> switchBody = [
+      GroupMainScreen(),
+      GroupCalendarScreen(),
+      GroupSongListScreen(groupID: groupID),
+    ];
+
     Widget switchFAB(int index) {
       if (index == 0) {
         return null;
@@ -58,7 +67,7 @@ class GroupScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: model.switchBody[model.currentIndex],
+            body: switchBody[model.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
               onTap: model.onTabTapped,
               currentIndex: model.currentIndex,

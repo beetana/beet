@@ -13,79 +13,161 @@ class GroupSongListScreen extends StatelessWidget {
     return ChangeNotifierProvider<GroupSongListModel>(
       create: (_) => GroupSongListModel()..getSongList(groupID),
       child: Consumer<GroupSongListModel>(builder: (context, model, child) {
-        return Column(
+        return Stack(
           children: <Widget>[
-            FlatButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.playlist_add,
-                    color: Colors.black54,
-                  ),
-                  Text('セットリストを作成'),
-                ],
-              ),
-              onPressed: () {
-                model.changeMode();
-              },
-            ),
-            Flexible(
-              child: ListView.builder(
-                  physics: ScrollPhysics(),
-                  itemCount: model.songList.length,
-                  itemBuilder: (context, index) {
-                    final song = model.songList[index];
-                    return SongListTile(
-                      songTitle: song.title,
-                      songMinute: song.playTime.toString(),
-                      isChecked: song.checkboxState,
-                      isVisible: model.isSetListMode,
-                      checkboxCallback: (state) {
-                        model.toggleCheck(song);
-                      },
-                      tileTappedCallback: () {
-                        if (model.isSetListMode == true) {
-                          model.toggleCheck(song);
-                        }
-                      },
-                    );
-                  }),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+            Column(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: 16.0,
-                    bottom: 16.0,
-                  ),
-                  child: RawMaterialButton(
-                    elevation: 6.0,
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    constraints: BoxConstraints.tightFor(
-                      width: 56.0,
-                      height: 56.0,
-                    ),
-                    shape: CircleBorder(),
-                    fillColor: Colors.blueGrey,
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddSongScreen(groupID: groupID),
-                          fullscreenDialog: true,
+                Container(
+                  height: 40.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      FlatButton(
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.playlist_add,
+                              color: Colors.black54,
+                            ),
+                            Text(
+                              'セットリストを作成',
+                            ),
+                          ],
                         ),
-                      );
-                      model.getSongList(groupID);
-                    },
+                        onPressed: () {
+                          model.changeMode();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  child: ListView.builder(
+                      physics: ScrollPhysics(),
+                      itemCount: model.songList.length,
+                      itemBuilder: (context, index) {
+                        final song = model.songList[index];
+                        return SongListTile(
+                          songTitle: song.title,
+                          songMinute: song.playTime.toString(),
+                          isChecked: song.checkboxState,
+                          isVisible: model.isSetListMode,
+                          checkboxCallback: (state) {
+                            model.selectSong(song);
+                          },
+                          tileTappedCallback: () {
+                            if (model.isSetListMode == true) {
+                              model.selectSong(song);
+                            }
+                          },
+                        );
+                      }),
+                ),
+                Visibility(
+                  visible: model.isSetListMode,
+                  child: SizedBox(
+                    height: 30.0,
                   ),
                 ),
               ],
             ),
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Visibility(
+                        visible: model.isSetListMode,
+                        child: Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                              color: Colors.blueGrey,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(18.0),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Text(
+                                  '${model.songNum.toString()} 曲',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  '${model.totalPlayTime.toString()} 分',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: model.isSetListMode,
+                        child: Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(18.0),
+                                ),
+                              ),
+                              height: 40.0,
+                              child: FlatButton(
+                                child: Text(
+                                  '作成',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {},
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
+                  Visibility(
+                    visible: !model.isSetListMode,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        right: 16.0,
+                        bottom: 16.0,
+                      ),
+                      child: RawMaterialButton(
+                        elevation: 6.0,
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        constraints: BoxConstraints.tightFor(
+                          width: 56.0,
+                          height: 56.0,
+                        ),
+                        shape: CircleBorder(),
+                        fillColor: Colors.blueGrey,
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  AddSongScreen(groupID: groupID),
+                              fullscreenDialog: true,
+                            ),
+                          );
+                          model.getSongList(groupID);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         );
       }),

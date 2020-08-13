@@ -4,7 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupSongListModel extends ChangeNotifier {
   List<String> songIDList = [];
-  List<Song> songList = [];
+  List songList = [];
+  List selectedSongs;
+  int songNum;
+  int totalPlayTime;
   bool isSetListMode = false;
 
   Future getSongList(groupID) async {
@@ -21,6 +24,9 @@ class GroupSongListModel extends ChangeNotifier {
               playTime: doc['minute'],
             ))
         .toList();
+    selectedSongs = [];
+    songNum = 0;
+    totalPlayTime = 0;
     notifyListeners();
   }
 
@@ -29,8 +35,16 @@ class GroupSongListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleCheck(Song song) {
+  void selectSong(Song song) {
     song.toggleCheckBoxState();
+    if (song.checkboxState == true) {
+      selectedSongs.add(song);
+      totalPlayTime = totalPlayTime + song.playTime;
+    } else {
+      selectedSongs.remove(song);
+      totalPlayTime = totalPlayTime - song.playTime;
+    }
+    songNum = selectedSongs.length;
     notifyListeners();
   }
 }

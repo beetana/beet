@@ -29,6 +29,7 @@ class AddSongModel extends ChangeNotifier {
           .add({
         'title': songTitle,
         'minute': playingTime,
+        'createdAt': Timestamp.now(),
       });
     } catch (e) {
       print(e.toString());

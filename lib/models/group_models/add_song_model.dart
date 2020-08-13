@@ -5,7 +5,7 @@ class AddSongModel extends ChangeNotifier {
   String songTitle = '';
   bool isLoading = false;
   int playingTime = 0;
-  final List<int> playingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  final List<int> playingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   startLoading() {
     isLoading = true;

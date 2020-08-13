@@ -1,6 +1,6 @@
 import 'package:beet/models/group_models/group_song_list_model.dart';
 import 'package:beet/screens/group_screens/add_song_screen.dart';
-import 'package:beet/screens/group_screens/set_list_screen.dart';
+import 'package:beet/widgets/song_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,22 +27,28 @@ class GroupSongListScreen extends StatelessWidget {
                 ],
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SetListScreen(),
-                  ),
-                );
+                model.changeMode();
               },
             ),
             Flexible(
               child: ListView.builder(
-                  physics: const ScrollPhysics(),
+                  physics: ScrollPhysics(),
                   itemCount: model.songList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: Text(model.songList[index].toString()),
-                      onTap: () {},
+                  itemBuilder: (context, index) {
+                    final song = model.songList[index];
+                    return SongListTile(
+                      songTitle: song.title,
+                      songMinute: song.playTime.toString(),
+                      isChecked: song.checkboxState,
+                      isVisible: model.isSetListMode,
+                      checkboxCallback: (state) {
+                        model.toggleCheck(song);
+                      },
+                      tileTappedCallback: () {
+                        if (model.isSetListMode == true) {
+                          model.toggleCheck(song);
+                        }
+                      },
                     );
                   }),
             ),
@@ -50,7 +56,10 @@ class GroupSongListScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: EdgeInsets.only(
+                    right: 16.0,
+                    bottom: 16.0,
+                  ),
                   child: RawMaterialButton(
                     elevation: 6.0,
                     child: Icon(

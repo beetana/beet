@@ -48,6 +48,7 @@ class GroupScreen extends StatelessWidget {
             ),
             body: switchBody[model.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
+              selectedItemColor: Colors.cyan,
               onTap: model.onTabTapped,
               currentIndex: model.currentIndex,
               items: <BottomNavigationBarItem>[

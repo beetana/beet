@@ -4,11 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupSongListModel extends ChangeNotifier {
   List<String> songIDList = [];
-  List songList = [];
-  List selectedSongs;
+  List<Song> songList = [];
+  List<Song> selectedSongs;
   int songNum;
   int totalPlayTime;
   bool isSetListMode = false;
+  Text buttonText = Text('セットリストを作成');
+  Icon buttonIcon = Icon(Icons.playlist_add, color: Colors.black54);
+  MainAxisAlignment buttonAlignment = MainAxisAlignment.center;
 
   Future getSongList(groupID) async {
     var songDoc = await Firestore.instance
@@ -32,6 +35,15 @@ class GroupSongListModel extends ChangeNotifier {
 
   void changeMode() {
     isSetListMode = !isSetListMode;
+    if (isSetListMode == true) {
+      buttonText = Text('キャンセル');
+      buttonIcon = Icon(Icons.close, color: Colors.black54);
+      buttonAlignment = MainAxisAlignment.end;
+    } else {
+      buttonText = Text('セットリストを作成');
+      buttonIcon = Icon(Icons.playlist_add, color: Colors.black54);
+      buttonAlignment = MainAxisAlignment.center;
+    }
     notifyListeners();
   }
 

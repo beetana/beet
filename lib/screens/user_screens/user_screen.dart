@@ -42,6 +42,7 @@ class UserScreen extends StatelessWidget {
             ),
             body: _body[model.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
+              selectedItemColor: Colors.cyan,
               onTap: model.onTabTapped,
               currentIndex: model.currentIndex,
               items: <BottomNavigationBarItem>[

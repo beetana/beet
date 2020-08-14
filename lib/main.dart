@@ -11,7 +11,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'beet',
       theme: ThemeData(
-        primaryColor: Colors.blueGrey,
+        primaryColor: Colors.grey,
+        accentColor: Colors.teal,
+        primaryTextTheme:
+            Theme.of(context).primaryTextTheme.apply(bodyColor: Colors.white),
+        primaryIconTheme:
+            Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
         scaffoldBackgroundColor: Color(0xFFf5f5f5),
       ),
       home: LoginScreen(),

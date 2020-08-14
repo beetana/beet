@@ -1,5 +1,6 @@
 import 'package:beet/models/group_models/group_song_list_model.dart';
 import 'package:beet/screens/group_screens/add_song_screen.dart';
+import 'package:beet/screens/group_screens/group_set_list_screen.dart';
 import 'package:beet/widgets/song_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,19 +21,14 @@ class GroupSongListScreen extends StatelessWidget {
                 Container(
                   height: 40.0,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: model.buttonAlignment,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       FlatButton(
                         child: Row(
                           children: <Widget>[
-                            Icon(
-                              Icons.playlist_add,
-                              color: Colors.black54,
-                            ),
-                            Text(
-                              'セットリストを作成',
-                            ),
+                            model.buttonIcon,
+                            model.buttonText,
                           ],
                         ),
                         onPressed: () {
@@ -45,6 +41,7 @@ class GroupSongListScreen extends StatelessWidget {
                 Flexible(
                   child: ListView.builder(
                       physics: ScrollPhysics(),
+                      itemExtent: 70.0,
                       itemCount: model.songList.length,
                       itemBuilder: (context, index) {
                         final song = model.songList[index];
@@ -88,7 +85,7 @@ class GroupSongListScreen extends StatelessWidget {
                           child: Container(
                             height: 40.0,
                             decoration: BoxDecoration(
-                              color: Colors.blueGrey,
+                              color: Colors.grey,
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(18.0),
                               ),
@@ -97,11 +94,11 @@ class GroupSongListScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 Text(
-                                  '${model.songNum.toString()} 曲',
+                                  '${model.songNum} 曲',
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 Text(
-                                  '${model.totalPlayTime.toString()} 分',
+                                  '${model.totalPlayTime} 分',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ],
@@ -115,7 +112,7 @@ class GroupSongListScreen extends StatelessWidget {
                             flex: 2,
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.grey,
+                                color: Colors.cyan,
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(18.0),
                                 ),
@@ -126,7 +123,18 @@ class GroupSongListScreen extends StatelessWidget {
                                   '作成',
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => GroupSetListScreen(
+                                        setList: model.selectedSongs,
+                                        songNum: model.songNum,
+                                        totalPlayTime: model.totalPlayTime,
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             )),
                       ),
@@ -150,7 +158,7 @@ class GroupSongListScreen extends StatelessWidget {
                           height: 56.0,
                         ),
                         shape: CircleBorder(),
-                        fillColor: Colors.blueGrey,
+                        fillColor: Colors.cyan,
                         onPressed: () async {
                           await Navigator.push(
                             context,

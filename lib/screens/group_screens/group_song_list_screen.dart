@@ -81,7 +81,7 @@ class GroupSongListScreen extends StatelessWidget {
                       Visibility(
                         visible: model.isSetListMode,
                         child: Expanded(
-                          flex: 1,
+                          flex: 3,
                           child: Container(
                             height: 40.0,
                             decoration: BoxDecoration(

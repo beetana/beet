@@ -21,23 +21,16 @@ class GroupSetListScreen extends StatelessWidget {
               Flexible(
                 child: ImplicitlyAnimatedReorderableList(
                     items: setList,
-                    areItemsTheSame: (oldItem, newItem) =>
-                        oldItem.id == newItem.id,
-                    onReorderFinished: (item, from, to, newItems) {},
-                    itemBuilder: (context, itemAnimation, item, index) {
+                    areItemsTheSame: (oldItem, newItem) => oldItem == newItem,
+                    onReorderFinished: (song, from, to, songs) {},
+                    itemBuilder: (context, animation, song, index) {
                       return Reorderable(
-                        key: ValueKey(item),
-                        builder: (context, dragAnimation, inDrag) {
-                          final t = dragAnimation.value;
-                          final color = Color.lerp(
-                              Colors.white, Colors.white.withOpacity(1.0), t);
-
+                        key: ValueKey(song),
+                        builder: (context, animation, bool) {
                           return Material(
-                            color: Colors.black,
                             type: MaterialType.transparency,
                             child: ListTile(
-                              title: Text('${index + 1}.  ${item.title}'),
-//                              leading: Text('${index + 1}'),
+                              title: Text('${index + 1}.  ${song.title}'),
                               trailing: Handle(
                                 delay: Duration(milliseconds: 100),
                                 child: Icon(
@@ -62,7 +55,7 @@ class GroupSetListScreen extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Expanded(
-                    flex: 1,
+                    flex: 3,
                     child: Container(
                       height: 40.0,
                       decoration: BoxDecoration(

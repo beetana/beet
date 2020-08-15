@@ -1,22 +1,22 @@
-import 'package:beet/models/group_models/add_song_model.dart';
+import 'package:beet/models/group_models/group_add_song_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddSongScreen extends StatelessWidget {
-  AddSongScreen({this.groupID});
+class GroupAddSongScreen extends StatelessWidget {
+  GroupAddSongScreen({this.groupID});
   final String groupID;
   final songTitleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AddSongModel>(
-      create: (_) => AddSongModel(),
+    return ChangeNotifierProvider<GroupAddSongModel>(
+      create: (_) => GroupAddSongModel(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('曲を追加'),
         ),
-        body: Consumer<AddSongModel>(builder: (context, model, child) {
+        body: Consumer<GroupAddSongModel>(builder: (context, model, child) {
           return Stack(
             children: <Widget>[
               Padding(

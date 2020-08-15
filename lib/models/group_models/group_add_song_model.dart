@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AddSongModel extends ChangeNotifier {
+class GroupAddSongModel extends ChangeNotifier {
   String songTitle = '';
   bool isLoading = false;
   int playingTime = 0;

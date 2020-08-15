@@ -1,5 +1,5 @@
 import 'package:beet/models/group_models/group_song_list_model.dart';
-import 'package:beet/screens/group_screens/add_song_screen.dart';
+import 'package:beet/screens/group_screens/group_add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen.dart';
 import 'package:beet/widgets/song_list_tile.dart';
 import 'package:flutter/material.dart';
@@ -169,7 +169,7 @@ class GroupSongListScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    AddSongScreen(groupID: groupID),
+                                    GroupAddSongScreen(groupID: groupID),
                                 fullscreenDialog: true,
                               ),
                             );

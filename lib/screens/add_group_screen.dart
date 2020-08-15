@@ -42,7 +42,6 @@ class AddGroupScreen extends StatelessWidget {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              // TODO 追加したグループのページへ遷移
                               builder: (BuildContext context) => GroupScreen(
                                 groupID: model.groupID,
                               ),

@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'beet',
       theme: ThemeData(
         primaryColor: Colors.grey,
-        accentColor: Colors.teal,
+        accentColor: Colors.cyan,
         primaryTextTheme:
             Theme.of(context).primaryTextTheme.apply(bodyColor: Colors.white),
         primaryIconTheme:

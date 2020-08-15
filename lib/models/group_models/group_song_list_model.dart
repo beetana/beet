@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupSongListModel extends ChangeNotifier {
-  List<String> songIDList = [];
   List<Song> songList = [];
   List<Song> selectedSongs;
   int songNum;
@@ -20,10 +19,10 @@ class GroupSongListModel extends ChangeNotifier {
         .collection('songs')
         .orderBy('createdAt', descending: true)
         .getDocuments();
-    songIDList = songDoc.documents.map((doc) => doc.documentID).toList();
     songList = songDoc.documents
         .map((doc) => Song(
-              title: doc['title'].toString(),
+              id: doc.documentID,
+              title: doc['title'],
               playTime: doc['minute'],
             ))
         .toList();
@@ -32,6 +31,9 @@ class GroupSongListModel extends ChangeNotifier {
     totalPlayTime = 0;
     notifyListeners();
   }
+
+// TODO getSongListが終わった時にsongListが空なら'曲がありませんと表示する'
+  void songListCheck() {}
 
   void changeMode() {
     isSetListMode = !isSetListMode;

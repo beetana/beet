@@ -21,7 +21,7 @@ class GroupSongListModel extends ChangeNotifier {
         .getDocuments();
     songList = songDoc.documents
         .map((doc) => Song(
-              id: doc.documentID,
+              songID: doc.documentID,
               title: doc['title'],
               playTime: doc['minute'],
             ))

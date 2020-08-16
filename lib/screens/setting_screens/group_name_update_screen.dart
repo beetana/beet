@@ -10,7 +10,6 @@ class GroupNameUpdateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    groupNameController.text = groupName;
     return ChangeNotifierProvider<GroupNameUpdateModel>(
       create: (_) => GroupNameUpdateModel(),
       child: Scaffold(
@@ -18,6 +17,8 @@ class GroupNameUpdateScreen extends StatelessWidget {
           title: Text('グループ名を変更'),
         ),
         body: Consumer<GroupNameUpdateModel>(builder: (context, model, child) {
+          groupNameController.text = groupName;
+          model.groupName = groupName;
           return Stack(
             children: <Widget>[
               Padding(
@@ -37,11 +38,14 @@ class GroupNameUpdateScreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             groupNameController.clear();
+                            model.groupName = '';
+                            print(groupNameController.text);
+                            print(model.groupName);
                           },
                         ),
                       ),
                       onChanged: (text) {
-                        model.newGroupName = text;
+                        model.groupName = text;
                       },
                     ),
                     SizedBox(

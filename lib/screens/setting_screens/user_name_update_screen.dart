@@ -9,7 +9,6 @@ class UserNameUpdateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    userNameController.text = userName;
     return ChangeNotifierProvider<UserNameUpdateModel>(
       create: (_) => UserNameUpdateModel(),
       child: Scaffold(
@@ -17,6 +16,8 @@ class UserNameUpdateScreen extends StatelessWidget {
           title: Text('アカウント名を変更'),
         ),
         body: Consumer<UserNameUpdateModel>(builder: (context, model, child) {
+          userNameController.text = userName;
+          model.userName = userName;
           return Stack(
             children: <Widget>[
               Padding(
@@ -36,11 +37,12 @@ class UserNameUpdateScreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             userNameController.clear();
+                            model.userName = '';
                           },
                         ),
                       ),
                       onChanged: (text) {
-                        model.newName = text;
+                        model.userName = text;
                       },
                     ),
                     SizedBox(

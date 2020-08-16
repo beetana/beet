@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupNameUpdateModel extends ChangeNotifier {
-  String newGroupName = '';
+  String groupName;
   bool isLoading = false;
 
   startLoading() {
@@ -16,7 +16,7 @@ class GroupNameUpdateModel extends ChangeNotifier {
   }
 
   Future updateGroupName(groupID) async {
-    if (newGroupName.isEmpty) {
+    if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
     try {
@@ -24,7 +24,7 @@ class GroupNameUpdateModel extends ChangeNotifier {
           .collection('groups')
           .document(groupID)
           .updateData({
-        'groupName': newGroupName,
+        'groupName': groupName,
       });
     } catch (e) {
       print(e.toString());

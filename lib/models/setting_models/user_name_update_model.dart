@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserNameUpdateModel extends ChangeNotifier {
-  String newName = '';
+  String userName;
   bool isLoading = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -18,7 +18,7 @@ class UserNameUpdateModel extends ChangeNotifier {
   }
 
   Future updateUserName() async {
-    if (newName.isEmpty) {
+    if (userName.isEmpty) {
       throw ('名前を入力してください');
     }
     try {
@@ -27,7 +27,7 @@ class UserNameUpdateModel extends ChangeNotifier {
           .collection('users')
           .document(user.uid)
           .updateData({
-        'name': newName,
+        'name': userName,
       });
     } catch (e) {
       print(e.toString());

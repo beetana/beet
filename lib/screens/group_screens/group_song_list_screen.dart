@@ -1,6 +1,7 @@
 import 'package:beet/models/group_models/group_song_list_model.dart';
 import 'package:beet/screens/group_screens/group_add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen.dart';
+import 'package:beet/screens/group_screens/group_song_edit_screen.dart';
 import 'package:beet/widgets/song_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,11 +55,23 @@ class GroupSongListScreen extends StatelessWidget {
                             checkboxCallback: (state) {
                               model.selectSong(song);
                             },
-                            tileTappedCallback: () {
+                            tileTappedCallback: () async {
                               if (model.isSetListMode == true) {
                                 model.selectSong(song);
                               } else {
-                                // TODO 編集画面に遷移
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GroupSongEditScreen(
+                                      groupID: groupID,
+                                      songID: song.songID,
+                                      songTitle: song.title,
+                                      songPlayTime: song.playTime,
+                                    ),
+                                    fullscreenDialog: true,
+                                  ),
+                                );
+                                model.getSongList(groupID);
                               }
                             },
                           );

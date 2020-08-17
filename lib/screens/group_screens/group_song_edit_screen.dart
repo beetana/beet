@@ -107,6 +107,29 @@ class GroupSongEditScreen extends StatelessWidget {
                         }
                         model.endLoading();
                       },
+                    ),
+                    FlatButton(
+                      child: Text(
+                        '削除',
+                      ),
+                      onPressed: () async {
+                        bool isDelete =
+                            await _confirmDeleteDialog(context, '削除しますか？');
+                        if (isDelete == true) {
+                          model.startLoading();
+                          try {
+                            await model.deleteSong(
+                              groupID: groupID,
+                              songID: songID,
+                            );
+                            await _showTextDialog(context, '削除しました');
+                            Navigator.pop(context);
+                          } catch (e) {
+                            _showTextDialog(context, e.toString());
+                          }
+                          model.endLoading();
+                        }
+                      },
                     )
                   ],
                 ),
@@ -149,4 +172,36 @@ Future _showTextDialog(context, message) async {
       );
     },
   );
+}
+
+Future _confirmDeleteDialog(context, message) async {
+  bool _isDelete;
+  _isDelete = await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.0),
+          ),
+        ),
+        title: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('キャンセル'),
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+          ),
+          FlatButton(
+            child: Text('削除'),
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+          ),
+        ],
+      );
+    },
+  );
+  return _isDelete;
 }

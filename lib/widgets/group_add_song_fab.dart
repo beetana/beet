@@ -12,18 +12,19 @@ class GroupAddSongFAB extends StatelessWidget {
         bottom: 16.0,
       ),
       child: RawMaterialButton(
-          elevation: 6.0,
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          constraints: BoxConstraints.tightFor(
-            width: 56.0,
-            height: 56.0,
-          ),
-          shape: CircleBorder(),
-          fillColor: Colors.cyan,
-          onPressed: onPressed),
+        elevation: 6.0,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        constraints: BoxConstraints.tightFor(
+          width: 56.0,
+          height: 56.0,
+        ),
+        shape: CircleBorder(),
+        fillColor: Colors.cyan,
+        onPressed: onPressed,
+      ),
     );
   }
 }

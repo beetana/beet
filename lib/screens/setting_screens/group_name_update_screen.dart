@@ -99,7 +99,7 @@ Future _showTextDialog(context, message) async {
           FlatButton(
             child: Text('OK'),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.pop(context);
             },
           ),
         ],

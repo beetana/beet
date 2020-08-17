@@ -165,7 +165,7 @@ Future _showTextDialog(context, message) async {
           FlatButton(
             child: Text('OK'),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.pop(context);
             },
           ),
         ],
@@ -190,13 +190,13 @@ Future _confirmDeleteDialog(context, message) async {
           FlatButton(
             child: Text('キャンセル'),
             onPressed: () {
-              Navigator.of(context).pop(false);
+              Navigator.pop(context, false);
             },
           ),
           FlatButton(
             child: Text('削除'),
             onPressed: () {
-              Navigator.of(context).pop(true);
+              Navigator.pop(context, true);
             },
           ),
         ],

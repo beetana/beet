@@ -36,4 +36,18 @@ class GroupSongEditModel extends ChangeNotifier {
       throw ('エラーが発生しました');
     }
   }
+
+  Future deleteSong({groupID, songID}) async {
+    try {
+      await Firestore.instance
+          .collection('groups')
+          .document(groupID)
+          .collection('songs')
+          .document(songID)
+          .delete();
+    } catch (e) {
+      print(e.toString());
+      throw ('エラーが発生しました');
+    }
+  }
 }

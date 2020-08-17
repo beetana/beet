@@ -7,12 +7,14 @@ class GroupSongListModel extends ChangeNotifier {
   List<Song> selectedSongs;
   int songNum;
   int totalPlayTime;
+  bool isLoading = false;
   bool isSetListMode = false;
   Text buttonText = Text('セットリストを作成');
   Icon buttonIcon = Icon(Icons.playlist_add, color: Colors.black54);
   MainAxisAlignment buttonAlignment = MainAxisAlignment.center;
 
   Future getSongList(groupID) async {
+    isLoading = true;
     var songDoc = await Firestore.instance
         .collection('groups')
         .document(groupID)
@@ -26,14 +28,12 @@ class GroupSongListModel extends ChangeNotifier {
               playTime: doc['minute'],
             ))
         .toList();
+    isLoading = false;
     selectedSongs = [];
     songNum = 0;
     totalPlayTime = 0;
     notifyListeners();
   }
-
-// TODO getSongListが終わった時にsongListが空なら'曲がありませんと表示する'
-  void songListCheck() {}
 
   void changeMode() {
     isSetListMode = !isSetListMode;

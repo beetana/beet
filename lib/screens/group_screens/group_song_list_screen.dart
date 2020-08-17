@@ -196,9 +196,57 @@ class GroupSongListScreen extends StatelessWidget {
               )
             ],
           );
-        } else {
+        } else if (model.isLoading == true) {
           return Center(
             child: CircularProgressIndicator(),
+          );
+        } else {
+          return Stack(
+            children: <Widget>[
+              Center(
+                child: Text('曲がありません'),
+              ),
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: 16.0,
+                        bottom: 16.0,
+                      ),
+                      child: RawMaterialButton(
+                        elevation: 6.0,
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        constraints: BoxConstraints.tightFor(
+                          width: 56.0,
+                          height: 56.0,
+                        ),
+                        shape: CircleBorder(),
+                        fillColor: Colors.cyan,
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  GroupAddSongScreen(groupID: groupID),
+                              fullscreenDialog: true,
+                            ),
+                          );
+                          model.getSongList(groupID);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           );
         }
       }),

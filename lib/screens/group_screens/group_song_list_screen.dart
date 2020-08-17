@@ -2,6 +2,7 @@ import 'package:beet/models/group_models/group_song_list_model.dart';
 import 'package:beet/screens/group_screens/group_add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen.dart';
 import 'package:beet/screens/group_screens/group_song_edit_screen.dart';
+import 'package:beet/widgets/group_add_song_fab.dart';
 import 'package:beet/widgets/song_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -160,35 +161,18 @@ class GroupSongListScreen extends StatelessWidget {
                     ),
                     Visibility(
                       visible: !model.isSetListMode,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          right: 16.0,
-                          bottom: 16.0,
-                        ),
-                        child: RawMaterialButton(
-                          elevation: 6.0,
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          ),
-                          constraints: BoxConstraints.tightFor(
-                            width: 56.0,
-                            height: 56.0,
-                          ),
-                          shape: CircleBorder(),
-                          fillColor: Colors.cyan,
-                          onPressed: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    GroupAddSongScreen(groupID: groupID),
-                                fullscreenDialog: true,
-                              ),
-                            );
-                            model.getSongList(groupID);
-                          },
-                        ),
+                      child: GroupAddSongFAB(
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  GroupAddSongScreen(groupID: groupID),
+                              fullscreenDialog: true,
+                            ),
+                          );
+                          model.getSongList(groupID);
+                        },
                       ),
                     ),
                   ],
@@ -213,35 +197,18 @@ class GroupSongListScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                        right: 16.0,
-                        bottom: 16.0,
-                      ),
-                      child: RawMaterialButton(
-                        elevation: 6.0,
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                        constraints: BoxConstraints.tightFor(
-                          width: 56.0,
-                          height: 56.0,
-                        ),
-                        shape: CircleBorder(),
-                        fillColor: Colors.cyan,
-                        onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  GroupAddSongScreen(groupID: groupID),
-                              fullscreenDialog: true,
-                            ),
-                          );
-                          model.getSongList(groupID);
-                        },
-                      ),
+                    GroupAddSongFAB(
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                GroupAddSongScreen(groupID: groupID),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                        model.getSongList(groupID);
+                      },
                     ),
                   ],
                 ),

@@ -161,7 +161,7 @@ class GroupSongListScreen extends StatelessWidget {
                     ),
                     Visibility(
                       visible: !model.isSetListMode,
-                      child: GroupAddSongFAB(
+                      child: AddFloatingActionButton(
                         onPressed: () async {
                           await Navigator.push(
                             context,
@@ -197,7 +197,7 @@ class GroupSongListScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    GroupAddSongFAB(
+                    AddFloatingActionButton(
                       onPressed: () async {
                         await Navigator.push(
                           context,

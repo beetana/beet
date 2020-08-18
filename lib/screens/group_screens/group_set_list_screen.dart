@@ -30,7 +30,10 @@ class GroupSetListScreen extends StatelessWidget {
                           return Material(
                             type: MaterialType.transparency,
                             child: ListTile(
-                              title: Text('${index + 1}.  ${song.title}'),
+                              title: Text(
+                                '${index + 1}.  ${song.title}',
+                                maxLines: 1,
+                              ),
                               trailing: Handle(
                                 delay: Duration(milliseconds: 100),
                                 child: Icon(
@@ -45,7 +48,7 @@ class GroupSetListScreen extends StatelessWidget {
                     }),
               ),
               SizedBox(
-                height: 30.0,
+                height: 35.0,
               ),
             ],
           ),
@@ -61,7 +64,7 @@ class GroupSetListScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.grey,
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(18.0),
+                          topRight: Radius.circular(10.0),
                         ),
                       ),
                       child: Row(
@@ -85,7 +88,7 @@ class GroupSetListScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.cyan,
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(18.0),
+                            topLeft: Radius.circular(10.0),
                           ),
                         ),
                         height: 40.0,

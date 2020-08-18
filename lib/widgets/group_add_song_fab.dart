@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class GroupAddSongFAB extends StatelessWidget {
-  GroupAddSongFAB({this.onPressed});
+class AddFloatingActionButton extends StatelessWidget {
+  AddFloatingActionButton({this.onPressed});
   final Function onPressed;
 
   @override

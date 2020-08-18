@@ -44,7 +44,7 @@ class GroupSongListScreen extends StatelessWidget {
                   Flexible(
                     child: ListView.builder(
                         physics: ScrollPhysics(),
-                        itemExtent: 70.0,
+                        itemExtent: 60.0,
                         itemCount: model.songList.length,
                         itemBuilder: (context, index) {
                           final song = model.songList[index];
@@ -81,7 +81,7 @@ class GroupSongListScreen extends StatelessWidget {
                   Visibility(
                     visible: model.isSetListMode,
                     child: SizedBox(
-                      height: 30.0,
+                      height: 35.0,
                     ),
                   ),
                 ],
@@ -104,7 +104,7 @@ class GroupSongListScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(18.0),
+                                  topRight: Radius.circular(10.0),
                                 ),
                               ),
                               child: Row(
@@ -132,7 +132,7 @@ class GroupSongListScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color: Colors.cyan,
                                   borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(18.0),
+                                    topLeft: Radius.circular(10.0),
                                   ),
                                 ),
                                 height: 40.0,

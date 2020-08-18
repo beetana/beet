@@ -19,7 +19,10 @@ class SongListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(songTitle),
+      title: Text(
+        songTitle,
+        maxLines: 1,
+      ),
       subtitle: Visibility(
         visible: isVisible,
         child: Text('$songMinute分'),

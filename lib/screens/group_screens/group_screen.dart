@@ -14,8 +14,8 @@ class GroupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> switchBody = [
-      GroupMainScreen(),
-      GroupCalendarScreen(),
+      GroupMainScreen(groupID: groupID),
+      GroupCalendarScreen(groupID: groupID),
       GroupSongListScreen(groupID: groupID),
     ];
 

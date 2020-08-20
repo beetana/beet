@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GroupMainScreen extends StatelessWidget {
+  GroupMainScreen({this.groupID});
+  final String groupID;
   final dateFormat = DateFormat("y.M.d");
   @override
   Widget build(BuildContext context) {

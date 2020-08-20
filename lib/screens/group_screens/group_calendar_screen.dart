@@ -17,7 +17,7 @@ class GroupCalendarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupCalendarModel>(
-      create: (_) => GroupCalendarModel(),
+      create: (_) => GroupCalendarModel()..init(),
       child: Consumer<GroupCalendarModel>(builder: (context, model, child) {
         return Stack(
           children: <Widget>[

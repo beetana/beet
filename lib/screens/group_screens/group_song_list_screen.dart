@@ -2,7 +2,7 @@ import 'package:beet/models/group_models/group_song_list_model.dart';
 import 'package:beet/screens/group_screens/group_add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen.dart';
 import 'package:beet/screens/group_screens/group_song_edit_screen.dart';
-import 'package:beet/widgets/group_add_song_fab.dart';
+import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:beet/widgets/song_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

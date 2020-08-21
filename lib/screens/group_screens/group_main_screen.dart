@@ -13,34 +13,44 @@ class GroupMainScreen extends StatelessWidget {
     return ChangeNotifierProvider<GroupMainModel>(
       create: (_) => GroupMainModel()..getEventList(groupID),
       child: Consumer<GroupMainModel>(builder: (context, model, child) {
-        return Padding(
-          padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-          child: Column(
-            children: <Widget>[
-              Text(
-                dateFormat.format(DateTime.now()),
-                style: TextStyle(fontSize: 24.0),
-              ),
-              SizedBox(height: 10.0),
-              Flexible(
-                child: ListView.builder(
-                    physics: ScrollPhysics(),
-                    itemExtent: 70.0,
-                    itemCount: model.eventList.length,
-                    itemBuilder: (context, index) {
-                      final event = model.eventList[index];
-                      return EventListTile(
-                        eventTitle: event.eventTitle,
-                        eventPlace: event.eventPlace,
-                        eventMemo: event.eventMemo,
-                        startingDateTime: event.startingDateTime,
-                        endingDateTime: event.endingDateTime,
-                      );
-                    }),
-              ),
-            ],
-          ),
-        );
+        if (model.eventList.isNotEmpty) {
+          return Padding(
+            padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  dateFormat.format(DateTime.now()),
+                  style: TextStyle(fontSize: 24.0),
+                ),
+                SizedBox(height: 10.0),
+                Flexible(
+                  child: ListView.builder(
+                      physics: ScrollPhysics(),
+                      itemExtent: 70.0,
+                      itemCount: model.eventList.length,
+                      itemBuilder: (context, index) {
+                        final event = model.eventList[index];
+                        return EventListTile(
+                          eventTitle: event.eventTitle,
+                          eventPlace: event.eventPlace,
+                          eventMemo: event.eventMemo,
+                          startingDateTime: event.startingDateTime,
+                          endingDateTime: event.endingDateTime,
+                        );
+                      }),
+                ),
+              ],
+            ),
+          );
+        } else if (model.isLoading == true) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return Center(
+            child: Text('イベントがありません'),
+          );
+        }
       }),
     );
   }

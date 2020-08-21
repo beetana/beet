@@ -9,8 +9,10 @@ class GroupMainModel extends ChangeNotifier {
   String eventMemo;
   DateTime startingDateTime;
   DateTime endingDateTime;
+  bool isLoading = false;
 
   Future getEventList(groupID) async {
+    isLoading = true;
     var eventDoc = await Firestore.instance
         .collection('groups')
         .document(groupID)
@@ -26,7 +28,7 @@ class GroupMainModel extends ChangeNotifier {
               endingDateTime: doc['end'].toDate(),
             ))
         .toList();
-    print(eventList);
+    isLoading = false;
     notifyListeners();
   }
 }

@@ -11,6 +11,7 @@ class GroupAddEventScreen extends StatelessWidget {
   final dateFormat = DateFormat("y.M.d    H:mm");
   final eventTitleController = TextEditingController();
   final eventPlaceController = TextEditingController();
+  final eventMemoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +93,14 @@ class GroupAddEventScreen extends StatelessWidget {
                       },
                     ),
                     model.endingDateTimePickerBox,
+                    TextField(
+                      controller: eventMemoController,
+                      maxLines: 3,
+                      decoration: InputDecoration(hintText: 'メモ'),
+                      onChanged: (text) {
+                        model.eventMemo = text;
+                      },
+                    ),
                   ],
                 ),
               ),

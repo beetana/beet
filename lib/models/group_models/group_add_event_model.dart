@@ -6,6 +6,7 @@ class GroupAddEventModel extends ChangeNotifier {
   DateTime currentTime = DateTime.now();
   String eventTitle = '';
   String eventPlace = '';
+  String eventMemo = '';
   DateTime startingDateTime;
   DateTime endingDateTime;
   bool isLoading = false;
@@ -92,6 +93,7 @@ class GroupAddEventModel extends ChangeNotifier {
           .add({
         'title': eventTitle,
         'place': eventPlace,
+        'memo': eventMemo,
         'start': Timestamp.fromDate(startingDateTime),
         'end': Timestamp.fromDate(endingDateTime),
       });

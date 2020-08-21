@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GroupAddEventModel extends ChangeNotifier {
+  DateTime currentTime = DateTime.now();
   String eventTitle = '';
   String eventPlace = '';
   DateTime startingDateTime;
@@ -42,8 +43,11 @@ class GroupAddEventModel extends ChangeNotifier {
           use24hFormat: true,
           minuteInterval: 5,
           initialDateTime: startingDateTime,
+          minimumDate: DateTime(1980, 1, 1),
+          maximumDate: DateTime(2050, 12, 31),
           onDateTimeChanged: (DateTime newDateTime) {
             startingDateTime = newDateTime;
+            endingDateTime = startingDateTime.add(Duration(hours: 1));
           },
         ),
       );
@@ -62,6 +66,8 @@ class GroupAddEventModel extends ChangeNotifier {
           use24hFormat: true,
           minuteInterval: 5,
           initialDateTime: endingDateTime,
+          minimumDate: startingDateTime.add(Duration(minutes: 5)),
+          maximumDate: startingDateTime.add(Duration(days: 1000)),
           onDateTimeChanged: (DateTime newDateTime) {
             endingDateTime = newDateTime;
           },

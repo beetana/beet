@@ -24,6 +24,8 @@ class GroupCalendarScreen extends StatelessWidget {
             Column(
               children: <Widget>[
                 TableCalendar(
+                  startDay: DateTime(1980, 1, 1),
+                  endDay: DateTime(2050, 12, 31),
                   locale: 'ja_JA',
                   calendarController: calendarController,
                   availableCalendarFormats: {CalendarFormat.month: 'Month'},

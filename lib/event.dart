@@ -5,6 +5,7 @@ class Event {
   final String eventMemo;
   final DateTime startingDateTime;
   final DateTime endingDateTime;
+  final List<dynamic> dateList;
 
   Event({
     this.eventID,
@@ -13,5 +14,6 @@ class Event {
     this.eventMemo,
     this.startingDateTime,
     this.endingDateTime,
+    this.dateList,
   });
 }

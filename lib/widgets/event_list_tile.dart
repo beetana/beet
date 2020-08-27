@@ -7,7 +7,7 @@ class EventListTile extends StatelessWidget {
   final String eventMemo;
   final DateTime startingDateTime;
   final DateTime endingDateTime;
-  final dateFormat = DateFormat("M/d h:mm");
+  final dateFormat = DateFormat("M/d H:mm");
 
   EventListTile({
     this.eventTitle,

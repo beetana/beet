@@ -19,7 +19,7 @@ class GroupSongListModel extends ChangeNotifier {
         .collection('groups')
         .document(groupID)
         .collection('songs')
-        .orderBy('createdAt', descending: true)
+        .orderBy('createdAt', descending: false)
         .getDocuments();
     songList = songDoc.documents
         .map((doc) => Song(

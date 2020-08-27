@@ -11,8 +11,8 @@ class GroupCalendarScreen extends StatelessWidget {
   final calendarController = CalendarController();
   final Map<DateTime, List> events = {};
   final Map<DateTime, List> _holidays = {
-    DateTime(2019, 1, 1): ['New Year\'s Day'],
-    DateTime(2019, 2, 14): ['Valentine\'s Day'],
+    DateTime(2020, 1, 1): ['New Year\'s Day'],
+    DateTime(2020, 2, 14): ['Valentine\'s Day'],
   };
   @override
   Widget build(BuildContext context) {
@@ -28,12 +28,16 @@ class GroupCalendarScreen extends StatelessWidget {
                   endDay: DateTime(2050, 12, 31),
                   locale: 'ja_JA',
                   calendarController: calendarController,
-                  availableCalendarFormats: {CalendarFormat.month: 'Month'},
+                  availableCalendarFormats: {CalendarFormat.month: ''},
                   events: events,
                   holidays: _holidays,
                   startingDayOfWeek: StartingDayOfWeek.sunday,
+                  daysOfWeekStyle: DaysOfWeekStyle(
+                    weekdayStyle: TextStyle(color: Colors.black),
+                    weekendStyle: TextStyle(color: Colors.black54),
+                  ),
                   calendarStyle: CalendarStyle(
-                    weekendStyle: TextStyle(color: Colors.black45),
+                    weekendStyle: TextStyle(color: Colors.black54),
                     selectedColor: Colors.cyan[400],
                     todayColor: Colors.cyan[200],
                     markersColor: Colors.brown[700],

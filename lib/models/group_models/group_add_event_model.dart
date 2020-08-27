@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class GroupAddEventModel extends ChangeNotifier {
-  DateTime currentTime = DateTime.now();
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
@@ -15,13 +15,14 @@ class GroupAddEventModel extends ChangeNotifier {
   bool isShowEndingPicker = false;
   Widget startingDateTimePickerBox = SizedBox();
   Widget endingDateTimePickerBox = SizedBox();
+  final DateFormat dateFormat = DateFormat("y-MM-dd");
 
-  startLoading() {
+  void startLoading() {
     isLoading = true;
     notifyListeners();
   }
 
-  endLoading() {
+  void endLoading() {
     isLoading = false;
     notifyListeners();
   }
@@ -48,7 +49,9 @@ class GroupAddEventModel extends ChangeNotifier {
           maximumDate: DateTime(2050, 12, 31),
           onDateTimeChanged: (DateTime newDateTime) {
             startingDateTime = newDateTime;
-            endingDateTime = startingDateTime.add(Duration(hours: 1));
+            if (endingDateTime.isBefore(startingDateTime)) {
+              endingDateTime = startingDateTime.add(Duration(hours: 1));
+            }
           },
         ),
       );
@@ -82,10 +85,24 @@ class GroupAddEventModel extends ChangeNotifier {
   }
 
   Future addEvent({groupID}) async {
+    List<Timestamp> dateList = [];
+    String startFormat = dateFormat.format(startingDateTime);
+    String endFormat = dateFormat.format(endingDateTime);
+    int durationDays = DateTime.parse(endFormat)
+        .difference(DateTime.parse(startFormat))
+        .inDays;
+
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
+
     try {
+      for (int i = 0; i < durationDays; i++) {
+        Timestamp date =
+            Timestamp.fromDate(startingDateTime.add(Duration(days: i)));
+        dateList.add(date);
+      }
+      dateList.add(Timestamp.fromDate(endingDateTime));
       await Firestore.instance
           .collection('groups')
           .document(groupID)
@@ -94,6 +111,7 @@ class GroupAddEventModel extends ChangeNotifier {
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,
+        'dateList': dateList,
         'start': Timestamp.fromDate(startingDateTime),
         'end': Timestamp.fromDate(endingDateTime),
       });

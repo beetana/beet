@@ -8,8 +8,7 @@ import 'package:table_calendar/table_calendar.dart';
 class GroupCalendarScreen extends StatelessWidget {
   GroupCalendarScreen({this.groupID});
   final String groupID;
-  final calendarController = CalendarController();
-  final Map<DateTime, List> events = {};
+  final _calendarController = CalendarController();
   final Map<DateTime, List> _holidays = {
     DateTime(2020, 1, 1): ['New Year\'s Day'],
     DateTime(2020, 2, 14): ['Valentine\'s Day'],
@@ -27,9 +26,9 @@ class GroupCalendarScreen extends StatelessWidget {
                   startDay: DateTime(1980, 1, 1),
                   endDay: DateTime(2050, 12, 31),
                   locale: 'ja_JA',
-                  calendarController: calendarController,
+                  calendarController: _calendarController,
                   availableCalendarFormats: {CalendarFormat.month: ''},
-                  events: events,
+                  events: model.events,
                   holidays: _holidays,
                   startingDayOfWeek: StartingDayOfWeek.sunday,
                   daysOfWeekStyle: DaysOfWeekStyle(
@@ -48,12 +47,26 @@ class GroupCalendarScreen extends StatelessWidget {
                     formatButtonVisible: false,
                   ),
                   onDaySelected: (DateTime day, List events) {
-                    model.selectedDay = day;
+                    model.selectedDay =
+                        DateTime(day.year, day.month, day.day, 12);
+                    print(model.selectedDay);
                   },
                   onVisibleDaysChanged:
-                      (DateTime first, DateTime last, CalendarFormat format) {},
+                      (DateTime first, DateTime last, CalendarFormat format) {
+                    model.getEvents(
+                      groupID: groupID,
+                      first: first,
+                      last: last,
+                    );
+                  },
                   onCalendarCreated:
-                      (DateTime first, DateTime last, CalendarFormat format) {},
+                      (DateTime first, DateTime last, CalendarFormat format) {
+                    model.getEvents(
+                      groupID: groupID,
+                      first: first,
+                      last: last,
+                    );
+                  },
                 ),
                 Expanded(
                   child: Container(),

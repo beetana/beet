@@ -23,19 +23,21 @@ class GroupMainScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 24.0),
                 ),
                 SizedBox(height: 10.0),
-                Flexible(
+                Expanded(
                   child: ListView.builder(
                       physics: ScrollPhysics(),
-                      itemExtent: 70.0,
+                      itemExtent: 80.0,
                       itemCount: model.eventList.length,
                       itemBuilder: (context, index) {
                         final event = model.eventList[index];
                         return EventListTile(
+                          eventID: event.eventID,
                           eventTitle: event.eventTitle,
                           eventPlace: event.eventPlace,
                           eventMemo: event.eventMemo,
                           startingDateTime: event.startingDateTime,
                           endingDateTime: event.endingDateTime,
+                          onTap: () {},
                         );
                       }),
                 ),

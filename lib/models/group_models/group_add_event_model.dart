@@ -16,6 +16,7 @@ class GroupAddEventModel extends ChangeNotifier {
   Widget startingDateTimePickerBox = SizedBox();
   Widget endingDateTimePickerBox = SizedBox();
   final DateFormat dateFormat = DateFormat("y-MM-dd");
+  final DateFormat monthFormat = DateFormat("y-MM");
 
   void startLoading() {
     isLoading = true;
@@ -49,7 +50,8 @@ class GroupAddEventModel extends ChangeNotifier {
           maximumDate: DateTime(2050, 12, 31),
           onDateTimeChanged: (DateTime newDateTime) {
             startingDateTime = newDateTime;
-            if (endingDateTime.isBefore(startingDateTime)) {
+            if (startingDateTime.isAfter(endingDateTime) ||
+                startingDateTime.isAtSameMomentAs(endingDateTime)) {
               endingDateTime = startingDateTime.add(Duration(hours: 1));
             }
           },
@@ -85,24 +87,36 @@ class GroupAddEventModel extends ChangeNotifier {
   }
 
   Future addEvent({groupID}) async {
-    List<Timestamp> dateList = [];
-    String startFormat = dateFormat.format(startingDateTime);
-    String endFormat = dateFormat.format(endingDateTime);
-    int durationDays = DateTime.parse(endFormat)
-        .difference(DateTime.parse(startFormat))
-        .inDays;
+    DateTime date;
+    String month = '';
+    List<DateTime> dateList = [];
+    List<String> monthList = [];
+    String start = dateFormat.format(startingDateTime);
+    String end = dateFormat.format(endingDateTime);
+    int durationDays =
+        DateTime.parse(end).difference(DateTime.parse(start)).inDays;
+    DateTime eventDate = DateTime(
+      startingDateTime.year,
+      startingDateTime.month,
+      startingDateTime.day,
+      12,
+    ).toUtc();
+    for (int i = 0; i <= durationDays; i++) {
+      date = eventDate.add(Duration(days: i));
+      dateList.add(date);
+    }
+    dateList.forEach((value) {
+      String monthForm = monthFormat.format(value);
+      if (monthForm != month) {
+        month = monthForm;
+        monthList.add(month);
+      }
+    });
 
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
-
     try {
-      for (int i = 0; i < durationDays; i++) {
-        Timestamp date =
-            Timestamp.fromDate(startingDateTime.add(Duration(days: i)));
-        dateList.add(date);
-      }
-      dateList.add(Timestamp.fromDate(endingDateTime));
       await Firestore.instance
           .collection('groups')
           .document(groupID)
@@ -111,6 +125,7 @@ class GroupAddEventModel extends ChangeNotifier {
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,
+        'monthList': monthList,
         'dateList': dateList,
         'start': Timestamp.fromDate(startingDateTime),
         'end': Timestamp.fromDate(endingDateTime),

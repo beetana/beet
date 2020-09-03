@@ -42,13 +42,16 @@ class EventListTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(eventTitle),
-                      Text(
-                        '@ $eventPlace',
-                        style: TextStyle(color: Colors.black54),
+                      Visibility(
+                        visible: eventPlace.isNotEmpty,
+                        child: Text(
+                          '@ $eventPlace',
+                          style: TextStyle(color: Colors.black54),
+                        ),
                       ),
                     ],
                   ),
@@ -92,7 +95,7 @@ class EventDateTimeWidget extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text(dateFormat.format(startingDateTime)),
@@ -103,7 +106,7 @@ class EventDateTimeWidget extends StatelessWidget {
               width: 8.0,
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text(timeFormat.format(startingDateTime)),
@@ -118,7 +121,7 @@ class EventDateTimeWidget extends StatelessWidget {
       return Text(dateFormat.format(startingDateTime));
     } else {
       return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Text(dateFormat.format(startingDateTime)),

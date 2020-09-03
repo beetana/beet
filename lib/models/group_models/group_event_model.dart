@@ -12,6 +12,7 @@ class GroupEventModel extends ChangeNotifier {
   DateTime startingDateTime;
   DateTime endingDateTime;
   final dateFormat = DateFormat('y/M/d(E)  H:mm', 'ja_JP');
+  final allDayDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   void init(Event event) {
     eventID = event.eventID;
@@ -24,19 +25,25 @@ class GroupEventModel extends ChangeNotifier {
   }
 
   Widget eventDateWidget() {
-    if (isAllDay == true) {
-      return Container();
-    } else {
+    String startingDay = allDayDateFormat.format(startingDateTime);
+    String endingDay = allDayDateFormat.format(endingDateTime);
+
+    if (isAllDay == false) {
       return Column(
         children: <Widget>[
           Text('開始  ${dateFormat.format(startingDateTime)}'),
           Text('終了  ${dateFormat.format(endingDateTime)}'),
         ],
       );
+    } else if (isAllDay == true && startingDay == endingDay) {
+      return Text('終日  ${allDayDateFormat.format(startingDateTime)}');
+    } else {
+      return Column(
+        children: <Widget>[
+          Text('開始  ${allDayDateFormat.format(startingDateTime)}'),
+          Text('終了  ${allDayDateFormat.format(endingDateTime)}'),
+        ],
+      );
     }
   }
 }
-
-//Text('開始  ${dateFormat.format(event.startingDateTime)}'),
-//Text('終了'),
-//Text('終日'),

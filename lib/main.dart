@@ -188,8 +188,8 @@ class MyApp extends StatelessWidget {
 //        children: <Widget>[
 //          // Switch out 2 lines below to play with TableCalendar's settings
 //          //-----------------------
-////          _buildTableCalendar(),
-//          _buildTableCalendarWithBuilders(),
+//          _buildTableCalendar(),
+////          _buildTableCalendarWithBuilders(),
 //          const SizedBox(height: 8.0),
 //          _buildButtons(),
 //          const SizedBox(height: 8.0),
@@ -205,7 +205,7 @@ class MyApp extends StatelessWidget {
 //      calendarController: _calendarController,
 //      events: _events,
 //      holidays: _holidays,
-//      locale: 'ja_JA',
+//      locale: 'ja_JP',
 //      startingDayOfWeek: StartingDayOfWeek.monday,
 //      calendarStyle: CalendarStyle(
 //        selectedColor: Colors.deepOrange[400],
@@ -230,7 +230,7 @@ class MyApp extends StatelessWidget {
 //  // More advanced TableCalendar configuration (using Builders & Styles)
 //  Widget _buildTableCalendarWithBuilders() {
 //    return TableCalendar(
-//      locale: 'ja_JA',
+//      locale: 'ja_JP',
 //      calendarController: _calendarController,
 //      events: _events,
 //      holidays: _holidays,

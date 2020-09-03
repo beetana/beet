@@ -6,17 +6,19 @@ class EventListTile extends StatelessWidget {
   final String eventTitle;
   final String eventPlace;
   final String eventMemo;
+  final bool isAllDay;
   final DateTime startingDateTime;
   final DateTime endingDateTime;
   final Function onTap;
-  final DateFormat dateFormat = DateFormat("M/d");
-  final DateFormat timeFormat = DateFormat("H:mm");
+  final DateFormat dateFormat = DateFormat('M/d');
+  final DateFormat timeFormat = DateFormat('H:mm');
 
   EventListTile({
     this.eventID,
     this.eventTitle,
     this.eventPlace,
     this.eventMemo,
+    this.isAllDay,
     this.startingDateTime,
     this.endingDateTime,
     this.onTap,
@@ -50,32 +52,12 @@ class EventListTile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 2.0),
-                    child: Row(
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(dateFormat.format(startingDateTime)),
-                            Text(dateFormat.format(endingDateTime)),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text('${timeFormat.format(startingDateTime)} ~'),
-                            Text(timeFormat.format(endingDateTime)),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  EventDateTimeWidget(
+                      isAllDay: isAllDay,
+                      dateFormat: dateFormat,
+                      startingDateTime: startingDateTime,
+                      endingDateTime: endingDateTime,
+                      timeFormat: timeFormat),
                 ],
               ),
             ),
@@ -84,5 +66,65 @@ class EventListTile extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class EventDateTimeWidget extends StatelessWidget {
+  EventDateTimeWidget({
+    @required this.isAllDay,
+    @required this.dateFormat,
+    @required this.startingDateTime,
+    @required this.endingDateTime,
+    @required this.timeFormat,
+  });
+
+  final bool isAllDay;
+  final DateTime startingDateTime;
+  final DateTime endingDateTime;
+  final DateFormat dateFormat;
+  final DateFormat timeFormat;
+
+  @override
+  Widget build(BuildContext context) {
+    if (isAllDay == false) {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: 2.0),
+        child: Row(
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Text(dateFormat.format(startingDateTime)),
+                Text('~ ${dateFormat.format(endingDateTime)}'),
+              ],
+            ),
+            SizedBox(
+              width: 8.0,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Text(timeFormat.format(startingDateTime)),
+                Text(timeFormat.format(endingDateTime)),
+              ],
+            ),
+          ],
+        ),
+      );
+    } else if (dateFormat.format(startingDateTime) ==
+        dateFormat.format(endingDateTime)) {
+      return Text(dateFormat.format(startingDateTime));
+    } else {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Text(dateFormat.format(startingDateTime)),
+          Text('~ ${dateFormat.format(endingDateTime)}'),
+        ],
+      );
+    }
   }
 }

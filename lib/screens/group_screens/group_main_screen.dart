@@ -1,4 +1,5 @@
 import 'package:beet/models/group_models/group_main_model.dart';
+import 'package:beet/screens/group_screens/group_event_screen.dart';
 import 'package:beet/widgets/event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +8,7 @@ import 'package:provider/provider.dart';
 class GroupMainScreen extends StatelessWidget {
   GroupMainScreen({this.groupID});
   final String groupID;
-  final dateFormat = DateFormat("y/M/d");
+  final dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupMainModel>(
@@ -35,9 +36,20 @@ class GroupMainScreen extends StatelessWidget {
                           eventTitle: event.eventTitle,
                           eventPlace: event.eventPlace,
                           eventMemo: event.eventMemo,
+                          isAllDay: event.isAllDay,
                           startingDateTime: event.startingDateTime,
                           endingDateTime: event.endingDateTime,
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GroupEventScreen(
+                                  groupID: groupID,
+                                  event: event,
+                                ),
+                              ),
+                            );
+                          },
                         );
                       }),
                 ),

@@ -15,8 +15,11 @@ class GroupAddEventModel extends ChangeNotifier {
   bool isShowEndingPicker = false;
   Widget startingDateTimePickerBox = SizedBox();
   Widget endingDateTimePickerBox = SizedBox();
-  final DateFormat dateFormat = DateFormat("y-MM-dd");
-  final DateFormat monthFormat = DateFormat("y-MM");
+  CupertinoDatePickerMode cupertinoDatePickerMode =
+      CupertinoDatePickerMode.dateAndTime;
+  DateFormat tileDateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_JP');
+  final DateFormat dateFormat = DateFormat('y-MM-dd');
+  final DateFormat monthFormat = DateFormat('y-MM');
 
   void startLoading() {
     isLoading = true;
@@ -35,6 +38,21 @@ class GroupAddEventModel extends ChangeNotifier {
 
   void switchIsAllDay(bool value) {
     isAllDay = value;
+    if (isAllDay == true) {
+      tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+      cupertinoDatePickerMode = CupertinoDatePickerMode.date;
+      startingDateTimePickerBox = SizedBox();
+      endingDateTimePickerBox = SizedBox();
+      isShowStartingPicker = false;
+      isShowEndingPicker = false;
+    } else {
+      tileDateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_JP');
+      cupertinoDatePickerMode = CupertinoDatePickerMode.dateAndTime;
+      startingDateTimePickerBox = SizedBox();
+      endingDateTimePickerBox = SizedBox();
+      isShowStartingPicker = false;
+      isShowEndingPicker = false;
+    }
     notifyListeners();
   }
 
@@ -43,6 +61,7 @@ class GroupAddEventModel extends ChangeNotifier {
       startingDateTimePickerBox = Container(
         height: 100.0,
         child: CupertinoDatePicker(
+          mode: cupertinoDatePickerMode,
           use24hFormat: true,
           minuteInterval: 5,
           initialDateTime: startingDateTime,
@@ -69,6 +88,7 @@ class GroupAddEventModel extends ChangeNotifier {
       endingDateTimePickerBox = Container(
         height: 100.0,
         child: CupertinoDatePicker(
+          mode: cupertinoDatePickerMode,
           use24hFormat: true,
           minuteInterval: 5,
           initialDateTime: endingDateTime,
@@ -76,6 +96,10 @@ class GroupAddEventModel extends ChangeNotifier {
           maximumDate: startingDateTime.add(Duration(days: 1000)),
           onDateTimeChanged: (DateTime newDateTime) {
             endingDateTime = newDateTime;
+            if (startingDateTime.isAfter(endingDateTime) ||
+                startingDateTime.isAtSameMomentAs(endingDateTime)) {
+              endingDateTime = startingDateTime.add(Duration(hours: 1));
+            }
           },
         ),
       );
@@ -116,6 +140,21 @@ class GroupAddEventModel extends ChangeNotifier {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
+    if (isAllDay == true) {
+      startingDateTime = DateTime(
+        startingDateTime.year,
+        startingDateTime.month,
+        startingDateTime.day,
+        0,
+      );
+      endingDateTime = DateTime(
+        endingDateTime.year,
+        endingDateTime.month,
+        endingDateTime.day,
+        23,
+        55,
+      );
+    }
     try {
       await Firestore.instance
           .collection('groups')
@@ -125,6 +164,7 @@ class GroupAddEventModel extends ChangeNotifier {
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,
+        'isAllDay': isAllDay,
         'monthList': monthList,
         'dateList': dateList,
         'start': Timestamp.fromDate(startingDateTime),

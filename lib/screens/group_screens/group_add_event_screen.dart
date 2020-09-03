@@ -8,7 +8,7 @@ class GroupAddEventScreen extends StatelessWidget {
   GroupAddEventScreen({this.groupID, this.dateTime});
   final groupID;
   final dateTime;
-  final dateFormat = DateFormat("y.M.d    H:mm");
+  final dateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_jp');
   final eventTitleController = TextEditingController();
   final eventPlaceController = TextEditingController();
   final eventMemoController = TextEditingController();
@@ -78,7 +78,8 @@ class GroupAddEventScreen extends StatelessWidget {
                     Divider(height: 0.5),
                     ListTile(
                       title: Text('開始'),
-                      trailing: Text(dateFormat.format(model.startingDateTime)),
+                      trailing: Text(
+                          model.tileDateFormat.format(model.startingDateTime)),
                       onTap: () {
                         model.showStartingDateTimePicker();
                       },
@@ -87,7 +88,8 @@ class GroupAddEventScreen extends StatelessWidget {
                     Divider(height: 0.5),
                     ListTile(
                       title: Text('終了'),
-                      trailing: Text(dateFormat.format(model.endingDateTime)),
+                      trailing: Text(
+                          model.tileDateFormat.format(model.endingDateTime)),
                       onTap: () {
                         model.showEndingDateTimePicker();
                       },

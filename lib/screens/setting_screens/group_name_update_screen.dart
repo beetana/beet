@@ -39,8 +39,6 @@ class GroupNameUpdateScreen extends StatelessWidget {
                           onPressed: () {
                             groupNameController.clear();
                             model.groupName = '';
-                            print(groupNameController.text);
-                            print(model.groupName);
                           },
                         ),
                       ),

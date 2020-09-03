@@ -1,4 +1,5 @@
 import 'package:beet/screens/group_screens/group_add_event_screen.dart';
+import 'package:beet/widgets/event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/models/group_models/group_calendar_model.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
@@ -25,7 +26,7 @@ class GroupCalendarScreen extends StatelessWidget {
                 TableCalendar(
                   startDay: DateTime(1980, 1, 1),
                   endDay: DateTime(2050, 12, 31),
-                  locale: 'ja_JA',
+                  locale: 'ja_JP',
                   calendarController: _calendarController,
                   availableCalendarFormats: {CalendarFormat.month: ''},
                   events: model.events,
@@ -49,27 +50,47 @@ class GroupCalendarScreen extends StatelessWidget {
                   onDaySelected: (DateTime day, List events) {
                     model.selectedDay =
                         DateTime(day.year, day.month, day.day, 12);
-                    print(model.selectedDay);
+                    model.getSelectedEvents();
                   },
-                  onVisibleDaysChanged:
-                      (DateTime first, DateTime last, CalendarFormat format) {
-                    model.getEvents(
+                  onVisibleDaysChanged: (DateTime first, DateTime last,
+                      CalendarFormat format) async {
+                    await model.getEvents(
                       groupID: groupID,
                       first: first,
                       last: last,
                     );
                   },
-                  onCalendarCreated:
-                      (DateTime first, DateTime last, CalendarFormat format) {
-                    model.getEvents(
+                  onCalendarCreated: (DateTime first, DateTime last,
+                      CalendarFormat format) async {
+                    await model.getEvents(
                       groupID: groupID,
                       first: first,
                       last: last,
                     );
+                    model.getSelectedEvents();
                   },
                 ),
                 Expanded(
-                  child: Container(),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                    child: ListView.builder(
+                        physics: ScrollPhysics(),
+                        itemExtent: 80.0,
+                        itemCount: model.selectedEvents.length,
+                        itemBuilder: (context, index) {
+                          final event = model.selectedEvents[index];
+                          return EventListTile(
+                            eventID: event.eventID,
+                            eventTitle: event.eventTitle,
+                            eventPlace: event.eventPlace,
+                            eventMemo: event.eventMemo,
+                            isAllDay: event.isAllDay,
+                            startingDateTime: event.startingDateTime,
+                            endingDateTime: event.endingDateTime,
+                            onTap: () {},
+                          );
+                        }),
+                  ),
                 ),
               ],
             ),
@@ -81,8 +102,8 @@ class GroupCalendarScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   AddFloatingActionButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => GroupAddEventScreen(
@@ -92,6 +113,10 @@ class GroupCalendarScreen extends StatelessWidget {
                           fullscreenDialog: true,
                         ),
                       );
+                      model.getEvents(
+                          groupID: groupID,
+                          first: _calendarController.visibleDays[0],
+                          last: _calendarController.visibleDays.last);
                     },
                   ),
                 ],

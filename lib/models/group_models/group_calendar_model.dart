@@ -8,8 +8,9 @@ class GroupCalendarModel extends ChangeNotifier {
   DateTime selectedDay;
   Map<DateTime, List> events = {};
   List eventList = [];
-  final DateFormat dateFormat = DateFormat("y-MM-dd");
-  final DateFormat monthFormat = DateFormat("y-MM");
+  List selectedEvents = [];
+  final DateFormat dateFormat = DateFormat('y-MM-dd');
+  final DateFormat monthFormat = DateFormat('y-MM');
 
   void init() {
     selectedDay = DateTime(now.year, now.month, now.day, 12);
@@ -35,6 +36,7 @@ class GroupCalendarModel extends ChangeNotifier {
                 eventTitle: doc['title'],
                 eventPlace: doc['place'],
                 eventMemo: doc['memo'],
+                isAllDay: doc['isAllDay'],
                 startingDateTime: doc['start'].toDate(),
                 endingDateTime: doc['end'].toDate(),
                 dateList: doc['dateList'].map((date) => date.toDate()).toList(),
@@ -43,13 +45,17 @@ class GroupCalendarModel extends ChangeNotifier {
       for (int i = 0; i <= durationDays; i++) {
         DateTime date = firstDate.add(Duration(days: i));
         calendarEvent =
-            eventList.where((n) => n.dateList.contains(date)).toList();
+            eventList.where((n) => n.dateList.contains(date)).toList() ?? [];
         events[date] = calendarEvent;
       }
-      print(events);
     } catch (e) {
       print(e);
     }
+    notifyListeners();
+  }
+
+  void getSelectedEvents() {
+    selectedEvents = events[selectedDay] ?? [];
     notifyListeners();
   }
 }

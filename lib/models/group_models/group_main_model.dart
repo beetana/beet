@@ -22,6 +22,7 @@ class GroupMainModel extends ChangeNotifier {
                 eventTitle: doc['title'],
                 eventPlace: doc['place'],
                 eventMemo: doc['memo'],
+                isAllDay: doc['isAllDay'],
                 startingDateTime: doc['start'].toDate(),
                 endingDateTime: doc['end'].toDate(),
                 dateList: doc['dateList'].map((date) => date.toDate()).toList(),

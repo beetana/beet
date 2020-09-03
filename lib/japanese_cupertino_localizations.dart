@@ -18,7 +18,7 @@ class _CupertinoLocalizationDelegate
   bool shouldReload(_CupertinoLocalizationDelegate old) => false;
 
   @override
-  String toString() => 'DefaultCupertinoLocalizations.delegate(ja_JA)';
+  String toString() => 'DefaultCupertinoLocalizations.delegate(ja_JP)';
 }
 
 class JapaneseCupertinoLocalizations implements CupertinoLocalizations {
@@ -65,13 +65,13 @@ class JapaneseCupertinoLocalizations implements CupertinoLocalizations {
   ];
 
   @override
-  String datePickerYear(int yearIndex) => yearIndex.toString();
+  String datePickerYear(int yearIndex) => '$yearIndex年';
 
   @override
   String datePickerMonth(int monthIndex) => _months[monthIndex - 1];
 
   @override
-  String datePickerDayOfMonth(int dayIndex) => dayIndex.toString();
+  String datePickerDayOfMonth(int dayIndex) => '$dayIndex日';
 
   @override
   String datePickerHour(int hour) => hour.toString();
@@ -91,12 +91,12 @@ class JapaneseCupertinoLocalizations implements CupertinoLocalizations {
   @override
   String datePickerMediumDate(DateTime date) {
     return '${_shortMonths[date.month - DateTime.january]} '
-        '${date.day.toString().padRight(2) + '日'}'
+        '${date.day.toString() + '日'}'
         '${_shortWeekdays[date.weekday - DateTime.monday]} ';
   }
 
   @override
-  DatePickerDateOrder get datePickerDateOrder => DatePickerDateOrder.mdy;
+  DatePickerDateOrder get datePickerDateOrder => DatePickerDateOrder.ymd;
 
   @override
   DatePickerDateTimeOrder get datePickerDateTimeOrder =>

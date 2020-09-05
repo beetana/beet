@@ -36,7 +36,7 @@ class GroupEventModel extends ChangeNotifier {
         ],
       );
     } else if (isAllDay == true && startingDay == endingDay) {
-      return Text('終日  ${allDayDateFormat.format(startingDateTime)}');
+      return Text(allDayDateFormat.format(startingDateTime));
     } else {
       return Column(
         children: <Widget>[
@@ -44,6 +44,14 @@ class GroupEventModel extends ChangeNotifier {
           Text('終了  ${allDayDateFormat.format(endingDateTime)}'),
         ],
       );
+    }
+  }
+
+  Widget eventMemoWidget() {
+    if (eventMemo.isEmpty) {
+      return Text('メモ');
+    } else {
+      return Text(eventMemo);
     }
   }
 }

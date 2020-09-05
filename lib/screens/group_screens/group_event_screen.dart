@@ -41,14 +41,23 @@ class GroupEventScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(event.eventTitle),
+                Text(
+                  event.eventTitle,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 Visibility(
                   visible: event.eventPlace.isNotEmpty,
                   child: Text('@${event.eventPlace}'),
                 ),
+                SizedBox(height: 20.0),
                 model.eventDateWidget(),
+                SizedBox(height: 10.0),
                 Divider(height: 0.5),
-                Text(event.eventMemo),
+                SizedBox(height: 10.0),
+                model.eventMemoWidget(),
               ],
             ),
           ),

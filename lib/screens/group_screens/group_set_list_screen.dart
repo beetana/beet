@@ -1,4 +1,5 @@
 import 'package:beet/models/group_models/group_set_list_model.dart';
+import 'package:beet/screens/group_screens/group_set_list_screen_2.dart';
 import 'package:flutter/material.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:provider/provider.dart';
@@ -123,7 +124,16 @@ class GroupSetListScreen extends StatelessWidget {
                                 '決定',
                                 style: TextStyle(color: Colors.white),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GroupSetListScreen2(
+                                      setList: model.setList,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           )),
                     ],

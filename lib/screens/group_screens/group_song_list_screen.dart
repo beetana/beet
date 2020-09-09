@@ -141,18 +141,19 @@ class GroupSongListScreen extends StatelessWidget {
                                     '作成',
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  onPressed: () {
-                                    Navigator.push(
+                                  onPressed: () async {
+                                    List<String> setList = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             GroupSetListScreen(
-                                          setList: model.selectedSongs,
+                                          selectedSongs: model.selectedSongs,
                                           songNum: model.songNum,
                                           totalPlayTime: model.totalPlayTime,
                                         ),
                                       ),
                                     );
+                                    model.selectedSongs = setList;
                                   },
                                 ),
                               )),

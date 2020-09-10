@@ -1,74 +1,83 @@
-import 'package:beet/models/group_models/group_set_list_model.dart';
-import 'package:beet/screens/group_screens/group_set_list_screen_2.dart';
+import 'package:beet/models/group_models/group_set_list_model_3.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:provider/provider.dart';
 
-class GroupSetListScreen extends StatelessWidget {
-  GroupSetListScreen({this.selectedSongs, this.songNum, this.totalPlayTime});
-  final List<String> selectedSongs;
+class GroupSetListScreen3 extends StatelessWidget {
+  GroupSetListScreen3({
+    this.setList,
+    this.eventTitle,
+    this.eventPlace,
+    this.eventDateText,
+    this.songNum,
+    this.totalPlayTime,
+  });
+  final List<String> setList;
+  final String eventTitle;
+  final String eventPlace;
+  final String eventDateText;
   final int songNum;
   final int totalPlayTime;
+  final GlobalKey _globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<GroupSetListModel>(
-      create: (_) => GroupSetListModel()..init(selectedSongs),
-      child: Consumer<GroupSetListModel>(builder: (context, model, child) {
+    return ChangeNotifierProvider<GroupSetListModel3>(
+      create: (_) => GroupSetListModel3(),
+      child: Consumer<GroupSetListModel3>(builder: (context, model, child) {
         return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pop(context, model.setList);
-              },
-            ),
-            title: Text('セットリスト作成'),
-          ),
           body: Stack(
             children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Flexible(
-                    child: ImplicitlyAnimatedReorderableList(
-                        items: model.setList,
-                        areItemsTheSame: (oldItem, newItem) =>
-                            oldItem == newItem,
-                        onReorderFinished: (song, from, to, songs) {
-                          model.setList = songs;
-                          print(songs);
-                        },
-                        itemBuilder: (context, animation, song, index) {
-                          return Reorderable(
-                            key: ValueKey(song),
-                            builder: (context, animation, bool) {
-                              return Material(
-                                type: MaterialType.transparency,
-                                child: ListTile(
+              SafeArea(
+                child: AspectRatio(
+                  aspectRatio: 1.0 / 1.415,
+                  child: Container(
+                    color: Colors.black12,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Text(
+                                eventTitle,
+                                style: TextStyle(fontSize: 18.0),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Text(
+                                eventDateText,
+                                style: TextStyle(fontSize: 14.0),
+                              ),
+                              Text(
+                                ' @$eventPlace',
+                                style: TextStyle(fontSize: 14.0),
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: setList.length,
+                              itemExtent: 30.5,
+                              itemBuilder: (context, index) {
+                                return ListTile(
                                   title: Text(
-                                    '$song',
-                                    maxLines: 1,
+                                    '${index + 1}. ${setList[index]}',
+                                    style: TextStyle(fontSize: 22.0),
                                   ),
-                                  trailing: Handle(
-                                    delay: Duration(milliseconds: 100),
-                                    child: Icon(
-                                      Icons.list,
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        }),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  SizedBox(
-                    height: 35.0,
-                  ),
-                ],
+                ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -113,11 +122,11 @@ class GroupSetListScreen extends StatelessWidget {
                           height: 40.0,
                           child: FlatButton(
                             child: Text(
-                              'MC追加',
+                              '戻る',
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () {
-                              model.addMC();
+                              Navigator.pop(context);
                             },
                           ),
                         ),
@@ -134,21 +143,10 @@ class GroupSetListScreen extends StatelessWidget {
                           height: 40.0,
                           child: FlatButton(
                             child: Text(
-                              '決定',
+                              '保存',
                               style: TextStyle(color: Colors.white),
                             ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GroupSetListScreen2(
-                                    setList: model.setList,
-                                    songNum: songNum,
-                                    totalPlayTime: totalPlayTime,
-                                  ),
-                                ),
-                              );
-                            },
+                            onPressed: () {},
                           ),
                         ),
                       ),

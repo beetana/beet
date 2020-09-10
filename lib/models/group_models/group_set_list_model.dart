@@ -3,14 +3,9 @@ import 'package:flutter/material.dart';
 
 class GroupSetListModel extends ChangeNotifier {
   List<String> setList;
-  int songNum;
-  int totalPlayTime;
-  int num = 1;
 
-  void init(selectedSongs, songNum, totalPlayTime) {
+  void init(selectedSongs) {
     setList = selectedSongs;
-    this.songNum = songNum;
-    this.totalPlayTime = totalPlayTime;
   }
 
   void addMC() {

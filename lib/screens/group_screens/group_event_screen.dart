@@ -1,18 +1,14 @@
 import 'package:beet/event.dart';
 import 'package:beet/models/group_models/group_event_model.dart';
+import 'package:beet/screens/group_screens/group_edit_event_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GroupEventScreen extends StatelessWidget {
   GroupEventScreen({this.groupID, this.event});
   final String groupID;
   final Event event;
-  final dateFormat = DateFormat('y/M/d(E)  H:mm', 'ja_JP');
-  final eventTitleController = TextEditingController();
-  final eventPlaceController = TextEditingController();
-  final eventMemoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +28,18 @@ class GroupEventScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onPressed: () async {},
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GroupEditEventScreen(
+                        groupID: groupID,
+                        event: event,
+                      ),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
               ),
             ],
           ),

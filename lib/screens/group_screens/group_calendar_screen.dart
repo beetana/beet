@@ -1,4 +1,5 @@
 import 'package:beet/screens/group_screens/group_add_event_screen.dart';
+import 'package:beet/screens/group_screens/group_event_screen.dart';
 import 'package:beet/widgets/event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/models/group_models/group_calendar_model.dart';
@@ -87,7 +88,17 @@ class GroupCalendarScreen extends StatelessWidget {
                             isAllDay: event.isAllDay,
                             startingDateTime: event.startingDateTime,
                             endingDateTime: event.endingDateTime,
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GroupEventScreen(
+                                    groupID: groupID,
+                                    event: event,
+                                  ),
+                                ),
+                              );
+                            },
                           );
                         }),
                   ),

@@ -68,6 +68,14 @@ class GroupAddEventModel extends ChangeNotifier {
           minimumDate: DateTime(1980, 1, 1),
           maximumDate: DateTime(2050, 12, 31),
           onDateTimeChanged: (DateTime newDateTime) {
+            if (isAllDay == true) {
+              newDateTime = DateTime(
+                newDateTime.year,
+                newDateTime.month,
+                newDateTime.day,
+                12,
+              );
+            }
             startingDateTime = newDateTime;
             if (startingDateTime.isAfter(endingDateTime) ||
                 startingDateTime.isAtSameMomentAs(endingDateTime)) {
@@ -95,6 +103,14 @@ class GroupAddEventModel extends ChangeNotifier {
           minimumDate: startingDateTime.add(Duration(minutes: 5)),
           maximumDate: startingDateTime.add(Duration(days: 1000)),
           onDateTimeChanged: (DateTime newDateTime) {
+            if (isAllDay == true) {
+              newDateTime = DateTime(
+                newDateTime.year,
+                newDateTime.month,
+                newDateTime.day,
+                12,
+              );
+            }
             endingDateTime = newDateTime;
             if (startingDateTime.isAfter(endingDateTime) ||
                 startingDateTime.isAtSameMomentAs(endingDateTime)) {
@@ -140,21 +156,7 @@ class GroupAddEventModel extends ChangeNotifier {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
-    if (isAllDay == true) {
-      startingDateTime = DateTime(
-        startingDateTime.year,
-        startingDateTime.month,
-        startingDateTime.day,
-        0,
-      );
-      endingDateTime = DateTime(
-        endingDateTime.year,
-        endingDateTime.month,
-        endingDateTime.day,
-        23,
-        55,
-      );
-    }
+
     try {
       await Firestore.instance
           .collection('groups')

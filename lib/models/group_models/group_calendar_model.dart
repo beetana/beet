@@ -7,8 +7,8 @@ class GroupCalendarModel extends ChangeNotifier {
   DateTime now = DateTime.now();
   DateTime selectedDay;
   Map<DateTime, List> events = {};
-  List eventList = [];
-  List selectedEvents = [];
+  List<Event> eventList = [];
+  List<Event> selectedEvents = [];
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
 

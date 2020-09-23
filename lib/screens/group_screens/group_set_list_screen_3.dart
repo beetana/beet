@@ -1,4 +1,5 @@
 import 'package:beet/models/group_models/group_set_list_model_3.dart';
+import 'package:beet/widgets/set_list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,6 @@ class GroupSetListScreen3 extends StatelessWidget {
   final String eventDateText;
   final int songNum;
   final int totalPlayTime;
-  final GlobalKey _globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -29,54 +29,77 @@ class GroupSetListScreen3 extends StatelessWidget {
           body: Stack(
             children: <Widget>[
               SafeArea(
-                child: AspectRatio(
-                  aspectRatio: 1.0 / 1.415,
-                  child: Container(
-                    color: Colors.black12,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                child: Column(
+                  children: <Widget>[
+                    AspectRatio(
+                      aspectRatio: 1.0 / 1.415,
+                      child: RepaintBoundary(
+                        key: model.globalKey,
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
                             children: <Widget>[
-                              Text(
-                                eventTitle,
-                                style: TextStyle(fontSize: 18.0),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16.0, left: 16.0, right: 16.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        Text(
+                                          eventTitle,
+                                          style: TextStyle(fontSize: 17.0),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        Text(
+                                          eventDateText,
+                                          style: TextStyle(fontSize: 13.0),
+                                        ),
+                                        eventPlace.isNotEmpty
+                                            ? Text(
+                                                ' @$eventPlace',
+                                                style:
+                                                    TextStyle(fontSize: 13.0),
+                                              )
+                                            : Text(''),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: setList.length,
+                                  itemExtent: 30.5,
+                                  itemBuilder: (context, index) {
+                                    return SetListTile(
+                                      setList: setList,
+                                      index: index,
+                                    );
+                                  },
+                                ),
                               ),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Text(
-                                eventDateText,
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                              Text(
-                                ' @$eventPlace',
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: setList.length,
-                              itemExtent: 30.5,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: Text(
-                                    '${index + 1}. ${setList[index]}',
-                                    style: TextStyle(fontSize: 22.0),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                    Expanded(
+                      child: Container(
+                        child: Center(
+                          child: model.setListImage,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 35.0,
+                    ),
+                  ],
                 ),
               ),
               Column(
@@ -146,7 +169,9 @@ class GroupSetListScreen3 extends StatelessWidget {
                               '保存',
                               style: TextStyle(color: Colors.white),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              model.createImage();
+                            },
                           ),
                         ),
                       ),

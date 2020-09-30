@@ -3,11 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class GroupMainModel extends ChangeNotifier {
+  DateTime currentDateTime = DateTime.now();
   List<Event> eventList = [];
   bool isLoading = false;
 
   Future getEventList(groupID) async {
-    final currentTimestamp = Timestamp.fromDate(DateTime.now());
+    final currentTimestamp = Timestamp.fromDate(currentDateTime);
     isLoading = true;
     try {
       QuerySnapshot eventDoc = await Firestore.instance

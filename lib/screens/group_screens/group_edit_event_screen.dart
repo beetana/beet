@@ -28,7 +28,7 @@ class GroupEditEventScreen extends StatelessWidget {
             actions: <Widget>[
               FlatButton(
                 child: Text(
-                  'OK',
+                  '完了',
                   style: TextStyle(
                     color: Colors.yellow,
                     fontSize: 16.0,
@@ -107,8 +107,46 @@ class GroupEditEventScreen extends StatelessWidget {
                         model.eventMemo = text;
                       },
                     ),
+                    Expanded(
+                      child: SizedBox(),
+                    ),
+                    SizedBox(
+                      height: 40.0,
+                    ),
                   ],
                 ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    height: 40.0,
+                    width: double.infinity,
+                    color: Colors.red,
+                    child: FlatButton(
+                      child: Text('イベントを削除'),
+                      onPressed: () async {
+                        bool isDelete =
+                            await _confirmDeleteDialog(context, '削除しますか？');
+                        if (isDelete == true) {
+                          model.startLoading();
+                          try {
+                            await model.deleteEvent(
+                              groupID: groupID,
+                              eventID: model.eventID,
+                            );
+                            await _showTextDialog(context, '削除しました');
+                          } catch (e) {
+                            _showTextDialog(context, e.toString());
+                          }
+                          model.endLoading();
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
               model.isLoading
                   ? Container(
@@ -148,4 +186,36 @@ Future _showTextDialog(context, message) async {
       );
     },
   );
+}
+
+Future _confirmDeleteDialog(context, message) async {
+  bool _isDelete;
+  _isDelete = await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.0),
+          ),
+        ),
+        title: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('キャンセル'),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+          FlatButton(
+            child: Text('削除'),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+        ],
+      );
+    },
+  );
+  return _isDelete;
 }

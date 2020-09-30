@@ -22,6 +22,7 @@ dependencies:
   implicitly_animated_reorderable_list: ^0.2.3
   table_calendar: ^2.2.3
   intl: ^0.16.1
+  image_gallery_saver: ^1.5.0
 
 dev_dependencies:
   flutter_test:

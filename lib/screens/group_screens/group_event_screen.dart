@@ -29,7 +29,7 @@ class GroupEventScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
-                  Navigator.push(
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => GroupEditEventScreen(

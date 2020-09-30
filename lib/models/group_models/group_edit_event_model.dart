@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GroupEditEventModel extends ChangeNotifier {
+  String eventID;
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
@@ -36,6 +37,7 @@ class GroupEditEventModel extends ChangeNotifier {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
     }
+    eventID = event.eventID;
     eventTitle = event.eventTitle;
     eventPlace = event.eventPlace;
     eventMemo = event.eventMemo;
@@ -180,6 +182,20 @@ class GroupEditEventModel extends ChangeNotifier {
         'start': Timestamp.fromDate(startingDateTime),
         'end': Timestamp.fromDate(endingDateTime),
       });
+    } catch (e) {
+      print(e.toString());
+      throw ('エラーが発生しました');
+    }
+  }
+
+  Future deleteEvent({groupID, eventID}) async {
+    try {
+      await Firestore.instance
+          .collection('groups')
+          .document(groupID)
+          .collection('events')
+          .document(eventID)
+          .delete();
     } catch (e) {
       print(e.toString());
       throw ('エラーが発生しました');

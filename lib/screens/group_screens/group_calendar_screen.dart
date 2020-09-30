@@ -88,8 +88,8 @@ class GroupCalendarScreen extends StatelessWidget {
                             isAllDay: event.isAllDay,
                             startingDateTime: event.startingDateTime,
                             endingDateTime: event.endingDateTime,
-                            onTap: () {
-                              Navigator.push(
+                            onTap: () async {
+                              await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => GroupEventScreen(
@@ -97,6 +97,11 @@ class GroupCalendarScreen extends StatelessWidget {
                                     event: event,
                                   ),
                                 ),
+                              );
+                              await model.getEvents(
+                                groupID: groupID,
+                                first: _calendarController.visibleDays[0],
+                                last: _calendarController.visibleDays.last,
                               );
                             },
                           );
@@ -124,10 +129,11 @@ class GroupCalendarScreen extends StatelessWidget {
                           fullscreenDialog: true,
                         ),
                       );
-                      model.getEvents(
-                          groupID: groupID,
-                          first: _calendarController.visibleDays[0],
-                          last: _calendarController.visibleDays.last);
+                      await model.getEvents(
+                        groupID: groupID,
+                        first: _calendarController.visibleDays[0],
+                        last: _calendarController.visibleDays.last,
+                      );
                     },
                   ),
                 ],

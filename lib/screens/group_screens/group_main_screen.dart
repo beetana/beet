@@ -20,7 +20,7 @@ class GroupMainScreen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  dateFormat.format(DateTime.now()),
+                  dateFormat.format(model.currentDateTime),
                   style: TextStyle(fontSize: 24.0),
                 ),
                 SizedBox(height: 10.0),
@@ -39,8 +39,8 @@ class GroupMainScreen extends StatelessWidget {
                           isAllDay: event.isAllDay,
                           startingDateTime: event.startingDateTime,
                           endingDateTime: event.endingDateTime,
-                          onTap: () {
-                            Navigator.push(
+                          onTap: () async {
+                            await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => GroupEventScreen(
@@ -49,6 +49,7 @@ class GroupMainScreen extends StatelessWidget {
                                 ),
                               ),
                             );
+                            await model.getEventList(groupID);
                           },
                         );
                       }),

@@ -4,12 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:beet/models/add_group_model.dart';
 
 class AddGroupScreen extends StatelessWidget {
+  AddGroupScreen({this.userName});
+  final String userName;
   final groupNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AddGroupModel>(
-      create: (_) => AddGroupModel(),
+      create: (_) => AddGroupModel()..init(userName),
       child: Scaffold(
         appBar: AppBar(
           title: Text('グループを追加'),

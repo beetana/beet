@@ -3,17 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddGroupModel extends ChangeNotifier {
+  String userName = '';
   String groupName = '';
   String groupID = '';
   bool isLoading = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  startLoading() {
+  void init(userName) {
+    this.userName = userName;
+  }
+
+  void startLoading() {
     isLoading = true;
     notifyListeners();
   }
 
-  endLoading() {
+  void endLoading() {
     isLoading = false;
     notifyListeners();
   }
@@ -22,19 +27,33 @@ class AddGroupModel extends ChangeNotifier {
     if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
+    FirebaseUser user = await _auth.currentUser();
     try {
       final newGroup = await Firestore.instance.collection('groups').add({
         'groupName': groupName,
         'createdAt': Timestamp.now(),
+        'userCount': 1,
       });
-      final FirebaseUser user = await _auth.currentUser();
       groupID = newGroup.documentID;
+      await Firestore.instance
+          .collection('groups')
+          .document(groupID)
+          .collection('groupUsers')
+          .document(user.uid)
+          .setData({
+        'userID': user.uid,
+        'userName': userName,
+        'joinedAt': Timestamp.now(),
+      });
       await Firestore.instance
           .collection('users')
           .document(user.uid)
           .collection('joiningGroup')
           .document(groupID)
-          .setData({'joinedAt': Timestamp.now()});
+          .setData({
+        'name': groupName,
+        'joinedAt': Timestamp.now(),
+      });
     } catch (e) {
       throw ('エラーが発生しました');
     }

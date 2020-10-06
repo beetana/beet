@@ -28,6 +28,7 @@ class WelcomeModel extends ChangeNotifier {
       await Firestore.instance.collection('users').document(user.uid).setData({
         'name': name,
         'email': email,
+        'groupCount': 0,
         'createdAt': Timestamp.now(),
       });
     } catch (e) {

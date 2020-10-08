@@ -4,8 +4,8 @@ class Event {
   final String eventPlace;
   final String eventMemo;
   final bool isAllDay;
-  final DateTime startingDateTime;
-  final DateTime endingDateTime;
+  DateTime startingDateTime;
+  DateTime endingDateTime;
   final List<dynamic> dateList;
 
   Event({

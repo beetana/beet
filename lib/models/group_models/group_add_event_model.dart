@@ -127,6 +127,9 @@ class GroupAddEventModel extends ChangeNotifier {
   }
 
   Future addEvent({groupID}) async {
+    if (eventTitle.isEmpty) {
+      throw ('タイトルを入力してください');
+    }
     DateTime date;
     String month = '';
     List<DateTime> dateList = [];
@@ -152,9 +155,21 @@ class GroupAddEventModel extends ChangeNotifier {
         monthList.add(month);
       }
     });
-
-    if (eventTitle.isEmpty) {
-      throw ('タイトルを入力してください');
+    if (isAllDay == true) {
+      startingDateTime = DateTime(
+        startingDateTime.year,
+        startingDateTime.month,
+        startingDateTime.day,
+        0,
+      );
+      endingDateTime = DateTime(
+        endingDateTime.year,
+        endingDateTime.month,
+        endingDateTime.day,
+        23,
+        59,
+        59,
+      );
     }
 
     try {

@@ -1,4 +1,5 @@
 import 'package:beet/models/user_models/user_main_model.dart';
+import 'package:beet/screens/user_screens/user_event_screen.dart';
 import 'package:beet/widgets/event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +12,7 @@ class UserMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserMainModel>(
-      create: (_) => UserMainModel(),
+      create: (_) => UserMainModel()..getEventList(userID),
       child: Consumer<UserMainModel>(builder: (context, model, child) {
         if (model.eventList.isNotEmpty) {
           return Padding(
@@ -38,7 +39,18 @@ class UserMainScreen extends StatelessWidget {
                           isAllDay: event.isAllDay,
                           startingDateTime: event.startingDateTime,
                           endingDateTime: event.endingDateTime,
-                          onTap: () {},
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UserEventScreen(
+                                  userID: userID,
+                                  event: event,
+                                ),
+                              ),
+                            );
+                            await model.getEventList(userID);
+                          },
                         );
                       }),
                 ),

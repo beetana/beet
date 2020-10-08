@@ -1,4 +1,6 @@
 import 'package:beet/models/user_models/user_calendar_model.dart';
+import 'package:beet/screens/user_screens/user_add_event_screen.dart';
+import 'package:beet/screens/user_screens/user_event_screen.dart';
 import 'package:beet/widgets/event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
@@ -52,10 +54,21 @@ class UserCalendarScreen extends StatelessWidget {
                     model.getSelectedEvents();
                   },
                   onVisibleDaysChanged: (DateTime first, DateTime last,
-                      CalendarFormat format) async {},
+                      CalendarFormat format) async {
+                    await model.getEvents(
+                      userID: userID,
+                      first: first,
+                      last: last,
+                    );
+                  },
                   onCalendarCreated: (DateTime first, DateTime last,
                       CalendarFormat format) async {
-//                    model.getSelectedEvents();
+                    await model.getEvents(
+                      userID: userID,
+                      first: first,
+                      last: last,
+                    );
+                    model.getSelectedEvents();
                   },
                 ),
                 Expanded(
@@ -75,7 +88,22 @@ class UserCalendarScreen extends StatelessWidget {
                             isAllDay: event.isAllDay,
                             startingDateTime: event.startingDateTime,
                             endingDateTime: event.endingDateTime,
-                            onTap: () {},
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UserEventScreen(
+                                    userID: userID,
+                                    event: event,
+                                  ),
+                                ),
+                              );
+                              await model.getEvents(
+                                userID: userID,
+                                first: _calendarController.visibleDays[0],
+                                last: _calendarController.visibleDays.last,
+                              );
+                            },
                           );
                         }),
                   ),
@@ -90,7 +118,23 @@ class UserCalendarScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   AddFloatingActionButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserAddEventScreen(
+                            userID: userID,
+                            dateTime: model.selectedDay,
+                          ),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                      await model.getEvents(
+                        userID: userID,
+                        first: _calendarController.visibleDays[0],
+                        last: _calendarController.visibleDays.last,
+                      );
+                    },
                   ),
                 ],
               ),

@@ -7,16 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserScreen extends StatelessWidget {
-  final List<Widget> _body = [
-    UserMainScreen(),
-    UserCalendarScreen(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserModel>(
       create: (_) => UserModel()..init(),
       child: Consumer<UserModel>(builder: (context, model, child) {
+        final List<Widget> switchBody = [
+          UserMainScreen(userID: model.userID),
+          UserCalendarScreen(userID: model.userID),
+        ];
         if (model.userName.isNotEmpty) {
           return Scaffold(
             drawer: DrawerScreen(),
@@ -40,7 +39,7 @@ class UserScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: _body[model.currentIndex],
+            body: switchBody[model.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
               selectedItemColor: Colors.cyan,
               onTap: model.onTabTapped,

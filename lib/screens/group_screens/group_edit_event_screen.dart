@@ -135,13 +135,12 @@ class GroupEditEventScreen extends StatelessWidget {
                               groupID: groupID,
                               eventID: model.eventID,
                             );
-                            await _showTextDialog(context, '削除しました');
+                            Navigator.pop(context);
+                            Navigator.pop(context);
                           } catch (e) {
                             _showTextDialog(context, e.toString());
                           }
                           model.endLoading();
-                          Navigator.pop(context);
-                          Navigator.pop(context);
                         }
                       },
                     ),

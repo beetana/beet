@@ -58,6 +58,10 @@ class GroupAddEventModel extends ChangeNotifier {
 
   void showStartingDateTimePicker() {
     if (isShowStartingPicker == false) {
+      if (isShowEndingPicker == true) {
+        isShowEndingPicker = false;
+        endingDateTimePickerBox = SizedBox();
+      }
       startingDateTimePickerBox = Container(
         height: 100.0,
         child: CupertinoDatePicker(
@@ -93,6 +97,10 @@ class GroupAddEventModel extends ChangeNotifier {
 
   void showEndingDateTimePicker() {
     if (isShowEndingPicker == false) {
+      if (isShowStartingPicker == true) {
+        isShowStartingPicker = false;
+        startingDateTimePickerBox = SizedBox();
+      }
       endingDateTimePickerBox = Container(
         height: 100.0,
         child: CupertinoDatePicker(

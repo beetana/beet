@@ -6,13 +6,13 @@ class UserModel extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   int currentIndex = 0;
   String userName = '';
+  String userID;
 
   Future init() async {
     FirebaseUser currentUser = await auth.currentUser();
-    final DocumentSnapshot userDoc = await Firestore.instance
-        .collection('users')
-        .document(currentUser.uid)
-        .get();
+    userID = currentUser.uid;
+    final DocumentSnapshot userDoc =
+        await Firestore.instance.collection('users').document(userID).get();
     userName = userDoc['name'];
     notifyListeners();
   }

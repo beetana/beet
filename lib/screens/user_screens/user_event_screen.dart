@@ -1,20 +1,20 @@
 import 'package:beet/event.dart';
-import 'package:beet/models/group_models/group_event_model.dart';
-import 'package:beet/screens/group_screens/group_edit_event_screen.dart';
+import 'package:beet/models/user_models/user_event_model.dart';
+import 'package:beet/screens/user_screens/user_edit_event_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class GroupEventScreen extends StatelessWidget {
-  GroupEventScreen({this.groupID, this.event});
-  final String groupID;
+class UserEventScreen extends StatelessWidget {
+  UserEventScreen({this.userID, this.event});
+  final String userID;
   final Event event;
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<GroupEventModel>(
-      create: (_) => GroupEventModel()..init(event),
-      child: Consumer<GroupEventModel>(builder: (context, model, child) {
+    return ChangeNotifierProvider<UserEventModel>(
+      create: (_) => UserEventModel()..init(event),
+      child: Consumer<UserEventModel>(builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
             title: Text('イベント詳細'),
@@ -32,8 +32,8 @@ class GroupEventScreen extends StatelessWidget {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GroupEditEventScreen(
-                        groupID: groupID,
+                      builder: (context) => UserEditEventScreen(
+                        userID: userID,
                         event: event,
                       ),
                       fullscreenDialog: true,

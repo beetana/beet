@@ -68,6 +68,10 @@ class GroupEditEventModel extends ChangeNotifier {
 
   void showStartingDateTimePicker() {
     if (isShowStartingPicker == false) {
+      if (isShowEndingPicker == true) {
+        isShowEndingPicker = false;
+        endingDateTimePickerBox = SizedBox();
+      }
       startingDateTimePickerBox = Container(
         height: 100.0,
         child: CupertinoDatePicker(
@@ -103,6 +107,10 @@ class GroupEditEventModel extends ChangeNotifier {
 
   void showEndingDateTimePicker() {
     if (isShowEndingPicker == false) {
+      if (isShowStartingPicker == true) {
+        isShowStartingPicker = false;
+        startingDateTimePickerBox = SizedBox();
+      }
       if (startingDateTime.isAfter(endingDateTime) ||
           startingDateTime.isAtSameMomentAs(endingDateTime)) {
         endingDateTime = startingDateTime.add(Duration(hours: 1));

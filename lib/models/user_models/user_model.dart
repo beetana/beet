@@ -18,7 +18,9 @@ class UserModel extends ChangeNotifier {
   }
 
   void onTabTapped(int index) {
-    currentIndex = index;
-    notifyListeners();
+    if (currentIndex != index) {
+      currentIndex = index;
+      notifyListeners();
+    }
   }
 }

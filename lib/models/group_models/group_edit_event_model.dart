@@ -36,6 +36,20 @@ class GroupEditEventModel extends ChangeNotifier {
     if (event.isAllDay == true) {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
+      DateTime start = event.startingDateTime;
+      DateTime end = event.endingDateTime;
+      event.startingDateTime = DateTime(
+        start.year,
+        start.month,
+        start.day,
+        12,
+      );
+      event.endingDateTime = DateTime(
+        end.year,
+        end.month,
+        end.day,
+        12,
+      );
     }
     eventID = event.eventID;
     eventTitle = event.eventTitle;

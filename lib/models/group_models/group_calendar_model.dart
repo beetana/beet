@@ -44,24 +44,6 @@ class GroupCalendarModel extends ChangeNotifier {
           .toList();
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
-      eventList.forEach((event) {
-        if (event.isAllDay == true) {
-          DateTime start = event.startingDateTime;
-          DateTime end = event.endingDateTime;
-          event.startingDateTime = DateTime(
-            start.year,
-            start.month,
-            start.day,
-            12,
-          );
-          event.endingDateTime = DateTime(
-            end.year,
-            end.month,
-            end.day,
-            12,
-          );
-        }
-      });
       for (int i = 0; i <= durationDays; i++) {
         DateTime date = firstDate.add(Duration(days: i));
         calendarEvent =

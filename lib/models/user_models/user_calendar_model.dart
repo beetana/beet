@@ -7,6 +7,7 @@ class UserCalendarModel extends ChangeNotifier {
   DateTime now = DateTime.now();
   DateTime selectedDay;
   Map<DateTime, List> events = {};
+  List<String> myIDList = [];
   List<Event> eventList = [];
   List<Event> selectedEvents = [];
   final DateFormat dateFormat = DateFormat('y-MM-dd');
@@ -22,14 +23,24 @@ class UserCalendarModel extends ChangeNotifier {
     int durationDays = last.difference(first).inDays;
     List<Event> calendarEvent = [];
     events = {};
+    myIDList = [userID];
 
     try {
-      var eventDoc = await Firestore.instance
+      QuerySnapshot joiningGroupDoc = await Firestore.instance
           .collection('users')
           .document(userID)
-          .collection('events')
+          .collection('joiningGroup')
+          .getDocuments();
+      myIDList.addAll(
+          joiningGroupDoc.documents.map((doc) => doc.documentID).toList());
+
+      //TODO whereIn句で10件までしかクエリできないので、参加できるグループを5つまでにするなどの対策が必要
+      QuerySnapshot eventDoc = await Firestore.instance
+          .collectionGroup('events')
+          .where('myID', whereIn: myIDList)
           .where('monthList', arrayContains: monthForm)
           .getDocuments();
+
       eventList = eventDoc.documents
           .map((doc) => Event(
                 eventID: doc.documentID,

@@ -21,6 +21,7 @@ class UserMainModel extends ChangeNotifier {
       myIDList.addAll(
           joiningGroupDoc.documents.map((doc) => doc.documentID).toList());
 
+      //TODO whereIn句で10件までしかクエリできないので、参加できるグループを5つまでにするなどの対策が必要
       QuerySnapshot eventDoc = await Firestore.instance
           .collectionGroup('events')
           .where('myID', whereIn: myIDList)
@@ -38,26 +39,6 @@ class UserMainModel extends ChangeNotifier {
                 dateList: doc['dateList'].map((date) => date.toDate()).toList(),
               ))
           .toList();
-
-      //TODO whereIn句で10件までしかクエリできないので、参加できるグループを5つまでにするなどの対策が必要
-//      QuerySnapshot groupEventDoc = await Firestore.instance
-//          .collectionGroup('events')
-//          .where('groupID', whereIn: myIDList)
-//          .where('end', isGreaterThan: currentTimestamp)
-//          .getDocuments();
-//
-//      eventList.addAll(groupEventDoc.documents
-//          .map((doc) => Event(
-//                eventID: doc.documentID,
-//                eventTitle: doc['title'],
-//                eventPlace: doc['place'],
-//                eventMemo: doc['memo'],
-//                isAllDay: doc['isAllDay'],
-//                startingDateTime: doc['start'].toDate(),
-//                endingDateTime: doc['end'].toDate(),
-//                dateList: doc['dateList'].map((date) => date.toDate()).toList(),
-//              ))
-//          .toList());
 
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));

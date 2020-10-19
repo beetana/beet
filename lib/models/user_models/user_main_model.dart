@@ -39,13 +39,13 @@ class UserMainModel extends ChangeNotifier {
       joiningGroupList =
           joiningGroupDoc.documents.map((e) => e.documentID).toList();
       print(joiningGroupList);
-
+      //TODO whereIn句で10件までしかクエリできないので、参加できるグループを5つまでにするなどの対策が必要
       QuerySnapshot groupEventDoc = await Firestore.instance
-          .collection('groups')
-          .document(joiningGroupList[1])
-          .collection('events')
+          .collectionGroup('events')
+          .where('groupID', whereIn: joiningGroupList)
           .where('end', isGreaterThan: currentTimestamp)
           .getDocuments();
+
       eventList.addAll(groupEventDoc.documents
           .map((doc) => Event(
                 eventID: doc.documentID,

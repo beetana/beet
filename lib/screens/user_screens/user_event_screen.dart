@@ -19,27 +19,30 @@ class UserEventScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text('イベント詳細'),
             actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  '編集',
-                  style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserEditEventScreen(
-                        userID: userID,
-                        event: event,
-                      ),
-                      fullscreenDialog: true,
+              Visibility(
+                visible: model.myID == userID,
+                child: FlatButton(
+                  child: Text(
+                    '編集',
+                    style: TextStyle(
+                      color: Colors.yellow,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                  );
-                },
+                  ),
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserEditEventScreen(
+                          userID: userID,
+                          event: event,
+                        ),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),

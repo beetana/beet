@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EventListTile extends StatelessWidget {
-  final String eventID;
   final String eventTitle;
   final String eventPlace;
-  final String eventMemo;
   final bool isAllDay;
   final DateTime startingDateTime;
   final DateTime endingDateTime;
@@ -14,10 +12,8 @@ class EventListTile extends StatelessWidget {
   final DateFormat timeFormat = DateFormat('H:mm');
 
   EventListTile({
-    this.eventID,
     this.eventTitle,
     this.eventPlace,
-    this.eventMemo,
     this.isAllDay,
     this.startingDateTime,
     this.endingDateTime,

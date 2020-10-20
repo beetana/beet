@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GroupEditEventModel extends ChangeNotifier {
+  String myID;
   String eventID;
   String eventTitle = '';
   String eventPlace = '';
@@ -51,6 +52,7 @@ class GroupEditEventModel extends ChangeNotifier {
         12,
       );
     }
+    myID = event.myID;
     eventID = event.eventID;
     eventTitle = event.eventTitle;
     eventPlace = event.eventPlace;
@@ -163,6 +165,9 @@ class GroupEditEventModel extends ChangeNotifier {
   }
 
   Future editEvent({groupID}) async {
+    if (eventTitle.isEmpty) {
+      throw ('タイトルを入力してください');
+    }
     DateTime date;
     String month = '';
     List<DateTime> dateList = [];
@@ -188,9 +193,21 @@ class GroupEditEventModel extends ChangeNotifier {
         monthList.add(month);
       }
     });
-
-    if (eventTitle.isEmpty) {
-      throw ('タイトルを入力してください');
+    if (isAllDay == true) {
+      startingDateTime = DateTime(
+        startingDateTime.year,
+        startingDateTime.month,
+        startingDateTime.day,
+        0,
+      );
+      endingDateTime = DateTime(
+        endingDateTime.year,
+        endingDateTime.month,
+        endingDateTime.day,
+        23,
+        59,
+        59,
+      );
     }
 
     try {
@@ -198,7 +215,9 @@ class GroupEditEventModel extends ChangeNotifier {
           .collection('groups')
           .document(groupID)
           .collection('events')
-          .add({
+          .document(eventID)
+          .setData({
+        'myID': myID,
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,

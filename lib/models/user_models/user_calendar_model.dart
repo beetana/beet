@@ -44,6 +44,7 @@ class UserCalendarModel extends ChangeNotifier {
       eventList = eventDoc.documents
           .map((doc) => Event(
                 eventID: doc.documentID,
+                myID: doc['myID'],
                 eventTitle: doc['title'],
                 eventPlace: doc['place'],
                 eventMemo: doc['memo'],

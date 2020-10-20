@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class UserEditEventModel extends ChangeNotifier {
+  String myID;
   String eventID;
   String eventTitle = '';
   String eventPlace = '';
@@ -51,6 +52,7 @@ class UserEditEventModel extends ChangeNotifier {
         12,
       );
     }
+    myID = event.myID;
     eventID = event.eventID;
     eventTitle = event.eventTitle;
     eventPlace = event.eventPlace;
@@ -162,7 +164,11 @@ class UserEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO 自分のイベントしか編集できないようにしないといけない
   Future editEvent({userID}) async {
+    if (eventTitle.isEmpty) {
+      throw ('タイトルを入力してください');
+    }
     DateTime date;
     String month = '';
     List<DateTime> dateList = [];
@@ -188,9 +194,21 @@ class UserEditEventModel extends ChangeNotifier {
         monthList.add(month);
       }
     });
-
-    if (eventTitle.isEmpty) {
-      throw ('タイトルを入力してください');
+    if (isAllDay == true) {
+      startingDateTime = DateTime(
+        startingDateTime.year,
+        startingDateTime.month,
+        startingDateTime.day,
+        0,
+      );
+      endingDateTime = DateTime(
+        endingDateTime.year,
+        endingDateTime.month,
+        endingDateTime.day,
+        23,
+        59,
+        59,
+      );
     }
 
     try {
@@ -198,7 +216,9 @@ class UserEditEventModel extends ChangeNotifier {
           .collection('users')
           .document(userID)
           .collection('events')
-          .add({
+          .document(eventID)
+          .setData({
+        'myID': myID,
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class UserEventModel extends ChangeNotifier {
-  String eventID;
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
@@ -15,7 +14,6 @@ class UserEventModel extends ChangeNotifier {
   final allDayDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   void init(Event event) {
-    eventID = event.eventID;
     eventTitle = event.eventTitle;
     eventPlace = event.eventPlace;
     eventMemo = event.eventMemo;

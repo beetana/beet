@@ -81,10 +81,8 @@ class GroupCalendarScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final event = model.selectedEvents[index];
                           return EventListTile(
-                            eventID: event.eventID,
                             eventTitle: event.eventTitle,
                             eventPlace: event.eventPlace,
-                            eventMemo: event.eventMemo,
                             isAllDay: event.isAllDay,
                             startingDateTime: event.startingDateTime,
                             endingDateTime: event.endingDateTime,

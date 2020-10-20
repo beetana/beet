@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+
 class Event {
+  final String myID;
   final String eventID;
   final String eventTitle;
   final String eventPlace;
@@ -9,13 +12,14 @@ class Event {
   final List<dynamic> dateList;
 
   Event({
-    this.eventID,
-    this.eventTitle,
-    this.eventPlace,
-    this.eventMemo,
-    this.isAllDay,
-    this.startingDateTime,
-    this.endingDateTime,
-    this.dateList,
+    @required this.eventID,
+    @required this.myID,
+    @required this.eventTitle,
+    @required this.eventPlace,
+    @required this.eventMemo,
+    @required this.isAllDay,
+    @required this.startingDateTime,
+    @required this.endingDateTime,
+    @required this.dateList,
   });
 }

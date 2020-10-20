@@ -16,12 +16,12 @@ class UserEditEventScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    eventTitleController.text = event.eventTitle;
+    eventPlaceController.text = event.eventPlace;
+    eventMemoController.text = event.eventMemo;
     return ChangeNotifierProvider<UserEditEventModel>(
       create: (_) => UserEditEventModel()..init(event: event),
       child: Consumer<UserEditEventModel>(builder: (context, model, child) {
-        eventTitleController.text = event.eventTitle;
-        eventPlaceController.text = event.eventPlace;
-        eventMemoController.text = event.eventMemo;
         return Scaffold(
           appBar: AppBar(
             title: Text('イベントを編集'),
@@ -39,7 +39,7 @@ class UserEditEventScreen extends StatelessWidget {
                   model.startLoading();
                   try {
                     await model.editEvent(userID: userID);
-                    await _showTextDialog(context, '追加しました');
+                    await _showTextDialog(context, '更新しました');
                     Navigator.pop(context);
                   } catch (e) {
                     _showTextDialog(context, e.toString());

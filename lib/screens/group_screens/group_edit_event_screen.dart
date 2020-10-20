@@ -16,12 +16,12 @@ class GroupEditEventScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    eventTitleController.text = event.eventTitle;
+    eventPlaceController.text = event.eventPlace;
+    eventMemoController.text = event.eventMemo;
     return ChangeNotifierProvider<GroupEditEventModel>(
       create: (_) => GroupEditEventModel()..init(event: event),
       child: Consumer<GroupEditEventModel>(builder: (context, model, child) {
-        eventTitleController.text = event.eventTitle;
-        eventPlaceController.text = event.eventPlace;
-        eventMemoController.text = event.eventMemo;
         return Scaffold(
           appBar: AppBar(
             title: Text('イベントを編集'),
@@ -39,7 +39,7 @@ class GroupEditEventScreen extends StatelessWidget {
                   model.startLoading();
                   try {
                     await model.editEvent(groupID: groupID);
-                    await _showTextDialog(context, '追加しました');
+                    await _showTextDialog(context, '更新しました');
                     Navigator.pop(context);
                   } catch (e) {
                     _showTextDialog(context, e.toString());

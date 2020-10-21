@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserSettingScreen extends StatelessWidget {
+  UserSettingScreen({this.userID, this.userName});
+  final String userID;
+  final String userName;
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => UserSettingModel()..init(),
+      create: (_) => UserSettingModel()..init(userID: userID),
       child: Scaffold(
         appBar: AppBar(
           title: Text('設定'),
@@ -41,11 +45,12 @@ class UserSettingScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => UserNameUpdateScreen(
+                          userID: model.userID,
                           userName: model.userName,
                         ),
                       ),
                     );
-                    model.init();
+                    model.init(userID: userID);
                   },
                 ),
               ),
@@ -57,7 +62,17 @@ class UserSettingScreen extends StatelessWidget {
                 child: ListTile(
                   title: Text('アイコンの変更'),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {},
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserNameUpdateScreen(
+                          userName: model.userName,
+                        ),
+                      ),
+                    );
+                    model.init();
+                  },
                 ),
               ),
               Padding(

@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserSettingScreen extends StatelessWidget {
-  UserSettingScreen({this.userID, this.userName});
+  UserSettingScreen({this.userID});
   final String userID;
-  final String userName;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class UserSettingScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => UserNameUpdateScreen(
-                          userID: model.userID,
+                          userID: userID,
                           userName: model.userName,
                         ),
                       ),

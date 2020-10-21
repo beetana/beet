@@ -3,21 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserNameUpdateScreen extends StatelessWidget {
-  UserNameUpdateScreen({this.userName});
+  UserNameUpdateScreen({this.userID, this.userName});
+  final String userID;
   final String userName;
   final userNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    userNameController.text = userName;
     return ChangeNotifierProvider<UserNameUpdateModel>(
-      create: (_) => UserNameUpdateModel(),
+      create: (_) =>
+          UserNameUpdateModel()..init(userID: userID, userName: userName),
       child: Scaffold(
         appBar: AppBar(
           title: Text('アカウント名を変更'),
         ),
         body: Consumer<UserNameUpdateModel>(builder: (context, model, child) {
-          userNameController.text = userName;
-          model.userName = userName;
           return Stack(
             children: <Widget>[
               Padding(

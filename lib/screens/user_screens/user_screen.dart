@@ -30,7 +30,10 @@ class UserScreen extends StatelessWidget {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserSettingScreen(),
+                        builder: (context) => UserSettingScreen(
+                          userID: model.userID,
+                          userName: model.userName,
+                        ),
                         fullscreenDialog: true,
                       ),
                     );

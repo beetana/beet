@@ -10,15 +10,15 @@ class GroupNameUpdateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    groupNameController.text = groupName;
     return ChangeNotifierProvider<GroupNameUpdateModel>(
-      create: (_) => GroupNameUpdateModel(),
+      create: (_) =>
+          GroupNameUpdateModel()..init(groupID: groupID, groupName: groupName),
       child: Scaffold(
         appBar: AppBar(
           title: Text('グループ名を変更'),
         ),
         body: Consumer<GroupNameUpdateModel>(builder: (context, model, child) {
-          groupNameController.text = groupName;
-          model.groupName = groupName;
           return Stack(
             children: <Widget>[
               Padding(
@@ -54,7 +54,7 @@ class GroupNameUpdateScreen extends StatelessWidget {
                       onPressed: () async {
                         model.startLoading();
                         try {
-                          await model.updateGroupName(groupID);
+                          await model.updateGroupName();
                           await _showTextDialog(context, '変更しました');
                           Navigator.pop(context);
                         } catch (e) {

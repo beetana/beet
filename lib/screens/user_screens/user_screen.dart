@@ -32,7 +32,6 @@ class UserScreen extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => UserSettingScreen(
                           userID: model.userID,
-                          userName: model.userName,
                         ),
                         fullscreenDialog: true,
                       ),

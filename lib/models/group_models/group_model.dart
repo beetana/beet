@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class GroupModel extends ChangeNotifier {
-  int currentIndex = 0;
   String groupName = '';
+  int currentIndex = 0;
 
   Future init({String groupID}) async {
     DocumentSnapshot groupDoc =
@@ -13,7 +13,9 @@ class GroupModel extends ChangeNotifier {
   }
 
   void onTabTapped(int index) {
-    currentIndex = index;
-    notifyListeners();
+    if (currentIndex != index) {
+      currentIndex = index;
+      notifyListeners();
+    }
   }
 }

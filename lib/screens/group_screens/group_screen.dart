@@ -54,15 +54,15 @@ class GroupScreen extends StatelessWidget {
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
-                  title: Text('ホーム'),
+                  label: 'ホーム',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.calendar_today),
-                  title: Text('カレンダー'),
+                  label: 'カレンダー',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.library_music),
-                  title: Text('持ち曲'),
+                  label: '持ち曲',
                 ),
               ],
             ),

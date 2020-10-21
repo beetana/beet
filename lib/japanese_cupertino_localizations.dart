@@ -151,4 +151,14 @@ class JapaneseCupertinoLocalizations implements CupertinoLocalizations {
 
   static const LocalizationsDelegate<CupertinoLocalizations> delegate =
       _CupertinoLocalizationDelegate();
+
+  @override
+  // TODO: implement modalBarrierDismissLabel
+  String get modalBarrierDismissLabel => throw UnimplementedError();
+
+  @override
+  String tabSemanticsLabel({int tabIndex, int tabCount}) {
+    // TODO: implement tabSemanticsLabel
+    throw UnimplementedError();
+  }
 }

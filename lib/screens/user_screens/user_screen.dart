@@ -47,11 +47,11 @@ class UserScreen extends StatelessWidget {
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
-                  title: Text('ホーム'),
+                  label: 'ホーム',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.calendar_today),
-                  title: Text('カレンダー'),
+                  label: 'カレンダー',
                 ),
               ],
             ),

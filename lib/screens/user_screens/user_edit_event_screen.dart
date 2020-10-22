@@ -133,7 +133,6 @@ class UserEditEventScreen extends StatelessWidget {
                           try {
                             await model.deleteEvent(
                               userID: userID,
-                              eventID: model.eventID,
                             );
                             Navigator.pop(context);
                             Navigator.pop(context);

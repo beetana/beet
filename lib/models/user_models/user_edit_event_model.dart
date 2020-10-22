@@ -164,7 +164,6 @@ class UserEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO 自分のイベントしか編集できないようにしないといけない
   Future editEvent({userID}) async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
@@ -234,7 +233,7 @@ class UserEditEventModel extends ChangeNotifier {
     }
   }
 
-  Future deleteEvent({userID, eventID}) async {
+  Future deleteEvent({userID}) async {
     try {
       await Firestore.instance
           .collection('users')

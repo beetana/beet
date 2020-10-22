@@ -37,11 +37,12 @@ class UserEventScreen extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => UserEditEventScreen(
                           userID: userID,
-                          event: event,
+                          event: model.event,
                         ),
                         fullscreenDialog: true,
                       ),
                     );
+                    model.getEvent(userID: userID);
                   },
                 ),
               ),

@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 
 class UserModel extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  String userID;
   String userName = '';
   int currentIndex = 0;
 
-  Future init() async {
-    FirebaseUser currentUser = await auth.currentUser();
-    userID = currentUser.uid;
+  Future init({String userID}) async {
     DocumentSnapshot userDoc =
         await Firestore.instance.collection('users').document(userID).get();
     userName = userDoc['name'];

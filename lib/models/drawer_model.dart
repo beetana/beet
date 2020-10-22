@@ -6,7 +6,6 @@ class DrawerModel extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   String userID;
   String userName = '';
-  String email = '';
   List<String> groupName = [];
   List<String> groupID = [];
 
@@ -23,13 +22,12 @@ class DrawerModel extends ChangeNotifier {
         .getDocuments();
 
     userName = userData['name'];
-    email = userData['email'];
     groupID = (joiningGroup.documents.map((doc) => doc.documentID).toList());
 
     for (String id in groupID) {
       DocumentSnapshot groupDoc =
           await Firestore.instance.collection('groups').document(id).get();
-      groupName.add(groupDoc['groupName'].toString());
+      groupName.add(groupDoc['groupName']);
     }
     notifyListeners();
   }

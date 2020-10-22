@@ -7,15 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserScreen extends StatelessWidget {
+  UserScreen({this.userID});
+  final String userID;
   @override
   Widget build(BuildContext context) {
+    final List<Widget> switchBody = [
+      UserMainScreen(userID: userID),
+      UserCalendarScreen(userID: userID),
+    ];
     return ChangeNotifierProvider<UserModel>(
-      create: (_) => UserModel()..init(),
+      create: (_) => UserModel()..init(userID: userID),
       child: Consumer<UserModel>(builder: (context, model, child) {
-        final List<Widget> switchBody = [
-          UserMainScreen(userID: model.userID),
-          UserCalendarScreen(userID: model.userID),
-        ];
         if (model.userName.isNotEmpty) {
           return Scaffold(
             drawer: DrawerScreen(),
@@ -31,12 +33,12 @@ class UserScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => UserSettingScreen(
-                          userID: model.userID,
+                          userID: userID,
                         ),
                         fullscreenDialog: true,
                       ),
                     );
-                    model.init();
+                    model.init(userID: userID);
                   },
                 ),
               ],

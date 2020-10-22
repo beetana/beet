@@ -11,6 +11,7 @@ class UserCalendarScreen extends StatelessWidget {
   UserCalendarScreen({this.userID});
   final String userID;
   final _calendarController = CalendarController();
+  //TODO 祝日をどう設定するか
   final Map<DateTime, List> _holidays = {
     DateTime(2020, 1, 1): ['New Year\'s Day'],
     DateTime(2020, 2, 14): ['Valentine\'s Day'],

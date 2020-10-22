@@ -1,3 +1,4 @@
+import 'package:beet/event.dart';
 import 'package:beet/models/user_models/user_calendar_model.dart';
 import 'package:beet/screens/user_screens/user_add_event_screen.dart';
 import 'package:beet/screens/user_screens/user_event_screen.dart';
@@ -56,6 +57,7 @@ class UserCalendarScreen extends StatelessWidget {
                   },
                   onVisibleDaysChanged: (DateTime first, DateTime last,
                       CalendarFormat format) async {
+                    //TODO 月を切り替える度に、その月の1日にフォーカスしてもいいかも
                     await model.getEvents(
                       userID: userID,
                       first: first,
@@ -80,7 +82,7 @@ class UserCalendarScreen extends StatelessWidget {
                         itemExtent: 80.0,
                         itemCount: model.selectedEvents.length,
                         itemBuilder: (context, index) {
-                          final event = model.selectedEvents[index];
+                          Event event = model.selectedEvents[index];
                           return EventListTile(
                             eventTitle: event.eventTitle,
                             eventPlace: event.eventPlace,
@@ -102,6 +104,7 @@ class UserCalendarScreen extends StatelessWidget {
                                 first: _calendarController.visibleDays[0],
                                 last: _calendarController.visibleDays.last,
                               );
+                              model.getSelectedEvents();
                             },
                           );
                         }),
@@ -133,6 +136,7 @@ class UserCalendarScreen extends StatelessWidget {
                         first: _calendarController.visibleDays[0],
                         last: _calendarController.visibleDays.last,
                       );
+                      model.getSelectedEvents();
                     },
                   ),
                 ],

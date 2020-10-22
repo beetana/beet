@@ -1,3 +1,4 @@
+import 'package:beet/event.dart';
 import 'package:beet/screens/group_screens/group_add_event_screen.dart';
 import 'package:beet/screens/group_screens/group_event_screen.dart';
 import 'package:beet/widgets/event_list_tile.dart';
@@ -79,7 +80,7 @@ class GroupCalendarScreen extends StatelessWidget {
                         itemExtent: 80.0,
                         itemCount: model.selectedEvents.length,
                         itemBuilder: (context, index) {
-                          final event = model.selectedEvents[index];
+                          Event event = model.selectedEvents[index];
                           return EventListTile(
                             eventTitle: event.eventTitle,
                             eventPlace: event.eventPlace,
@@ -101,6 +102,7 @@ class GroupCalendarScreen extends StatelessWidget {
                                 first: _calendarController.visibleDays[0],
                                 last: _calendarController.visibleDays.last,
                               );
+                              model.getSelectedEvents();
                             },
                           );
                         }),
@@ -132,6 +134,7 @@ class GroupCalendarScreen extends StatelessWidget {
                         first: _calendarController.visibleDays[0],
                         last: _calendarController.visibleDays.last,
                       );
+                      model.getSelectedEvents();
                     },
                   ),
                 ],

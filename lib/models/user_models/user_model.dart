@@ -11,7 +11,7 @@ class UserModel extends ChangeNotifier {
   Future init() async {
     FirebaseUser currentUser = await auth.currentUser();
     userID = currentUser.uid;
-    final DocumentSnapshot userDoc =
+    DocumentSnapshot userDoc =
         await Firestore.instance.collection('users').document(userID).get();
     userName = userDoc['name'];
     notifyListeners();

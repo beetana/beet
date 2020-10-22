@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class WelcomeModel extends ChangeNotifier {
+  String userID;
   String name = '';
   String email = '';
   String password = '';
@@ -31,6 +32,7 @@ class WelcomeModel extends ChangeNotifier {
         'groupCount': 0,
         'createdAt': Timestamp.now(),
       });
+      userID = user.uid;
     } catch (e) {
       throw (_convertErrorMessage(e.code));
     }
@@ -49,6 +51,8 @@ class WelcomeModel extends ChangeNotifier {
         email: email,
         password: password,
       );
+      FirebaseUser user = await _auth.currentUser();
+      userID = user.uid;
     } catch (e) {
       throw (_convertErrorMessage(e.code));
     }

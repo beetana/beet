@@ -29,7 +29,7 @@ class DrawerScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserScreen(),
+                        builder: (context) => UserScreen(userID: model.userID),
                       ),
                     );
                   },

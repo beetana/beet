@@ -133,7 +133,6 @@ class GroupEditEventScreen extends StatelessWidget {
                           try {
                             await model.deleteEvent(
                               groupID: groupID,
-                              eventID: model.eventID,
                             );
                             Navigator.pop(context);
                             Navigator.pop(context);

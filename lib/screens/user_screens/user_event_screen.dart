@@ -15,64 +15,75 @@ class UserEventScreen extends StatelessWidget {
     return ChangeNotifierProvider<UserEventModel>(
       create: (_) => UserEventModel()..init(event),
       child: Consumer<UserEventModel>(builder: (context, model, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('イベント詳細'),
-            actions: <Widget>[
-              Visibility(
-                visible: model.myID == userID,
-                child: FlatButton(
-                  child: Text(
-                    '編集',
-                    style: TextStyle(
-                      color: Colors.yellow,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(
+                title: Text('イベント詳細'),
+                actions: <Widget>[
+                  Visibility(
+                    visible: model.myID == userID,
+                    child: FlatButton(
+                      child: Text(
+                        '編集',
+                        style: TextStyle(
+                          color: Colors.yellow,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserEditEventScreen(
+                              userID: userID,
+                              event: model.event,
+                            ),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                        await model.getEvent(userID: userID);
+                      },
                     ),
                   ),
-                  //TODO 編集画面から戻ってきたときに表示されているイベントの内容が更新されていない
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserEditEventScreen(
-                          userID: userID,
-                          event: model.event,
-                        ),
-                        fullscreenDialog: true,
+                ],
+              ),
+              body: Padding(
+                padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      model.eventTitle,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
                       ),
-                    );
-                    model.getEvent(userID: userID);
-                  },
+                    ),
+                    Visibility(
+                      visible: model.eventPlace.isNotEmpty,
+                      child: Text('@${model.eventPlace}'),
+                    ),
+                    SizedBox(height: 20.0),
+                    model.eventDateWidget(),
+                    SizedBox(height: 10.0),
+                    Divider(height: 0.5),
+                    SizedBox(height: 10.0),
+                    model.eventMemoWidget(),
+                  ],
                 ),
               ),
-            ],
-          ),
-          body: Padding(
-            padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  model.eventTitle,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Visibility(
-                  visible: model.eventPlace.isNotEmpty,
-                  child: Text('@${model.eventPlace}'),
-                ),
-                SizedBox(height: 20.0),
-                model.eventDateWidget(),
-                SizedBox(height: 10.0),
-                Divider(height: 0.5),
-                SizedBox(height: 10.0),
-                model.eventMemoWidget(),
-              ],
             ),
-          ),
+            model.isLoading
+                ? Container(
+                    color: Colors.black.withOpacity(0.3),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : SizedBox(),
+          ],
         );
       }),
     );

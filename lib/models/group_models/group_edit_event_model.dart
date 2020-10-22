@@ -34,6 +34,7 @@ class GroupEditEventModel extends ChangeNotifier {
   }
 
   void init({event}) {
+    //TODO もし全日かつ同じ日付ならendを13時にしたい
     if (event.isAllDay == true) {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
@@ -233,7 +234,7 @@ class GroupEditEventModel extends ChangeNotifier {
     }
   }
 
-  Future deleteEvent({groupID, eventID}) async {
+  Future deleteEvent({groupID}) async {
     try {
       await Firestore.instance
           .collection('groups')

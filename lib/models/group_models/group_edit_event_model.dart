@@ -34,7 +34,6 @@ class GroupEditEventModel extends ChangeNotifier {
   }
 
   void init({event}) {
-    //TODO もし全日かつ同じ日付ならendを13時にしたい
     if (event.isAllDay == true) {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
@@ -52,6 +51,14 @@ class GroupEditEventModel extends ChangeNotifier {
         end.day,
         12,
       );
+      if (event.startingDateTime == event.endingDateTime) {
+        event.endingDateTime = DateTime(
+          end.year,
+          end.month,
+          end.day,
+          13,
+        );
+      }
     }
     myID = event.myID;
     eventID = event.eventID;
@@ -127,10 +134,6 @@ class GroupEditEventModel extends ChangeNotifier {
       if (isShowStartingPicker == true) {
         isShowStartingPicker = false;
         startingDateTimePickerBox = SizedBox();
-      }
-      if (startingDateTime.isAfter(endingDateTime) ||
-          startingDateTime.isAtSameMomentAs(endingDateTime)) {
-        endingDateTime = startingDateTime.add(Duration(hours: 1));
       }
       endingDateTimePickerBox = Container(
         height: 100.0,

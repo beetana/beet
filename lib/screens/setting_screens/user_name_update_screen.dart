@@ -73,7 +73,7 @@ class UserNameUpdateScreen extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       ),
                     )
-                  : SizedBox()
+                  : SizedBox(),
             ],
           );
         }),

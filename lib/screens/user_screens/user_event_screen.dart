@@ -15,41 +15,47 @@ class UserEventScreen extends StatelessWidget {
     return ChangeNotifierProvider<UserEventModel>(
       create: (_) => UserEventModel()..init(event),
       child: Consumer<UserEventModel>(builder: (context, model, child) {
-        return Stack(
-          children: [
-            Scaffold(
-              appBar: AppBar(
-                title: Text('イベント詳細'),
-                actions: <Widget>[
-                  Visibility(
-                    visible: model.myID == userID,
-                    child: FlatButton(
-                      child: Text(
-                        '編集',
-                        style: TextStyle(
-                          color: Colors.yellow,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => UserEditEventScreen(
-                              userID: userID,
-                              event: model.event,
-                            ),
-                            fullscreenDialog: true,
-                          ),
-                        );
-                        await model.getEvent(userID: userID);
-                      },
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('イベント詳細'),
+            actions: <Widget>[
+              Visibility(
+                visible: model.myID == userID,
+                child: FlatButton(
+                  child: Text(
+                    '編集',
+                    style: TextStyle(
+                      color: Colors.yellow,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ],
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserEditEventScreen(
+                          userID: userID,
+                          event: model.event,
+                        ),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                    model.startLoading();
+                    try {
+                      await model.getEvent(userID: userID);
+                    } catch (e) {
+                      _showTextDialog(context, e.toString());
+                    }
+                    model.endLoading();
+                  },
+                ),
               ),
-              body: Padding(
+            ],
+          ),
+          body: Stack(
+            children: [
+              Padding(
                 padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,21 +77,111 @@ class UserEventScreen extends StatelessWidget {
                     Divider(height: 0.5),
                     SizedBox(height: 10.0),
                     model.eventMemoWidget(),
+                    Expanded(
+                      child: SizedBox(),
+                    ),
+                    SizedBox(height: 40.0),
                   ],
                 ),
               ),
-            ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(),
+              Visibility(
+                visible: model.myID == userID,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      height: 40.0,
+                      width: double.infinity,
+                      color: Colors.red,
+                      child: FlatButton(
+                        child: Text('イベントを削除'),
+                        onPressed: () async {
+                          bool isDelete =
+                              await _confirmDeleteDialog(context, '削除しますか？');
+                          if (isDelete == true) {
+                            model.startLoading();
+                            try {
+                              await model.deleteEvent(userID: userID);
+                              Navigator.pop(context);
+                            } catch (e) {
+                              _showTextDialog(context, e.toString());
+                            }
+                            model.endLoading();
+                          }
+                        },
+                      ),
                     ),
-                  )
-                : SizedBox(),
-          ],
+                  ],
+                ),
+              ),
+              model.isLoading
+                  ? Container(
+                      color: Colors.black.withOpacity(0.3),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : SizedBox(),
+            ],
+          ),
         );
       }),
     );
   }
+}
+
+Future _showTextDialog(context, message) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.0),
+          ),
+        ),
+        title: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future _confirmDeleteDialog(context, message) async {
+  bool _isDelete;
+  _isDelete = await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.0),
+          ),
+        ),
+        title: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('キャンセル'),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+          FlatButton(
+            child: Text('削除'),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+        ],
+      );
+    },
+  );
+  return _isDelete;
 }

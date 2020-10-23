@@ -232,18 +232,4 @@ class UserEditEventModel extends ChangeNotifier {
       throw ('エラーが発生しました');
     }
   }
-
-  Future deleteEvent({userID}) async {
-    try {
-      await Firestore.instance
-          .collection('users')
-          .document(userID)
-          .collection('events')
-          .document(eventID)
-          .delete();
-    } catch (e) {
-      print(e.toString());
-      throw ('エラーが発生しました');
-    }
-  }
 }

@@ -30,8 +30,17 @@ class UserEventModel extends ChangeNotifier {
     endingDateTime = event.endingDateTime;
   }
 
-  Future getEvent({userID}) async {
+  void startLoading() {
     isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future getEvent({String userID}) async {
     try {
       DocumentSnapshot eventDoc = await Firestore.instance
           .collection('users')
@@ -60,9 +69,23 @@ class UserEventModel extends ChangeNotifier {
       endingDateTime = event.endingDateTime;
     } catch (e) {
       print(e.toString());
+      throw ('エラーが発生しました');
     }
-    isLoading = false;
     notifyListeners();
+  }
+
+  Future deleteEvent({String userID}) async {
+    try {
+      await Firestore.instance
+          .collection('users')
+          .document(userID)
+          .collection('events')
+          .document(eventID)
+          .delete();
+    } catch (e) {
+      print(e.toString());
+      throw ('エラーが発生しました');
+    }
   }
 
   Widget eventDateWidget() {

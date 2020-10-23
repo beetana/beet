@@ -113,7 +113,7 @@ class GroupAddEventScreen extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       ),
                     )
-                  : SizedBox()
+                  : SizedBox(),
             ],
           ),
         );

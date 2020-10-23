@@ -95,7 +95,7 @@ class GroupAddSongScreen extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       ),
                     )
-                  : SizedBox()
+                  : SizedBox(),
             ],
           );
         }),

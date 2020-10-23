@@ -99,6 +99,7 @@ class UserEditEventScreen extends StatelessWidget {
                       },
                     ),
                     model.endingDateTimePickerBox,
+                    //TODO DateTimePickerを開いた時にメモのテキストフィールドがはみ出す
                     TextField(
                       controller: eventMemoController,
                       maxLines: 10,

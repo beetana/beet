@@ -51,6 +51,14 @@ class UserEditEventModel extends ChangeNotifier {
         end.day,
         12,
       );
+      if (event.startingDateTime == event.endingDateTime) {
+        event.endingDateTime = DateTime(
+          end.year,
+          end.month,
+          end.day,
+          13,
+        );
+      }
     }
     myID = event.myID;
     eventID = event.eventID;
@@ -126,10 +134,6 @@ class UserEditEventModel extends ChangeNotifier {
       if (isShowStartingPicker == true) {
         isShowStartingPicker = false;
         startingDateTimePickerBox = SizedBox();
-      }
-      if (startingDateTime.isAfter(endingDateTime) ||
-          startingDateTime.isAtSameMomentAs(endingDateTime)) {
-        endingDateTime = startingDateTime.add(Duration(hours: 1));
       }
       endingDateTimePickerBox = Container(
         height: 100.0,

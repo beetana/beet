@@ -233,18 +233,4 @@ class GroupEditEventModel extends ChangeNotifier {
       throw ('エラーが発生しました');
     }
   }
-
-  Future deleteEvent({groupID}) async {
-    try {
-      await Firestore.instance
-          .collection('groups')
-          .document(groupID)
-          .collection('events')
-          .document(eventID)
-          .delete();
-    } catch (e) {
-      print(e.toString());
-      throw ('エラーが発生しました');
-    }
-  }
 }

@@ -28,8 +28,17 @@ class GroupEventModel extends ChangeNotifier {
     endingDateTime = event.endingDateTime;
   }
 
-  Future getEvent({String groupID}) async {
+  void startLoading() {
     isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future getEvent({String groupID}) async {
     try {
       DocumentSnapshot eventDoc = await Firestore.instance
           .collection('groups')
@@ -57,9 +66,23 @@ class GroupEventModel extends ChangeNotifier {
       endingDateTime = event.endingDateTime;
     } catch (e) {
       print(e.toString());
+      throw ('エラーが発生しました');
     }
-    isLoading = false;
     notifyListeners();
+  }
+
+  Future deleteEvent({String groupID}) async {
+    try {
+      await Firestore.instance
+          .collection('groups')
+          .document(groupID)
+          .collection('events')
+          .document(eventID)
+          .delete();
+    } catch (e) {
+      print(e.toString());
+      throw ('エラーが発生しました');
+    }
   }
 
   Widget eventDateWidget() {

@@ -33,6 +33,7 @@ class RegisterScreen extends StatelessWidget {
                     model.name = text;
                   },
                 ),
+                SizedBox(height: 16.0),
                 TextField(
                   controller: emailController,
                   decoration: InputDecoration(
@@ -55,7 +56,7 @@ class RegisterScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(
-                  height: 24.0,
+                  height: 40.0,
                 ),
                 RaisedButton(
                   elevation: 3.0,

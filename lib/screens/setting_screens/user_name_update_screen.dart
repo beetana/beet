@@ -58,7 +58,7 @@ class UserNameUpdateScreen extends StatelessWidget {
                           await _showTextDialog(context, '変更しました');
                           Navigator.pop(context);
                         } catch (e) {
-                          _showTextDialog(context, e.toString());
+                          await _showTextDialog(context, e.toString());
                         }
                         model.endLoading();
                       },

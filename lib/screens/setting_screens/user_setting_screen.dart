@@ -1,4 +1,5 @@
 import 'package:beet/models/setting_models/user_setting_model.dart';
+import 'package:beet/screens/setting_screens/user_image_update_screen.dart';
 import 'package:beet/screens/setting_screens/user_name_update_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -65,12 +66,11 @@ class UserSettingScreen extends StatelessWidget {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserNameUpdateScreen(
-                          userName: model.userName,
+                        builder: (context) => UserImageUpdateScreen(
+                          userID: userID,
                         ),
                       ),
                     );
-                    model.init();
                   },
                 ),
               ),

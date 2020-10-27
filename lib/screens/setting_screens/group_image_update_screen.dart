@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupImageUpdateScreen extends StatelessWidget {
-  GroupImageUpdateScreen({this.groupID});
+  GroupImageUpdateScreen({this.groupID, this.groupImageURL});
   final String groupID;
+  final String groupImageURL;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupImageUpdateModel>(
-      create: (_) => GroupImageUpdateModel()..init(groupID: groupID),
+      create: (_) => GroupImageUpdateModel()
+        ..init(groupID: groupID, groupImageURL: groupImageURL),
       child: Scaffold(
         appBar: AppBar(
           title: Text('プロフィール画像を変更'),

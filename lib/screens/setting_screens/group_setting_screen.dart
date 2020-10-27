@@ -45,7 +45,9 @@ class GroupSettingScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => GroupNameUpdateScreen(
-                            groupID: groupID, groupName: model.groupName),
+                          groupID: groupID,
+                          groupName: model.groupName,
+                        ),
                       ),
                     );
                     model.init(groupID: groupID);
@@ -66,6 +68,7 @@ class GroupSettingScreen extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => GroupImageUpdateScreen(
                           groupID: groupID,
+                          groupImageURL: model.groupImageURL,
                         ),
                       ),
                     );

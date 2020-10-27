@@ -68,6 +68,7 @@ class UserSettingScreen extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => UserImageUpdateScreen(
                           userID: userID,
+                          userImageURL: model.userImageURL,
                         ),
                       ),
                     );

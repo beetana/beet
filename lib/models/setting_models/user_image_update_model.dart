@@ -10,13 +10,9 @@ class UserImageUpdateModel extends ChangeNotifier {
   File imageFile;
   bool isLoading = false;
 
-  Future init({userID}) async {
-    isLoading = true;
+  void init({userID, userImageURL}) {
     this.userID = userID;
-    DocumentSnapshot user =
-        await Firestore.instance.collection('users').document(userID).get();
-    userImageURL = user['imageURL'];
-    isLoading = false;
+    this.userImageURL = userImageURL;
     notifyListeners();
   }
 

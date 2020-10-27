@@ -1,4 +1,5 @@
 import 'package:beet/models/setting_models/group_setting_model.dart';
+import 'package:beet/screens/setting_screens/group_image_update_screen.dart';
 import 'package:beet/screens/setting_screens/group_name_update_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,9 +58,18 @@ class GroupSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('アイコンの変更'),
+                  title: Text('プロフィール画像の変更'),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GroupImageUpdateScreen(
+                          groupID: groupID,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
               Padding(

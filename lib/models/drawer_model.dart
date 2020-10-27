@@ -5,23 +5,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class DrawerModel extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   String userID;
+  String userImageURL;
   String userName = '';
   List<String> groupName = [];
   List<String> groupID = [];
 
-  Future getUserData() async {
-    FirebaseUser currentUser = await auth.currentUser();
-    userID = currentUser.uid;
-    var userData =
+  Future init() async {
+    FirebaseUser user = await auth.currentUser();
+    userID = user.uid;
+    DocumentSnapshot userDoc =
         await Firestore.instance.collection('users').document(userID).get();
 
-    var joiningGroup = await Firestore.instance
+    QuerySnapshot joiningGroup = await Firestore.instance
         .collection('users')
         .document(userID)
         .collection('joiningGroup')
         .getDocuments();
 
-    userName = userData['name'];
+    userImageURL = userDoc['imageURL'];
+    userName = userDoc['name'];
     groupID = (joiningGroup.documents.map((doc) => doc.documentID).toList());
 
     for (String id in groupID) {

@@ -10,13 +10,10 @@ class GroupImageUpdateModel extends ChangeNotifier {
   File imageFile;
   bool isLoading = false;
 
-  Future init({groupID}) async {
-    isLoading = true;
+  void init({groupID, groupImageURL}) {
     this.groupID = groupID;
-    DocumentSnapshot group =
-        await Firestore.instance.collection('groups').document(groupID).get();
-    groupImageURL = group['imageURL'];
-    isLoading = false;
+    this.groupImageURL = groupImageURL;
+    print(this.groupImageURL);
     notifyListeners();
   }
 

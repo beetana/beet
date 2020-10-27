@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserImageUpdateScreen extends StatelessWidget {
-  UserImageUpdateScreen({this.userID});
+  UserImageUpdateScreen({this.userID, this.userImageURL});
   final String userID;
+  final String userImageURL;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserImageUpdateModel>(
-      create: (_) => UserImageUpdateModel()..init(userID: userID),
+      create: (_) => UserImageUpdateModel()
+        ..init(userID: userID, userImageURL: userImageURL),
       child: Scaffold(
         appBar: AppBar(
           title: Text('プロフィール画像を変更'),

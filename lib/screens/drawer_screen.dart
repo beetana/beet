@@ -9,7 +9,7 @@ class DrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<DrawerModel>(
-      create: (_) => DrawerModel()..getUserData(),
+      create: (_) => DrawerModel()..init(),
       child: Consumer<DrawerModel>(builder: (context, model, child) {
         if (model.userName.isNotEmpty) {
           return Drawer(
@@ -20,7 +20,8 @@ class DrawerScreen extends StatelessWidget {
                   //TODO AccountEmailのスペースに何か入れる。例えば参加しているグループ数など
                   accountEmail: Text(''),
                   currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage(model.userImageURL),
+                    backgroundColor: Colors.transparent,
                   ),
                 ),
                 ListTile(

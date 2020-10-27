@@ -60,10 +60,10 @@ class UserSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('アイコンの変更'),
+                  title: Text('プロフィール画像の変更'),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () async {
-                    await Navigator.push(
+                  onTap: () {
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => UserImageUpdateScreen(

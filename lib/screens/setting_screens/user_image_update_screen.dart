@@ -36,9 +36,6 @@ class UserImageUpdateScreen extends StatelessWidget {
                                           'images/test_user_image.png'),
                               backgroundColor: Colors.transparent,
                             ),
-//                            model.imageFile != null
-//                                ? Image.file(model.imageFile)
-//                                : Container(color: Colors.black),
                             onTap: () async {
                               await model.pickImageFile();
                             },

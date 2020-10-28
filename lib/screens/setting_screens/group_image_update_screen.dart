@@ -52,6 +52,7 @@ class GroupImageUpdateScreen extends StatelessWidget {
                         try {
                           await model.updateGroupImage();
                           await _showTextDialog(context, 'プロフィール画像を保存しました');
+                          Navigator.pop(context);
                         } catch (e) {
                           await _showTextDialog(context, e.toString());
                         }

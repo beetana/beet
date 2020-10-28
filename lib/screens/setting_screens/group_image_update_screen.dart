@@ -33,6 +33,7 @@ class GroupImageUpdateScreen extends StatelessWidget {
                               backgroundImage: model.imageFile != null
                                   ? FileImage(model.imageFile)
                                   : model.groupImageURL != null
+                                      //TODO NetworkImageを取得するのに時間がかかるのでインジケーターを出したい
                                       ? NetworkImage(model.groupImageURL)
                                       : AssetImage(
                                           'images/test_user_image.png'),

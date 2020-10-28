@@ -62,8 +62,8 @@ class GroupSettingScreen extends StatelessWidget {
                 child: ListTile(
                   title: Text('プロフィール画像の変更'),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => GroupImageUpdateScreen(
@@ -72,6 +72,7 @@ class GroupSettingScreen extends StatelessWidget {
                         ),
                       ),
                     );
+                    model.init(groupID: groupID);
                   },
                 ),
               ),

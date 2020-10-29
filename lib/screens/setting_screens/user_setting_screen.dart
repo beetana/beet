@@ -27,7 +27,7 @@ class UserSettingScreen extends StatelessWidget {
                   bottom: 8.0,
                 ),
                 child: Text(
-                  'ユーザー設定',
+                  'アカウント設定',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -57,7 +57,7 @@ class UserSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('ユーザー情報'),
+                  title: Text('アカウント情報'),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () async {
                     await Navigator.push(

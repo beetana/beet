@@ -24,7 +24,7 @@ class GroupUpdateScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: Text('グループ情報を変更'),
+                title: Text('グループ情報を編集'),
               ),
               body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),

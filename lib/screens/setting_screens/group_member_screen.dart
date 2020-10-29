@@ -1,18 +1,18 @@
-import 'package:beet/models/setting_models/user_security_model.dart';
+import 'package:beet/models/setting_models/group_member_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class UserSecurityScreen extends StatelessWidget {
+class GroupMemberScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<UserSecurityModel>(
-      create: (_) => UserSecurityModel(),
-      child: Consumer<UserSecurityModel>(builder: (context, model, child) {
+    return ChangeNotifierProvider<GroupMemberModel>(
+      create: (_) => GroupMemberModel(),
+      child: Consumer<GroupMemberModel>(builder: (context, model, child) {
         return Stack(
           children: [
             Scaffold(
               appBar: AppBar(
-                title: Text('ログインとセキュリティ'),
+                title: Text('メンバー'),
               ),
               body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),

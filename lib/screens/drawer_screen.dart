@@ -20,7 +20,9 @@ class DrawerScreen extends StatelessWidget {
                   //TODO AccountEmailのスペースに何か入れる。例えば参加しているグループ数など
                   accountEmail: Text(''),
                   currentAccountPicture: CircleAvatar(
-                    backgroundImage: NetworkImage(model.userImageURL),
+                    backgroundImage: model.userImageURL != null
+                        ? NetworkImage(model.userImageURL)
+                        : AssetImage('images/test_user_image.png'),
                     backgroundColor: Colors.transparent,
                   ),
                 ),

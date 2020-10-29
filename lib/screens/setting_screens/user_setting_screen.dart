@@ -23,7 +23,7 @@ class UserSettingScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(
                   left: 16.0,
-                  top: 24.0,
+                  top: 16.0,
                   bottom: 8.0,
                 ),
                 child: Text(
@@ -34,24 +34,28 @@ class UserSettingScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
-                child: Column(
-                  children: [
-                    Container(
-                      width: 128.0,
-                      height: 128.0,
-                      child: CircleAvatar(
-                        backgroundImage: model.userImageURL != null
-                            ? NetworkImage(model.userImageURL)
-                            : AssetImage('images/test_user_image.png'),
-                        backgroundColor: Colors.transparent,
+              Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 128.0,
+                        height: 128.0,
+                        child: CircleAvatar(
+                          backgroundImage: model.userImageURL != null
+                              ? NetworkImage(model.userImageURL)
+                              : AssetImage('images/test_user_image.png'),
+                          backgroundColor: Colors.transparent,
+                        ),
                       ),
-                    ),
-                    Text(
-                      model.userName != null ? model.userName : 'Loading...',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                      SizedBox(height: 4.0),
+                      Text(
+                        model.userName != null ? model.userName : 'Loading...',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -96,7 +100,7 @@ class UserSettingScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(
                   left: 16.0,
-                  top: 24.0,
+                  top: 16.0,
                   bottom: 8.0,
                 ),
                 child: Text(

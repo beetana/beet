@@ -5,14 +5,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class GroupImageUpdateModel extends ChangeNotifier {
+class GroupUpdateModel extends ChangeNotifier {
   String groupID;
+  String groupName = '';
   String groupImageURL;
   File imageFile;
   bool isLoading = false;
 
-  void init({groupID, groupImageURL}) {
+  void init({groupID, groupName, groupImageURL}) {
     this.groupID = groupID;
+    this.groupName = groupName;
     this.groupImageURL = groupImageURL;
     notifyListeners();
   }
@@ -25,6 +27,23 @@ class GroupImageUpdateModel extends ChangeNotifier {
   void endLoading() {
     isLoading = false;
     notifyListeners();
+  }
+
+  Future updateGroupName() async {
+    if (groupName.isEmpty) {
+      throw ('グループ名を入力してください');
+    }
+    try {
+      await Firestore.instance
+          .collection('groups')
+          .document(groupID)
+          .updateData({
+        'groupName': groupName,
+      });
+    } catch (e) {
+      print(e.toString());
+      throw ('エラーが発生しました');
+    }
   }
 
   Future pickImageFile() async {
@@ -64,7 +83,7 @@ class GroupImageUpdateModel extends ChangeNotifier {
       final storage = FirebaseStorage.instance;
       StorageTaskSnapshot snapshot = await storage
           .ref()
-          .child("userImage/$groupID")
+          .child("groupImage/$groupID")
           .putFile(imageFile)
           .onComplete;
       final imageURL = await snapshot.ref.getDownloadURL();

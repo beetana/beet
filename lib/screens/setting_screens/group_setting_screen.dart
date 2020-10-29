@@ -1,6 +1,6 @@
 import 'package:beet/models/setting_models/group_setting_model.dart';
-import 'package:beet/screens/setting_screens/group_image_update_screen.dart';
-import 'package:beet/screens/setting_screens/group_name_update_screen.dart';
+import 'package:beet/screens/setting_screens/group_member_screen.dart';
+import 'package:beet/screens/setting_screens/group_update_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,19 +34,39 @@ class GroupSettingScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              Center(
+                child: Column(
+                  children: [
+                    Container(
+                      width: 128.0,
+                      height: 128.0,
+                      child: CircleAvatar(
+                        backgroundImage: model.groupImageURL != null
+                            ? NetworkImage(model.groupImageURL)
+                            : AssetImage('images/test_user_image.png'),
+                        backgroundColor: Colors.transparent,
+                      ),
+                    ),
+                    Text(
+                      model.groupName != null ? model.groupName : 'Loading...',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('グループ名の変更'),
-                  subtitle: Text(model.groupName),
+                  title: Text('グループ情報'),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () async {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GroupNameUpdateScreen(
+                        builder: (context) => GroupUpdateScreen(
                           groupID: groupID,
                           groupName: model.groupName,
+                          groupImageURL: model.groupImageURL,
                         ),
                       ),
                     );
@@ -60,16 +80,13 @@ class GroupSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('プロフィール画像の変更'),
+                  title: Text('メンバー'),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () async {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GroupImageUpdateScreen(
-                          groupID: groupID,
-                          groupImageURL: model.groupImageURL,
-                        ),
+                        builder: (context) => GroupMemberScreen(),
                       ),
                     );
                     model.init(groupID: groupID);

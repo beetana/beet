@@ -58,7 +58,7 @@ class GroupImageUpdateScreen extends StatelessWidget {
                         }
                         model.endLoading();
                       }
-                    })
+                    }),
                   ],
                 ),
               ),

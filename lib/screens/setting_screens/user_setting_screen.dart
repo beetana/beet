@@ -1,6 +1,6 @@
 import 'package:beet/models/setting_models/user_setting_model.dart';
-import 'package:beet/screens/setting_screens/user_image_update_screen.dart';
-import 'package:beet/screens/setting_screens/user_name_update_screen.dart';
+import 'package:beet/screens/setting_screens/user_security_screen.dart';
+import 'package:beet/screens/setting_screens/user_update_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,19 +34,39 @@ class UserSettingScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              Center(
+                child: Column(
+                  children: [
+                    Container(
+                      width: 128.0,
+                      height: 128.0,
+                      child: CircleAvatar(
+                        backgroundImage: model.userImageURL != null
+                            ? NetworkImage(model.userImageURL)
+                            : AssetImage('images/test_user_image.png'),
+                        backgroundColor: Colors.transparent,
+                      ),
+                    ),
+                    Text(
+                      model.userName != null ? model.userName : 'Loading...',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('アカウント名の変更'),
-                  subtitle: Text(model.userName),
+                  title: Text('ユーザー情報'),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () async {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserNameUpdateScreen(
+                        builder: (context) => UserUpdateScreen(
                           userID: userID,
                           userName: model.userName,
+                          userImageURL: model.userImageURL,
                         ),
                       ),
                     );
@@ -60,16 +80,13 @@ class UserSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('プロフィール画像の変更'),
+                  title: Text('ログインとセキュリティ'),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () async {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserImageUpdateScreen(
-                          userID: userID,
-                          userImageURL: model.userImageURL,
-                        ),
+                        builder: (context) => UserSecurityScreen(),
                       ),
                     );
                     model.init(userID: userID);

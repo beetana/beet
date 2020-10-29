@@ -1,34 +1,68 @@
-import 'package:beet/models/setting_models/user_name_update_model.dart';
+import 'package:beet/models/setting_models/user_update_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class UserNameUpdateScreen extends StatelessWidget {
-  UserNameUpdateScreen({this.userID, this.userName});
+class UserUpdateScreen extends StatelessWidget {
+  UserUpdateScreen({this.userID, this.userName, this.userImageURL});
   final String userID;
   final String userName;
+  final String userImageURL;
   final userNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     userNameController.text = userName;
-    return ChangeNotifierProvider<UserNameUpdateModel>(
-      create: (_) =>
-          UserNameUpdateModel()..init(userID: userID, userName: userName),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('アカウント名を変更'),
+    return ChangeNotifierProvider<UserUpdateModel>(
+      create: (_) => UserUpdateModel()
+        ..init(
+          userID: userID,
+          userName: userName,
+          userImageURL: userImageURL,
         ),
-        body: Consumer<UserNameUpdateModel>(builder: (context, model, child) {
-          return Stack(
-            children: <Widget>[
-              Padding(
+      child: Consumer<UserUpdateModel>(builder: (context, model, child) {
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(
+                title: Text('ユーザー情報を変更'),
+              ),
+              body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Container(
+                      width: 128.0,
+                      height: 128.0,
+                      child: InkWell(
+                        child: CircleAvatar(
+                          backgroundImage: model.imageFile != null
+                              ? FileImage(model.imageFile)
+                              : model.userImageURL != null
+                                  ? NetworkImage(model.userImageURL)
+                                  : AssetImage('images/test_user_image.png'),
+                          backgroundColor: Colors.transparent,
+                        ),
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        onTap: () async {
+                          await model.pickImageFile();
+                          if (model.imageFile != null) {
+                            model.startLoading();
+                            try {
+                              await model.updateUserImage();
+                              await _showTextDialog(context, 'プロフィール画像を保存しました');
+                              Navigator.pop(context);
+                            } catch (e) {
+                              await _showTextDialog(context, e.toString());
+                            }
+                            model.endLoading();
+                          }
+                        },
+                      ),
+                    ),
                     TextField(
                       controller: userNameController,
-                      autofocus: true,
                       decoration: InputDecoration(
                         hintText: 'アカウント名',
                         suffix: IconButton(
@@ -66,18 +100,18 @@ class UserNameUpdateScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              model.isLoading
-                  ? Container(
-                      color: Colors.black.withOpacity(0.3),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : SizedBox(),
-            ],
-          );
-        }),
-      ),
+            ),
+            model.isLoading
+                ? Container(
+                    color: Colors.black.withOpacity(0.3),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : SizedBox(),
+          ],
+        );
+      }),
     );
   }
 }

@@ -90,14 +90,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        child: Center(
-                          child: model.setListImage,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 35.0,
+                      child: SizedBox(),
                     ),
                   ],
                 ),
@@ -170,7 +163,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () {
-                              model.createImage();
+                              model.saveSetListImage();
                             },
                           ),
                         ),

@@ -57,6 +57,7 @@ class UserCalendarScreen extends StatelessWidget {
                   },
                   onVisibleDaysChanged: (DateTime first, DateTime last,
                       CalendarFormat format) async {
+                    model.getHolidays(first: first);
                     //TODO 月を切り替える度に、その月の1日にフォーカスしてもいいかも
                     await model.getEvents(
                       userID: userID,
@@ -66,6 +67,7 @@ class UserCalendarScreen extends StatelessWidget {
                   },
                   onCalendarCreated: (DateTime first, DateTime last,
                       CalendarFormat format) async {
+                    model.getHolidays(first: first);
                     await model.getEvents(
                       userID: userID,
                       first: first,

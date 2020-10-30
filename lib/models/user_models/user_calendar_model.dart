@@ -66,7 +66,6 @@ class UserCalendarModel extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    notifyListeners();
   }
 
   void getHolidays({DateTime first}) {
@@ -86,7 +85,6 @@ class UserCalendarModel extends ChangeNotifier {
         holidays[DateTime(year, month, day)] = holidayName;
       });
     }
-    print(holidays);
   }
 
   void getSelectedEvents() {

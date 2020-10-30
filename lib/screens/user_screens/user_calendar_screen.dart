@@ -12,11 +12,7 @@ class UserCalendarScreen extends StatelessWidget {
   UserCalendarScreen({this.userID});
   final String userID;
   final _calendarController = CalendarController();
-  //TODO 祝日をどう設定するか
-  final Map<DateTime, List> _holidays = {
-    DateTime(2020, 1, 1): ['New Year\'s Day'],
-    DateTime(2020, 2, 14): ['Valentine\'s Day'],
-  };
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserCalendarModel>(
@@ -33,7 +29,7 @@ class UserCalendarScreen extends StatelessWidget {
                   calendarController: _calendarController,
                   availableCalendarFormats: {CalendarFormat.month: ''},
                   events: model.events,
-                  holidays: _holidays,
+                  holidays: model.holidays,
                   startingDayOfWeek: StartingDayOfWeek.sunday,
                   daysOfWeekStyle: DaysOfWeekStyle(
                     weekdayStyle: TextStyle(color: Colors.black),
@@ -54,6 +50,7 @@ class UserCalendarScreen extends StatelessWidget {
                     model.selectedDay =
                         DateTime(day.year, day.month, day.day, 12);
                     model.getSelectedEvents();
+                    print(day);
                   },
                   onVisibleDaysChanged: (DateTime first, DateTime last,
                       CalendarFormat format) async {

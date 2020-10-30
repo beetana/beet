@@ -2,13 +2,14 @@ import 'package:beet/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nholiday_jp/nholiday_jp.dart';
 
 class GroupCalendarModel extends ChangeNotifier {
   DateTime now = DateTime.now();
   DateTime selectedDay;
-  Map<DateTime, List> events = {};
-  List<Event> eventList = [];
   List<Event> selectedEvents = [];
+  Map<DateTime, List> events = {};
+  Map<DateTime, List> holidays = {};
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
 
@@ -17,14 +18,15 @@ class GroupCalendarModel extends ChangeNotifier {
   }
 
   Future getEvents({groupID, first, last}) async {
+    events = {};
+    List<Event> eventList;
+    List<Event> eventsOfDay;
     DateTime firstDate = DateTime(first.year, first.month, first.day, 12);
     String monthForm = monthFormat.format(first);
     int durationDays = last.difference(first).inDays;
-    List<Event> calendarEvent = [];
-    events = {};
 
     try {
-      var eventDoc = await Firestore.instance
+      QuerySnapshot eventDoc = await Firestore.instance
           .collection('groups')
           .document(groupID)
           .collection('events')
@@ -47,14 +49,32 @@ class GroupCalendarModel extends ChangeNotifier {
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
       for (int i = 0; i <= durationDays; i++) {
         DateTime date = firstDate.add(Duration(days: i));
-        calendarEvent =
+        eventsOfDay =
             eventList.where((n) => n.dateList.contains(date)).toList() ?? [];
-        events[date] = calendarEvent;
+        events[date] = eventsOfDay;
       }
     } catch (e) {
       print(e);
     }
-    notifyListeners();
+  }
+
+  void getHolidays({DateTime first}) {
+    holidays = {};
+    List<String> holidaysList;
+    int year = first.year;
+    int month = first.month;
+    holidaysList = NHolidayJp.getByMonth(year, month)
+        .map((holiday) => holiday.toString())
+        .toList();
+    if (holidaysList.isNotEmpty) {
+      holidaysList.forEach((holiday) {
+        List<String> splitHoliday = holiday.split(' ');
+        String holidayDate = splitHoliday[0];
+        List<String> holidayName = [splitHoliday[1]];
+        int day = int.parse(holidayDate.split('/')[1]);
+        holidays[DateTime(year, month, day)] = holidayName;
+      });
+    }
   }
 
   void getSelectedEvents() {

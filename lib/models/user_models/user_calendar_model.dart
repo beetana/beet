@@ -2,6 +2,7 @@ import 'package:beet/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nholiday_jp/nholiday_jp.dart';
 
 class UserCalendarModel extends ChangeNotifier {
   DateTime now = DateTime.now();
@@ -12,6 +13,7 @@ class UserCalendarModel extends ChangeNotifier {
   List<Event> selectedEvents = [];
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
+  List<Holiday> holidays = NHolidayJp.getByMonth(2020, 03);
 
   void init() {
     selectedDay = DateTime(now.year, now.month, now.day, 12);
@@ -66,6 +68,17 @@ class UserCalendarModel extends ChangeNotifier {
       print(e);
     }
     notifyListeners();
+  }
+
+  void getHolidays({DateTime first}) {
+    String monthForm = monthFormat.format(first);
+    String strYear = monthForm.substring(0, 4);
+    String strMonth =
+        monthForm.substring(monthForm.length - 2, monthForm.length);
+    int year = int.parse(strYear);
+    int month = int.parse(strMonth);
+    List<Holiday> holidays = NHolidayJp.getByMonth(year, month);
+    print(holidays);
   }
 
   void getSelectedEvents() {

@@ -22,6 +22,7 @@ class UserCalendarScreen extends StatelessWidget {
           children: <Widget>[
             Column(
               children: <Widget>[
+                //TODO 祝日を選択した際に何の日なのか画面に表示したい
                 TableCalendar(
                   startDay: DateTime(1980, 1, 1),
                   endDay: DateTime(2050, 12, 31),
@@ -76,7 +77,7 @@ class UserCalendarScreen extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
                     child: ListView.builder(
-                        physics: ScrollPhysics(),
+                        physics: AlwaysScrollableScrollPhysics(),
                         itemExtent: 80.0,
                         itemCount: model.selectedEvents.length,
                         itemBuilder: (context, index) {

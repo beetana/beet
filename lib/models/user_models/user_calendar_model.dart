@@ -68,7 +68,7 @@ class UserCalendarModel extends ChangeNotifier {
     }
   }
 
-//TODO 祝日を選択した際に何の日なのか画面に表示したい
+//TODO 同じ日に祝日が被った場合、holidayNameの定義の仕方を変えないといけない
   void getHolidays({DateTime first}) {
     holidays = {};
     List<String> holidaysList;
@@ -83,6 +83,7 @@ class UserCalendarModel extends ChangeNotifier {
         String holidayDate = splitHoliday[0];
         List<String> holidayName = [splitHoliday[1]];
         int day = int.parse(holidayDate.split('/')[1]);
+        //TODO 祝日の名前を取得する時のことを考えるとDateTimeを12時で指定した方がいいかも
         holidays[DateTime(year, month, day)] = holidayName;
       });
     }

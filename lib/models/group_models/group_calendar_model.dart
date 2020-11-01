@@ -72,7 +72,7 @@ class GroupCalendarModel extends ChangeNotifier {
         String holidayDate = splitHoliday[0];
         List<String> holidayName = [splitHoliday[1]];
         int day = int.parse(holidayDate.split('/')[1]);
-        holidays[DateTime(year, month, day)] = holidayName;
+        holidays[DateTime(year, month, day, 12)] = holidayName;
       });
     }
   }

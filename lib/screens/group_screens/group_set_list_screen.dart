@@ -39,7 +39,6 @@ class GroupSetListScreen extends StatelessWidget {
                             oldItem == newItem,
                         onReorderFinished: (song, from, to, songs) {
                           model.setList = songs;
-                          print(songs);
                         },
                         itemBuilder: (context, animation, song, index) {
                           return Reorderable(

@@ -40,13 +40,14 @@ class GroupCalendarScreen extends StatelessWidget {
                     selectedColor: Colors.cyan[400],
                     todayColor: Colors.cyan[200],
                     markersColor: Colors.brown[700],
+                    markersMaxAmount: 1,
                     outsideDaysVisible: false,
                   ),
                   headerStyle: HeaderStyle(
                     centerHeaderTitle: true,
                     formatButtonVisible: false,
                   ),
-                  onDaySelected: (DateTime day, List events) {
+                  onDaySelected: (DateTime day, List events, List a) {
                     model.selectedDay =
                         DateTime(day.year, day.month, day.day, 12);
                     model.getSelectedEvents();

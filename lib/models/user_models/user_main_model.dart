@@ -21,7 +21,6 @@ class UserMainModel extends ChangeNotifier {
       myIDList.addAll(
           joiningGroupDoc.documents.map((doc) => doc.documentID).toList());
 
-      //TODO whereIn句で10件までしかクエリできないので、参加できるグループを5つまでにするなどの対策が必要
       QuerySnapshot eventDoc = await Firestore.instance
           .collectionGroup('events')
           .where('myID', whereIn: myIDList)

@@ -17,7 +17,6 @@ class DrawerScreen extends StatelessWidget {
               children: <Widget>[
                 UserAccountsDrawerHeader(
                   accountName: Text(model.userName),
-                  //TODO AccountEmailのスペースに何か入れる。例えば参加しているグループ数など
                   accountEmail: Text(''),
                   currentAccountPicture: CircleAvatar(
                     backgroundImage: model.userImageURL != null

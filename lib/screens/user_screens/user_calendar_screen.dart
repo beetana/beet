@@ -39,8 +39,8 @@ class UserCalendarScreen extends StatelessWidget {
                     weekdayStyle: TextStyle(color: Colors.black),
                     weekendStyle: TextStyle(color: Colors.deepOrange[400]),
                     holidayStyle: TextStyle(color: Colors.deepOrange[400]),
-                    selectedColor: Colors.cyan[400],
-                    todayColor: Colors.cyan[200],
+                    selectedColor: Colors.black54,
+                    todayColor: Colors.black26,
                     outsideDaysVisible: false,
                   ),
                   headerStyle: HeaderStyle(

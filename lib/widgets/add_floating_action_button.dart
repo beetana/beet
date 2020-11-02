@@ -22,7 +22,7 @@ class AddFloatingActionButton extends StatelessWidget {
           height: 56.0,
         ),
         shape: CircleBorder(),
-        fillColor: Colors.cyan,
+        fillColor: Colors.black54,
         onPressed: onPressed,
       ),
     );

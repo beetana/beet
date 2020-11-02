@@ -65,7 +65,7 @@ class DrawerScreen extends StatelessWidget {
                         Icons.add,
                         color: Colors.black54,
                       ),
-                      Text('グループを追加'),
+                      Text('グループを作成'),
                     ],
                   ),
                   onPressed: () {

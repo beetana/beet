@@ -30,7 +30,7 @@ class SongListTile extends StatelessWidget {
       trailing: Visibility(
         visible: isVisible,
         child: Checkbox(
-          activeColor: Colors.cyan,
+          activeColor: Colors.black,
           value: isChecked,
           onChanged: checkboxCallback,
         ),

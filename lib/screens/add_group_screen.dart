@@ -14,7 +14,7 @@ class AddGroupScreen extends StatelessWidget {
       create: (_) => AddGroupModel()..init(userName),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('グループを追加'),
+          title: Text('グループを作成'),
         ),
         body: Consumer<AddGroupModel>(builder: (context, model, child) {
           return Stack(
@@ -35,7 +35,7 @@ class AddGroupScreen extends StatelessWidget {
                       height: 24.0,
                     ),
                     RaisedButton(
-                      child: Text('追加'),
+                      child: Text('作成'),
                       onPressed: () async {
                         model.startLoading();
                         try {

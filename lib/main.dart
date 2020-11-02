@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
       locale: Locale('ja', 'JA'),
       title: 'beet',
       theme: ThemeData(
-        primaryColor: Colors.grey,
-        accentColor: Colors.cyan,
+        primaryColor: Colors.black,
+//        accentColor: Colors.black,
         primaryTextTheme:
             Theme.of(context).primaryTextTheme.apply(bodyColor: Colors.white),
         primaryIconTheme:

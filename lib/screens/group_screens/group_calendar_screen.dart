@@ -33,23 +33,56 @@ class GroupCalendarScreen extends StatelessWidget {
                   startingDayOfWeek: StartingDayOfWeek.sunday,
                   daysOfWeekStyle: DaysOfWeekStyle(
                     weekdayStyle: TextStyle(color: Colors.black),
-                    weekendStyle: TextStyle(color: Colors.black54),
+                    weekendStyle: TextStyle(color: Colors.deepOrange[400]),
                   ),
                   calendarStyle: CalendarStyle(
-                    weekendStyle: TextStyle(color: Colors.black54),
+                    weekdayStyle: TextStyle(color: Colors.black),
+                    weekendStyle: TextStyle(color: Colors.deepOrange[400]),
+                    holidayStyle: TextStyle(color: Colors.deepOrange[400]),
                     selectedColor: Colors.black54,
                     todayColor: Colors.black26,
-                    markersColor: Colors.brown[700],
-                    markersMaxAmount: 1,
                     outsideDaysVisible: false,
                   ),
                   headerStyle: HeaderStyle(
                     centerHeaderTitle: true,
                     formatButtonVisible: false,
                   ),
-                  onDaySelected: (DateTime day, List events, List a) {
+                  builders: CalendarBuilders(
+                    markersBuilder: (context, date, events, holidays) {
+                      List<Widget> children = [];
+                      if (events.isNotEmpty) {
+                        children.add(
+                          Positioned(
+                            top: 5,
+                            right: 5,
+                            child: Icon(
+                              Icons.event_available,
+                              size: 15.0,
+                              color: Colors.blueGrey[800],
+                            ),
+                          ),
+                        );
+                      }
+                      if (holidays.isNotEmpty) {
+                        children.add(
+                          Positioned(
+                            bottom: 2.0,
+                            child: Text(
+                              model.holidays[date][0],
+                              style: TextStyle(
+                                fontSize: 8.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      return children;
+                    },
+                  ),
+                  onDaySelected: (DateTime date, List events, List holidays) {
                     model.selectedDay =
-                        DateTime(day.year, day.month, day.day, 12);
+                        DateTime(date.year, date.month, date.day, 12);
                     model.getSelectedEvents();
                   },
                   onVisibleDaysChanged: (DateTime first, DateTime last,

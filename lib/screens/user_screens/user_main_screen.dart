@@ -26,7 +26,7 @@ class UserMainScreen extends StatelessWidget {
                 SizedBox(height: 10.0),
                 Expanded(
                   child: ListView.builder(
-                      physics: ScrollPhysics(),
+                      physics: AlwaysScrollableScrollPhysics(),
                       itemExtent: 80.0,
                       itemCount: model.eventList.length,
                       itemBuilder: (context, index) {

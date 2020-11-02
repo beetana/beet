@@ -33,14 +33,14 @@ class UserCalendarScreen extends StatelessWidget {
                   startingDayOfWeek: StartingDayOfWeek.sunday,
                   daysOfWeekStyle: DaysOfWeekStyle(
                     weekdayStyle: TextStyle(color: Colors.black),
-                    weekendStyle: TextStyle(color: Colors.black54),
+                    weekendStyle: TextStyle(color: Colors.deepOrange[400]),
                   ),
                   calendarStyle: CalendarStyle(
-                    weekendStyle: TextStyle(color: Colors.black54),
+                    weekdayStyle: TextStyle(color: Colors.black),
+                    weekendStyle: TextStyle(color: Colors.deepOrange[400]),
+                    holidayStyle: TextStyle(color: Colors.deepOrange[400]),
                     selectedColor: Colors.cyan[400],
                     todayColor: Colors.cyan[200],
-                    markersColor: Colors.brown[700],
-                    markersMaxAmount: 1,
                     outsideDaysVisible: false,
                   ),
                   headerStyle: HeaderStyle(
@@ -49,8 +49,7 @@ class UserCalendarScreen extends StatelessWidget {
                   ),
                   builders: CalendarBuilders(
                     markersBuilder: (context, date, events, holidays) {
-                      final List<Widget> children = [];
-
+                      List<Widget> children = [];
                       if (events.isNotEmpty) {
                         children.add(
                           Positioned(
@@ -64,14 +63,16 @@ class UserCalendarScreen extends StatelessWidget {
                           ),
                         );
                       }
-
                       if (holidays.isNotEmpty) {
                         children.add(
                           Positioned(
-                            bottom: 0.0,
+                            bottom: 2.0,
                             child: Text(
                               model.holidays[date][0],
-                              style: TextStyle(fontSize: 8.0),
+                              style: TextStyle(
+                                fontSize: 8.0,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         );

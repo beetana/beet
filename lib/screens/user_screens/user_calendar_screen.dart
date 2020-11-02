@@ -22,7 +22,6 @@ class UserCalendarScreen extends StatelessWidget {
           children: <Widget>[
             Column(
               children: <Widget>[
-                //TODO 祝日を選択した際に何の日なのか画面に表示したい
                 TableCalendar(
                   startDay: DateTime(1980, 1, 1),
                   endDay: DateTime(2050, 12, 31),
@@ -48,11 +47,42 @@ class UserCalendarScreen extends StatelessWidget {
                     centerHeaderTitle: true,
                     formatButtonVisible: false,
                   ),
-                  onDaySelected: (DateTime day, List events, List a) {
+                  builders: CalendarBuilders(
+                    markersBuilder: (context, date, events, holidays) {
+                      final List<Widget> children = [];
+
+                      if (events.isNotEmpty) {
+                        children.add(
+                          Positioned(
+                            top: 5,
+                            right: 5,
+                            child: Icon(
+                              Icons.event_available,
+                              size: 15.0,
+                              color: Colors.blueGrey[800],
+                            ),
+                          ),
+                        );
+                      }
+
+                      if (holidays.isNotEmpty) {
+                        children.add(
+                          Positioned(
+                            bottom: 0.0,
+                            child: Text(
+                              model.holidays[date][0],
+                              style: TextStyle(fontSize: 8.0),
+                            ),
+                          ),
+                        );
+                      }
+                      return children;
+                    },
+                  ),
+                  onDaySelected: (DateTime date, List events, List holidays) {
                     model.selectedDay =
-                        DateTime(day.year, day.month, day.day, 12);
+                        DateTime(date.year, date.month, date.day, 12);
                     model.getSelectedEvents();
-                    print(model.holidays[model.selectedDay]);
                   },
                   onVisibleDaysChanged: (DateTime first, DateTime last,
                       CalendarFormat format) async {

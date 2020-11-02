@@ -68,7 +68,6 @@ class UserCalendarModel extends ChangeNotifier {
     }
   }
 
-//TODO 同じ日に祝日が被った場合、holidayNameの定義の仕方を変えないといけない
   void getHolidays({DateTime first}) {
     holidays = {};
     List<String> holidaysList;

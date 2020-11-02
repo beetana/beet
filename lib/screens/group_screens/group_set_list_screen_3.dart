@@ -129,7 +129,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                         flex: 2,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.indigo,
+                            color: Colors.black54,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10.0),
                               topRight: Radius.circular(10.0),
@@ -151,7 +151,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                         flex: 2,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.cyan,
+                            color: Colors.black,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10.0),
                             ),

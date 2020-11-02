@@ -37,8 +37,8 @@ class GroupCalendarScreen extends StatelessWidget {
                   ),
                   calendarStyle: CalendarStyle(
                     weekendStyle: TextStyle(color: Colors.black54),
-                    selectedColor: Colors.cyan[400],
-                    todayColor: Colors.cyan[200],
+                    selectedColor: Colors.black54,
+                    todayColor: Colors.black26,
                     markersColor: Colors.brown[700],
                     markersMaxAmount: 1,
                     outsideDaysVisible: false,

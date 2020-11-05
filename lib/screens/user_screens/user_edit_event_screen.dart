@@ -32,9 +32,8 @@ class UserEditEventScreen extends StatelessWidget {
                     child: Text(
                       '完了',
                       style: TextStyle(
-                        color: Colors.yellow,
+                        color: Colors.white,
                         fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     onPressed: () async {

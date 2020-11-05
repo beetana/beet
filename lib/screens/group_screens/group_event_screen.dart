@@ -23,9 +23,8 @@ class GroupEventScreen extends StatelessWidget {
                 child: Text(
                   '編集',
                   style: TextStyle(
-                    color: Colors.yellow,
+                    color: Colors.white,
                     fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 onPressed: () async {
@@ -87,7 +86,7 @@ class GroupEventScreen extends StatelessWidget {
                   Container(
                     height: 40.0,
                     width: double.infinity,
-                    color: Colors.red,
+                    color: Colors.blueGrey[200],
                     child: FlatButton(
                       child: Text('イベントを削除'),
                       onPressed: () async {

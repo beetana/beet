@@ -11,15 +11,15 @@ class GroupMainModel extends ChangeNotifier {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
     isLoading = true;
     try {
-      QuerySnapshot eventDoc = await Firestore.instance
+      QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
+          .doc(groupID)
           .collection('events')
           .where('end', isGreaterThan: currentTimestamp)
-          .getDocuments();
-      eventList = eventDoc.documents
+          .get();
+      eventList = eventDoc.docs
           .map((doc) => Event(
-                eventID: doc.documentID,
+                eventID: doc.id,
                 myID: doc['myID'],
                 eventTitle: doc['title'],
                 eventPlace: doc['place'],

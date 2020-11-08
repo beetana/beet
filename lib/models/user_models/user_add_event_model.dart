@@ -181,9 +181,9 @@ class UserAddEventModel extends ChangeNotifier {
     }
 
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('users')
-          .document(userID)
+          .doc(userID)
           .collection('events')
           .add({
         'myID': userID,

@@ -22,9 +22,9 @@ class GroupAddSongModel extends ChangeNotifier {
       throw ('タイトルを入力してください');
     }
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
+          .doc(groupID)
           .collection('songs')
           .add({
         'title': songTitle,

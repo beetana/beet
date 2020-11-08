@@ -15,15 +15,15 @@ class GroupSongListModel extends ChangeNotifier {
 
   Future getSongList(groupID) async {
     isLoading = true;
-    var songDoc = await Firestore.instance
+    var songDoc = await FirebaseFirestore.instance
         .collection('groups')
-        .document(groupID)
+        .doc(groupID)
         .collection('songs')
         .orderBy('createdAt', descending: false)
-        .getDocuments();
-    songList = songDoc.documents
+        .get();
+    songList = songDoc.docs
         .map((doc) => Song(
-              songID: doc.documentID,
+              songID: doc.id,
               title: doc['title'],
               playTime: doc['minute'],
             ))

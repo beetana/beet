@@ -181,9 +181,9 @@ class GroupAddEventModel extends ChangeNotifier {
     }
 
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
+          .doc(groupID)
           .collection('events')
           .add({
         'myID': groupID,

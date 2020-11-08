@@ -215,12 +215,12 @@ class GroupEditEventModel extends ChangeNotifier {
     }
 
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
+          .doc(groupID)
           .collection('events')
-          .document(eventID)
-          .setData({
+          .doc(eventID)
+          .set({
         'myID': myID,
         'title': eventTitle,
         'place': eventPlace,

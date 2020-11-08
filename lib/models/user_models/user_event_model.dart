@@ -42,14 +42,14 @@ class UserEventModel extends ChangeNotifier {
 
   Future getEvent({String userID}) async {
     try {
-      DocumentSnapshot eventDoc = await Firestore.instance
+      DocumentSnapshot eventDoc = await FirebaseFirestore.instance
           .collection('users')
-          .document(userID)
+          .doc(userID)
           .collection('events')
-          .document(eventID)
+          .doc(eventID)
           .get();
       event = Event(
-        eventID: eventDoc.documentID,
+        eventID: eventDoc.id,
         myID: eventDoc['myID'],
         eventTitle: eventDoc['title'],
         eventPlace: eventDoc['place'],
@@ -76,11 +76,11 @@ class UserEventModel extends ChangeNotifier {
 
   Future deleteEvent({String userID}) async {
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('users')
-          .document(userID)
+          .doc(userID)
           .collection('events')
-          .document(eventID)
+          .doc(eventID)
           .delete();
     } catch (e) {
       print(e.toString());

@@ -215,12 +215,12 @@ class UserEditEventModel extends ChangeNotifier {
     }
 
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('users')
-          .document(userID)
+          .doc(userID)
           .collection('events')
-          .document(eventID)
-          .setData({
+          .doc(eventID)
+          .set({
         'myID': myID,
         'title': eventTitle,
         'place': eventPlace,

@@ -22,12 +22,12 @@ class GroupSongEditModel extends ChangeNotifier {
       throw ('タイトルを入力してください');
     }
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
+          .doc(groupID)
           .collection('songs')
-          .document(songID)
-          .updateData({
+          .doc(songID)
+          .update({
         'title': songTitle,
         'minute': playingTime,
       });
@@ -39,11 +39,11 @@ class GroupSongEditModel extends ChangeNotifier {
 
   Future deleteSong({groupID, songID}) async {
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
+          .doc(groupID)
           .collection('songs')
-          .document(songID)
+          .doc(songID)
           .delete();
     } catch (e) {
       print(e.toString());

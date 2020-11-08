@@ -34,7 +34,7 @@ class UserUpdateModel extends ChangeNotifier {
       throw ('名前を入力してください');
     }
     try {
-      await Firestore.instance.collection('users').document(userID).updateData({
+      await FirebaseFirestore.instance.collection('users').doc(userID).update({
         'name': userName,
       });
     } catch (e) {
@@ -78,16 +78,13 @@ class UserUpdateModel extends ChangeNotifier {
     }
     try {
       final storage = FirebaseStorage.instance;
-      StorageTaskSnapshot snapshot = await storage
-          .ref()
-          .child("userImage/$userID")
-          .putFile(imageFile)
-          .onComplete;
+      TaskSnapshot snapshot =
+          await storage.ref().child("userImage/$userID").putFile(imageFile);
       final imageURL = await snapshot.ref.getDownloadURL();
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('users')
-          .document(userID)
-          .updateData({'imageURL': imageURL});
+          .doc(userID)
+          .update({'imageURL': imageURL});
       userImageURL = imageURL;
       notifyListeners();
     } catch (e) {

@@ -21,12 +21,12 @@ class WelcomeModel extends ChangeNotifier {
     }
 
     try {
-      final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
+      final User user = (await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       ))
           .user;
-      await Firestore.instance.collection('users').document(user.uid).setData({
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'name': name,
         'email': email,
         'groupCount': 0,
@@ -51,7 +51,7 @@ class WelcomeModel extends ChangeNotifier {
         email: email,
         password: password,
       );
-      FirebaseUser user = await _auth.currentUser();
+      User user = _auth.currentUser;
       userID = user.uid;
     } catch (e) {
       throw (_convertErrorMessage(e.code));

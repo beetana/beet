@@ -27,23 +27,22 @@ class UserCalendarModel extends ChangeNotifier {
     int durationDays = last.difference(first).inDays;
 
     try {
-      QuerySnapshot joiningGroupDoc = await Firestore.instance
+      QuerySnapshot joiningGroupDoc = await FirebaseFirestore.instance
           .collection('users')
-          .document(userID)
+          .doc(userID)
           .collection('joiningGroup')
-          .getDocuments();
-      myIDList.addAll(
-          joiningGroupDoc.documents.map((doc) => doc.documentID).toList());
+          .get();
+      myIDList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
 
-      QuerySnapshot eventDoc = await Firestore.instance
+      QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collectionGroup('events')
           .where('myID', whereIn: myIDList)
           .where('monthList', arrayContains: monthForm)
-          .getDocuments();
+          .get();
 
-      eventList = eventDoc.documents
+      eventList = eventDoc.docs
           .map((doc) => Event(
-                eventID: doc.documentID,
+                eventID: doc.id,
                 myID: doc['myID'],
                 eventTitle: doc['title'],
                 eventPlace: doc['place'],

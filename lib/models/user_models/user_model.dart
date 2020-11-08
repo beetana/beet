@@ -9,7 +9,7 @@ class UserModel extends ChangeNotifier {
 
   Future init({String userID}) async {
     DocumentSnapshot userDoc =
-        await Firestore.instance.collection('users').document(userID).get();
+        await FirebaseFirestore.instance.collection('users').doc(userID).get();
     userName = userDoc['name'];
     notifyListeners();
   }

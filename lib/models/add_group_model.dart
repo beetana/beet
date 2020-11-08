@@ -27,37 +27,38 @@ class AddGroupModel extends ChangeNotifier {
     if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
-    FirebaseUser user = await _auth.currentUser();
+    User user = _auth.currentUser;
     try {
-      final newGroup = await Firestore.instance.collection('groups').add({
+      final newGroup =
+          await FirebaseFirestore.instance.collection('groups').add({
         'groupName': groupName,
         'createdAt': Timestamp.now(),
         'userCount': 1,
       });
-      groupID = newGroup.documentID;
-      await Firestore.instance
+      groupID = newGroup.id;
+      await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
+          .doc(groupID)
           .collection('groupUsers')
-          .document(user.uid)
-          .setData({
+          .doc(user.uid)
+          .set({
         'userID': user.uid,
         'userName': userName,
         'joinedAt': Timestamp.now(),
       });
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('users')
-          .document(user.uid)
+          .doc(user.uid)
           .collection('joiningGroup')
-          .document(groupID)
-          .setData({
+          .doc(groupID)
+          .set({
         'groupName': groupName,
         'joinedAt': Timestamp.now(),
       });
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('users')
-          .document(user.uid)
-          .updateData({
+          .doc(user.uid)
+          .update({
         'groupCount': FieldValue.increment(1),
       });
     } catch (e) {

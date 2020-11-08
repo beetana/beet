@@ -7,7 +7,7 @@ class UserSettingModel extends ChangeNotifier {
 
   Future init({userID}) async {
     DocumentSnapshot user =
-        await Firestore.instance.collection('users').document(userID).get();
+        await FirebaseFirestore.instance.collection('users').doc(userID).get();
     userName = user['name'];
     userImageURL = user['imageURL'];
     notifyListeners();

@@ -40,14 +40,14 @@ class GroupEventModel extends ChangeNotifier {
 
   Future getEvent({String groupID}) async {
     try {
-      DocumentSnapshot eventDoc = await Firestore.instance
+      DocumentSnapshot eventDoc = await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
+          .doc(groupID)
           .collection('events')
-          .document(eventID)
+          .doc(eventID)
           .get();
       event = Event(
-        eventID: eventDoc.documentID,
+        eventID: eventDoc.id,
         myID: eventDoc['myID'],
         eventTitle: eventDoc['title'],
         eventPlace: eventDoc['place'],
@@ -73,11 +73,11 @@ class GroupEventModel extends ChangeNotifier {
 
   Future deleteEvent({String groupID}) async {
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
+          .doc(groupID)
           .collection('events')
-          .document(eventID)
+          .doc(eventID)
           .delete();
     } catch (e) {
       print(e.toString());

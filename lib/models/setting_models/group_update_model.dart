@@ -34,10 +34,10 @@ class GroupUpdateModel extends ChangeNotifier {
       throw ('グループ名を入力してください');
     }
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
-          .updateData({
+          .doc(groupID)
+          .update({
         'groupName': groupName,
       });
     } catch (e) {
@@ -81,16 +81,13 @@ class GroupUpdateModel extends ChangeNotifier {
     }
     try {
       final storage = FirebaseStorage.instance;
-      StorageTaskSnapshot snapshot = await storage
-          .ref()
-          .child("groupImage/$groupID")
-          .putFile(imageFile)
-          .onComplete;
+      TaskSnapshot snapshot =
+          await storage.ref().child("groupImage/$groupID").putFile(imageFile);
       final imageURL = await snapshot.ref.getDownloadURL();
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection('groups')
-          .document(groupID)
-          .updateData({'imageURL': imageURL});
+          .doc(groupID)
+          .update({'imageURL': imageURL});
       groupImageURL = imageURL;
       notifyListeners();
     } catch (e) {

@@ -6,8 +6,10 @@ class GroupSettingModel extends ChangeNotifier {
   String groupImageURL;
 
   Future init({groupID}) async {
-    DocumentSnapshot groupDoc =
-        await Firestore.instance.collection('groups').document(groupID).get();
+    DocumentSnapshot groupDoc = await FirebaseFirestore.instance
+        .collection('groups')
+        .doc(groupID)
+        .get();
     groupName = groupDoc['groupName'];
     groupImageURL = groupDoc['imageURL'];
     notifyListeners();

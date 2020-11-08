@@ -11,24 +11,24 @@ class DrawerModel extends ChangeNotifier {
   List<String> groupID = [];
 
   Future init() async {
-    FirebaseUser user = await auth.currentUser();
+    User user = auth.currentUser;
     userID = user.uid;
     DocumentSnapshot userDoc =
-        await Firestore.instance.collection('users').document(userID).get();
+        await FirebaseFirestore.instance.collection('users').doc(userID).get();
 
-    QuerySnapshot joiningGroup = await Firestore.instance
+    QuerySnapshot joiningGroup = await FirebaseFirestore.instance
         .collection('users')
-        .document(userID)
+        .doc(userID)
         .collection('joiningGroup')
-        .getDocuments();
+        .get();
 
     userImageURL = userDoc['imageURL'];
     userName = userDoc['name'];
-    groupID = (joiningGroup.documents.map((doc) => doc.documentID).toList());
+    groupID = (joiningGroup.docs.map((doc) => doc.id).toList());
 
     for (String id in groupID) {
       DocumentSnapshot groupDoc =
-          await Firestore.instance.collection('groups').document(id).get();
+          await FirebaseFirestore.instance.collection('groups').doc(id).get();
       groupName.add(groupDoc['groupName']);
     }
     notifyListeners();

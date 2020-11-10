@@ -3,8 +3,8 @@ enum UserState {
   waiting,
 
   // 未ログイン
-  noLogin,
+  notLoggedIn,
 
-  // ログイン済
-  Login,
+  // ログイン
+  loggedIn,
 }

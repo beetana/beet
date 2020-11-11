@@ -29,11 +29,7 @@ class MyAppModel {
       UserState state = UserState.notLoggedIn;
       final user = await _fetchUser(firebaseUser);
       if (user != null) {
-        if (user.name == null) {
-          state = UserState.notLoggedIn;
-        } else {
-          state = UserState.loggedIn;
-        }
+        state = UserState.loggedIn;
       } else {
         state = UserState.notLoggedIn;
       }

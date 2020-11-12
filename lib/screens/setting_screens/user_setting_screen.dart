@@ -90,7 +90,8 @@ class UserSettingScreen extends StatelessWidget {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserSecurityScreen(),
+                        builder: (context) =>
+                            UserSecurityScreen(userID: userID),
                       ),
                     );
                     model.init(userID: userID);

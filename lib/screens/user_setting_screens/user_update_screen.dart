@@ -1,4 +1,4 @@
-import 'package:beet/models/setting_models/user_update_model.dart';
+import 'package:beet/models/user_setting_models/user_update_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

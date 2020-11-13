@@ -1,4 +1,4 @@
-import 'package:beet/models/setting_models/group_member_model.dart';
+import 'package:beet/models/group_setting_models/group_member_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

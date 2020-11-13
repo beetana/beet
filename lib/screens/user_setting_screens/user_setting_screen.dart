@@ -1,6 +1,6 @@
 import 'package:beet/models/user_setting_models/user_setting_model.dart';
 import 'package:beet/screens/user_setting_screens/user_security_screen.dart';
-import 'package:beet/screens/user_setting_screens/user_update_screen.dart';
+import 'package:beet/screens/user_setting_screens/user_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,7 +67,7 @@ class UserSettingScreen extends StatelessWidget {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserUpdateScreen(
+                        builder: (context) => UserEditScreen(
                           userID: userID,
                           userName: model.userName,
                           userImageURL: model.userImageURL,

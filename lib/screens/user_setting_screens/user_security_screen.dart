@@ -1,4 +1,4 @@
-import 'package:beet/models/setting_models/user_security_model.dart';
+import 'package:beet/models/user_setting_models/user_security_model.dart';
 import 'package:beet/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

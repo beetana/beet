@@ -1,22 +1,22 @@
-import 'package:beet/models/setting_models/user_setting_model.dart';
-import 'package:beet/screens/setting_screens/user_security_screen.dart';
-import 'package:beet/screens/setting_screens/user_update_screen.dart';
+import 'package:beet/models/group_setting_models/group_setting_model.dart';
+import 'package:beet/screens/group_setting_screens/group_member_screen.dart';
+import 'package:beet/screens/group_setting_screens/group_update_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class UserSettingScreen extends StatelessWidget {
-  UserSettingScreen({this.userID});
-  final String userID;
+class GroupSettingScreen extends StatelessWidget {
+  GroupSettingScreen({this.groupID});
+  final String groupID;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => UserSettingModel()..init(userID: userID),
+      create: (_) => GroupSettingModel()..init(groupID: groupID),
       child: Scaffold(
         appBar: AppBar(
           title: Text('設定'),
         ),
-        body: Consumer<UserSettingModel>(builder: (context, model, child) {
+        body: Consumer<GroupSettingModel>(builder: (context, model, child) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -27,7 +27,7 @@ class UserSettingScreen extends StatelessWidget {
                   bottom: 8.0,
                 ),
                 child: Text(
-                  'アカウント設定',
+                  'グループ設定',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -43,15 +43,17 @@ class UserSettingScreen extends StatelessWidget {
                         width: 128.0,
                         height: 128.0,
                         child: CircleAvatar(
-                          backgroundImage: model.userImageURL != null
-                              ? NetworkImage(model.userImageURL)
+                          backgroundImage: model.groupImageURL != null
+                              ? NetworkImage(model.groupImageURL)
                               : AssetImage('images/test_user_image.png'),
                           backgroundColor: Colors.transparent,
                         ),
                       ),
                       SizedBox(height: 4.0),
                       Text(
-                        model.userName != null ? model.userName : 'Loading...',
+                        model.groupName != null
+                            ? model.groupName
+                            : 'Loading...',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -61,20 +63,20 @@ class UserSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('アカウント情報'),
+                  title: Text('グループ情報'),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () async {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserUpdateScreen(
-                          userID: userID,
-                          userName: model.userName,
-                          userImageURL: model.userImageURL,
+                        builder: (context) => GroupUpdateScreen(
+                          groupID: groupID,
+                          groupName: model.groupName,
+                          groupImageURL: model.groupImageURL,
                         ),
                       ),
                     );
-                    model.init(userID: userID);
+                    model.init(groupID: groupID);
                   },
                 ),
               ),
@@ -84,17 +86,16 @@ class UserSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('ログインとセキュリティ'),
+                  title: Text('メンバー'),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () async {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            UserSecurityScreen(userID: userID),
+                        builder: (context) => GroupMemberScreen(),
                       ),
                     );
-                    model.init(userID: userID);
+                    model.init(groupID: groupID);
                   },
                 ),
               ),

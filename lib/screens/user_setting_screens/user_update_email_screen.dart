@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserUpdateEmailScreen extends StatelessWidget {
-  UserUpdateEmailScreen({this.userID, this.email});
-  final userID;
+  UserUpdateEmailScreen({this.email});
   final email;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -13,7 +12,7 @@ class UserUpdateEmailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     emailController.text = email;
     return ChangeNotifierProvider<UserUpdateEmailModel>(
-      create: (_) => UserUpdateEmailModel()..init(userID: userID, email: email),
+      create: (_) => UserUpdateEmailModel()..init(email: email),
       child: Consumer<UserUpdateEmailModel>(builder: (context, model, child) {
         return Stack(
           children: [

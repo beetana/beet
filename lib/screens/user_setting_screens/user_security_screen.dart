@@ -1,5 +1,6 @@
 import 'package:beet/models/user_setting_models/user_security_model.dart';
 import 'package:beet/screens/login_screen.dart';
+import 'package:beet/screens/user_setting_screens/user_update_email_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,15 +29,16 @@ class UserSecurityScreen extends StatelessWidget {
                         subtitle: Text(model.email),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () async {
-//                          await Navigator.push(
-//                            context,
-//                            MaterialPageRoute(
-//                              builder: (context) => UserUpdateScreen(
-//                                userID: userID,
-//                              ),
-//                            ),
-//                          );
-//                          model.init(userID: userID);
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserUpdateEmailScreen(
+                                userID: userID,
+                                email: model.email,
+                              ),
+                            ),
+                          );
+                          model.init(userID: userID);
                         },
                       ),
                     ),

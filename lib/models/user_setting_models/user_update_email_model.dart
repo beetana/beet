@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserUpdateEmailModel extends ChangeNotifier {
-  String userID;
   String email = '';
   String password = '';
   bool isLoading = false;
   bool isAuthRequired = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void init({userID, email}) {
-    this.userID = userID;
+  void init({email}) {
     this.email = email;
   }
 

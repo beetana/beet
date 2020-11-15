@@ -1,9 +1,9 @@
-import 'package:beet/models/setting_models/user_update_model.dart';
+import 'package:beet/models/user_setting_models/user_edit_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class UserUpdateScreen extends StatelessWidget {
-  UserUpdateScreen({this.userID, this.userName, this.userImageURL});
+class UserEditScreen extends StatelessWidget {
+  UserEditScreen({this.userID, this.userName, this.userImageURL});
   final String userID;
   final String userName;
   final String userImageURL;
@@ -12,14 +12,14 @@ class UserUpdateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     userNameController.text = userName;
-    return ChangeNotifierProvider<UserUpdateModel>(
-      create: (_) => UserUpdateModel()
+    return ChangeNotifierProvider<UserEditModel>(
+      create: (_) => UserEditModel()
         ..init(
           userID: userID,
           userName: userName,
           userImageURL: userImageURL,
         ),
-      child: Consumer<UserUpdateModel>(builder: (context, model, child) {
+      child: Consumer<UserEditModel>(builder: (context, model, child) {
         return Stack(
           children: [
             Scaffold(

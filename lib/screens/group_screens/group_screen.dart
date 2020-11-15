@@ -3,7 +3,7 @@ import 'package:beet/screens/drawer_screen.dart';
 import 'package:beet/screens/group_screens/group_calendar_screen.dart';
 import 'package:beet/screens/group_screens/group_main_screen.dart';
 import 'package:beet/screens/group_screens/group_song_list_screen.dart';
-import 'package:beet/screens/setting_screens/group_setting_screen.dart';
+import 'package:beet/screens/group_setting_screens/group_setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

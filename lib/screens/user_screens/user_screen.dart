@@ -1,6 +1,6 @@
 import 'package:beet/models/user_models/user_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
-import 'package:beet/screens/setting_screens/user_setting_screen.dart';
+import 'package:beet/screens/user_setting_screens/user_setting_screen.dart';
 import 'package:beet/screens/user_screens/user_calendar_screen.dart';
 import 'package:beet/screens/user_screens/user_main_screen.dart';
 import 'package:flutter/material.dart';

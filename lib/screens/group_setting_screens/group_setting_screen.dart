@@ -1,6 +1,6 @@
-import 'package:beet/models/setting_models/group_setting_model.dart';
-import 'package:beet/screens/setting_screens/group_member_screen.dart';
-import 'package:beet/screens/setting_screens/group_update_screen.dart';
+import 'package:beet/models/group_setting_models/group_setting_model.dart';
+import 'package:beet/screens/group_setting_screens/group_member_screen.dart';
+import 'package:beet/screens/group_setting_screens/group_update_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

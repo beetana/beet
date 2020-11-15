@@ -28,7 +28,6 @@ class WelcomeModel extends ChangeNotifier {
           .user;
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'name': name,
-        'email': email,
         'groupCount': 0,
         'createdAt': Timestamp.now(),
       });

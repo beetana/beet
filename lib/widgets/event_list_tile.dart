@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 class EventListTile extends StatelessWidget {
   final String eventTitle;
   final String eventPlace;
+  final bool isPrivateEvent;
   final bool isAllDay;
   final DateTime startingDateTime;
   final DateTime endingDateTime;
@@ -14,6 +15,7 @@ class EventListTile extends StatelessWidget {
   EventListTile({
     this.eventTitle,
     this.eventPlace,
+    this.isPrivateEvent,
     this.isAllDay,
     this.startingDateTime,
     this.endingDateTime,
@@ -24,47 +26,66 @@ class EventListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Material(
-          color: Colors.black12,
-          borderRadius: BorderRadius.circular(10.0),
-          child: InkWell(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        children: [
+          EventPlannerImage(isPrivateEvent: isPrivateEvent),
+          Expanded(
+            child: Material(
+              color: Colors.black26,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(3.0),
+                topRight: Radius.circular(10.0),
+                bottomRight: Radius.circular(10.0),
+                bottomLeft: Radius.circular(30.0),
+              ),
+              child: InkWell(
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(eventTitle),
-                      Visibility(
-                        visible: eventPlace.isNotEmpty,
-                        child: Text(
-                          '@ $eventPlace',
-                          style: TextStyle(color: Colors.black54),
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(eventTitle),
+                          Visibility(
+                            visible: eventPlace.isNotEmpty,
+                            child: Text(
+                              '@ $eventPlace',
+                              style: TextStyle(color: Colors.black54),
+                            ),
+                          ),
+                        ],
                       ),
+                      EventDateTimeWidget(
+                          isAllDay: isAllDay,
+                          dateFormat: dateFormat,
+                          startingDateTime: startingDateTime,
+                          endingDateTime: endingDateTime,
+                          timeFormat: timeFormat),
                     ],
                   ),
-                  EventDateTimeWidget(
-                      isAllDay: isAllDay,
-                      dateFormat: dateFormat,
-                      startingDateTime: startingDateTime,
-                      endingDateTime: endingDateTime,
-                      timeFormat: timeFormat),
-                ],
+                ),
+                onTap: onTap,
               ),
             ),
-            onTap: onTap,
           ),
-        ),
+        ],
       ),
     );
+  }
+}
+
+class EventPlannerImage extends StatelessWidget {
+  final bool isPrivateEvent;
+  EventPlannerImage({
+    @required this.isPrivateEvent,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return isPrivateEvent ? SizedBox() : Text('test');
   }
 }
 

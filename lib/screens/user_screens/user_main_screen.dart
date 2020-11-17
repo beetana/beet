@@ -34,6 +34,7 @@ class UserMainScreen extends StatelessWidget {
                         return EventListTile(
                           eventTitle: event.eventTitle,
                           eventPlace: event.eventPlace,
+                          isPrivateEvent: false,
                           isAllDay: event.isAllDay,
                           startingDateTime: event.startingDateTime,
                           endingDateTime: event.endingDateTime,

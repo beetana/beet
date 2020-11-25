@@ -27,14 +27,14 @@ class UserMainScreen extends StatelessWidget {
                 Expanded(
                   child: ListView.builder(
                       physics: AlwaysScrollableScrollPhysics(),
-                      itemExtent: 80.0,
+                      itemExtent: 100.0,
                       itemCount: model.eventList.length,
                       itemBuilder: (context, index) {
                         final event = model.eventList[index];
                         return EventListTile(
                           eventTitle: event.eventTitle,
                           eventPlace: event.eventPlace,
-                          isPrivateEvent: false,
+                          isPrivateEvent: true,
                           isAllDay: event.isAllDay,
                           startingDateTime: event.startingDateTime,
                           endingDateTime: event.endingDateTime,

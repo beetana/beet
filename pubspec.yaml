@@ -20,6 +20,7 @@ dependencies:
   cloud_firestore: ^0.14.2
   firebase_storage: ^5.0.0
   firebase_auth: ^0.18.2
+  firebase_dynamic_links: ^0.6.2
   implicitly_animated_reorderable_list: ^0.3.2
   table_calendar: ^2.3.0
   intl: ^0.16.1

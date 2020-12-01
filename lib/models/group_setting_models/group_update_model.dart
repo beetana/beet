@@ -38,7 +38,7 @@ class GroupUpdateModel extends ChangeNotifier {
           .collection('groups')
           .doc(groupID)
           .update({
-        'groupName': groupName,
+        'name': groupName,
       });
     } catch (e) {
       print(e.toString());

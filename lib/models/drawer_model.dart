@@ -29,7 +29,7 @@ class DrawerModel extends ChangeNotifier {
     for (String id in groupID) {
       DocumentSnapshot groupDoc =
           await FirebaseFirestore.instance.collection('groups').doc(id).get();
-      groupName.add(groupDoc['groupName']);
+      groupName.add(groupDoc['name']);
     }
     notifyListeners();
   }

@@ -10,7 +10,7 @@ class GroupSettingModel extends ChangeNotifier {
         .collection('groups')
         .doc(groupID)
         .get();
-    groupName = groupDoc['groupName'];
+    groupName = groupDoc['name'];
     groupImageURL = groupDoc['imageURL'];
     notifyListeners();
   }

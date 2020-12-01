@@ -10,7 +10,7 @@ class GroupModel extends ChangeNotifier {
         .collection('groups')
         .doc(groupID)
         .get();
-    groupName = groupDoc['groupName'];
+    groupName = groupDoc['name'];
     notifyListeners();
   }
 

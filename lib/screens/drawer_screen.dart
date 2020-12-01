@@ -56,17 +56,12 @@ class DrawerScreen extends StatelessWidget {
                         );
                       }),
                 ),
-                FlatButton(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.add,
-                        color: Colors.black54,
-                      ),
-                      Text('グループを作成'),
-                    ],
+                FlatButton.icon(
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.black54,
                   ),
+                  label: Text('グループを作成'),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -76,7 +71,7 @@ class DrawerScreen extends StatelessWidget {
                       ),
                     );
                   },
-                )
+                ),
               ],
             ),
           );

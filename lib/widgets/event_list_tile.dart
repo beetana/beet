@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EventListTile extends StatelessWidget {
+  final String imageURL;
+  final String name;
   final String eventTitle;
   final String eventPlace;
   final bool isAllDay;
@@ -12,59 +14,130 @@ class EventListTile extends StatelessWidget {
   final DateFormat timeFormat = DateFormat('H:mm');
 
   EventListTile({
-    this.eventTitle,
-    this.eventPlace,
-    this.isAllDay,
-    this.startingDateTime,
-    this.endingDateTime,
-    this.onTap,
+    this.imageURL,
+    this.name,
+    @required this.eventTitle,
+    @required this.eventPlace,
+    @required this.isAllDay,
+    @required this.startingDateTime,
+    @required this.endingDateTime,
+    @required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Material(
-          color: Colors.black12,
-          borderRadius: BorderRadius.circular(10.0),
-          child: InkWell(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          EventPlannerImage(imageURL: imageURL, name: name),
+          SizedBox(height: 5.0),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(width: 2.0),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: InkWell(
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(eventTitle),
-                      Visibility(
-                        visible: eventPlace.isNotEmpty,
-                        child: Text(
-                          '@ $eventPlace',
-                          style: TextStyle(color: Colors.black54),
-                        ),
+                      EventOverViewWidget(
+                        eventTitle: eventTitle,
+                        eventPlace: eventPlace,
                       ),
+                      EventDateTimeWidget(
+                          isAllDay: isAllDay,
+                          dateFormat: dateFormat,
+                          startingDateTime: startingDateTime,
+                          endingDateTime: endingDateTime,
+                          timeFormat: timeFormat),
                     ],
                   ),
-                  EventDateTimeWidget(
-                      isAllDay: isAllDay,
-                      dateFormat: dateFormat,
-                      startingDateTime: startingDateTime,
-                      endingDateTime: endingDateTime,
-                      timeFormat: timeFormat),
-                ],
+                ),
+                onTap: onTap,
               ),
             ),
-            onTap: onTap,
           ),
-        ),
+        ],
       ),
     );
+  }
+}
+
+class EventPlannerImage extends StatelessWidget {
+  final String imageURL;
+  final String name;
+  EventPlannerImage({
+    this.imageURL,
+    this.name,
+  });
+  @override
+  Widget build(BuildContext context) {
+    if (imageURL != null) {
+      return Row(
+        children: [
+          Container(
+            width: 30.0,
+            height: 30.0,
+            child: CircleAvatar(
+              backgroundImage: imageURL != null
+                  ? NetworkImage(imageURL)
+                  : AssetImage('images/test_user_image.png'),
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+          SizedBox(width: 5.0),
+          Text(
+            name,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
+      );
+    } else {
+      return SizedBox();
+    }
+  }
+}
+
+class EventOverViewWidget extends StatelessWidget {
+  EventOverViewWidget({
+    @required this.eventTitle,
+    @required this.eventPlace,
+  });
+
+  final String eventTitle;
+  final String eventPlace;
+
+  @override
+  Widget build(BuildContext context) {
+    if (eventPlace.isNotEmpty) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            eventTitle,
+            style: TextStyle(fontSize: 16.0),
+          ),
+          Text(
+            '@ $eventPlace',
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 14.0,
+            ),
+          ),
+        ],
+      );
+    } else
+      return Text(
+        eventTitle,
+        style: TextStyle(fontSize: 16.0),
+      );
   }
 }
 
@@ -86,31 +159,28 @@ class EventDateTimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isAllDay == false) {
-      return Padding(
-        padding: EdgeInsets.symmetric(vertical: 2.0),
-        child: Row(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Text(dateFormat.format(startingDateTime)),
-                Text('~ ${dateFormat.format(endingDateTime)}'),
-              ],
-            ),
-            SizedBox(
-              width: 8.0,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Text(timeFormat.format(startingDateTime)),
-                Text(timeFormat.format(endingDateTime)),
-              ],
-            ),
-          ],
-        ),
+      return Row(
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Text(dateFormat.format(startingDateTime)),
+              Text('~ ${dateFormat.format(endingDateTime)}'),
+            ],
+          ),
+          SizedBox(
+            width: 8.0,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Text(timeFormat.format(startingDateTime)),
+              Text(timeFormat.format(endingDateTime)),
+            ],
+          ),
+        ],
       );
     } else if (dateFormat.format(startingDateTime) ==
         dateFormat.format(endingDateTime)) {

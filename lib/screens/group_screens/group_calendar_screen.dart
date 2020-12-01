@@ -111,7 +111,7 @@ class GroupCalendarScreen extends StatelessWidget {
                     padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
                     child: ListView.builder(
                         physics: AlwaysScrollableScrollPhysics(),
-                        itemExtent: 80.0,
+                        itemExtent: 90.0,
                         itemCount: model.selectedEvents.length,
                         itemBuilder: (context, index) {
                           Event event = model.selectedEvents[index];

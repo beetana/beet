@@ -1,17 +1,19 @@
 import 'package:beet/event.dart';
+import 'package:beet/event_planner_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UserMainModel extends ChangeNotifier {
   DateTime currentDateTime = DateTime.now();
   List<Event> eventList = [];
-  List<String> myIDList = [];
+  Map<String, EventPlannerInfo> eventPlanner = {};
   bool isLoading = false;
 
   Future getEventList(userID) async {
     isLoading = true;
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
-    myIDList = [userID];
+    List<String> myIDList = [userID];
+
     try {
       QuerySnapshot joiningGroupDoc = await FirebaseFirestore.instance
           .collection('users')
@@ -19,6 +21,8 @@ class UserMainModel extends ChangeNotifier {
           .collection('joiningGroup')
           .get();
       myIDList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
+
+      await fetchEventPlannerInfo(myIDList: myIDList);
 
       QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collectionGroup('events')
@@ -46,5 +50,21 @@ class UserMainModel extends ChangeNotifier {
     }
     isLoading = false;
     notifyListeners();
+  }
+
+  Future fetchEventPlannerInfo({myIDList}) async {
+    for (String id in myIDList) {
+      if (id.length == 28) {
+        DocumentSnapshot userDoc =
+            await FirebaseFirestore.instance.collection('users').doc(id).get();
+        EventPlannerInfo info = EventPlannerInfo.doc(userDoc);
+        eventPlanner[id] = info;
+      } else {
+        DocumentSnapshot groupDoc =
+            await FirebaseFirestore.instance.collection('groups').doc(id).get();
+        EventPlannerInfo info = EventPlannerInfo.doc(groupDoc);
+        eventPlanner[id] = info;
+      }
+    }
   }
 }

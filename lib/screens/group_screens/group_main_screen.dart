@@ -27,7 +27,7 @@ class GroupMainScreen extends StatelessWidget {
                 Expanded(
                   child: ListView.builder(
                       physics: AlwaysScrollableScrollPhysics(),
-                      itemExtent: 80.0,
+                      itemExtent: 90.0,
                       itemCount: model.eventList.length,
                       itemBuilder: (context, index) {
                         final event = model.eventList[index];

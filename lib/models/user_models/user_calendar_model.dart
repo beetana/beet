@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nholiday_jp/nholiday_jp.dart';
+import 'package:beet/event_planner_info.dart';
 
 class UserCalendarModel extends ChangeNotifier {
   DateTime now = DateTime.now();
@@ -10,6 +11,7 @@ class UserCalendarModel extends ChangeNotifier {
   List<Event> selectedEvents = [];
   Map<DateTime, List> events = {};
   Map<DateTime, List> holidays = {};
+  Map<String, EventPlannerInfo> eventPlanner = {};
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
 
@@ -33,6 +35,8 @@ class UserCalendarModel extends ChangeNotifier {
           .collection('joiningGroup')
           .get();
       myIDList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
+
+      await fetchEventPlannerInfo(myIDList: myIDList);
 
       QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collectionGroup('events')
@@ -63,6 +67,22 @@ class UserCalendarModel extends ChangeNotifier {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future fetchEventPlannerInfo({myIDList}) async {
+    for (String id in myIDList) {
+      if (id.length == 28) {
+        DocumentSnapshot userDoc =
+            await FirebaseFirestore.instance.collection('users').doc(id).get();
+        EventPlannerInfo info = EventPlannerInfo.doc(userDoc);
+        eventPlanner[id] = info;
+      } else {
+        DocumentSnapshot groupDoc =
+            await FirebaseFirestore.instance.collection('groups').doc(id).get();
+        EventPlannerInfo info = EventPlannerInfo.doc(groupDoc);
+        eventPlanner[id] = info;
+      }
     }
   }
 

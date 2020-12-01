@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EventListTile extends StatelessWidget {
+  final String imageURL;
+  final String name;
   final String eventTitle;
   final String eventPlace;
-  final bool isPrivateEvent;
   final bool isAllDay;
   final DateTime startingDateTime;
   final DateTime endingDateTime;
@@ -13,9 +14,10 @@ class EventListTile extends StatelessWidget {
   final DateFormat timeFormat = DateFormat('H:mm');
 
   EventListTile({
+    this.imageURL,
+    this.name,
     @required this.eventTitle,
     @required this.eventPlace,
-    @required this.isPrivateEvent,
     @required this.isAllDay,
     @required this.startingDateTime,
     @required this.endingDateTime,
@@ -29,7 +31,8 @@ class EventListTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          EventPlannerImage(isPrivateEvent: isPrivateEvent),
+          EventPlannerImage(imageURL: imageURL, name: name),
+          SizedBox(height: 5.0),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -67,13 +70,37 @@ class EventListTile extends StatelessWidget {
 }
 
 class EventPlannerImage extends StatelessWidget {
-  final bool isPrivateEvent;
+  final String imageURL;
+  final String name;
   EventPlannerImage({
-    this.isPrivateEvent,
+    this.imageURL,
+    this.name,
   });
   @override
   Widget build(BuildContext context) {
-    return isPrivateEvent ? Text('test') : SizedBox();
+    if (imageURL != null) {
+      return Row(
+        children: [
+          Container(
+            width: 30.0,
+            height: 30.0,
+            child: CircleAvatar(
+              backgroundImage: imageURL != null
+                  ? NetworkImage(imageURL)
+                  : AssetImage('images/test_user_image.png'),
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+          SizedBox(width: 5.0),
+          Text(
+            name,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
+      );
+    } else {
+      return SizedBox();
+    }
   }
 }
 

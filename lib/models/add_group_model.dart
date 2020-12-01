@@ -31,7 +31,7 @@ class AddGroupModel extends ChangeNotifier {
     try {
       final newGroup =
           await FirebaseFirestore.instance.collection('groups').add({
-        'groupName': groupName,
+        'name': groupName,
         'createdAt': Timestamp.now(),
         'userCount': 1,
       });
@@ -52,7 +52,7 @@ class AddGroupModel extends ChangeNotifier {
           .collection('joiningGroup')
           .doc(groupID)
           .set({
-        'groupName': groupName,
+        'name': groupName,
         'joinedAt': Timestamp.now(),
       });
       await FirebaseFirestore.instance

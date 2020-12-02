@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserSettingModel extends ChangeNotifier {
   String userName = '';
-  String userImageURL;
+  String userImageURL = '';
 
   Future init({userID}) async {
     DocumentSnapshot user =

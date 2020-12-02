@@ -19,7 +19,7 @@ class DrawerScreen extends StatelessWidget {
                   accountName: Text(model.userName),
                   accountEmail: Text(''),
                   currentAccountPicture: CircleAvatar(
-                    backgroundImage: model.userImageURL != null
+                    backgroundImage: model.userImageURL.isNotEmpty
                         ? NetworkImage(model.userImageURL)
                         : AssetImage('images/test_user_image.png'),
                     backgroundColor: Colors.transparent,

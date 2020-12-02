@@ -38,7 +38,7 @@ class UserEditScreen extends StatelessWidget {
                         child: CircleAvatar(
                           backgroundImage: model.imageFile != null
                               ? FileImage(model.imageFile)
-                              : model.userImageURL != null
+                              : model.userImageURL.isNotEmpty
                                   ? NetworkImage(model.userImageURL)
                                   : AssetImage('images/test_user_image.png'),
                           backgroundColor: Colors.transparent,

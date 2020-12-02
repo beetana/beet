@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class DrawerModel extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   String userID;
-  String userImageURL;
+  String userImageURL = '';
   String userName = '';
   List<String> groupName = [];
   List<String> groupID = [];

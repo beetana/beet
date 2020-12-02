@@ -32,6 +32,7 @@ class AddGroupModel extends ChangeNotifier {
       final newGroup =
           await FirebaseFirestore.instance.collection('groups').add({
         'name': groupName,
+        'imageURL': '',
         'createdAt': Timestamp.now(),
         'userCount': 1,
       });

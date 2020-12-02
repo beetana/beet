@@ -28,6 +28,7 @@ class WelcomeModel extends ChangeNotifier {
           .user;
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'name': name,
+        'imageURL': '',
         'groupCount': 0,
         'createdAt': Timestamp.now(),
       });

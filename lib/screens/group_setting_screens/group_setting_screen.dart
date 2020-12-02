@@ -43,7 +43,7 @@ class GroupSettingScreen extends StatelessWidget {
                         width: 128.0,
                         height: 128.0,
                         child: CircleAvatar(
-                          backgroundImage: model.groupImageURL != null
+                          backgroundImage: model.groupImageURL.isNotEmpty
                               ? NetworkImage(model.groupImageURL)
                               : AssetImage('images/test_user_image.png'),
                           backgroundColor: Colors.transparent,

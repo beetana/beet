@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 class UserEditModel extends ChangeNotifier {
   String userID;
   String userName = '';
-  String userImageURL;
+  String userImageURL = '';
   File imageFile;
   bool isLoading = false;
 

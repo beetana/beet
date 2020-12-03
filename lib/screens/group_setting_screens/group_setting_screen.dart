@@ -92,7 +92,8 @@ class GroupSettingScreen extends StatelessWidget {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GroupMemberScreen(),
+                        builder: (context) =>
+                            GroupMemberScreen(groupID: groupID),
                       ),
                     );
                     model.init(groupID: groupID);

@@ -343,6 +343,8 @@ PODS:
   - nanopb/decode (1.30906.0)
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.10)
+  - share (0.0.1):
+    - Flutter
   - TOCropViewController (2.5.5)
 
 DEPENDENCIES:
@@ -355,6 +357,7 @@ DEPENDENCIES:
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - share (from `.symlinks/plugins/share/ios`)
 
 SPEC REPOS:
   trunk:
@@ -396,6 +399,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
+  share:
+    :path: ".symlinks/plugins/share/ios"
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -424,6 +429,7 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
+  share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
 
 PODFILE CHECKSUM: 84878806e4d88a0951b2d8ce11267485effbcb2a

@@ -1,12 +1,15 @@
 import 'package:beet/models/group_setting_models/group_member_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 class GroupMemberScreen extends StatelessWidget {
+  GroupMemberScreen({this.groupID});
+  final groupID;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupMemberModel>(
-      create: (_) => GroupMemberModel(),
+      create: (_) => GroupMemberModel()..init(groupID: groupID),
       child: Consumer<GroupMemberModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -16,21 +19,25 @@ class GroupMemberScreen extends StatelessWidget {
               ),
               body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  children: [
-                    RaisedButton(
-                        child: Text('OK'),
+                child: Container(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton.icon(
+                        icon: Icon(
+                          Icons.group_add,
+                          color: Colors.black54,
+                        ),
+                        label: Text('メンバーを招待'),
                         onPressed: () async {
-                          model.startLoading();
-                          try {
-                            await _showTextDialog(context, 'プロフィール画像を保存しました');
-                            Navigator.pop(context);
-                          } catch (e) {
-                            await _showTextDialog(context, e.toString());
-                          }
-                          model.endLoading();
-                        }),
-                  ],
+                          await model.createDynamicLink();
+                          Share.share(
+                              'beetへの招待が届いています！\n下記の2ステップで招待を承諾すると、家族間で牧場の情報を共有することができます。\n①アプリをダウンロードiOS\niOSリンク\nAndroid\nAndroidリンク\n②ダウンロード後、以下の招待リンクをタップ\nダイナミックリンク');
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

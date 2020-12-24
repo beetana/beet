@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 
 class GroupMemberModel extends ChangeNotifier {
   String groupID;
+  String groupName;
+  Uri dynamicLink;
   bool isLoading = false;
 
-  void init({groupID}) {
+  void init({groupID, groupName}) {
     this.groupID = groupID;
+    this.groupName = groupName;
     notifyListeners();
   }
 
@@ -22,8 +25,8 @@ class GroupMemberModel extends ChangeNotifier {
 
   Future createDynamicLink() async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://beet.page.link',
-      link: Uri.parse('https://beet.page.link/?id=$groupID'),
+      uriPrefix: 'https://beetana.page.link',
+      link: Uri.parse('https://beetana.page.link/?id=$groupID&name=$groupName'),
       androidParameters: AndroidParameters(
         packageName: 'com.beetana.beet',
         minimumVersion: 1,
@@ -31,14 +34,20 @@ class GroupMemberModel extends ChangeNotifier {
       iosParameters: IosParameters(
         bundleId: 'com.beetana.beet',
         minimumVersion: '1',
+        fallbackUrl:
+            Uri.parse('https://apps.apple.com/jp/app/memow/id1518582060'),
       ),
     );
 
-    Uri dynamicUrl = await parameters.buildUrl();
-    print(dynamicUrl);
-
-//    final ShortDynamicLink shortDynamicLink = await parameters.buildShortLink();
-//    final Uri shortUrl = shortDynamicLink.shortUrl;
-//    print(shortUrl);
+    Uri link = await parameters.buildUrl();
+    final ShortDynamicLink shortenedLink =
+        await DynamicLinkParameters.shortenUrl(
+      link,
+      DynamicLinkParametersOptions(
+          shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
+    );
+    dynamicLink = shortenedLink.shortUrl;
+    print('$dynamicLink');
+    print('$dynamicLink?d=1');
   }
 }

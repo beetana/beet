@@ -1,15 +1,17 @@
 import 'package:beet/models/group_setting_models/group_member_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:share/share.dart';
 
 class GroupMemberScreen extends StatelessWidget {
-  GroupMemberScreen({this.groupID});
+  GroupMemberScreen({this.groupID, this.groupName});
   final groupID;
+  final groupName;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupMemberModel>(
-      create: (_) => GroupMemberModel()..init(groupID: groupID),
+      create: (_) =>
+          GroupMemberModel()..init(groupID: groupID, groupName: groupName),
       child: Consumer<GroupMemberModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -32,8 +34,7 @@ class GroupMemberScreen extends StatelessWidget {
                         label: Text('メンバーを招待'),
                         onPressed: () async {
                           await model.createDynamicLink();
-                          Share.share(
-                              'beetへの招待が届いています！\n下記の2ステップで招待を承諾すると、家族間で牧場の情報を共有することができます。\n①アプリをダウンロードiOS\niOSリンク\nAndroid\nAndroidリンク\n②ダウンロード後、以下の招待リンクをタップ\nダイナミックリンク');
+                          await _inviteMemberDialog(context, model.dynamicLink);
                         },
                       ),
                     ],
@@ -74,6 +75,56 @@ Future _showTextDialog(context, message) async {
               Navigator.pop(context);
             },
           ),
+        ],
+      );
+    },
+  );
+}
+
+Future _inviteMemberDialog(context, dynamicLink) async {
+  final String inviteMessage =
+      'beetのグループへの招待が届きました。\n招待リンクをタップしてグループに参加しましょう。\n▶︎まずはbeetをダウンロード\niOS\niOSリンク\nAndroid\nAndroidリンク\n▶︎ダウンロード後、以下の招待リンクをタップ\n$dynamicLink';
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return SimpleDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.0),
+          ),
+        ),
+        title: Text('次のメッセージをシェアしてグループに参加してもらいましょう。'),
+        titleTextStyle: TextStyle(fontSize: 16.0, color: Colors.black),
+        titlePadding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+        children: [
+          SimpleDialogOption(
+            child: Text(
+              inviteMessage,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(height: 8.0),
+          SimpleDialogOption(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(width: 2.0, color: Colors.blue),
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              child: Center(
+                  child: Text(
+                'メッセージをコピー',
+                style: TextStyle(color: Colors.blue),
+              )),
+            ),
+            onPressed: () async {
+              final ClipboardData data = ClipboardData(text: inviteMessage);
+              await Clipboard.setData(data);
+              await _showTextDialog(context, 'コピーしました!');
+              Navigator.pop(context);
+            },
+          )
         ],
       );
     },

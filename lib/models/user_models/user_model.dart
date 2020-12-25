@@ -10,7 +10,6 @@ class UserModel extends ChangeNotifier {
   final dynamicLinks = DynamicLinksServices();
 
   Future init({String userID, BuildContext context}) async {
-//    this.context = context;
     dynamicLinks.fetchLinkData(context);
 
     DocumentSnapshot userDoc =

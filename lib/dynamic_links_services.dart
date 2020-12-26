@@ -5,7 +5,39 @@ import 'package:flutter/material.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class DynamicLinksServices {
+  Uri dynamicLink;
   BuildContext context;
+  User user = FirebaseAuth.instance.currentUser;
+
+  Future<Uri> createDynamicLink({String groupID, String groupName}) async {
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
+      uriPrefix: 'https://beetana.page.link',
+      link: Uri.parse('https://beetana.page.link/?id=$groupID&name=$groupName'),
+      androidParameters: AndroidParameters(
+        packageName: 'com.beetana.beet',
+        minimumVersion: 1,
+      ),
+      iosParameters: IosParameters(
+        bundleId: 'com.beetana.beet',
+        minimumVersion: '1',
+        fallbackUrl:
+            Uri.parse('https://apps.apple.com/jp/app/memow/id1518582060'),
+      ),
+    );
+
+    Uri link = await parameters.buildUrl();
+    final ShortDynamicLink shortenedLink =
+        await DynamicLinkParameters.shortenUrl(
+      link,
+      DynamicLinkParametersOptions(
+          shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
+    );
+    dynamicLink = shortenedLink.shortUrl;
+    print('$dynamicLink');
+    print('$dynamicLink?d=1');
+    return dynamicLink;
+  }
+
   void fetchLinkData(context) async {
     this.context = context;
     PendingDynamicLinkData link =
@@ -75,8 +107,51 @@ class DynamicLinksServices {
     );
   }
 
+  void promptLogin(context) async {
+    this.context = context;
+
+    PendingDynamicLinkData link =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+    if (link != null) {
+      promptLoginDialog(context);
+    }
+    print('complete getInitialLink');
+
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData dynamicLink) async {
+      if (dynamicLink != null) {
+        promptLoginDialog(context);
+      }
+      print('complete onLink');
+    });
+  }
+
+  Future promptLoginDialog(context) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(5.0),
+            ),
+          ),
+          title: Text('ログインしてからお試しください。'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future joinGroup(groupID, groupName) async {
-    String userID = FirebaseAuth.instance.currentUser.uid;
+    String userID = user.uid;
     String userName;
     final userDocRef =
         FirebaseFirestore.instance.collection('users').doc(userID);

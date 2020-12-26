@@ -1,3 +1,4 @@
+import 'package:beet/dynamic_links_services.dart';
 import 'package:beet/models/group_setting_models/group_member_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,11 +8,12 @@ class GroupMemberScreen extends StatelessWidget {
   GroupMemberScreen({this.groupID, this.groupName});
   final groupID;
   final groupName;
+  final dynamicLinks = DynamicLinksServices();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupMemberModel>(
-      create: (_) =>
-          GroupMemberModel()..init(groupID: groupID, groupName: groupName),
+      create: (_) => GroupMemberModel(),
       child: Consumer<GroupMemberModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -33,8 +35,13 @@ class GroupMemberScreen extends StatelessWidget {
                         ),
                         label: Text('メンバーを招待'),
                         onPressed: () async {
-                          await model.createDynamicLink();
-                          await _inviteMemberDialog(context, model.dynamicLink);
+                          model.startLoading();
+                          Uri link = await dynamicLinks.createDynamicLink(
+                            groupID: groupID,
+                            groupName: groupName,
+                          );
+                          model.endLoading();
+                          await _inviteMemberDialog(context, link);
                         },
                       ),
                     ],

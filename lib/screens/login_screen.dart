@@ -11,7 +11,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<WelcomeModel>(
-      create: (_) => WelcomeModel(),
+      create: (_) => WelcomeModel()..init(context),
       child: Scaffold(
         body: Consumer<WelcomeModel>(builder: (context, model, child) {
           return Padding(

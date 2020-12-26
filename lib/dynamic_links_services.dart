@@ -61,7 +61,7 @@ class DynamicLinksServices {
       final queryParams = deepLink.queryParameters;
       invitedGroupID = queryParams['id'];
       invitedGroupName = queryParams['name'];
-      showTextDialog(context, invitedGroupID, invitedGroupName);
+      invitedDialog(context, invitedGroupID, invitedGroupName);
 
       print(queryParams);
       print('招待されたグループのIDは${queryParams['id']}');
@@ -69,7 +69,7 @@ class DynamicLinksServices {
     }
   }
 
-  Future showTextDialog(context, groupID, groupName) async {
+  Future invitedDialog(context, groupID, groupName) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -84,15 +84,23 @@ class DynamicLinksServices {
             FlatButton(
               child: Text('参加'),
               onPressed: () async {
-                await joinGroup(groupID, groupName);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => GroupScreen(
-                      groupID: groupID,
+                showIndicator(context);
+                final isAlreadyJoin = await joinGroup(groupID, groupName);
+                if (isAlreadyJoin == true) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  await alertMessageDialog(context, 'すでにグループに参加しています');
+                } else {
+                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => GroupScreen(
+                        groupID: groupID,
+                      ),
                     ),
-                  ),
-                );
+                  );
+                }
               },
             ),
             FlatButton(
@@ -113,20 +121,20 @@ class DynamicLinksServices {
     PendingDynamicLinkData link =
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (link != null) {
-      promptLoginDialog(context);
+      alertMessageDialog(context, 'ログインしてからお試しください。');
     }
     print('complete getInitialLink');
 
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
       if (dynamicLink != null) {
-        promptLoginDialog(context);
+        alertMessageDialog(context, 'ログインしてからお試しください。');
       }
       print('complete onLink');
     });
   }
 
-  Future promptLoginDialog(context) async {
+  Future alertMessageDialog(context, message) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -136,7 +144,7 @@ class DynamicLinksServices {
               Radius.circular(5.0),
             ),
           ),
-          title: Text('ログインしてからお試しください。'),
+          title: Text(message),
           actions: <Widget>[
             FlatButton(
               child: Text('OK'),
@@ -150,9 +158,10 @@ class DynamicLinksServices {
     );
   }
 
-  Future joinGroup(groupID, groupName) async {
+  Future<bool> joinGroup(groupID, groupName) async {
     String userID = user.uid;
     String userName;
+    bool isAlreadyJoin = false;
     final userDocRef =
         FirebaseFirestore.instance.collection('users').doc(userID);
     final groupDocRef =
@@ -181,9 +190,27 @@ class DynamicLinksServices {
         await userDocRef.update({
           'groupCount': FieldValue.increment(1),
         });
+      } else {
+        isAlreadyJoin = true;
       }
     } catch (e) {
       print(e.toString());
     }
+    print(isAlreadyJoin);
+    return isAlreadyJoin;
+  }
+
+  void showIndicator(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.black.withOpacity(0.3),
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
+    );
   }
 }

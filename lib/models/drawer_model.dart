@@ -11,8 +11,7 @@ class DrawerModel extends ChangeNotifier {
   List<String> groupID = [];
 
   Future init() async {
-    Auth.User user = _auth.currentUser;
-    userID = user.uid;
+    userID = _auth.currentUser.uid;
     DocumentSnapshot userDoc =
         await FirebaseFirestore.instance.collection('users').doc(userID).get();
 

@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -7,7 +7,7 @@ class AddGroupModel extends ChangeNotifier {
   String groupName = '';
   String groupID;
   bool isLoading = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _auth = Auth.FirebaseAuth.instance;
 
   void init(userName) {
     this.userName = userName;
@@ -27,7 +27,7 @@ class AddGroupModel extends ChangeNotifier {
     if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
-    User user = _auth.currentUser;
+    Auth.User user = _auth.currentUser;
     try {
       final newGroup =
           await FirebaseFirestore.instance.collection('groups').add({

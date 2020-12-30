@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 
 class UserSecurityModel extends ChangeNotifier {
@@ -8,7 +8,7 @@ class UserSecurityModel extends ChangeNotifier {
 
   void init({userID}) {
     this.userID = userID;
-    final firebaseUser = FirebaseAuth.instance.currentUser;
+    final firebaseUser = Auth.FirebaseAuth.instance.currentUser;
     email = firebaseUser.email;
     notifyListeners();
   }
@@ -25,7 +25,7 @@ class UserSecurityModel extends ChangeNotifier {
 
   Future logout() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      await Auth.FirebaseAuth.instance.signOut();
     } catch (e) {
       print(e.toString());
       throw ('エラーが発生しました');

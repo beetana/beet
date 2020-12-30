@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DrawerModel extends ChangeNotifier {
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final _auth = Auth.FirebaseAuth.instance;
   String userID;
   String userImageURL = '';
   String userName = '';
@@ -11,7 +11,7 @@ class DrawerModel extends ChangeNotifier {
   List<String> groupID = [];
 
   Future init() async {
-    User user = auth.currentUser;
+    Auth.User user = _auth.currentUser;
     userID = user.uid;
     DocumentSnapshot userDoc =
         await FirebaseFirestore.instance.collection('users').doc(userID).get();

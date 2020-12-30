@@ -1,10 +1,8 @@
 import 'package:beet/dynamic_links_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserModel extends ChangeNotifier {
-  final FirebaseAuth auth = FirebaseAuth.instance;
   String userName = '';
   int currentIndex = 0;
   BuildContext context;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserUpdatePasswordModel extends ChangeNotifier {
   String currentPassword = '';
   String newPassword = '';
   String confirmNewPassword = '';
   bool isLoading = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _auth = Auth.FirebaseAuth.instance;
 
   void startLoading() {
     isLoading = true;
@@ -36,7 +36,7 @@ class UserUpdatePasswordModel extends ChangeNotifier {
       throw ('現在のパスワードとは異なるパスワードを作成してください');
     }
     try {
-      await user.reauthenticateWithCredential(EmailAuthProvider.credential(
+      await user.reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
         email: user.email,
         password: currentPassword,
       ));

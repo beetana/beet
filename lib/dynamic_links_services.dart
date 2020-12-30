@@ -1,13 +1,13 @@
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class DynamicLinksServices {
   Uri dynamicLink;
   BuildContext context;
-  User user = FirebaseAuth.instance.currentUser;
+  Auth.User user = Auth.FirebaseAuth.instance.currentUser;
 
   Future<Uri> createDynamicLink({String groupID, String groupName}) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(

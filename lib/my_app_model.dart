@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 class MyAppModel {
   String userID;
+  User user;
 
   // ignore: close_sinks
   final _userStateStreamController = StreamController<UserState>();
@@ -60,6 +61,7 @@ class MyAppModel {
       return null;
     }
     User user = User.doc(doc);
+    this.user = user;
     userID = user.id;
     return user;
   }

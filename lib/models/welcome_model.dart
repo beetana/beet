@@ -32,13 +32,13 @@ class WelcomeModel extends ChangeNotifier {
         password: password,
       ))
           .user;
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      userID = user.uid;
+      await FirebaseFirestore.instance.collection('users').doc(userID).set({
         'name': name,
         'imageURL': '',
         'groupCount': 0,
         'createdAt': Timestamp.now(),
       });
-      userID = user.uid;
     } catch (e) {
       throw (_convertErrorMessage(e.code));
     }

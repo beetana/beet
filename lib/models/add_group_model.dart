@@ -4,13 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddGroupModel extends ChangeNotifier {
   String userName = '';
+  String userImageURL = '';
   String groupName = '';
   String groupID;
   bool isLoading = false;
   final _auth = Auth.FirebaseAuth.instance;
 
-  void init(userName) {
+  void init({String userName, String userImageURL}) {
     this.userName = userName;
+    this.userImageURL = userImageURL;
   }
 
   void startLoading() {
@@ -43,8 +45,8 @@ class AddGroupModel extends ChangeNotifier {
           .collection('groupUsers')
           .doc(user.uid)
           .set({
-        'userID': user.uid,
-        'userName': userName,
+        'name': userName,
+        'imageURL': userImageURL,
         'joinedAt': Timestamp.now(),
       });
       await FirebaseFirestore.instance
@@ -54,6 +56,7 @@ class AddGroupModel extends ChangeNotifier {
           .doc(groupID)
           .set({
         'name': groupName,
+        'imageURL': '',
         'joinedAt': Timestamp.now(),
       });
       await FirebaseFirestore.instance

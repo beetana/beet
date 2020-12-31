@@ -53,8 +53,8 @@ class DynamicLinksServices {
   }
 
   void handleLinkData(PendingDynamicLinkData data) {
-    String invitedGroupID;
-    String invitedGroupName;
+    String invitedGroupID = '';
+    String invitedGroupName = '';
 
     final Uri deepLink = data?.link;
     if (deepLink != null) {
@@ -85,7 +85,7 @@ class DynamicLinksServices {
               child: Text('参加'),
               onPressed: () async {
                 showIndicator(context);
-                final isAlreadyJoin = await joinGroup(groupID, groupName);
+                final isAlreadyJoin = await joinGroup(groupID);
                 if (isAlreadyJoin == true) {
                   Navigator.pop(context);
                   Navigator.pop(context);
@@ -158,9 +158,12 @@ class DynamicLinksServices {
     );
   }
 
-  Future<bool> joinGroup(groupID, groupName) async {
+  Future<bool> joinGroup(groupID) async {
     String userID = user.uid;
-    String userName;
+    String userName = '';
+    String userImageURL = '';
+    String groupName = '';
+    String groupImageURL = '';
     bool isAlreadyJoin = false;
     final userDocRef =
         FirebaseFirestore.instance.collection('users').doc(userID);
@@ -175,9 +178,15 @@ class DynamicLinksServices {
       if (!joiningGroupDoc.exists) {
         final userDoc = await userDocRef.get();
         userName = userDoc['name'];
+        userImageURL = userDoc['imageURL'];
+
+        final groupDoc = await groupDocRef.get();
+        groupName = groupDoc['name'];
+        groupImageURL = groupDoc['imageURL'];
+
         await groupDocRef.collection('groupUsers').doc(userID).set({
-          'userID': userID,
-          'userName': userName,
+          'name': userName,
+          'imageURL': userImageURL,
           'joinedAt': Timestamp.now(),
         });
         await groupDocRef.update({
@@ -185,6 +194,7 @@ class DynamicLinksServices {
         });
         await userDocRef.collection('joiningGroup').doc(groupID).set({
           'name': groupName,
+          'imageURL': groupImageURL,
           'joinedAt': Timestamp.now(),
         });
         await userDocRef.update({

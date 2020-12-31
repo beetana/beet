@@ -66,8 +66,10 @@ class DrawerScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            AddGroupScreen(userName: model.userName),
+                        builder: (context) => AddGroupScreen(
+                          userName: model.userName,
+                          userImageURL: model.userImageURL,
+                        ),
                       ),
                     );
                   },

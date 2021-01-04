@@ -11,6 +11,7 @@ class UserEditModel extends ChangeNotifier {
   String userImageURL = '';
   File imageFile;
   bool isLoading = false;
+  List<String> joiningGroupsID = [];
 
   void init({userID, userName, userImageURL}) {
     this.userID = userID;
@@ -34,9 +35,25 @@ class UserEditModel extends ChangeNotifier {
       throw ('名前を入力してください');
     }
     try {
+      final joiningGroups = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userID)
+          .collection('joiningGroup')
+          .get();
+      joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
       await FirebaseFirestore.instance.collection('users').doc(userID).update({
         'name': userName,
       });
+      for (String groupID in joiningGroupsID) {
+        await FirebaseFirestore.instance
+            .collection('groups')
+            .doc(groupID)
+            .collection('groupUsers')
+            .doc(userID)
+            .update({
+          'name': userName,
+        });
+      }
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');
@@ -80,13 +97,27 @@ class UserEditModel extends ChangeNotifier {
       final storage = FirebaseStorage.instance;
       TaskSnapshot snapshot =
           await storage.ref().child("userImage/$userID").putFile(imageFile);
-      final imageURL = await snapshot.ref.getDownloadURL();
+      final String imageURL = await snapshot.ref.getDownloadURL();
+      final joiningGroups = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userID)
+          .collection('joiningGroup')
+          .get();
+      joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userID)
           .update({'imageURL': imageURL});
-      userImageURL = imageURL;
-      notifyListeners();
+      for (String groupID in joiningGroupsID) {
+        await FirebaseFirestore.instance
+            .collection('groups')
+            .doc(groupID)
+            .collection('groupUsers')
+            .doc(userID)
+            .update({
+          'imageURL': imageURL,
+        });
+      }
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

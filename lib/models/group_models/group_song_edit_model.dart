@@ -32,7 +32,7 @@ class GroupSongEditModel extends ChangeNotifier {
         'minute': playingTime,
       });
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
   }
@@ -46,7 +46,7 @@ class GroupSongEditModel extends ChangeNotifier {
           .doc(songID)
           .delete();
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
   }

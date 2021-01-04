@@ -204,7 +204,7 @@ class DynamicLinksServices {
         isAlreadyJoin = true;
       }
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
     print(isAlreadyJoin);
     return isAlreadyJoin;

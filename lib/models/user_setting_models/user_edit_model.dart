@@ -38,7 +38,7 @@ class UserEditModel extends ChangeNotifier {
         'name': userName,
       });
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
   }
@@ -88,7 +88,7 @@ class UserEditModel extends ChangeNotifier {
       userImageURL = imageURL;
       notifyListeners();
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
   }

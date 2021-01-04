@@ -9,23 +9,42 @@ class DrawerModel extends ChangeNotifier {
   String userName = '';
   List<String> groupName = [];
   List<String> groupID = [];
+  bool isLoading = false;
+
+  void startLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
 
   Future init() async {
+    startLoading();
     userID = _auth.currentUser.uid;
-    DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(userID).get();
+    try {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userID)
+          .get();
 
-    QuerySnapshot joiningGroup = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('joiningGroup')
-        .get();
+      QuerySnapshot joiningGroup = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userID)
+          .collection('joiningGroup')
+          .get();
 
-    userImageURL = userDoc['imageURL'];
-    userName = userDoc['name'];
-    groupID = (joiningGroup.docs.map((doc) => doc.id).toList());
-    groupName =
-        (joiningGroup.docs.map((doc) => doc['name'].toString()).toList());
-    notifyListeners();
+      userImageURL = userDoc['imageURL'];
+      userName = userDoc['name'];
+      groupID = (joiningGroup.docs.map((doc) => doc.id).toList());
+      groupName =
+          (joiningGroup.docs.map((doc) => doc['name'].toString()).toList());
+    } catch (e) {
+      print(e);
+    } finally {
+      endLoading();
+    }
   }
 }

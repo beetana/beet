@@ -35,42 +35,9 @@ class GroupMainModel extends ChangeNotifier {
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
     isLoading = false;
     notifyListeners();
   }
-
-//  void fetchLinkData() async {
-//    try {
-//      PendingDynamicLinkData link =
-//          await FirebaseDynamicLinks.instance.getInitialLink();
-//      handleLinkData(link);
-//      print('いえい');
-//      print('complete getInitialLink');
-//
-//      FirebaseDynamicLinks.instance.onLink(
-//          onSuccess: (PendingDynamicLinkData dynamicLink) async {
-//        handleLinkData(dynamicLink);
-//        print('complete onLink');
-//      });
-//    } catch (e) {
-//      print(e.toString());
-//    }
-//  }
-//
-//  void handleLinkData(PendingDynamicLinkData data) {
-//    final Uri deepLink = data?.link;
-//    if (deepLink != null) {
-//      final queryParams = deepLink.queryParameters;
-//      invitedGroupID = queryParams['id'];
-//      invitedGroupName = queryParams['name'];
-//      print('わーお');
-//      print(queryParams);
-//      print('招待されたグループのIDは$invitedGroupID');
-//      print('招待されたグループの名前は$invitedGroupName');
-//      notifyListeners();
-//      main(invitedGroupID: invitedGroupID, invitedGroupName: invitedGroupName);
-//    }
-//  }
 }

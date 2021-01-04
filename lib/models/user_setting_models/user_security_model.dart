@@ -27,7 +27,7 @@ class UserSecurityModel extends ChangeNotifier {
     try {
       await Auth.FirebaseAuth.instance.signOut();
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
   }

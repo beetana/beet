@@ -41,7 +41,7 @@ class GroupUpdateModel extends ChangeNotifier {
         'name': groupName,
       });
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
   }
@@ -91,7 +91,7 @@ class GroupUpdateModel extends ChangeNotifier {
       groupImageURL = imageURL;
       notifyListeners();
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
   }

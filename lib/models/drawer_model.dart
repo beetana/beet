@@ -24,12 +24,8 @@ class DrawerModel extends ChangeNotifier {
     userImageURL = userDoc['imageURL'];
     userName = userDoc['name'];
     groupID = (joiningGroup.docs.map((doc) => doc.id).toList());
-
-    for (String id in groupID) {
-      DocumentSnapshot groupDoc =
-          await FirebaseFirestore.instance.collection('groups').doc(id).get();
-      groupName.add(groupDoc['name']);
-    }
+    groupName =
+        (joiningGroup.docs.map((doc) => doc['name'].toString()).toList());
     notifyListeners();
   }
 }

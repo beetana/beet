@@ -40,23 +40,24 @@ class DrawerScreen extends StatelessWidget {
                   ),
                   Flexible(
                     child: ListView.builder(
-                        physics: const ScrollPhysics(),
-                        itemCount: model.groupName.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            title: Text(model.groupName[index]),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GroupScreen(
-                                    groupID: model.groupID[index],
-                                  ),
+                      physics: const ScrollPhysics(),
+                      itemCount: model.groupName.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          title: Text(model.groupName[index]),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GroupScreen(
+                                  groupID: model.groupID[index],
                                 ),
-                              );
-                            },
-                          );
-                        }),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                   FlatButton.icon(
                     icon: Icon(

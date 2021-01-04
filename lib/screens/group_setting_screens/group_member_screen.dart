@@ -13,7 +13,7 @@ class GroupMemberScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupMemberModel>(
-      create: (_) => GroupMemberModel(),
+      create: (_) => GroupMemberModel()..init(groupID: groupID),
       child: Consumer<GroupMemberModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -22,12 +22,39 @@ class GroupMemberScreen extends StatelessWidget {
                 title: Text('メンバー'),
               ),
               body: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: 0.0),
                 child: Container(
                   width: double.infinity,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      Expanded(
+                        child: ListView.builder(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          itemCount: model.userNames.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: model
+                                        .userImageURLs[index].isNotEmpty
+                                    ? NetworkImage(model.userImageURLs[index])
+                                    : AssetImage('images/test_user_image.png'),
+                                backgroundColor: Colors.transparent,
+                              ),
+                              title: Text(model.userNames[index]),
+                              onTap: () {
+//                              Navigator.push(
+//                                context,
+//                                MaterialPageRoute(
+//                                  builder: (context) => GroupScreen(
+//                                    groupID: model.groupID[index],
+//                                  ),
+//                                ),
+//                              );
+                              },
+                            );
+                          },
+                        ),
+                      ),
                       FlatButton.icon(
                         icon: Icon(
                           Icons.group_add,

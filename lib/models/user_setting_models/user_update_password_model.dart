@@ -61,6 +61,6 @@ String _convertErrorMessage(e) {
     case 'too-many-requests':
       return 'しばらく待ってからお試し下さい';
     default:
-      return 'エラーが発生しました';
+      return '不明なエラーです';
   }
 }

@@ -67,18 +67,20 @@ class WelcomeModel extends ChangeNotifier {
 
 String _convertErrorMessage(e) {
   switch (e) {
-    case 'ERROR_INVALID_EMAIL':
+    case 'invalid-email':
       return 'メールアドレスを正しい形式で入力してください';
-    case 'ERROR_WRONG_PASSWORD':
+    case 'email-already-in-use':
+      return 'そのメールアドレスはすでに使用されています';
+    case 'wrong-password':
       return 'パスワードが間違っています';
-    case 'ERROR_USER_NOT_FOUND':
+    case 'weak-password':
+      return 'パスワードは6文字以上で作成してください';
+    case 'user-not-found':
       return 'ユーザーが見つかりません';
-    case 'ERROR_USER_DISABLED':
+    case 'user-disabled':
       return 'ユーザーが無効です';
-    case 'ERROR_TOO_MANY_REQUESTS':
-      return 'ログインに失敗しました。しばらく経ってから再度お試しください';
-    case 'ERROR_OPERATION_NOT_ALLOWED':
-      return 'ログインが許可されていません。管理者にご連絡ください';
+    case 'too-many-requests':
+      return 'しばらく待ってからお試し下さい';
     default:
       return '不明なエラーです';
   }

@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupSettingModel extends ChangeNotifier {
   String groupName = '';
-  String groupImageURL;
+  String groupImageURL = '';
 
   Future init({groupID}) async {
     DocumentSnapshot groupDoc = await FirebaseFirestore.instance

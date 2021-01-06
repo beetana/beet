@@ -85,7 +85,7 @@ class EventPlannerImage extends StatelessWidget {
             width: 30.0,
             height: 30.0,
             child: CircleAvatar(
-              backgroundImage: imageURL != null
+              backgroundImage: imageURL.isNotEmpty
                   ? NetworkImage(imageURL)
                   : AssetImage('images/test_user_image.png'),
               backgroundColor: Colors.transparent,

@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 class UserScreen extends StatelessWidget {
   UserScreen({this.userID});
   final String userID;
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> switchBody = [
@@ -16,7 +17,7 @@ class UserScreen extends StatelessWidget {
       UserCalendarScreen(userID: userID),
     ];
     return ChangeNotifierProvider<UserModel>(
-      create: (_) => UserModel()..init(userID: userID),
+      create: (_) => UserModel()..init(userID: userID, context: context),
       child: Consumer<UserModel>(builder: (context, model, child) {
         if (model.userName.isNotEmpty) {
           return Scaffold(

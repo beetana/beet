@@ -1,16 +1,18 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddGroupModel extends ChangeNotifier {
   String userName = '';
+  String userImageURL = '';
   String groupName = '';
   String groupID;
   bool isLoading = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _auth = Auth.FirebaseAuth.instance;
 
-  void init(userName) {
+  void init({String userName, String userImageURL}) {
     this.userName = userName;
+    this.userImageURL = userImageURL;
   }
 
   void startLoading() {
@@ -27,11 +29,12 @@ class AddGroupModel extends ChangeNotifier {
     if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
-    User user = _auth.currentUser;
+    Auth.User user = _auth.currentUser;
     try {
       final newGroup =
           await FirebaseFirestore.instance.collection('groups').add({
         'name': groupName,
+        'imageURL': '',
         'createdAt': Timestamp.now(),
         'userCount': 1,
       });
@@ -42,8 +45,8 @@ class AddGroupModel extends ChangeNotifier {
           .collection('groupUsers')
           .doc(user.uid)
           .set({
-        'userID': user.uid,
-        'userName': userName,
+        'name': userName,
+        'imageURL': userImageURL,
         'joinedAt': Timestamp.now(),
       });
       await FirebaseFirestore.instance
@@ -53,6 +56,7 @@ class AddGroupModel extends ChangeNotifier {
           .doc(groupID)
           .set({
         'name': groupName,
+        'imageURL': '',
         'joinedAt': Timestamp.now(),
       });
       await FirebaseFirestore.instance

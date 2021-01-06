@@ -38,7 +38,7 @@ class GroupUpdateScreen extends StatelessWidget {
                         child: CircleAvatar(
                           backgroundImage: model.imageFile != null
                               ? FileImage(model.imageFile)
-                              : model.groupImageURL != null
+                              : model.groupImageURL.isNotEmpty
                                   ? NetworkImage(model.groupImageURL)
                                   : AssetImage('images/test_user_image.png'),
                           backgroundColor: Colors.transparent,

@@ -29,9 +29,7 @@ class GroupScreen extends StatelessWidget {
               title: Text(model.groupName),
               actions: <Widget>[
                 IconButton(
-                  icon: Icon(
-                    Icons.settings,
-                  ),
+                  icon: Icon(Icons.settings),
                   onPressed: () async {
                     await Navigator.push(
                       context,

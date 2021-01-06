@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserUpdateEmailModel extends ChangeNotifier {
   String email = '';
   String password = '';
   bool isLoading = false;
   bool isAuthRequired = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _auth = Auth.FirebaseAuth.instance;
 
   void init({email}) {
     this.email = email;
@@ -29,7 +29,8 @@ class UserUpdateEmailModel extends ChangeNotifier {
     }
     try {
       if (isAuthRequired) {
-        await user.reauthenticateWithCredential(EmailAuthProvider.credential(
+        await user
+            .reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
           email: user.email,
           password: password,
         ));

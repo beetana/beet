@@ -46,7 +46,7 @@ class UserMainModel extends ChangeNotifier {
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
     isLoading = false;
     notifyListeners();

@@ -197,7 +197,7 @@ class UserAddEventModel extends ChangeNotifier {
         'end': Timestamp.fromDate(endingDateTime),
       });
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
   }

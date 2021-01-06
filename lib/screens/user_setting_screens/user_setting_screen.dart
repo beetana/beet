@@ -43,7 +43,7 @@ class UserSettingScreen extends StatelessWidget {
                         width: 128.0,
                         height: 128.0,
                         child: CircleAvatar(
-                          backgroundImage: model.userImageURL != null
+                          backgroundImage: model.userImageURL.isNotEmpty
                               ? NetworkImage(model.userImageURL)
                               : AssetImage('images/test_user_image.png'),
                           backgroundColor: Colors.transparent,

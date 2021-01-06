@@ -11,33 +11,35 @@ class DrawerScreen extends StatelessWidget {
     return ChangeNotifierProvider<DrawerModel>(
       create: (_) => DrawerModel()..init(),
       child: Consumer<DrawerModel>(builder: (context, model, child) {
-        if (model.userName.isNotEmpty) {
-          return Drawer(
-            child: Column(
-              children: <Widget>[
-                UserAccountsDrawerHeader(
-                  accountName: Text(model.userName),
-                  accountEmail: Text(''),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundImage: model.userImageURL != null
-                        ? NetworkImage(model.userImageURL)
-                        : AssetImage('images/test_user_image.png'),
-                    backgroundColor: Colors.transparent,
+        return Stack(
+          children: [
+            Drawer(
+              child: Column(
+                children: <Widget>[
+                  UserAccountsDrawerHeader(
+                    accountName: Text(model.userName),
+                    accountEmail: Text(''),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundImage: model.userImageURL.isNotEmpty
+                          ? NetworkImage(model.userImageURL)
+                          : AssetImage('images/test_user_image.png'),
+                      backgroundColor: Colors.transparent,
+                    ),
                   ),
-                ),
-                ListTile(
-                  title: Text('マイページ'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserScreen(userID: model.userID),
-                      ),
-                    );
-                  },
-                ),
-                Flexible(
-                  child: ListView.builder(
+                  ListTile(
+                    title: Text('マイページ'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              UserScreen(userID: model.userID),
+                        ),
+                      );
+                    },
+                  ),
+                  Flexible(
+                    child: ListView.builder(
                       physics: const ScrollPhysics(),
                       itemCount: model.groupName.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -54,45 +56,40 @@ class DrawerScreen extends StatelessWidget {
                             );
                           },
                         );
-                      }),
-                ),
-                FlatButton(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.add,
-                        color: Colors.black54,
-                      ),
-                      Text('グループを作成'),
-                    ],
+                      },
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            AddGroupScreen(userName: model.userName),
-                      ),
-                    );
-                  },
-                )
-              ],
+                  FlatButton.icon(
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.black54,
+                    ),
+                    label: Text('グループを作成'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddGroupScreen(
+                            userName: model.userName,
+                            userImageURL: model.userImageURL,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-          );
-        } else {
-          return Drawer(
-            child: Column(
-              children: <Widget>[
-                UserAccountsDrawerHeader(
-                  accountName: Text(''),
-                  accountEmail: Text(''),
-                ),
-                Text('Loading...'),
-              ],
-            ),
-          );
-        }
+            model.isLoading
+                ? Container(
+                    color: Colors.black.withOpacity(0.3),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : SizedBox(),
+          ],
+        );
       }),
     );
   }

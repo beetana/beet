@@ -1,5 +1,6 @@
+import 'package:beet/dynamic_links_services.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class WelcomeModel extends ChangeNotifier {
@@ -7,7 +8,12 @@ class WelcomeModel extends ChangeNotifier {
   String name = '';
   String email = '';
   String password = '';
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _auth = Auth.FirebaseAuth.instance;
+  final dynamicLinks = DynamicLinksServices();
+
+  void init(context) {
+    dynamicLinks.promptLogin(context);
+  }
 
   Future register() async {
     if (name.isEmpty) {
@@ -21,17 +27,18 @@ class WelcomeModel extends ChangeNotifier {
     }
 
     try {
-      final User user = (await _auth.createUserWithEmailAndPassword(
+      final Auth.User user = (await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       ))
           .user;
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      userID = user.uid;
+      await FirebaseFirestore.instance.collection('users').doc(userID).set({
         'name': name,
+        'imageURL': '',
         'groupCount': 0,
         'createdAt': Timestamp.now(),
       });
-      userID = user.uid;
     } catch (e) {
       throw (_convertErrorMessage(e.code));
     }
@@ -50,7 +57,7 @@ class WelcomeModel extends ChangeNotifier {
         email: email,
         password: password,
       );
-      User user = _auth.currentUser;
+      Auth.User user = _auth.currentUser;
       userID = user.uid;
     } catch (e) {
       throw (_convertErrorMessage(e.code));

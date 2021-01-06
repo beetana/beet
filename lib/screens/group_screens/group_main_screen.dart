@@ -9,6 +9,7 @@ class GroupMainScreen extends StatelessWidget {
   GroupMainScreen({this.groupID});
   final String groupID;
   final dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupMainModel>(

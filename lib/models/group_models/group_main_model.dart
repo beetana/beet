@@ -6,6 +6,8 @@ class GroupMainModel extends ChangeNotifier {
   DateTime currentDateTime = DateTime.now();
   List<Event> eventList = [];
   bool isLoading = false;
+  String invitedGroupID;
+  String invitedGroupName;
 
   Future getEventList(groupID) async {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
@@ -33,7 +35,7 @@ class GroupMainModel extends ChangeNotifier {
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
     isLoading = false;
     notifyListeners();

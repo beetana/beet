@@ -10,6 +10,7 @@ import 'package:beet/screens/login_screen.dart';
 
 class MyApp extends StatelessWidget {
   final model = MyAppModel();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,15 +42,14 @@ class MyApp extends StatelessWidget {
               snapshot.connectionState == ConnectionState.waiting
                   ? UserState.waiting
                   : snapshot.data;
-
           print("MyApp(): userState = $state");
-          return _convertPage(state);
+          return _convertPage(state: state);
         },
       ),
     );
   }
 
-  StatelessWidget _convertPage(UserState state) {
+  StatelessWidget _convertPage({UserState state}) {
     switch (state) {
       case UserState.waiting: // 初期化中
         return SplashScreen();

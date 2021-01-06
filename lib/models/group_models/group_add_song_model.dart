@@ -32,7 +32,7 @@ class GroupAddSongModel extends ChangeNotifier {
         'createdAt': Timestamp.now(),
       });
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
   }

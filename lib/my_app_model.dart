@@ -8,18 +8,17 @@ import 'package:firebase_core/firebase_core.dart';
 
 class MyAppModel {
   String userID;
+
   // ignore: close_sinks
   final _userStateStreamController = StreamController<UserState>();
   Stream<UserState> get userState => _userStateStreamController.stream;
 
   UserState _state;
 
-  /// コンストラクタ
   MyAppModel() {
-    _init(); // 初期化処理は非同期で行うため await しない
+    _init(); // 初期化処理は非同期で行うためawaitしない
   }
 
-  /// 初期化処理
   Future _init() async {
     // packageの初期化処理
     await Firebase.initializeApp();

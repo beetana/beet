@@ -27,13 +27,9 @@ class GroupSongListScreen extends StatelessWidget {
                       mainAxisAlignment: model.buttonAlignment,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        FlatButton(
-                          child: Row(
-                            children: <Widget>[
-                              model.buttonIcon,
-                              model.buttonText,
-                            ],
-                          ),
+                        FlatButton.icon(
+                          icon: model.buttonIcon,
+                          label: model.buttonText,
                           onPressed: () {
                             model.changeMode();
                           },

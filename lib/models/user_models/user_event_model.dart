@@ -68,7 +68,7 @@ class UserEventModel extends ChangeNotifier {
       startingDateTime = event.startingDateTime;
       endingDateTime = event.endingDateTime;
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
     notifyListeners();
@@ -83,7 +83,7 @@ class UserEventModel extends ChangeNotifier {
           .doc(eventID)
           .delete();
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw ('エラーが発生しました');
     }
   }

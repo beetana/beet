@@ -43,7 +43,10 @@ class GroupMemberScreen extends StatelessWidget {
                                     : AssetImage('images/test_user_image.png'),
                                 backgroundColor: Colors.transparent,
                               ),
-                              title: Text(userName),
+                              title: Text(
+                                userName,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                               onTap: () async {
                                 bool isMe = userID == model.myID;
                                 bool isDelete = await _showMemberBottomSheet(

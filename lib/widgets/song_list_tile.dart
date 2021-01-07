@@ -21,7 +21,7 @@ class SongListTile extends StatelessWidget {
     return ListTile(
       title: Text(
         songTitle,
-        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
       subtitle: Visibility(
         visible: isVisible,

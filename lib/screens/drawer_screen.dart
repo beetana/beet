@@ -38,13 +38,16 @@ class DrawerScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  Flexible(
+                  Expanded(
                     child: ListView.builder(
-                      physics: const ScrollPhysics(),
+                      physics: ScrollPhysics(),
                       itemCount: model.groupName.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
-                          title: Text(model.groupName[index]),
+                          title: Text(
+                            model.groupName[index],
+                            overflow: TextOverflow.ellipsis,
+                          ),
                           onTap: () {
                             Navigator.push(
                               context,

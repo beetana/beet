@@ -92,9 +92,12 @@ class EventPlannerImage extends StatelessWidget {
             ),
           ),
           SizedBox(width: 5.0),
-          Text(
-            name,
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Expanded(
+            child: Text(
+              name,
+              style: TextStyle(fontWeight: FontWeight.bold),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       );
@@ -116,27 +119,34 @@ class EventOverViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (eventPlace.isNotEmpty) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            eventTitle,
-            style: TextStyle(fontSize: 16.0),
-          ),
-          Text(
-            '@ $eventPlace',
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: 14.0,
+      return Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              eventTitle,
+              style: TextStyle(fontSize: 16.0),
+              overflow: TextOverflow.ellipsis,
             ),
-          ),
-        ],
+            Text(
+              '@ $eventPlace',
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: 14.0,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       );
     } else
-      return Text(
-        eventTitle,
-        style: TextStyle(fontSize: 16.0),
+      return Expanded(
+        child: Text(
+          eventTitle,
+          style: TextStyle(fontSize: 16.0),
+          overflow: TextOverflow.ellipsis,
+        ),
       );
   }
 }

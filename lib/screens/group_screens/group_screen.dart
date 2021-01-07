@@ -26,7 +26,10 @@ class GroupScreen extends StatelessWidget {
           return Scaffold(
             drawer: DrawerScreen(),
             appBar: AppBar(
-              title: Text(model.groupName),
+              title: Text(
+                model.groupName,
+                textAlign: TextAlign.center,
+              ),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.settings),

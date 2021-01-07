@@ -50,11 +50,16 @@ class GroupSettingScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 4.0),
-                      Text(
-                        model.groupName != null
-                            ? model.groupName
-                            : 'Loading...',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text(
+                          model.groupName != null
+                              ? model.groupName
+                              : 'Loading...',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),

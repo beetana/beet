@@ -23,7 +23,10 @@ class UserScreen extends StatelessWidget {
           return Scaffold(
             drawer: DrawerScreen(),
             appBar: AppBar(
-              title: Text(model.userName),
+              title: Text(
+                model.userName,
+                textAlign: TextAlign.center,
+              ),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(

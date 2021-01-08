@@ -86,9 +86,12 @@ class GroupEventScreen extends StatelessWidget {
                   Container(
                     height: 40.0,
                     width: double.infinity,
-                    color: Colors.blueGrey[200],
+                    color: Colors.redAccent,
                     child: FlatButton(
-                      child: Text('イベントを削除'),
+                      child: Text(
+                        'イベントを削除',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       onPressed: () async {
                         bool isDelete =
                             await _confirmDeleteDialog(context, '削除しますか？');

@@ -25,7 +25,7 @@ class GroupSongListModel extends ChangeNotifier {
         .map((doc) => Song(
               songID: doc.id,
               title: doc['title'],
-              playTime: doc['minute'],
+              playingTime: doc['minute'],
             ))
         .toList();
     isLoading = false;
@@ -53,10 +53,10 @@ class GroupSongListModel extends ChangeNotifier {
     song.toggleCheckBoxState();
     if (song.checkboxState == true) {
       selectedSongs.add(song.title);
-      totalPlayTime = totalPlayTime + song.playTime;
+      totalPlayTime = totalPlayTime + song.playingTime;
     } else {
       selectedSongs.remove(song.title);
-      totalPlayTime = totalPlayTime - song.playTime;
+      totalPlayTime = totalPlayTime - song.playingTime;
     }
     songNum = selectedSongs
         .where((value) =>

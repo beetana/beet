@@ -5,28 +5,54 @@ import 'package:provider/provider.dart';
 
 class GroupSongEditScreen extends StatelessWidget {
   GroupSongEditScreen(
-      {this.groupID, this.songID, this.songTitle, this.songPlayTime});
+      {this.groupID, this.songID, this.songTitle, this.songPlayingTime});
   final String groupID;
   final String songID;
   final String songTitle;
-  final int songPlayTime;
+  final int songPlayingTime;
   final songTitleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final timePickerController =
+        FixedExtentScrollController(initialItem: songPlayingTime);
+    songTitleController.text = songTitle;
     return ChangeNotifierProvider<GroupSongEditModel>(
-      create: (_) => GroupSongEditModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('曲を編集'),
+      create: (_) => GroupSongEditModel()
+        ..init(
+          groupID: groupID,
+          songID: songID,
+          songTitle: songTitle,
+          songPlayingTime: songPlayingTime,
         ),
-        body: Consumer<GroupSongEditModel>(builder: (context, model, child) {
-          final timePickerController =
-              FixedExtentScrollController(initialItem: songPlayTime);
-          songTitleController.text = songTitle;
-          model.songTitle = songTitle;
-          model.playingTime = songPlayTime;
-          return Stack(
+      child: Consumer<GroupSongEditModel>(builder: (context, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('曲を編集'),
+            actions: [
+              FlatButton(
+                child: Text(
+                  '保存',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                ),
+                onPressed: () async {
+                  model.startLoading();
+                  try {
+                    await model.editSong();
+                    await _showTextDialog(context, '変更しました');
+                    Navigator.pop(context);
+                  } catch (e) {
+                    _showTextDialog(context, e.toString());
+                  }
+                  model.endLoading();
+                },
+              ),
+            ],
+          ),
+          body: Stack(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -74,9 +100,10 @@ class GroupSongEditScreen extends StatelessWidget {
                               magnification: 1.2,
                               useMagnifier: true,
                               onSelectedItemChanged: (index) {
-                                model.playingTime = model.playingTimes[index];
+                                model.songPlayingTime =
+                                    model.songPlayingTimes[index];
                               },
-                              children: model.playingTimes
+                              children: model.songPlayingTimes
                                   .map((value) => Text('$value'))
                                   .toList(),
                             ),
@@ -88,40 +115,28 @@ class GroupSongEditScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 24.0,
-                    ),
-                    RaisedButton(
-                      child: Text('OK'),
-                      onPressed: () async {
-                        model.startLoading();
-                        try {
-                          await model.editSong(
-                            groupID: groupID,
-                            songID: songID,
-                          );
-                          await _showTextDialog(context, '変更しました');
-                          Navigator.pop(context);
-                        } catch (e) {
-                          _showTextDialog(context, e.toString());
-                        }
-                        model.endLoading();
-                      },
-                    ),
-                    FlatButton(
+                  ],
+                ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    height: 40.0,
+                    width: double.infinity,
+                    color: Colors.redAccent,
+                    child: FlatButton(
                       child: Text(
                         '削除',
+                        style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () async {
                         bool isDelete =
                             await _confirmDeleteDialog(context, '削除しますか？');
-                        if (isDelete == true) {
+                        if (isDelete) {
                           model.startLoading();
                           try {
-                            await model.deleteSong(
-                              groupID: groupID,
-                              songID: songID,
-                            );
+                            await model.deleteSong();
                             await _showTextDialog(context, '削除しました');
                             Navigator.pop(context);
                           } catch (e) {
@@ -130,9 +145,9 @@ class GroupSongEditScreen extends StatelessWidget {
                           model.endLoading();
                         }
                       },
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
               model.isLoading
                   ? Container(
@@ -143,9 +158,9 @@ class GroupSongEditScreen extends StatelessWidget {
                     )
                   : SizedBox(),
             ],
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }

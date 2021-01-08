@@ -12,12 +12,34 @@ class GroupAddSongScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupAddSongModel>(
       create: (_) => GroupAddSongModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('曲を追加'),
-        ),
-        body: Consumer<GroupAddSongModel>(builder: (context, model, child) {
-          return Stack(
+      child: Consumer<GroupAddSongModel>(builder: (context, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('曲を追加'),
+            actions: [
+              FlatButton(
+                child: Text(
+                  '保存',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                ),
+                onPressed: () async {
+                  model.startLoading();
+                  try {
+                    await model.addSong(groupID);
+                    await _showTextDialog(context, '追加しました');
+                    Navigator.pop(context);
+                  } catch (e) {
+                    _showTextDialog(context, e.toString());
+                  }
+                  model.endLoading();
+                },
+              ),
+            ],
+          ),
+          body: Stack(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -54,9 +76,10 @@ class GroupAddSongScreen extends StatelessWidget {
                               magnification: 1.2,
                               useMagnifier: true,
                               onSelectedItemChanged: (index) {
-                                model.playingTime = model.playingTimes[index];
+                                model.songPlayingTime =
+                                    model.songPlayingTimes[index];
                               },
-                              children: model.playingTimes
+                              children: model.songPlayingTimes
                                   .map((value) => Text('$value'))
                                   .toList(),
                             ),
@@ -68,23 +91,6 @@ class GroupAddSongScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 24.0,
-                    ),
-                    RaisedButton(
-                      child: Text('OK'),
-                      onPressed: () async {
-                        model.startLoading();
-                        try {
-                          await model.addSong(groupID);
-                          await _showTextDialog(context, '追加しました');
-                          Navigator.pop(context);
-                        } catch (e) {
-                          _showTextDialog(context, e.toString());
-                        }
-                        model.endLoading();
-                      },
-                    )
                   ],
                 ),
               ),
@@ -97,9 +103,9 @@ class GroupAddSongScreen extends StatelessWidget {
                     )
                   : SizedBox(),
             ],
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }

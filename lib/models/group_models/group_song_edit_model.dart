@@ -2,10 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupSongEditModel extends ChangeNotifier {
-  String songTitle;
-  int playingTime;
+  String groupID = '';
+  String songID = '';
+  String songTitle = '';
+  int songPlayingTime;
   bool isLoading = false;
-  final List<int> playingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  void init(
+      {String groupID, String songID, String songTitle, int songPlayingTime}) {
+    this.groupID = groupID;
+    this.songID = songID;
+    this.songTitle = songTitle;
+    this.songPlayingTime = songPlayingTime;
+  }
 
   startLoading() {
     isLoading = true;
@@ -17,7 +27,7 @@ class GroupSongEditModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future editSong({groupID, songID}) async {
+  Future editSong() async {
     if (songTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
@@ -29,7 +39,7 @@ class GroupSongEditModel extends ChangeNotifier {
           .doc(songID)
           .update({
         'title': songTitle,
-        'minute': playingTime,
+        'minute': songPlayingTime,
       });
     } catch (e) {
       print(e);
@@ -37,7 +47,7 @@ class GroupSongEditModel extends ChangeNotifier {
     }
   }
 
-  Future deleteSong({groupID, songID}) async {
+  Future deleteSong() async {
     try {
       await FirebaseFirestore.instance
           .collection('groups')

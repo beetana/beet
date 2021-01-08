@@ -39,14 +39,14 @@ class GroupSongListScreen extends StatelessWidget {
                   ),
                   Flexible(
                     child: ListView.builder(
-                        physics: ScrollPhysics(),
+                        physics: AlwaysScrollableScrollPhysics(),
                         itemExtent: 60.0,
                         itemCount: model.songList.length,
                         itemBuilder: (context, index) {
                           final song = model.songList[index];
                           return SongListTile(
                             songTitle: song.title,
-                            songMinute: song.playTime.toString(),
+                            songMinute: song.playingTime.toString(),
                             isChecked: song.checkboxState,
                             isVisible: model.isSetListMode,
                             checkboxCallback: (state) {
@@ -63,7 +63,7 @@ class GroupSongListScreen extends StatelessWidget {
                                       groupID: groupID,
                                       songID: song.songID,
                                       songTitle: song.title,
-                                      songPlayTime: song.playTime,
+                                      songPlayingTime: song.playingTime,
                                     ),
                                     fullscreenDialog: true,
                                   ),

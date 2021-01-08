@@ -6,9 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class GroupMemberScreen extends StatelessWidget {
-  GroupMemberScreen({this.groupID, this.groupName});
+  GroupMemberScreen({this.groupID});
   final groupID;
-  final groupName;
   final dynamicLinks = DynamicLinksServices();
 
   @override
@@ -87,7 +86,7 @@ class GroupMemberScreen extends StatelessWidget {
                           model.startLoading();
                           Uri link = await dynamicLinks.createDynamicLink(
                             groupID: groupID,
-                            groupName: groupName,
+                            groupName: model.groupName,
                           );
                           model.endLoading();
                           await _inviteMemberDialog(context, link);

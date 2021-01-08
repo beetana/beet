@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class GroupMemberModel extends ChangeNotifier {
   String groupID = '';
+  String groupName = '';
   String myID = '';
   List<String> userIDs = [];
   List<String> userNames = [];
@@ -25,6 +26,12 @@ class GroupMemberModel extends ChangeNotifier {
     this.groupID = groupID;
     myID = Auth.FirebaseAuth.instance.currentUser.uid;
     try {
+      DocumentSnapshot groupDoc = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupID)
+          .get();
+      groupName = groupDoc['name'];
+
       QuerySnapshot groupUsers = await FirebaseFirestore.instance
           .collection('groups')
           .doc(groupID)

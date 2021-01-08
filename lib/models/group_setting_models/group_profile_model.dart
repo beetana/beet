@@ -5,18 +5,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class GroupUpdateModel extends ChangeNotifier {
+class GroupProfileModel extends ChangeNotifier {
   String groupID;
   String groupName = '';
-  String groupImageURL;
+  String groupImageURL = '';
   File imageFile;
   bool isLoading = false;
   List<String> groupUsersID = [];
 
-  void init({groupID, groupName, groupImageURL}) {
+  Future init({groupID}) async {
     this.groupID = groupID;
-    this.groupName = groupName;
-    this.groupImageURL = groupImageURL;
+    DocumentSnapshot groupDoc = await FirebaseFirestore.instance
+        .collection('groups')
+        .doc(groupID)
+        .get();
+    groupName = groupDoc['name'];
+    groupImageURL = groupDoc['imageURL'];
     notifyListeners();
   }
 
@@ -30,42 +34,14 @@ class GroupUpdateModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateGroupName() async {
-    if (groupName.isEmpty) {
-      throw ('グループ名を入力してください');
-    }
-    try {
-      final groupUsers = await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupID)
-          .collection('groupUsers')
-          .get();
-      groupUsersID = (groupUsers.docs.map((doc) => doc.id).toList());
-      await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupID)
-          .update({
-        'name': groupName,
-      });
-      for (String userID in groupUsersID) {
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userID)
-            .collection('joiningGroup')
-            .doc(groupID)
-            .update({
-          'name': groupName,
-        });
-      }
-    } catch (e) {
-      print(e);
-      throw ('エラーが発生しました');
-    }
-  }
-
   Future pickImageFile() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    imageFile = null;
+    final pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
+    if (pickedFile == null) {
+      return;
+    }
+
     imageFile = await ImageCropper.cropImage(
       sourcePath: pickedFile.path,
       maxWidth: 160,
@@ -110,7 +86,9 @@ class GroupUpdateModel extends ChangeNotifier {
       await FirebaseFirestore.instance
           .collection('groups')
           .doc(groupID)
-          .update({'imageURL': imageURL});
+          .update({
+        'imageURL': imageURL,
+      });
       for (String userID in groupUsersID) {
         await FirebaseFirestore.instance
             .collection('users')
@@ -121,6 +99,46 @@ class GroupUpdateModel extends ChangeNotifier {
           'imageURL': imageURL,
         });
       }
+    } catch (e) {
+      print(e);
+      throw ('エラーが発生しました');
+    }
+  }
+
+  Future deleteGroupImage() async {
+    if (groupImageURL.isEmpty) {
+      throw ('プロフィール画像が設定されていません');
+    }
+
+    try {
+      await FirebaseStorage.instance
+          .ref()
+          .child("groupImage/$groupID")
+          .delete();
+      final groupUsers = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupID)
+          .collection('groupUsers')
+          .get();
+      groupUsersID = (groupUsers.docs.map((doc) => doc.id).toList());
+      await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupID)
+          .update({
+        'imageURL': '',
+      });
+      for (String userID in groupUsersID) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userID)
+            .collection('joiningGroup')
+            .doc(groupID)
+            .update({
+          'imageURL': '',
+        });
+      }
+      groupImageURL = '';
+      imageFile = null;
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

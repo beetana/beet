@@ -1,6 +1,6 @@
 import 'package:beet/models/group_setting_models/group_setting_model.dart';
 import 'package:beet/screens/group_setting_screens/group_member_screen.dart';
-import 'package:beet/screens/group_setting_screens/group_update_screen.dart';
+import 'package:beet/screens/group_setting_screens/group_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +11,7 @@ class GroupSettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => GroupSettingModel()..init(groupID: groupID),
+      create: (_) => GroupSettingModel(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('設定'),
@@ -34,37 +34,6 @@ class GroupSettingScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
-                child: Center(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 128.0,
-                        height: 128.0,
-                        child: CircleAvatar(
-                          backgroundImage: model.groupImageURL.isNotEmpty
-                              ? NetworkImage(model.groupImageURL)
-                              : AssetImage('images/test_user_image.png'),
-                          backgroundColor: Colors.transparent,
-                        ),
-                      ),
-                      SizedBox(height: 4.0),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Text(
-                          model.groupName != null
-                              ? model.groupName
-                              : 'Loading...',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -74,14 +43,10 @@ class GroupSettingScreen extends StatelessWidget {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GroupUpdateScreen(
-                          groupID: groupID,
-                          groupName: model.groupName,
-                          groupImageURL: model.groupImageURL,
-                        ),
+                        builder: (context) =>
+                            GroupProfileScreen(groupID: groupID),
                       ),
                     );
-                    model.init(groupID: groupID);
                   },
                 ),
               ),
@@ -97,13 +62,10 @@ class GroupSettingScreen extends StatelessWidget {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GroupMemberScreen(
-                          groupID: groupID,
-                          groupName: model.groupName,
-                        ),
+                        builder: (context) =>
+                            GroupMemberScreen(groupID: groupID),
                       ),
                     );
-                    model.init(groupID: groupID);
                   },
                 ),
               ),

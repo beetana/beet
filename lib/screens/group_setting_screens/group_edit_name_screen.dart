@@ -44,27 +44,25 @@ class GroupEditNameScreen extends StatelessWidget {
                 ],
               ),
               body: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Center(
-                  child: TextField(
-                    controller: groupNameController,
-                    decoration: InputDecoration(
-                      hintText: 'グループ名',
-                      suffix: IconButton(
-                        icon: Icon(
-                          Icons.clear,
-                          color: Colors.black54,
-                        ),
-                        onPressed: () {
-                          groupNameController.clear();
-                          model.groupName = '';
-                        },
+                padding: EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: groupNameController,
+                  decoration: InputDecoration(
+                    hintText: 'グループ名',
+                    suffix: IconButton(
+                      icon: Icon(
+                        Icons.clear,
+                        color: Colors.black54,
                       ),
+                      onPressed: () {
+                        groupNameController.clear();
+                        model.groupName = '';
+                      },
                     ),
-                    onChanged: (text) {
-                      model.groupName = text;
-                    },
                   ),
+                  onChanged: (text) {
+                    model.groupName = text;
+                  },
                 ),
               ),
             ),

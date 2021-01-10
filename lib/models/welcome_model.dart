@@ -1,4 +1,3 @@
-import 'package:beet/dynamic_links_services.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,11 +8,6 @@ class WelcomeModel extends ChangeNotifier {
   String email = '';
   String password = '';
   final _auth = Auth.FirebaseAuth.instance;
-  final dynamicLinks = DynamicLinksServices();
-
-  void init(context) {
-    dynamicLinks.promptLogin(context);
-  }
 
   Future register() async {
     if (name.isEmpty) {

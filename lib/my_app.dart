@@ -1,4 +1,5 @@
 import 'package:beet/my_app_model.dart';
+import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/screens/splash_screen.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:beet/user_state.dart';
@@ -49,13 +50,13 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  StatelessWidget _convertPage({UserState state}) {
+  Widget _convertPage({UserState state}) {
     switch (state) {
       case UserState.waiting: // 初期化中
         return SplashScreen();
 
       case UserState.notLoggedIn: // 未ログイン
-        return LoginScreen();
+        return WelcomeScreen();
 
       case UserState.loggedIn: // 登録済み
         return UserScreen(userID: model.userID);

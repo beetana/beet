@@ -48,61 +48,63 @@ class UserAddEventScreen extends StatelessWidget {
               ),
               body: Padding(
                 padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      controller: eventTitleController,
-                      decoration: InputDecoration(hintText: 'タイトル'),
-                      onChanged: (text) {
-                        model.eventTitle = text;
-                      },
-                    ),
-                    TextField(
-                      controller: eventPlaceController,
-                      decoration: InputDecoration(hintText: '場所'),
-                      onChanged: (text) {
-                        model.eventPlace = text;
-                      },
-                    ),
-                    SizedBox(
-                      height: 50.0,
-                    ),
-                    SwitchListTile(
-                      value: model.isAllDay,
-                      title: Text('終日'),
-                      onChanged: (value) {
-                        model.switchIsAllDay(value);
-                      },
-                    ),
-                    Divider(height: 0.5),
-                    ListTile(
-                      title: Text('開始'),
-                      trailing: Text(
-                          model.tileDateFormat.format(model.startingDateTime)),
-                      onTap: () {
-                        model.showStartingDateTimePicker();
-                      },
-                    ),
-                    model.startingDateTimePickerBox,
-                    Divider(height: 0.5),
-                    ListTile(
-                      title: Text('終了'),
-                      trailing: Text(
-                          model.tileDateFormat.format(model.endingDateTime)),
-                      onTap: () {
-                        model.showEndingDateTimePicker();
-                      },
-                    ),
-                    model.endingDateTimePickerBox,
-                    TextField(
-                      controller: eventMemoController,
-                      maxLines: 3,
-                      decoration: InputDecoration(hintText: 'メモ'),
-                      onChanged: (text) {
-                        model.eventMemo = text;
-                      },
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      TextField(
+                        controller: eventTitleController,
+                        decoration: InputDecoration(hintText: 'タイトル'),
+                        onChanged: (text) {
+                          model.eventTitle = text;
+                        },
+                      ),
+                      TextField(
+                        controller: eventPlaceController,
+                        decoration: InputDecoration(hintText: '場所'),
+                        onChanged: (text) {
+                          model.eventPlace = text;
+                        },
+                      ),
+                      SizedBox(
+                        height: 50.0,
+                      ),
+                      SwitchListTile(
+                        value: model.isAllDay,
+                        title: Text('終日'),
+                        onChanged: (value) {
+                          model.switchIsAllDay(value);
+                        },
+                      ),
+                      Divider(height: 0.5),
+                      ListTile(
+                        title: Text('開始'),
+                        trailing: Text(model.tileDateFormat
+                            .format(model.startingDateTime)),
+                        onTap: () {
+                          model.showStartingDateTimePicker();
+                        },
+                      ),
+                      model.startingDateTimePickerBox,
+                      Divider(height: 0.5),
+                      ListTile(
+                        title: Text('終了'),
+                        trailing: Text(
+                            model.tileDateFormat.format(model.endingDateTime)),
+                        onTap: () {
+                          model.showEndingDateTimePicker();
+                        },
+                      ),
+                      model.endingDateTimePickerBox,
+                      TextField(
+                        controller: eventMemoController,
+                        maxLines: 3,
+                        decoration: InputDecoration(hintText: 'メモ'),
+                        onChanged: (text) {
+                          model.eventMemo = text;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

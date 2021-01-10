@@ -42,7 +42,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                 ],
               ),
               body: Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   children: [
                     TextField(

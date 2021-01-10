@@ -44,27 +44,25 @@ class UserEditNameScreen extends StatelessWidget {
                 ],
               ),
               body: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Center(
-                  child: TextField(
-                    controller: userNameController,
-                    decoration: InputDecoration(
-                      hintText: 'アカウント名',
-                      suffix: IconButton(
-                        icon: Icon(
-                          Icons.clear,
-                          color: Colors.black54,
-                        ),
-                        onPressed: () {
-                          userNameController.clear();
-                          model.userName = '';
-                        },
+                padding: EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: userNameController,
+                  decoration: InputDecoration(
+                    hintText: 'アカウント名',
+                    suffix: IconButton(
+                      icon: Icon(
+                        Icons.clear,
+                        color: Colors.black54,
                       ),
+                      onPressed: () {
+                        userNameController.clear();
+                        model.userName = '';
+                      },
                     ),
-                    onChanged: (text) {
-                      model.userName = text;
-                    },
                   ),
+                  onChanged: (text) {
+                    model.userName = text;
+                  },
                 ),
               ),
             ),

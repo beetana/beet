@@ -18,10 +18,9 @@ class RegisterScreen extends StatelessWidget {
         ),
         body: Consumer<WelcomeModel>(builder: (context, model, child) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
             child: Column(
               children: <Widget>[
-                SizedBox(height: 32),
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(

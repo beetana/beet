@@ -1,4 +1,3 @@
-import 'package:beet/screens/register_screen.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,79 +10,96 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<WelcomeModel>(
-      create: (_) => WelcomeModel()..init(context),
+      create: (_) => WelcomeModel(),
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('ログイン'),
+        ),
         body: Consumer<WelcomeModel>(builder: (context, model, child) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: <Widget>[
-                Expanded(
-                  flex: 3,
-                  child: Container(),
-                ),
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'メールアドレス',
+                SizedBox(height: 32),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                      color: Colors.grey[800],
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  onChanged: (text) {
-                    model.email = text;
-                  },
-                ),
-                TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'パスワード',
-                  ),
-                  onChanged: (text) {
-                    model.password = text;
-                  },
-                ),
-                SizedBox(
-                  height: 24.0,
-                ),
-                RaisedButton(
-                  elevation: 3.0,
-                  child: Text("ログイン"),
-                  color: Colors.grey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  onPressed: () async {
-                    try {
-                      await model.login();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              UserScreen(userID: model.userID),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            hintText: 'メールアドレス',
+                            border: InputBorder.none,
+                            contentPadding:
+                                EdgeInsets.symmetric(vertical: 18.0),
+                          ),
+                          onChanged: (text) {
+                            model.email = text;
+                          },
                         ),
-                      );
-                    } catch (e) {
-                      _showTextDialog(context, e);
-                    }
-                  },
-                ),
-                Expanded(
-                  flex: 2,
-                  child: (Container()),
-                ),
-                FlatButton(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: Text(
-                    "アカウントを作成",
-                    style: TextStyle(fontSize: 20.0),
+                        Divider(
+                          height: 0.5,
+                        ),
+                        TextField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: 'パスワード',
+                            border: InputBorder.none,
+                            contentPadding:
+                                EdgeInsets.symmetric(vertical: 18.0),
+                          ),
+                          onChanged: (text) {
+                            model.password = text;
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
-                    );
-                  },
+                ),
+                SizedBox(height: 32.0),
+                Container(
+                  height: 56.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    color: Colors.grey[800],
+                    highlightColor: Colors.white38,
+                    child: Text(
+                      'ログイン',
+                      style: TextStyle(
+                        color: Color(0xFFf5f5f5),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () async {
+                      try {
+                        await model.login();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                UserScreen(userID: model.userID),
+                          ),
+                        );
+                      } catch (e) {
+                        _showTextDialog(context, e);
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

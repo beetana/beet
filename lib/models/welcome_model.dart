@@ -7,7 +7,18 @@ class WelcomeModel extends ChangeNotifier {
   String name = '';
   String email = '';
   String password = '';
+  bool isLoading = false;
   final _auth = Auth.FirebaseAuth.instance;
+
+  void startLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
 
   Future register() async {
     if (name.isEmpty) {

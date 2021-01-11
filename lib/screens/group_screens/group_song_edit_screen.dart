@@ -146,67 +146,6 @@ class GroupSongEditScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-//                Column(
-//                  mainAxisAlignment: MainAxisAlignment.center,
-//                  children: <Widget>[
-//                    TextField(
-//                      controller: songTitleController,
-//                      autofocus: true,
-//                      decoration: InputDecoration(
-//                        hintText: 'タイトル',
-//                        suffix: IconButton(
-//                          icon: Icon(
-//                            Icons.clear,
-//                            color: Colors.black54,
-//                          ),
-//                          onPressed: () {
-//                            songTitleController.clear();
-//                            model.songTitle = '';
-//                          },
-//                        ),
-//                      ),
-//                      onChanged: (text) {
-//                        model.songTitle = text;
-//                      },
-//                    ),
-//                    SizedBox(
-//                      height: 32.0,
-//                    ),
-//                    Padding(
-//                      padding: EdgeInsets.symmetric(horizontal: 40.0),
-//                      child: Row(
-//                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                        children: <Widget>[
-//                          Text(
-//                            '演奏時間',
-//                            style: TextStyle(fontSize: 20.0),
-//                          ),
-//                          Container(
-//                            height: 96.0,
-//                            width: 56.0,
-//                            child: CupertinoPicker(
-//                              scrollController: timePickerController,
-//                              itemExtent: 32.0,
-//                              magnification: 1.2,
-//                              useMagnifier: true,
-//                              onSelectedItemChanged: (index) {
-//                                model.songPlayingTime =
-//                                    model.songPlayingTimes[index];
-//                              },
-//                              children: model.songPlayingTimes
-//                                  .map((value) => Text('$value'))
-//                                  .toList(),
-//                            ),
-//                          ),
-//                          Text(
-//                            '分',
-//                            style: TextStyle(fontSize: 20.0),
-//                          ),
-//                        ],
-//                      ),
-//                    ),
-//                  ],
-//                ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,

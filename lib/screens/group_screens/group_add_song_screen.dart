@@ -42,56 +42,86 @@ class GroupAddSongScreen extends StatelessWidget {
           body: Stack(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    TextField(
-                      controller: songTitleController,
-                      autofocus: true,
-                      decoration: InputDecoration(
-                        hintText: 'タイトル',
-                      ),
-                      onChanged: (text) {
-                        model.songTitle = text;
-                      },
+                padding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                      color: Colors.grey[800],
                     ),
-                    SizedBox(
-                      height: 32.0,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextField(
+                          controller: songTitleController,
+                          autofocus: true,
+                          style: TextStyle(fontSize: 18.0),
+                          decoration: InputDecoration(
+                            hintText: 'タイトル',
+                            border: InputBorder.none,
+                            contentPadding:
+                                EdgeInsets.symmetric(vertical: 16.0),
+                          ),
+                          onChanged: (text) {
+                            model.songTitle = text;
+                          },
+                        ),
+                        Divider(height: 0.5),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                '演奏時間',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(width: 24.0),
+                              Container(
+                                height: 72.0,
+                                width: 48.0,
+                                child: CupertinoPicker(
+                                  itemExtent: 27.0,
+                                  magnification: 1.2,
+                                  useMagnifier: true,
+                                  onSelectedItemChanged: (index) {
+                                    model.songPlayingTime =
+                                        model.songPlayingTimes[index];
+                                  },
+                                  children: model.songPlayingTimes
+                                      .map((value) => Text(
+                                            '$value',
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ))
+                                      .toList(),
+                                ),
+                              ),
+                              SizedBox(width: 8.0),
+                              Text(
+                                '分',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 40.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Text(
-                            '演奏時間',
-                            style: TextStyle(fontSize: 20.0),
-                          ),
-                          Container(
-                            height: 96.0,
-                            width: 56.0,
-                            child: CupertinoPicker(
-                              itemExtent: 32.0,
-                              magnification: 1.2,
-                              useMagnifier: true,
-                              onSelectedItemChanged: (index) {
-                                model.songPlayingTime =
-                                    model.songPlayingTimes[index];
-                              },
-                              children: model.songPlayingTimes
-                                  .map((value) => Text('$value'))
-                                  .toList(),
-                            ),
-                          ),
-                          Text(
-                            '分',
-                            style: TextStyle(fontSize: 20.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
               model.isLoading

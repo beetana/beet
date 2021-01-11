@@ -23,15 +23,16 @@ class GroupSongListModel extends ChangeNotifier {
         .get();
     songList = songDoc.docs
         .map((doc) => Song(
-              songID: doc.id,
+              id: doc.id,
               title: doc['title'],
               playingTime: doc['minute'],
             ))
         .toList();
-    isLoading = false;
+
     selectedSongs = [];
     songNum = 0;
     totalPlayTime = 0;
+    isLoading = false;
     notifyListeners();
   }
 

@@ -1,7 +1,7 @@
 import 'package:beet/models/group_models/group_song_list_model.dart';
 import 'package:beet/screens/group_screens/group_add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen.dart';
-import 'package:beet/screens/group_screens/group_song_edit_screen.dart';
+import 'package:beet/screens/group_screens/group_song_screen.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:beet/widgets/song_list_tile.dart';
 import 'package:flutter/material.dart';
@@ -59,13 +59,10 @@ class GroupSongListScreen extends StatelessWidget {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => GroupSongEditScreen(
+                                    builder: (context) => GroupSongScreen(
                                       groupID: groupID,
-                                      songID: song.songID,
-                                      songTitle: song.title,
-                                      songPlayingTime: song.playingTime,
+                                      song: song,
                                     ),
-                                    fullscreenDialog: true,
                                   ),
                                 );
                                 model.getSongList(groupID);

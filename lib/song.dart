@@ -1,10 +1,10 @@
 class Song {
-  final String songID;
+  final String id;
   final String title;
   final int playingTime;
   bool checkboxState = false;
 
-  Song({this.songID, this.title, this.playingTime});
+  Song({this.id, this.title, this.playingTime});
 
   void toggleCheckBoxState() {
     checkboxState = !checkboxState;

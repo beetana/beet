@@ -22,40 +22,78 @@ class AddGroupScreen extends StatelessWidget {
           return Stack(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 16.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    TextField(
-                      controller: groupNameController,
-                      decoration: InputDecoration(hintText: 'グループ名'),
-                      onChanged: (text) {
-                        model.groupName = text;
-                      },
-                    ),
-                    SizedBox(
-                      height: 24.0,
-                    ),
-                    RaisedButton(
-                      child: Text('作成'),
-                      onPressed: () async {
-                        model.startLoading();
-                        try {
-                          await model.addGroup();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => GroupScreen(
-                                groupID: model.groupID,
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 0.5,
+                          color: Colors.grey[800],
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: groupNameController,
+                              autofocus: true,
+                              decoration: InputDecoration(
+                                hintText: 'グループ名',
+                                border: InputBorder.none,
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 18.0),
                               ),
+                              onChanged: (text) {
+                                model.groupName = text;
+                              },
                             ),
-                          );
-                        } catch (e) {
-                          _showTextDialog(context, e.toString());
-                        }
-                        model.endLoading();
-                      },
-                    )
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 48.0),
+                    Container(
+                      height: 56.0,
+                      width: 160,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        color: Colors.grey[800],
+                        highlightColor: Colors.white38,
+                        child: Text(
+                          '決定',
+                          style: TextStyle(
+                            color: Color(0xFFf5f5f5),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () async {
+                          model.startLoading();
+                          try {
+                            await model.addGroup();
+                            await _showTextDialog(context, '新規グループを作成しました');
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) => GroupScreen(
+                                  groupID: model.groupID,
+                                ),
+                              ),
+                            );
+                          } catch (e) {
+                            _showTextDialog(context, e.toString());
+                          }
+                          model.endLoading();
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),

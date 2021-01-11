@@ -33,7 +33,6 @@ class GroupEditNameScreen extends StatelessWidget {
                       model.startLoading();
                       try {
                         await model.updateGroupName();
-                        await _showTextDialog(context, '変更しました');
                         Navigator.pop(context);
                       } catch (e) {
                         await _showTextDialog(context, e.toString());
@@ -88,7 +87,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text(message),

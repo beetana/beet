@@ -139,7 +139,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text(message),
@@ -164,7 +164,7 @@ Future _confirmDeleteDialog(context, message) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text(message),

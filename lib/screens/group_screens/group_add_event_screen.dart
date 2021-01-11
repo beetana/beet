@@ -36,7 +36,6 @@ class GroupAddEventScreen extends StatelessWidget {
                       model.startLoading();
                       try {
                         await model.addEvent(groupID: groupID);
-                        await _showTextDialog(context, '追加しました');
                         Navigator.pop(context);
                       } catch (e) {
                         _showTextDialog(context, e.toString());
@@ -130,7 +129,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text(message),

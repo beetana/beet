@@ -181,7 +181,7 @@ Future<bool> _showConfirmDialog(context, isMe, userName) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text(titleText),
@@ -218,7 +218,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text(message),
@@ -244,7 +244,7 @@ Future _inviteMemberDialog(context, dynamicLink) async {
       return SimpleDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text('次のメッセージをシェアしてグループに参加してもらいましょう。'),
@@ -264,7 +264,7 @@ Future _inviteMemberDialog(context, dynamicLink) async {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(width: 2.0, color: Colors.blue),
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(10.0),
               ),
               child: Center(
                   child: Text(

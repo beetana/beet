@@ -52,32 +52,32 @@ class GroupEventScreen extends StatelessWidget {
           body: Stack(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      model.eventTitle,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 16.0),
+                      Text(
+                        model.eventTitle,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Visibility(
-                      visible: model.eventPlace.isNotEmpty,
-                      child: Text('@${model.eventPlace}'),
-                    ),
-                    SizedBox(height: 20.0),
-                    model.eventDateWidget(),
-                    SizedBox(height: 10.0),
-                    Divider(height: 0.5),
-                    SizedBox(height: 10.0),
-                    model.eventMemoWidget(),
-                    Expanded(
-                      child: SizedBox(),
-                    ),
-                    SizedBox(height: 40.0),
-                  ],
+                      Visibility(
+                        visible: model.eventPlace.isNotEmpty,
+                        child: Text('@${model.eventPlace}'),
+                      ),
+                      SizedBox(height: 20.0),
+                      model.eventDateWidget(),
+                      SizedBox(height: 10.0),
+                      Divider(height: 0.5),
+                      SizedBox(height: 10.0),
+                      model.eventMemoWidget(),
+                      SizedBox(height: 56.0),
+                    ],
+                  ),
                 ),
               ),
               Column(
@@ -89,12 +89,12 @@ class GroupEventScreen extends StatelessWidget {
                     color: Colors.redAccent,
                     child: FlatButton(
                       child: Text(
-                        'イベントを削除',
+                        '削除',
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () async {
-                        bool isDelete =
-                            await _confirmDeleteDialog(context, '削除しますか？');
+                        bool isDelete = await _confirmDeleteDialog(
+                            context, 'このイベントを削除しますか？');
                         if (isDelete == true) {
                           model.startLoading();
                           try {

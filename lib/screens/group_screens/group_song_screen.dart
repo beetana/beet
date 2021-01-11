@@ -33,7 +33,7 @@ class GroupSongScreen extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => GroupSongEditScreen(
                         groupID: groupID,
-                        song: song,
+                        song: model.song,
                       ),
                       fullscreenDialog: true,
                     ),
@@ -52,31 +52,43 @@ class GroupSongScreen extends StatelessWidget {
           body: Stack(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      model.songTitle,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 16.0),
+                      Text(
+                        'タイトル：',
+                        style: TextStyle(fontSize: 18.0),
                       ),
-                    ),
-                    SizedBox(height: 20.0),
-                    Text(
-                      model.songPlayingTime.toString(),
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        model.songTitle,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 16.0),
+                      Text(
+                        '演奏時間：',
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      Text(
+                        '${model.songPlayingTime.toString()}分',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 56.0),
+                    ],
+                  ),
                 ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
+                children: [
                   Container(
                     height: 40.0,
                     width: double.infinity,

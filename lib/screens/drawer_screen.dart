@@ -76,6 +76,7 @@ class DrawerScreen extends StatelessWidget {
                             userName: model.userName,
                             userImageURL: model.userImageURL,
                           ),
+                          fullscreenDialog: true,
                         ),
                       );
                     },

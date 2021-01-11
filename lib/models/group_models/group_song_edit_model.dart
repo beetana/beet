@@ -1,3 +1,4 @@
+import 'package:beet/song.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,12 +10,11 @@ class GroupSongEditModel extends ChangeNotifier {
   bool isLoading = false;
   final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  void init(
-      {String groupID, String songID, String songTitle, int songPlayingTime}) {
+  void init({String groupID, Song song}) {
     this.groupID = groupID;
-    this.songID = songID;
-    this.songTitle = songTitle;
-    this.songPlayingTime = songPlayingTime;
+    this.songID = song.id;
+    this.songTitle = song.title;
+    this.songPlayingTime = song.playingTime;
   }
 
   startLoading() {
@@ -41,20 +41,6 @@ class GroupSongEditModel extends ChangeNotifier {
         'title': songTitle,
         'minute': songPlayingTime,
       });
-    } catch (e) {
-      print(e);
-      throw ('エラーが発生しました');
-    }
-  }
-
-  Future deleteSong() async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupID)
-          .collection('songs')
-          .doc(songID)
-          .delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

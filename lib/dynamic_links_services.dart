@@ -76,7 +76,7 @@ class DynamicLinksServices {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(5.0),
+              Radius.circular(10.0),
             ),
           ),
           title: Text('$groupNameに招待されました。\n参加しますか？'),
@@ -141,7 +141,7 @@ class DynamicLinksServices {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(5.0),
+              Radius.circular(10.0),
             ),
           ),
           title: Text(message),

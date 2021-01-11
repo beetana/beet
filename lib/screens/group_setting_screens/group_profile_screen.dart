@@ -46,7 +46,6 @@ class GroupProfileScreen extends StatelessWidget {
                                 model.startLoading();
                                 try {
                                   await model.deleteGroupImage();
-                                  await _showTextDialog(context, '削除しました');
                                 } catch (e) {
                                   await _showTextDialog(context, e.toString());
                                 }
@@ -57,8 +56,6 @@ class GroupProfileScreen extends StatelessWidget {
                                   model.startLoading();
                                   try {
                                     await model.updateGroupImage();
-                                    await _showTextDialog(
-                                        context, 'プロフィール画像を保存しました');
                                   } catch (e) {
                                     await _showTextDialog(
                                         context, e.toString());
@@ -210,7 +207,7 @@ Future<bool> _showConfirmDialog(context) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text('プロフィール画像を削除しますか?'),
@@ -247,7 +244,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text(message),

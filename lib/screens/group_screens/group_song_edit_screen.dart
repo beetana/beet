@@ -34,7 +34,6 @@ class GroupSongEditScreen extends StatelessWidget {
                   model.startLoading();
                   try {
                     await model.editSong();
-                    await _showTextDialog(context, '保存しました');
                     Navigator.pop(context);
                   } catch (e) {
                     _showTextDialog(context, e.toString());
@@ -162,7 +161,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text(message),

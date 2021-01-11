@@ -40,7 +40,6 @@ class GroupEditEventScreen extends StatelessWidget {
                       model.startLoading();
                       try {
                         await model.editEvent(groupID: groupID);
-                        await _showTextDialog(context, '更新しました');
                         Navigator.pop(context);
                       } catch (e) {
                         _showTextDialog(context, e.toString());
@@ -135,7 +134,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+            Radius.circular(10.0),
           ),
         ),
         title: Text(message),

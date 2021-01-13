@@ -37,44 +37,50 @@ class GroupSongListScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Flexible(
+                  Divider(
+                    thickness: 0.1,
+                    height: 0.1,
+                    color: Colors.grey[800],
+                  ),
+                  Expanded(
                     child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemExtent: 60.0,
-                        itemCount: model.songList.length,
-                        itemBuilder: (context, index) {
-                          final song = model.songList[index];
-                          return SongListTile(
-                            songTitle: song.title,
-                            songMinute: song.playingTime.toString(),
-                            isChecked: song.checkboxState,
-                            isVisible: model.isSetListMode,
-                            checkboxCallback: (state) {
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemExtent: 60.0,
+                      itemCount: model.songList.length,
+                      itemBuilder: (context, index) {
+                        final song = model.songList[index];
+                        return SongListTile(
+                          songTitle: song.title,
+                          songMinute: song.playingTime.toString(),
+                          isChecked: song.checkboxState,
+                          isVisible: model.isSetListMode,
+                          checkboxCallback: (state) {
+                            model.selectSong(song);
+                          },
+                          tileTappedCallback: () async {
+                            if (model.isSetListMode == true) {
                               model.selectSong(song);
-                            },
-                            tileTappedCallback: () async {
-                              if (model.isSetListMode == true) {
-                                model.selectSong(song);
-                              } else {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GroupSongScreen(
-                                      groupID: groupID,
-                                      song: song,
-                                    ),
+                            } else {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GroupSongScreen(
+                                    groupID: groupID,
+                                    song: song,
                                   ),
-                                );
-                                model.getSongList(groupID);
-                              }
-                            },
-                          );
-                        }),
+                                ),
+                              );
+                              model.getSongList(groupID);
+                            }
+                          },
+                        );
+                      },
+                    ),
                   ),
                   Visibility(
                     visible: model.isSetListMode,
                     child: SizedBox(
-                      height: 35.0,
+                      height: 40.0,
                     ),
                   ),
                 ],
@@ -83,75 +89,74 @@ class GroupSongListScreen extends StatelessWidget {
                 height: double.infinity,
                 width: double.infinity,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Visibility(
-                          visible: model.isSetListMode,
-                          child: Expanded(
+                    Visibility(
+                      visible: model.isSetListMode,
+                      child: Divider(
+                        thickness: 0.1,
+                        height: 0.1,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                    Visibility(
+                      visible: model.isSetListMode,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
                             flex: 3,
                             child: Container(
                               height: 40.0,
-                              decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(10.0),
-                                ),
-                              ),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-                                  Text(
-                                    '${model.songNum} 曲',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  Text(
-                                    '${model.totalPlayTime} 分',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                                  Text('${model.songNum} 曲'),
+                                  Text('${model.totalPlayTime} 分'),
                                 ],
                               ),
                             ),
                           ),
-                        ),
-                        Visibility(
-                          visible: model.isSetListMode,
-                          child: Expanded(
-                              flex: 2,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10.0),
+                          Container(
+                            height: 40.0,
+                            child: VerticalDivider(
+                              thickness: 0.2,
+                              width: 0.2,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              height: 40.0,
+                              child: FlatButton(
+                                child: Text(
+                                  '決定',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 17.0,
                                   ),
                                 ),
-                                height: 40.0,
-                                child: FlatButton(
-                                  child: Text(
-                                    '作成',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: () async {
-                                    List<String> setList = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            GroupSetListScreen(
-                                          selectedSongs: model.selectedSongs,
-                                          songNum: model.songNum,
-                                          totalPlayTime: model.totalPlayTime,
-                                        ),
+                                onPressed: () async {
+                                  List<String> setList = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => GroupSetListScreen(
+                                        selectedSongs: model.selectedSongs,
+                                        songNum: model.songNum,
+                                        totalPlayTime: model.totalPlayTime,
+                                        groupID: groupID,
                                       ),
-                                    );
-                                    model.selectedSongs = setList;
-                                  },
-                                ),
-                              )),
-                        ),
-                      ],
+                                    ),
+                                  );
+                                  model.selectedSongs = setList;
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Visibility(
                       visible: !model.isSetListMode,

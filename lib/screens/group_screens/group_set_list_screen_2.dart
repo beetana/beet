@@ -5,10 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSetListScreen2 extends StatelessWidget {
-  GroupSetListScreen2({this.setList, this.songNum, this.totalPlayTime});
+  GroupSetListScreen2({
+    this.setList,
+    this.songNum,
+    this.totalPlayTime,
+    this.groupID,
+  });
   final List<String> setList;
   final int songNum;
   final int totalPlayTime;
+  final String groupID;
   final eventTitleController = TextEditingController();
   final eventPlaceController = TextEditingController();
 
@@ -16,27 +22,27 @@ class GroupSetListScreen2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupSetListModel2>(
       create: (_) => GroupSetListModel2()..init(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('詳細'),
-        ),
-        body: Consumer<GroupSetListModel2>(builder: (context, model, child) {
-          return Stack(
+      child: Consumer<GroupSetListModel2>(builder: (context, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('詳細'),
+          ),
+          body: Stack(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+                padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                 child: Column(
                   children: <Widget>[
                     TextField(
                       controller: eventTitleController,
-                      decoration: InputDecoration(hintText: 'タイトル'),
+                      decoration: InputDecoration(hintText: 'イベントタイトル'),
                       onChanged: (text) {
                         model.eventTitle = text;
                       },
                     ),
                     TextField(
                       controller: eventPlaceController,
-                      decoration: InputDecoration(hintText: '場所'),
+                      decoration: InputDecoration(hintText: '会場'),
                       onChanged: (text) {
                         model.eventPlace = text;
                       },
@@ -49,76 +55,56 @@ class GroupSetListScreen2 extends StatelessWidget {
                       },
                     ),
                     model.eventDatePickerBox,
-                    Divider(height: 0.5),
+                    Divider(
+                      thickness: 0.4,
+                      height: 0.4,
+                      color: Colors.black,
+                    ),
                   ],
                 ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
+                  Divider(
+                    thickness: 0.1,
+                    height: 0.1,
+                    color: Colors.grey[800],
+                  ),
                   Row(
                     children: <Widget>[
                       Expanded(
                         flex: 3,
                         child: Container(
                           height: 40.0,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10.0),
-                            ),
-                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Text(
-                                '$songNum 曲',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Text(
-                                '$totalPlayTime 分',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                              Text('$songNum 曲'),
+                              Text('$totalPlayTime 分'),
                             ],
                           ),
                         ),
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black54,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                            ),
-                          ),
-                          height: 40.0,
-                          child: FlatButton(
-                            child: Text(
-                              '日付未定',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () {
-                              model.dateUndecided();
-                            },
-                          ),
+                      Container(
+                        height: 40.0,
+                        child: VerticalDivider(
+                          thickness: 0.2,
+                          width: 0.2,
+                          color: Colors.grey,
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                            ),
-                          ),
                           height: 40.0,
                           child: FlatButton(
                             child: Text(
                               '決定',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 17.0,
+                              ),
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -131,6 +117,7 @@ class GroupSetListScreen2 extends StatelessWidget {
                                     eventDateText: model.eventDateText,
                                     songNum: songNum,
                                     totalPlayTime: totalPlayTime,
+                                    groupID: groupID,
                                   ),
                                 ),
                               );
@@ -143,9 +130,9 @@ class GroupSetListScreen2 extends StatelessWidget {
                 ],
               ),
             ],
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }

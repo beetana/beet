@@ -1,4 +1,5 @@
 import 'package:beet/models/group_models/group_set_list_model_3.dart';
+import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/widgets/set_list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class GroupSetListScreen3 extends StatelessWidget {
     this.eventDateText,
     this.songNum,
     this.totalPlayTime,
+    this.groupID,
   });
   final List<String> setList;
   final String eventTitle;
@@ -19,6 +21,7 @@ class GroupSetListScreen3 extends StatelessWidget {
   final String eventDateText;
   final int songNum;
   final int totalPlayTime;
+  final String groupID;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +77,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                               ),
                               Expanded(
                                 child: ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
                                   itemCount: setList.length,
                                   itemExtent: 30.5,
                                   itemBuilder: (context, index) {
@@ -89,8 +93,20 @@ class GroupSetListScreen3 extends StatelessWidget {
                         ),
                       ),
                     ),
+                    FlatButton.icon(
+                      icon: Icon(
+                        Icons.arrow_back,
+                      ),
+                      label: Text('戻る'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
                     Expanded(
                       child: SizedBox(),
+                    ),
+                    SizedBox(
+                      height: 32.0,
                     ),
                   ],
                 ),
@@ -98,72 +114,56 @@ class GroupSetListScreen3 extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
+                  Divider(
+                    thickness: 0.1,
+                    height: 0.1,
+                    color: Colors.grey[800],
+                  ),
                   Row(
                     children: <Widget>[
                       Expanded(
                         flex: 3,
                         child: Container(
                           height: 40.0,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10.0),
-                            ),
-                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Text(
-                                '$songNum 曲',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Text(
-                                '$totalPlayTime 分',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                              Text('$songNum 曲'),
+                              Text('$totalPlayTime 分'),
                             ],
                           ),
                         ),
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black54,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                            ),
-                          ),
-                          height: 40.0,
-                          child: FlatButton(
-                            child: Text(
-                              '戻る',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
+                      Container(
+                        height: 40.0,
+                        child: VerticalDivider(
+                          thickness: 0.2,
+                          width: 0.2,
+                          color: Colors.grey,
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                            ),
-                          ),
                           height: 40.0,
                           child: FlatButton(
                             child: Text(
                               '保存',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 17.0,
+                              ),
                             ),
-                            onPressed: () {
-                              model.saveSetListImage();
+                            onPressed: () async {
+                              await model.saveSetListImage();
+                              await _showTextDialog(context, '画像を保存しました');
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      GroupScreen(groupID: groupID),
+                                ),
+                              );
                             },
                           ),
                         ),
@@ -178,4 +178,28 @@ class GroupSetListScreen3 extends StatelessWidget {
       }),
     );
   }
+}
+
+Future _showTextDialog(context, message) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+        ),
+        title: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

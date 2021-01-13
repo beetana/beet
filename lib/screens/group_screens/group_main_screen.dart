@@ -25,6 +25,11 @@ class GroupMainScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 24.0),
                 ),
                 SizedBox(height: 10.0),
+                Divider(
+                  thickness: 0.1,
+                  height: 0.1,
+                  color: Colors.grey[800],
+                ),
                 Expanded(
                   child: ListView.builder(
                       physics: AlwaysScrollableScrollPhysics(),

@@ -106,6 +106,11 @@ class UserCalendarScreen extends StatelessWidget {
                     model.getSelectedEvents();
                   },
                 ),
+                Divider(
+                  thickness: 0.1,
+                  height: 0.1,
+                  color: Colors.grey[800],
+                ),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),

@@ -19,7 +19,7 @@ class SetListTile extends StatelessWidget {
         songNum.add('    ');
         mcCount.add('MC');
       } else {
-        var num = songNum.length - mcCount.length + 1;
+        int num = songNum.length - mcCount.length + 1;
         if (num < 10) {
           numText = ' ${num.toString()}.';
         } else {
@@ -32,7 +32,7 @@ class SetListTile extends StatelessWidget {
       title: Text(
         '${songNum[index]} ${setList[index]}',
         style: TextStyle(fontSize: 20.0),
-        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
       onTap: () {},
     );

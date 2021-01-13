@@ -36,7 +36,7 @@ class EventListTile extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(width: 1.0),
+                border: Border.all(width: 0.4),
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: InkWell(

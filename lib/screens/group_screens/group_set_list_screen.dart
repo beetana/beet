@@ -5,10 +5,16 @@ import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorder
 import 'package:provider/provider.dart';
 
 class GroupSetListScreen extends StatelessWidget {
-  GroupSetListScreen({this.selectedSongs, this.songNum, this.totalPlayTime});
+  GroupSetListScreen({
+    this.selectedSongs,
+    this.songNum,
+    this.totalPlayTime,
+    this.groupID,
+  });
   final List<String> selectedSongs;
   final int songNum;
   final int totalPlayTime;
+  final String groupID;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +23,26 @@ class GroupSetListScreen extends StatelessWidget {
       child: Consumer<GroupSetListModel>(builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
+            title: Text('セットリスト作成'),
+            actions: [
+              FlatButton(
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      'MC',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+                onPressed: () {
+                  model.addMC();
+                },
+              ),
+            ],
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
@@ -26,115 +52,90 @@ class GroupSetListScreen extends StatelessWidget {
                 Navigator.pop(context, model.setList);
               },
             ),
-            title: Text('セットリスト作成'),
           ),
           body: Stack(
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Flexible(
+                  Expanded(
                     child: ImplicitlyAnimatedReorderableList(
-                        items: model.setList,
-                        areItemsTheSame: (oldItem, newItem) =>
-                            oldItem == newItem,
-                        onReorderFinished: (song, from, to, songs) {
-                          model.setList = songs;
-                        },
-                        itemBuilder: (context, animation, song, index) {
-                          return Reorderable(
-                            key: ValueKey(song),
-                            builder: (context, animation, bool) {
-                              return Material(
-                                type: MaterialType.transparency,
-                                child: ListTile(
-                                  title: Text(
-                                    '$song',
-                                    maxLines: 1,
-                                  ),
-                                  trailing: Handle(
-                                    delay: Duration(milliseconds: 100),
-                                    child: Icon(
-                                      Icons.list,
-                                      color: Colors.black54,
-                                    ),
+                      items: model.setList,
+                      areItemsTheSame: (oldItem, newItem) => oldItem == newItem,
+                      onReorderFinished: (song, from, to, songs) {
+                        model.setList = songs;
+                      },
+                      itemBuilder: (context, animation, song, index) {
+                        return Reorderable(
+                          key: ValueKey(song),
+                          builder: (context, animation, bool) {
+                            return Material(
+                              type: MaterialType.transparency,
+                              child: ListTile(
+                                title: Text(
+                                  '$song',
+                                  maxLines: 1,
+                                ),
+                                trailing: Handle(
+                                  delay: Duration(milliseconds: 100),
+                                  child: Icon(
+                                    Icons.list,
+                                    color: Colors.black54,
                                   ),
                                 ),
-                              );
-                            },
-                          );
-                        }),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                   SizedBox(
-                    height: 35.0,
+                    height: 40.0,
                   ),
                 ],
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
+                  Divider(
+                    thickness: 0.1,
+                    height: 0.1,
+                    color: Colors.grey[800],
+                  ),
                   Row(
                     children: <Widget>[
                       Expanded(
                         flex: 3,
                         child: Container(
                           height: 40.0,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10.0),
-                            ),
-                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Text(
-                                '$songNum 曲',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Text(
-                                '$totalPlayTime 分',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                              Text('$songNum 曲'),
+                              Text('$totalPlayTime 分'),
                             ],
                           ),
                         ),
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black54,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                            ),
-                          ),
-                          height: 40.0,
-                          child: FlatButton(
-                            child: Text(
-                              'MC追加',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () {
-                              model.addMC();
-                            },
-                          ),
+                      Container(
+                        height: 40.0,
+                        child: VerticalDivider(
+                          thickness: 0.2,
+                          width: 0.2,
+                          color: Colors.grey,
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                            ),
-                          ),
                           height: 40.0,
                           child: FlatButton(
                             child: Text(
                               '決定',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 17.0,
+                              ),
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -144,6 +145,7 @@ class GroupSetListScreen extends StatelessWidget {
                                     setList: model.setList,
                                     songNum: songNum,
                                     totalPlayTime: totalPlayTime,
+                                    groupID: groupID,
                                   ),
                                 ),
                               );

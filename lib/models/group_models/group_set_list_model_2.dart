@@ -28,18 +28,41 @@ class GroupSetListModel2 extends ChangeNotifier {
 
   void showEventDatePicker() {
     if (isShowEventDatePicker == false) {
-      eventDatePickerBox = Container(
-        height: 100.0,
-        child: CupertinoDatePicker(
-          mode: CupertinoDatePickerMode.date,
-          initialDateTime: eventDate,
-          minimumDate: DateTime(1980, 1, 1),
-          maximumDate: DateTime(2050, 12, 31),
-          onDateTimeChanged: (DateTime newDate) {
-            eventDate = newDate;
-            eventDateText = eventDateFormat.format(eventDate);
-          },
-        ),
+      eventDatePickerBox = Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            height: 100.0,
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.date,
+              initialDateTime: eventDate,
+              minimumDate: DateTime(1980, 1, 1),
+              maximumDate: DateTime(2050, 12, 31),
+              onDateTimeChanged: (DateTime newDate) {
+                eventDate = newDate;
+                eventDateText = eventDateFormat.format(eventDate);
+              },
+            ),
+          ),
+          SizedBox(height: 16.0),
+          FlatButton.icon(
+            icon: Icon(
+              Icons.clear,
+              color: Colors.red[300],
+            ),
+            label: Text(
+              '未定',
+              style: TextStyle(color: Colors.red[300]),
+            ),
+            onPressed: () {
+              eventDate = DateTime.now();
+              eventDateText = '';
+              eventDatePickerBox = SizedBox();
+              isShowEventDatePicker = !isShowEventDatePicker;
+              notifyListeners();
+            },
+          ),
+        ],
       );
     } else {
       eventDatePickerBox = SizedBox();

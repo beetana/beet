@@ -116,7 +116,7 @@ class UserCalendarScreen extends StatelessWidget {
                     padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
                     child: ListView.builder(
                         physics: AlwaysScrollableScrollPhysics(),
-                        itemExtent: 120.0,
+                        itemExtent: 112.0,
                         itemCount: model.selectedEvents.length,
                         itemBuilder: (context, index) {
                           Event event = model.selectedEvents[index];

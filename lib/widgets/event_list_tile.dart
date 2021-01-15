@@ -26,23 +26,16 @@ class EventListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          EventPlannerImage(imageURL: imageURL, name: name),
-          SizedBox(height: 5.0),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(width: 0.4),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: InkWell(
+    return Container(
+      child: InkWell(
+        child: Column(
+          children: [
+            EventPlannerImage(imageURL: imageURL, name: name),
+            Expanded(
+              child: Container(
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      EdgeInsets.only(bottom: 8.0, left: 24.0, right: 24.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -59,11 +52,18 @@ class EventListTile extends StatelessWidget {
                     ],
                   ),
                 ),
-                onTap: onTap,
               ),
             ),
-          ),
-        ],
+            Divider(
+              thickness: 0.2,
+              height: 0.2,
+              indent: 8.0,
+              endIndent: 8.0,
+              color: Colors.grey[800],
+            ),
+          ],
+        ),
+        onTap: onTap,
       ),
     );
   }
@@ -79,30 +79,33 @@ class EventPlannerImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageURL != null) {
-      return Row(
-        children: [
-          Container(
-            width: 30.0,
-            height: 30.0,
-            child: CircleAvatar(
-              backgroundImage: imageURL.isNotEmpty
-                  ? NetworkImage(imageURL)
-                  : AssetImage('images/test_user_image.png'),
-              backgroundColor: Colors.transparent,
+      return Padding(
+        padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+        child: Row(
+          children: [
+            Container(
+              width: 40.0,
+              height: 40.0,
+              child: CircleAvatar(
+                backgroundImage: imageURL.isNotEmpty
+                    ? NetworkImage(imageURL)
+                    : AssetImage('images/test_user_image.png'),
+                backgroundColor: Colors.transparent,
+              ),
             ),
-          ),
-          SizedBox(width: 5.0),
-          Expanded(
-            child: Text(
-              name,
-              style: TextStyle(fontWeight: FontWeight.bold),
-              overflow: TextOverflow.ellipsis,
+            SizedBox(width: 5.0),
+            Expanded(
+              child: Text(
+                name,
+                style: TextStyle(fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     } else {
-      return SizedBox();
+      return SizedBox(height: 40.0);
     }
   }
 }
@@ -130,7 +133,7 @@ class EventOverViewWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              '@ $eventPlace',
+              '@$eventPlace',
               style: TextStyle(
                 color: Colors.black54,
                 fontSize: 14.0,

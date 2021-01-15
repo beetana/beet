@@ -112,42 +112,39 @@ class UserCalendarScreen extends StatelessWidget {
                   color: Colors.grey[800],
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-                    child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemExtent: 112.0,
-                        itemCount: model.selectedEvents.length,
-                        itemBuilder: (context, index) {
-                          Event event = model.selectedEvents[index];
-                          return EventListTile(
-                            imageURL: model.eventPlanner[event.myID].imageURL,
-                            name: model.eventPlanner[event.myID].name,
-                            eventTitle: event.eventTitle,
-                            eventPlace: event.eventPlace,
-                            isAllDay: event.isAllDay,
-                            startingDateTime: event.startingDateTime,
-                            endingDateTime: event.endingDateTime,
-                            onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => UserEventScreen(
-                                    userID: userID,
-                                    event: event,
-                                  ),
+                  child: ListView.builder(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemExtent: 112.0,
+                      itemCount: model.selectedEvents.length,
+                      itemBuilder: (context, index) {
+                        Event event = model.selectedEvents[index];
+                        return EventListTile(
+                          imageURL: model.eventPlanner[event.myID].imageURL,
+                          name: model.eventPlanner[event.myID].name,
+                          eventTitle: event.eventTitle,
+                          eventPlace: event.eventPlace,
+                          isAllDay: event.isAllDay,
+                          startingDateTime: event.startingDateTime,
+                          endingDateTime: event.endingDateTime,
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UserEventScreen(
+                                  userID: userID,
+                                  event: event,
                                 ),
-                              );
-                              await model.getEvents(
-                                userID: userID,
-                                first: _calendarController.visibleDays[0],
-                                last: _calendarController.visibleDays.last,
-                              );
-                              model.getSelectedEvents();
-                            },
-                          );
-                        }),
-                  ),
+                              ),
+                            );
+                            await model.getEvents(
+                              userID: userID,
+                              first: _calendarController.visibleDays[0],
+                              last: _calendarController.visibleDays.last,
+                            );
+                            model.getSelectedEvents();
+                          },
+                        );
+                      }),
                 ),
               ],
             ),

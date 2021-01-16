@@ -44,15 +44,15 @@ class GroupSetListModel2 extends ChangeNotifier {
               },
             ),
           ),
-          SizedBox(height: 16.0),
+          SizedBox(height: 24.0),
           FlatButton.icon(
             icon: Icon(
               Icons.clear,
-              color: Colors.red[300],
+              color: Colors.black54,
             ),
             label: Text(
               '未定',
-              style: TextStyle(color: Colors.red[300]),
+              style: TextStyle(color: Colors.black54),
             ),
             onPressed: () {
               eventDate = DateTime.now();

@@ -1,7 +1,8 @@
 import 'package:beet/event.dart';
 import 'package:beet/screens/group_screens/group_add_event_screen.dart';
 import 'package:beet/screens/group_screens/group_event_screen.dart';
-import 'package:beet/widgets/event_list_tile.dart';
+import 'package:beet/widgets/user_event_list_tile.dart';
+import 'package:beet/widgets/group_event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/models/group_models/group_calendar_model.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
@@ -112,40 +113,37 @@ class GroupCalendarScreen extends StatelessWidget {
                   color: Colors.grey[800],
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-                    child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemExtent: 90.0,
-                        itemCount: model.selectedEvents.length,
-                        itemBuilder: (context, index) {
-                          Event event = model.selectedEvents[index];
-                          return EventListTile(
-                            eventTitle: event.eventTitle,
-                            eventPlace: event.eventPlace,
-                            isAllDay: event.isAllDay,
-                            startingDateTime: event.startingDateTime,
-                            endingDateTime: event.endingDateTime,
-                            onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GroupEventScreen(
-                                    groupID: groupID,
-                                    event: event,
-                                  ),
+                  child: ListView.builder(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemExtent: 96.0,
+                      itemCount: model.selectedEvents.length,
+                      itemBuilder: (context, index) {
+                        Event event = model.selectedEvents[index];
+                        return GroupEventListTile(
+                          eventTitle: event.eventTitle,
+                          eventPlace: event.eventPlace,
+                          isAllDay: event.isAllDay,
+                          startingDateTime: event.startingDateTime,
+                          endingDateTime: event.endingDateTime,
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GroupEventScreen(
+                                  groupID: groupID,
+                                  event: event,
                                 ),
-                              );
-                              await model.getEvents(
-                                groupID: groupID,
-                                first: _calendarController.visibleDays[0],
-                                last: _calendarController.visibleDays.last,
-                              );
-                              model.getSelectedEvents();
-                            },
-                          );
-                        }),
-                  ),
+                              ),
+                            );
+                            await model.getEvents(
+                              groupID: groupID,
+                              first: _calendarController.visibleDays[0],
+                              last: _calendarController.visibleDays.last,
+                            );
+                            model.getSelectedEvents();
+                          },
+                        );
+                      }),
                 ),
               ],
             ),

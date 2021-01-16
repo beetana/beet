@@ -1,6 +1,6 @@
 import 'package:beet/models/user_models/user_main_model.dart';
 import 'package:beet/screens/user_screens/user_event_screen.dart';
-import 'package:beet/widgets/event_list_tile.dart';
+import 'package:beet/widgets/user_event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +35,7 @@ class UserMainScreen extends StatelessWidget {
                   itemCount: model.eventList.length,
                   itemBuilder: (context, index) {
                     final event = model.eventList[index];
-                    return EventListTile(
+                    return UserEventListTile(
                       imageURL: model.eventPlanner[event.myID].imageURL,
                       name: model.eventPlanner[event.myID].name,
                       eventTitle: event.eventTitle,

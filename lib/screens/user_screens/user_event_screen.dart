@@ -18,6 +18,7 @@ class UserEventScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text('イベント詳細'),
+            centerTitle: true,
             actions: <Widget>[
               Visibility(
                 visible: model.myID == userID,

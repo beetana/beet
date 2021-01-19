@@ -18,6 +18,7 @@ class UserSecurityScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('ログインとセキュリティ'),
+                centerTitle: true,
               ),
               body: Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.0),

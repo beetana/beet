@@ -24,6 +24,7 @@ class GroupSetListScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text('セットリスト作成'),
+            centerTitle: true,
             actions: [
               FlatButton(
                 child: Row(

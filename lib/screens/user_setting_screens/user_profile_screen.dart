@@ -17,6 +17,7 @@ class UserProfileScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('アカウント情報'),
+                centerTitle: true,
               ),
               body: Padding(
                 padding: EdgeInsets.symmetric(vertical: 16.0),

@@ -30,6 +30,7 @@ class GroupScreen extends StatelessWidget {
                 model.groupName,
                 textAlign: TextAlign.center,
               ),
+              centerTitle: true,
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.settings),

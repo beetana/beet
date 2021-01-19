@@ -18,6 +18,7 @@ class GroupSongScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text('曲詳細'),
+            centerTitle: true,
             actions: <Widget>[
               FlatButton(
                 child: Text(

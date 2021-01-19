@@ -19,6 +19,7 @@ class UserUpdateEmailScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('メールアドレスを変更'),
+                centerTitle: true,
                 actions: [
                   FlatButton(
                     child: Text(

@@ -32,83 +32,75 @@ class GroupSetListScreen3 extends StatelessWidget {
           body: Stack(
             children: <Widget>[
               SafeArea(
-                child: Column(
-                  children: <Widget>[
-                    AspectRatio(
-                      aspectRatio: 1.0 / 1.415,
-                      child: RepaintBoundary(
-                        key: model.globalKey,
-                        child: Container(
-                          color: Colors.white,
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 16.0, left: 16.0, right: 16.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: <Widget>[
-                                        Text(
-                                          eventTitle,
-                                          style: TextStyle(fontSize: 17.0),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: <Widget>[
-                                        Text(
-                                          eventDateText,
-                                          style: TextStyle(fontSize: 13.0),
-                                        ),
-                                        eventPlace.isNotEmpty
-                                            ? Text(
-                                                ' @$eventPlace',
-                                                style:
-                                                    TextStyle(fontSize: 13.0),
-                                              )
-                                            : Text(''),
-                                      ],
-                                    ),
-                                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      AspectRatio(
+                        aspectRatio: 1.0 / 1.415,
+                        child: RepaintBoundary(
+                          key: model.globalKey,
+                          child: Container(
+                            color: Colors.white,
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 16.0, left: 16.0, right: 16.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          Text(
+                                            eventTitle,
+                                            style: TextStyle(fontSize: 17.0),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          Text(
+                                            eventDateText,
+                                            style: TextStyle(fontSize: 13.0),
+                                          ),
+                                          eventPlace.isNotEmpty
+                                              ? Text(
+                                                  ' @$eventPlace',
+                                                  style:
+                                                      TextStyle(fontSize: 13.0),
+                                                )
+                                              : Text(''),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: setList.length,
-                                  itemExtent: 30.5,
-                                  itemBuilder: (context, index) {
-                                    return SetListTile(
-                                      setList: setList,
-                                      index: index,
-                                    );
-                                  },
+                                Expanded(
+                                  child: ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: setList.length,
+                                    itemExtent: 30.5,
+                                    itemBuilder: (context, index) {
+                                      return SetListTile(
+                                        setList: setList,
+                                        index: index,
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    FlatButton.icon(
-                      icon: Icon(
-                        Icons.arrow_back,
+                      SizedBox(
+                        height: 40.0,
                       ),
-                      label: Text('戻る'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    Expanded(
-                      child: SizedBox(),
-                    ),
-                    SizedBox(
-                      height: 32.0,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Column(
@@ -131,6 +123,32 @@ class GroupSetListScreen3 extends StatelessWidget {
                               Text('$songNum 曲'),
                               Text('$totalPlayTime 分'),
                             ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 40.0,
+                        child: VerticalDivider(
+                          thickness: 0.2,
+                          width: 0.2,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          height: 40.0,
+                          child: FlatButton(
+                            child: Text(
+                              '戻る',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 17.0,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
                         ),
                       ),

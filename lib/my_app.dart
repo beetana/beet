@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         const Locale('ja', 'JA'),
       ],
       locale: Locale('ja', 'JA'),
+      debugShowCheckedModeBanner: false,
       title: 'beet',
       theme: ThemeData(
         primaryColor: Colors.grey[800],

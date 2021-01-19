@@ -164,13 +164,23 @@ Future _confirmDeleteDialog(context, message) async {
         title: Text(message),
         actions: <Widget>[
           FlatButton(
-            child: Text('キャンセル'),
+            child: Text(
+              'キャンセル',
+              style: TextStyle(
+                color: Colors.black54,
+              ),
+            ),
             onPressed: () {
               Navigator.pop(context, false);
             },
           ),
           FlatButton(
-            child: Text('削除'),
+            child: Text(
+              '削除',
+              style: TextStyle(
+                color: Colors.redAccent,
+              ),
+            ),
             onPressed: () {
               Navigator.pop(context, true);
             },

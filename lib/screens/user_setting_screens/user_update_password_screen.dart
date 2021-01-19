@@ -18,6 +18,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('パスワードを変更'),
+                centerTitle: true,
                 actions: [
                   FlatButton(
                     child: Text(
@@ -43,71 +44,72 @@ class UserUpdatePasswordScreen extends StatelessWidget {
               ),
               body: Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: currentPasswordController,
-                      autofocus: true,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: '現在のパスワード',
-                        suffix: IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            color: Colors.black54,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: currentPasswordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: '現在のパスワード',
+                          suffix: IconButton(
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.black54,
+                            ),
+                            onPressed: () {
+                              currentPasswordController.clear();
+                              model.currentPassword = '';
+                            },
                           ),
-                          onPressed: () {
-                            currentPasswordController.clear();
-                            model.currentPassword = '';
-                          },
                         ),
+                        onChanged: (text) {
+                          model.currentPassword = text;
+                        },
                       ),
-                      onChanged: (text) {
-                        model.currentPassword = text;
-                      },
-                    ),
-                    TextField(
-                      controller: newPasswordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: '新しいパスワード',
-                        hintText: '6文字以上',
-                        suffix: IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            color: Colors.black54,
+                      TextField(
+                        controller: newPasswordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: '新しいパスワード',
+                          hintText: '6文字以上',
+                          suffix: IconButton(
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.black54,
+                            ),
+                            onPressed: () {
+                              newPasswordController.clear();
+                              model.newPassword = '';
+                            },
                           ),
-                          onPressed: () {
-                            newPasswordController.clear();
-                            model.newPassword = '';
-                          },
                         ),
+                        onChanged: (text) {
+                          model.newPassword = text;
+                        },
                       ),
-                      onChanged: (text) {
-                        model.newPassword = text;
-                      },
-                    ),
-                    TextField(
-                      controller: confirmNewPasswordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: '新しいパスワード(確認用)',
-                        suffix: IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            color: Colors.black54,
+                      TextField(
+                        controller: confirmNewPasswordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: '新しいパスワード(確認用)',
+                          suffix: IconButton(
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.black54,
+                            ),
+                            onPressed: () {
+                              confirmNewPasswordController.clear();
+                              model.confirmNewPassword = '';
+                            },
                           ),
-                          onPressed: () {
-                            confirmNewPasswordController.clear();
-                            model.confirmNewPassword = '';
-                          },
                         ),
+                        onChanged: (text) {
+                          model.confirmNewPassword = text;
+                        },
                       ),
-                      onChanged: (text) {
-                        model.confirmNewPassword = text;
-                      },
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

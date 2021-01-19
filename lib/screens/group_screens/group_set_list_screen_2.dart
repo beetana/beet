@@ -26,41 +26,55 @@ class GroupSetListScreen2 extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text('詳細'),
+            centerTitle: true,
           ),
           body: Stack(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      controller: eventTitleController,
-                      decoration: InputDecoration(hintText: 'イベントタイトル'),
-                      onChanged: (text) {
-                        model.eventTitle = text;
-                      },
-                    ),
-                    TextField(
-                      controller: eventPlaceController,
-                      decoration: InputDecoration(hintText: '会場'),
-                      onChanged: (text) {
-                        model.eventPlace = text;
-                      },
-                    ),
-                    ListTile(
-                      title: Text('日付'),
-                      trailing: Text(model.eventDateText),
-                      onTap: () {
-                        model.showEventDatePicker();
-                      },
-                    ),
-                    model.eventDatePickerBox,
-                    Divider(
-                      thickness: 0.4,
-                      height: 0.4,
-                      color: Colors.black,
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      TextField(
+                        controller: eventTitleController,
+                        decoration: InputDecoration(hintText: 'イベントタイトル'),
+                        onTap: () {
+                          if (model.isShowEventDatePicker == true) {
+                            model.showEventDatePicker();
+                          }
+                        },
+                        onChanged: (text) {
+                          model.eventTitle = text;
+                        },
+                      ),
+                      TextField(
+                        controller: eventPlaceController,
+                        decoration: InputDecoration(hintText: '会場'),
+                        onTap: () {
+                          if (model.isShowEventDatePicker == true) {
+                            model.showEventDatePicker();
+                          }
+                        },
+                        onChanged: (text) {
+                          model.eventPlace = text;
+                        },
+                      ),
+                      ListTile(
+                        title: Text('日付'),
+                        trailing: Text(model.eventDateText),
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
+                          model.showEventDatePicker();
+                        },
+                      ),
+                      model.eventDatePickerBox,
+                      Divider(
+                        thickness: 0.4,
+                        height: 0.4,
+                        color: Colors.black,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Column(

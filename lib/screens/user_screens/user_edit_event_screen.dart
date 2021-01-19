@@ -27,6 +27,7 @@ class UserEditEventScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('イベントを編集'),
+                centerTitle: true,
                 actions: <Widget>[
                   FlatButton(
                     child: Text(
@@ -57,6 +58,14 @@ class UserEditEventScreen extends StatelessWidget {
                       TextField(
                         controller: eventTitleController,
                         decoration: InputDecoration(hintText: 'タイトル'),
+                        onTap: () {
+                          if (model.isShowStartingPicker == true) {
+                            model.showStartingDateTimePicker();
+                          }
+                          if (model.isShowEndingPicker == true) {
+                            model.showEndingDateTimePicker();
+                          }
+                        },
                         onChanged: (text) {
                           model.eventTitle = text;
                         },
@@ -64,6 +73,14 @@ class UserEditEventScreen extends StatelessWidget {
                       TextField(
                         controller: eventPlaceController,
                         decoration: InputDecoration(hintText: '場所'),
+                        onTap: () {
+                          if (model.isShowStartingPicker == true) {
+                            model.showStartingDateTimePicker();
+                          }
+                          if (model.isShowEndingPicker == true) {
+                            model.showEndingDateTimePicker();
+                          }
+                        },
                         onChanged: (text) {
                           model.eventPlace = text;
                         },
@@ -84,6 +101,7 @@ class UserEditEventScreen extends StatelessWidget {
                         trailing: Text(model.tileDateFormat
                             .format(model.startingDateTime)),
                         onTap: () {
+                          FocusScope.of(context).unfocus();
                           model.showStartingDateTimePicker();
                         },
                       ),
@@ -94,6 +112,7 @@ class UserEditEventScreen extends StatelessWidget {
                         trailing: Text(
                             model.tileDateFormat.format(model.endingDateTime)),
                         onTap: () {
+                          FocusScope.of(context).unfocus();
                           model.showEndingDateTimePicker();
                         },
                       ),
@@ -103,6 +122,14 @@ class UserEditEventScreen extends StatelessWidget {
                         maxLines: 10,
                         maxLength: 200,
                         decoration: InputDecoration(hintText: 'メモ'),
+                        onTap: () {
+                          if (model.isShowStartingPicker == true) {
+                            model.showStartingDateTimePicker();
+                          }
+                          if (model.isShowEndingPicker == true) {
+                            model.showEndingDateTimePicker();
+                          }
+                        },
                         onChanged: (text) {
                           model.eventMemo = text;
                         },

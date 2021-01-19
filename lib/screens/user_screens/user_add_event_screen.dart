@@ -23,6 +23,7 @@ class UserAddEventScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('イベントを追加'),
+                centerTitle: true,
                 actions: <Widget>[
                   FlatButton(
                     child: Text(
@@ -53,6 +54,14 @@ class UserAddEventScreen extends StatelessWidget {
                       TextField(
                         controller: eventTitleController,
                         decoration: InputDecoration(hintText: 'タイトル'),
+                        onTap: () {
+                          if (model.isShowStartingPicker == true) {
+                            model.showStartingDateTimePicker();
+                          }
+                          if (model.isShowEndingPicker == true) {
+                            model.showEndingDateTimePicker();
+                          }
+                        },
                         onChanged: (text) {
                           model.eventTitle = text;
                         },
@@ -60,6 +69,14 @@ class UserAddEventScreen extends StatelessWidget {
                       TextField(
                         controller: eventPlaceController,
                         decoration: InputDecoration(hintText: '場所'),
+                        onTap: () {
+                          if (model.isShowStartingPicker == true) {
+                            model.showStartingDateTimePicker();
+                          }
+                          if (model.isShowEndingPicker == true) {
+                            model.showEndingDateTimePicker();
+                          }
+                        },
                         onChanged: (text) {
                           model.eventPlace = text;
                         },
@@ -77,9 +94,11 @@ class UserAddEventScreen extends StatelessWidget {
                       Divider(height: 0.5),
                       ListTile(
                         title: Text('開始'),
-                        trailing: Text(model.tileDateFormat
-                            .format(model.startingDateTime)),
+                        trailing: Text(
+                          model.tileDateFormat.format(model.startingDateTime),
+                        ),
                         onTap: () {
+                          FocusScope.of(context).unfocus();
                           model.showStartingDateTimePicker();
                         },
                       ),
@@ -88,8 +107,10 @@ class UserAddEventScreen extends StatelessWidget {
                       ListTile(
                         title: Text('終了'),
                         trailing: Text(
-                            model.tileDateFormat.format(model.endingDateTime)),
+                          model.tileDateFormat.format(model.endingDateTime),
+                        ),
                         onTap: () {
+                          FocusScope.of(context).unfocus();
                           model.showEndingDateTimePicker();
                         },
                       ),
@@ -98,6 +119,14 @@ class UserAddEventScreen extends StatelessWidget {
                         controller: eventMemoController,
                         maxLines: 3,
                         decoration: InputDecoration(hintText: 'メモ'),
+                        onTap: () {
+                          if (model.isShowStartingPicker == true) {
+                            model.showStartingDateTimePicker();
+                          }
+                          if (model.isShowEndingPicker == true) {
+                            model.showEndingDateTimePicker();
+                          }
+                        },
                         onChanged: (text) {
                           model.eventMemo = text;
                         },

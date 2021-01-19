@@ -23,6 +23,7 @@ class GroupAddEventScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('イベントを追加'),
+                centerTitle: true,
                 actions: <Widget>[
                   FlatButton(
                     child: Text(
@@ -53,6 +54,14 @@ class GroupAddEventScreen extends StatelessWidget {
                       TextField(
                         controller: eventTitleController,
                         decoration: InputDecoration(hintText: 'タイトル'),
+                        onTap: () {
+                          if (model.isShowStartingPicker == true) {
+                            model.showStartingDateTimePicker();
+                          }
+                          if (model.isShowEndingPicker == true) {
+                            model.showEndingDateTimePicker();
+                          }
+                        },
                         onChanged: (text) {
                           model.eventTitle = text;
                         },
@@ -60,6 +69,14 @@ class GroupAddEventScreen extends StatelessWidget {
                       TextField(
                         controller: eventPlaceController,
                         decoration: InputDecoration(hintText: '場所'),
+                        onTap: () {
+                          if (model.isShowStartingPicker == true) {
+                            model.showStartingDateTimePicker();
+                          }
+                          if (model.isShowEndingPicker == true) {
+                            model.showEndingDateTimePicker();
+                          }
+                        },
                         onChanged: (text) {
                           model.eventPlace = text;
                         },
@@ -80,6 +97,7 @@ class GroupAddEventScreen extends StatelessWidget {
                         trailing: Text(model.tileDateFormat
                             .format(model.startingDateTime)),
                         onTap: () {
+                          FocusScope.of(context).unfocus();
                           model.showStartingDateTimePicker();
                         },
                       ),
@@ -90,6 +108,7 @@ class GroupAddEventScreen extends StatelessWidget {
                         trailing: Text(
                             model.tileDateFormat.format(model.endingDateTime)),
                         onTap: () {
+                          FocusScope.of(context).unfocus();
                           model.showEndingDateTimePicker();
                         },
                       ),
@@ -98,6 +117,14 @@ class GroupAddEventScreen extends StatelessWidget {
                         controller: eventMemoController,
                         maxLines: 3,
                         decoration: InputDecoration(hintText: 'メモ'),
+                        onTap: () {
+                          if (model.isShowStartingPicker == true) {
+                            model.showStartingDateTimePicker();
+                          }
+                          if (model.isShowEndingPicker == true) {
+                            model.showEndingDateTimePicker();
+                          }
+                        },
                         onChanged: (text) {
                           model.eventMemo = text;
                         },

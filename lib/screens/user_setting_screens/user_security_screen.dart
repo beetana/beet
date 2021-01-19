@@ -153,13 +153,23 @@ Future _confirmLogoutDialog(context, message) async {
         title: Text(message),
         actions: <Widget>[
           FlatButton(
-            child: Text('キャンセル'),
+            child: Text(
+              'キャンセル',
+              style: TextStyle(
+                color: Colors.black54,
+              ),
+            ),
             onPressed: () {
               Navigator.pop(context, false);
             },
           ),
           FlatButton(
-            child: Text('ログアウト'),
+            child: Text(
+              'ログアウト',
+              style: TextStyle(
+                color: Colors.redAccent,
+              ),
+            ),
             onPressed: () {
               Navigator.pop(context, true);
             },

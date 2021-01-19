@@ -160,7 +160,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                     child: Text(
                       'ライブラリから選択',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.black87,
                         fontSize: 18.0,
                       ),
                     ),

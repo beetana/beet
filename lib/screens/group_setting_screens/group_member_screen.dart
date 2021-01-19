@@ -20,6 +20,7 @@ class GroupMemberScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('メンバー'),
+                centerTitle: true,
               ),
               body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 0.0),

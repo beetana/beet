@@ -27,6 +27,7 @@ class UserScreen extends StatelessWidget {
                 model.userName,
                 textAlign: TextAlign.center,
               ),
+              centerTitle: true,
               actions: <Widget>[
                 IconButton(
                   icon: Icon(

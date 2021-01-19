@@ -18,6 +18,7 @@ class GroupEventScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text('イベント詳細'),
+            centerTitle: true,
             actions: <Widget>[
               FlatButton(
                 child: Text(

@@ -17,52 +17,57 @@ class UserEditNameScreen extends StatelessWidget {
       child: Consumer<UserEditNameModel>(builder: (context, model, child) {
         return Stack(
           children: [
-            Scaffold(
-              appBar: AppBar(
-                title: Text('アカウント名を変更'),
-                centerTitle: true,
-                actions: [
-                  FlatButton(
-                    child: Text(
-                      '保存',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
+            GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text('アカウント名を変更'),
+                  centerTitle: true,
+                  actions: [
+                    FlatButton(
+                      child: Text(
+                        '保存',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
                       ),
-                    ),
-                    onPressed: () async {
-                      model.startLoading();
-                      try {
-                        await model.updateUserName();
-                        Navigator.pop(context);
-                      } catch (e) {
-                        await _showTextDialog(context, e.toString());
-                      }
-                      model.endLoading();
-                    },
-                  )
-                ],
-              ),
-              body: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: TextField(
-                  controller: userNameController,
-                  decoration: InputDecoration(
-                    hintText: 'アカウント名',
-                    suffix: IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: Colors.black54,
-                      ),
-                      onPressed: () {
-                        userNameController.clear();
-                        model.userName = '';
+                      onPressed: () async {
+                        model.startLoading();
+                        try {
+                          await model.updateUserName();
+                          Navigator.pop(context);
+                        } catch (e) {
+                          await _showTextDialog(context, e.toString());
+                        }
+                        model.endLoading();
                       },
+                    )
+                  ],
+                ),
+                body: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: TextField(
+                    controller: userNameController,
+                    decoration: InputDecoration(
+                      hintText: 'アカウント名',
+                      suffix: IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.black54,
+                        ),
+                        onPressed: () {
+                          userNameController.clear();
+                          model.userName = '';
+                        },
+                      ),
                     ),
+                    onChanged: (text) {
+                      model.userName = text;
+                    },
                   ),
-                  onChanged: (text) {
-                    model.userName = text;
-                  },
                 ),
               ),
             ),

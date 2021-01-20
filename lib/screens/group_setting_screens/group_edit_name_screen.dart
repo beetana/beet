@@ -17,52 +17,57 @@ class GroupEditNameScreen extends StatelessWidget {
       child: Consumer<GroupEditNameModel>(builder: (context, model, child) {
         return Stack(
           children: [
-            Scaffold(
-              appBar: AppBar(
-                title: Text('グループ名を変更'),
-                centerTitle: true,
-                actions: [
-                  FlatButton(
-                    child: Text(
-                      '保存',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
+            GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text('グループ名を変更'),
+                  centerTitle: true,
+                  actions: [
+                    FlatButton(
+                      child: Text(
+                        '保存',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
                       ),
-                    ),
-                    onPressed: () async {
-                      model.startLoading();
-                      try {
-                        await model.updateGroupName();
-                        Navigator.pop(context);
-                      } catch (e) {
-                        await _showTextDialog(context, e.toString());
-                      }
-                      model.endLoading();
-                    },
-                  )
-                ],
-              ),
-              body: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: TextField(
-                  controller: groupNameController,
-                  decoration: InputDecoration(
-                    hintText: 'グループ名',
-                    suffix: IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: Colors.black54,
-                      ),
-                      onPressed: () {
-                        groupNameController.clear();
-                        model.groupName = '';
+                      onPressed: () async {
+                        model.startLoading();
+                        try {
+                          await model.updateGroupName();
+                          Navigator.pop(context);
+                        } catch (e) {
+                          await _showTextDialog(context, e.toString());
+                        }
+                        model.endLoading();
                       },
+                    )
+                  ],
+                ),
+                body: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: TextField(
+                    controller: groupNameController,
+                    decoration: InputDecoration(
+                      hintText: 'グループ名',
+                      suffix: IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.black54,
+                        ),
+                        onPressed: () {
+                          groupNameController.clear();
+                          model.groupName = '';
+                        },
+                      ),
                     ),
+                    onChanged: (text) {
+                      model.groupName = text;
+                    },
                   ),
-                  onChanged: (text) {
-                    model.groupName = text;
-                  },
                 ),
               ),
             ),

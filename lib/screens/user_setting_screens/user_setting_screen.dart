@@ -1,6 +1,8 @@
 import 'package:beet/models/user_setting_models/user_setting_model.dart';
+import 'package:beet/screens/user_setting_screens/user_privacy_policy_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_security_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_profile_screen.dart';
+import 'package:beet/screens/user_setting_screens/user_terms_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -88,7 +90,15 @@ class UserSettingScreen extends StatelessWidget {
                 child: ListTile(
                   title: Text('プライバシーポリシー'),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserPrivacyPolicyScreen(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
                 ),
               ),
               Divider(
@@ -99,7 +109,15 @@ class UserSettingScreen extends StatelessWidget {
                 child: ListTile(
                   title: Text('利用規約'),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserTermsScreen(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
                 ),
               ),
               Divider(

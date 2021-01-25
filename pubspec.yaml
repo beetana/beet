@@ -30,6 +30,7 @@ dependencies:
   nholiday_jp: ^1.0.0
   share: ^0.6.5+4
   animated_text_kit: ^3.1.0
+  webview_flutter: ^1.0.7
 
 dev_dependencies:
   flutter_test:

@@ -40,3 +40,4 @@ flutter:
   uses-material-design: true
   assets:
     - images/test_user_image.png
+    - images/app_icon.png

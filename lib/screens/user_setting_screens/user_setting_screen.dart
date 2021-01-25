@@ -88,25 +88,6 @@ class UserSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('プライバシーポリシー'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserPrivacyPolicyScreen(),
-                        fullscreenDialog: true,
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Divider(
-                height: 0.5,
-              ),
-              Container(
-                color: Colors.white,
-                child: ListTile(
                   title: Text('利用規約'),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   onTap: () {
@@ -126,9 +107,30 @@ class UserSettingScreen extends StatelessWidget {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text('アプリ情報'),
+                  title: Text('プライバシーポリシー'),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserPrivacyPolicyScreen(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Divider(
+                height: 0.5,
+              ),
+              Container(
+                color: Colors.white,
+                child: ListTile(
+                  title: Text('アプリの詳細'),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                  onTap: () {
+                    _showAppInfoDialog(context);
+                  },
                 ),
               ),
             ],
@@ -137,4 +139,71 @@ class UserSettingScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future _showAppInfoDialog(context) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+        ),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              backgroundImage: AssetImage('images/app_icon.png'),
+            ),
+            SizedBox(width: 16.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'beet',
+                  style: TextStyle(
+                    fontSize: 26.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                Text(
+                  '1.0.0',
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Text(
+                  '2021  Kohei Tanabe',
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('ライセンスを表示'),
+            onPressed: () {
+              showLicensePage(context: context);
+            },
+          ),
+          FlatButton(
+            child: Text('閉じる'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

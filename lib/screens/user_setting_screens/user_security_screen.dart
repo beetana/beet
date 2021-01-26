@@ -21,7 +21,7 @@ class UserSecurityScreen extends StatelessWidget {
                 centerTitle: true,
               ),
               body: Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
+                padding: EdgeInsets.only(bottom: 4.0),
                 child: Column(
                   children: [
                     Container(
@@ -73,7 +73,10 @@ class UserSecurityScreen extends StatelessWidget {
                             Icons.exit_to_app,
                             color: Colors.black54,
                           ),
-                          Text('ログアウト'),
+                          Text(
+                            'ログアウト',
+                            style: TextStyle(fontSize: 16.0),
+                          ),
                         ],
                       ),
                       onPressed: () async {
@@ -96,7 +99,7 @@ class UserSecurityScreen extends StatelessWidget {
                           model.endLoading();
                         }
                       },
-                    )
+                    ),
                   ],
                 ),
               ),

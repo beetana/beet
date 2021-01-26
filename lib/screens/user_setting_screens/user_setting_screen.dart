@@ -95,7 +95,6 @@ class UserSettingScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => UserTermsScreen(),
-                        fullscreenDialog: true,
                       ),
                     );
                   },
@@ -114,7 +113,6 @@ class UserSettingScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => UserPrivacyPolicyScreen(),
-                        fullscreenDialog: true,
                       ),
                     );
                   },

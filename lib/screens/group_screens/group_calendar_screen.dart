@@ -1,7 +1,6 @@
 import 'package:beet/event.dart';
 import 'package:beet/screens/group_screens/group_add_event_screen.dart';
 import 'package:beet/screens/group_screens/group_event_screen.dart';
-import 'package:beet/widgets/user_event_list_tile.dart';
 import 'package:beet/widgets/group_event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/models/group_models/group_calendar_model.dart';

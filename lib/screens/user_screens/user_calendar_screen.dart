@@ -92,7 +92,7 @@ class UserCalendarScreen extends StatelessWidget {
                       first: first,
                       last: last,
                     );
-                    model.getHolidays(first: first);
+                    model.fetchHolidays(first: first);
                     model.getSelectedEvents();
                   },
                   onCalendarCreated: (DateTime first, DateTime last,
@@ -102,7 +102,7 @@ class UserCalendarScreen extends StatelessWidget {
                       first: first,
                       last: last,
                     );
-                    model.getHolidays(first: first);
+                    model.fetchHolidays(first: first);
                     model.getSelectedEvents();
                   },
                 ),

@@ -1,5 +1,6 @@
 import 'package:beet/models/user_setting_models/user_profile_model.dart';
 import 'package:beet/screens/user_setting_screens/user_edit_name_screen.dart';
+import 'package:beet/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,7 @@ class UserProfileScreen extends StatelessWidget {
                 centerTitle: true,
               ),
               body: Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
+                padding: EdgeInsets.only(top: 16.0, bottom: 4.0),
                 child: Column(
                   children: [
                     Stack(
@@ -106,7 +107,39 @@ class UserProfileScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    Divider(height: 0.5),
+                    Divider(
+                      height: 0.5,
+                    ),
+                    Expanded(
+                      child: SizedBox(),
+                    ),
+                    FlatButton(
+                      child: Text(
+                        'アカウントを削除',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                      onPressed: () async {
+                        String password =
+                            await _showDeleteAccountBottomSheet(context);
+                        if (password.isNotEmpty) {
+                          model.startLoading();
+                          try {
+                            await model.deleteAccount(password: password);
+                            await _showTextDialog(context, 'アカウントを削除しました');
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    WelcomeScreen(),
+                              ),
+                            );
+                          } catch (e) {
+                            await _showTextDialog(context, e);
+                          }
+                          model.endLoading();
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -162,7 +195,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       'ライブラリから選択',
                       style: TextStyle(
                         color: Colors.black87,
-                        fontSize: 18.0,
+                        fontSize: 17.0,
                       ),
                     ),
                     padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -177,15 +210,18 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       '写真を削除',
                       style: TextStyle(
                         color: Colors.redAccent,
-                        fontSize: 18.0,
+                        fontSize: 17.0,
                       ),
                     ),
                     padding: EdgeInsets.symmetric(vertical: 16.0),
                     onPressed: () async {
-                      bool isDelete = await _showConfirmDialog(context);
-                      isDelete
-                          ? changeImage = ChangeImage.delete
-                          : changeImage = ChangeImage.cancel;
+                      bool isDelete =
+                          await _showConfirmDialog(context, 'プロフィール画像');
+                      if (isDelete == true) {
+                        changeImage = ChangeImage.delete;
+                      } else {
+                        changeImage = ChangeImage.cancel;
+                      }
                       Navigator.pop(context);
                     },
                   ),
@@ -200,7 +236,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
   return changeImage;
 }
 
-Future<bool> _showConfirmDialog(context) async {
+Future<bool> _showConfirmDialog(context, message) async {
   bool isDelete;
   isDelete = await showDialog(
     context: context,
@@ -211,7 +247,7 @@ Future<bool> _showConfirmDialog(context) async {
             Radius.circular(10.0),
           ),
         ),
-        title: Text('プロフィール画像を削除しますか?'),
+        title: Text('$messageを削除しますか?'),
         actions: <Widget>[
           FlatButton(
             child: Text(
@@ -236,6 +272,97 @@ Future<bool> _showConfirmDialog(context) async {
     },
   );
   return isDelete;
+}
+
+Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
+  String password = '';
+  await showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    isDismissible: false,
+    builder: (context) {
+      return SingleChildScrollView(
+        child: Container(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            color: Color(0xff757575),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      'パスワードを入力してアカウントを削除',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: TextField(
+                      autofocus: true,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: 'パスワード',
+                      ),
+                      onChanged: (text) {
+                        password = text;
+                      },
+                    ),
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'アカウントを削除',
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 17.0,
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    onPressed: () async {
+                      FocusScope.of(context).unfocus();
+                      bool isDelete =
+                          await _showConfirmDialog(context, 'このアカウント');
+                      if (isDelete != true) {
+                        password = '';
+                      }
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Divider(height: 0.5),
+                  FlatButton(
+                    child: Text(
+                      'キャンセル',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 17.0,
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    onPressed: () {
+                      password = '';
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+  return password;
 }
 
 Future _showTextDialog(context, message) async {

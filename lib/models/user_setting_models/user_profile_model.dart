@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserProfileModel extends ChangeNotifier {
-  String userID;
+  String userID = '';
   String userName = '';
   String userImageURL = '';
   File imageFile;
   bool isLoading = false;
   List<String> joiningGroupsID = [];
+  final _auth = Auth.FirebaseAuth.instance;
 
   Future init({userID}) async {
     this.userID = userID;
@@ -71,10 +73,11 @@ class UserProfileModel extends ChangeNotifier {
       throw ('ファイルが選択されていません');
     }
     try {
-      final storage = FirebaseStorage.instance;
-      TaskSnapshot snapshot =
-          await storage.ref().child("userImage/$userID").putFile(imageFile);
-      final String imageURL = await snapshot.ref.getDownloadURL();
+      TaskSnapshot snapshot = await FirebaseStorage.instance
+          .ref()
+          .child("userImage/$userID")
+          .putFile(imageFile);
+      userImageURL = await snapshot.ref.getDownloadURL();
       final joiningGroups = await FirebaseFirestore.instance
           .collection('users')
           .doc(userID)
@@ -82,7 +85,7 @@ class UserProfileModel extends ChangeNotifier {
           .get();
       joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
       await FirebaseFirestore.instance.collection('users').doc(userID).update({
-        'imageURL': imageURL,
+        'imageURL': userImageURL,
       });
       for (String groupID in joiningGroupsID) {
         await FirebaseFirestore.instance
@@ -91,7 +94,7 @@ class UserProfileModel extends ChangeNotifier {
             .collection('groupUsers')
             .doc(userID)
             .update({
-          'imageURL': imageURL,
+          'imageURL': userImageURL,
         });
       }
     } catch (e) {
@@ -132,5 +135,58 @@ class UserProfileModel extends ChangeNotifier {
       print(e);
       throw ('エラーが発生しました');
     }
+  }
+
+  Future deleteAccount({String password}) async {
+    final user = _auth.currentUser;
+    final userDocRef =
+        FirebaseFirestore.instance.collection('users').doc(userID);
+    try {
+      await user.reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
+        email: user.email,
+        password: password,
+      ));
+      // Firebase Storageにあるプロフィール画像を削除
+      if (userImageURL.isNotEmpty) {
+        await FirebaseStorage.instance
+            .ref()
+            .child("userImage/$userID")
+            .delete();
+      }
+      // 参加しているグループから自分のドキュメントを削除
+      final joiningGroups = await userDocRef.collection('joiningGroup').get();
+      joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
+      for (String groupID in joiningGroupsID) {
+        final groupDocRef =
+            FirebaseFirestore.instance.collection('groups').doc(groupID);
+        await groupDocRef.collection('groupUsers').doc(userID).delete();
+        await groupDocRef.update({
+          'userCount': FieldValue.increment(-1),
+        });
+      }
+      // ユーザーの認証情報を削除
+      await user.delete();
+      // ユーザーのドキュメントを削除するとCloud FunctionsのdeleteUserがトリガーされ、
+      // userDocRef以下のサブコレクションも削除される
+      await userDocRef.delete();
+    } catch (e) {
+      print(e.code);
+      throw (_convertErrorMessage(e.code));
+    }
+  }
+}
+
+String _convertErrorMessage(e) {
+  switch (e) {
+    case 'wrong-password':
+      return 'パスワードが正しくありません';
+    case 'user-not-found':
+      return 'ユーザーが見つかりません';
+    case 'user-disabled':
+      return 'ユーザーが無効です';
+    case 'too-many-requests':
+      return 'しばらく待ってからお試し下さい';
+    default:
+      return '不明なエラーです';
   }
 }

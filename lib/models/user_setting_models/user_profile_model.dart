@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserProfileModel extends ChangeNotifier {
-  String userID;
+  String userID = '';
   String userName = '';
   String userImageURL = '';
   File imageFile;
@@ -73,10 +73,11 @@ class UserProfileModel extends ChangeNotifier {
       throw ('ファイルが選択されていません');
     }
     try {
-      final storage = FirebaseStorage.instance;
-      TaskSnapshot snapshot =
-          await storage.ref().child("userImage/$userID").putFile(imageFile);
-      final String imageURL = await snapshot.ref.getDownloadURL();
+      TaskSnapshot snapshot = await FirebaseStorage.instance
+          .ref()
+          .child("userImage/$userID")
+          .putFile(imageFile);
+      userImageURL = await snapshot.ref.getDownloadURL();
       final joiningGroups = await FirebaseFirestore.instance
           .collection('users')
           .doc(userID)
@@ -84,7 +85,7 @@ class UserProfileModel extends ChangeNotifier {
           .get();
       joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
       await FirebaseFirestore.instance.collection('users').doc(userID).update({
-        'imageURL': imageURL,
+        'imageURL': userImageURL,
       });
       for (String groupID in joiningGroupsID) {
         await FirebaseFirestore.instance
@@ -93,7 +94,7 @@ class UserProfileModel extends ChangeNotifier {
             .collection('groupUsers')
             .doc(userID)
             .update({
-          'imageURL': imageURL,
+          'imageURL': userImageURL,
         });
       }
     } catch (e) {
@@ -145,9 +146,28 @@ class UserProfileModel extends ChangeNotifier {
         email: user.email,
         password: password,
       ));
+      // Firebase Storageにあるプロフィール画像を削除
+      if (userImageURL.isNotEmpty) {
+        await FirebaseStorage.instance
+            .ref()
+            .child("userImage/$userID")
+            .delete();
+      }
+      // 参加しているグループから自分のドキュメントを削除
+      final joiningGroups = await userDocRef.collection('joiningGroup').get();
+      joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
+      for (String groupID in joiningGroupsID) {
+        final groupDocRef =
+            FirebaseFirestore.instance.collection('groups').doc(groupID);
+        await groupDocRef.collection('groupUsers').doc(userID).delete();
+        await groupDocRef.update({
+          'userCount': FieldValue.increment(-1),
+        });
+      }
+      // ユーザーの認証情報を削除
       await user.delete();
-      // ユーザーのドキュメントを消去すると、Cloud Functions内のdeleteUserが呼ばれて
-      // userDocRef以下のサブコレクションも自動で消去される
+      // ユーザーのドキュメントを削除するとCloud FunctionsのdeleteUserがトリガーされ、
+      // userDocRef以下のサブコレクションも削除される
       await userDocRef.delete();
     } catch (e) {
       print(e.code);

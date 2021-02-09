@@ -180,25 +180,20 @@ class DynamicLinksServices {
         userName = userDoc['name'];
         userImageURL = userDoc['imageURL'];
 
+        await groupDocRef.collection('groupUsers').doc(userID).set({
+          'name': userName,
+          'imageURL': userImageURL,
+          'joinedAt': FieldValue.serverTimestamp(),
+        });
+
         final groupDoc = await groupDocRef.get();
         groupName = groupDoc['name'];
         groupImageURL = groupDoc['imageURL'];
 
-        await groupDocRef.collection('groupUsers').doc(userID).set({
-          'name': userName,
-          'imageURL': userImageURL,
-          'joinedAt': Timestamp.now(),
-        });
-        await groupDocRef.update({
-          'userCount': FieldValue.increment(1),
-        });
         await userDocRef.collection('joiningGroup').doc(groupID).set({
           'name': groupName,
           'imageURL': groupImageURL,
-          'joinedAt': Timestamp.now(),
-        });
-        await userDocRef.update({
-          'groupCount': FieldValue.increment(1),
+          'joinedAt': FieldValue.serverTimestamp(),
         });
       } else {
         isAlreadyJoin = true;

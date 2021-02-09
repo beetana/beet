@@ -50,19 +50,13 @@ class GroupMemberModel extends ChangeNotifier {
   }
 
   Future deleteMember({String userID}) async {
-    final groupDocRef =
-        FirebaseFirestore.instance.collection('groups').doc(groupID);
     final userDocRef =
         FirebaseFirestore.instance.collection('users').doc(userID);
+    final groupDocRef =
+        FirebaseFirestore.instance.collection('groups').doc(groupID);
     try {
-      await groupDocRef.collection('groupUsers').doc(userID).delete();
       await userDocRef.collection('joiningGroup').doc(groupID).delete();
-      await groupDocRef.update({
-        'userCount': FieldValue.increment(-1),
-      });
-      await userDocRef.update({
-        'groupCount': FieldValue.increment(-1),
-      });
+      await groupDocRef.collection('groupUsers').doc(userID).delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

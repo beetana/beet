@@ -35,8 +35,7 @@ class AddGroupModel extends ChangeNotifier {
           await FirebaseFirestore.instance.collection('groups').add({
         'name': groupName,
         'imageURL': '',
-        'createdAt': Timestamp.now(),
-        'userCount': 1,
+        'createdAt': FieldValue.serverTimestamp(),
       });
       groupID = newGroup.id;
       await FirebaseFirestore.instance
@@ -47,7 +46,7 @@ class AddGroupModel extends ChangeNotifier {
           .set({
         'name': userName,
         'imageURL': userImageURL,
-        'joinedAt': Timestamp.now(),
+        'joinedAt': FieldValue.serverTimestamp(),
       });
       await FirebaseFirestore.instance
           .collection('users')
@@ -57,13 +56,7 @@ class AddGroupModel extends ChangeNotifier {
           .set({
         'name': groupName,
         'imageURL': '',
-        'joinedAt': Timestamp.now(),
-      });
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .update({
-        'groupCount': FieldValue.increment(1),
+        'joinedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       throw ('エラーが発生しました');

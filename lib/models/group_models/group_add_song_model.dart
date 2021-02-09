@@ -29,7 +29,7 @@ class GroupAddSongModel extends ChangeNotifier {
           .add({
         'title': songTitle,
         'minute': songPlayingTime,
-        'createdAt': Timestamp.now(),
+        'createdAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

@@ -155,20 +155,22 @@ class UserProfileModel extends ChangeNotifier {
       }
       // 参加しているグループから自分のドキュメントを削除
       final joiningGroups = await userDocRef.collection('joiningGroup').get();
+      print(joiningGroups);
       joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
-      for (String groupID in joiningGroupsID) {
-        final groupDocRef =
-            FirebaseFirestore.instance.collection('groups').doc(groupID);
-        await groupDocRef.collection('groupUsers').doc(userID).delete();
-        await groupDocRef.update({
-          'userCount': FieldValue.increment(-1),
-        });
+      print(joiningGroupsID);
+      if (joiningGroupsID.isNotEmpty) {
+        for (String groupID in joiningGroupsID) {
+          final groupDocRef =
+              FirebaseFirestore.instance.collection('groups').doc(groupID);
+          await groupDocRef.collection('groupUsers').doc(userID).delete();
+          print('削除');
+        }
       }
-      // ユーザーの認証情報を削除
-      await user.delete();
       // ユーザーのドキュメントを削除するとCloud FunctionsのdeleteUserがトリガーされ、
       // userDocRef以下のサブコレクションも削除される
       await userDocRef.delete();
+      // ユーザーの認証情報を削除
+      await user.delete();
     } catch (e) {
       print(e.code);
       throw (_convertErrorMessage(e.code));

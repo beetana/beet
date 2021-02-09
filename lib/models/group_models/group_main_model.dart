@@ -6,8 +6,6 @@ class GroupMainModel extends ChangeNotifier {
   DateTime currentDateTime = DateTime.now();
   List<Event> eventList = [];
   bool isLoading = false;
-  String invitedGroupID;
-  String invitedGroupName;
 
   Future getEventList(groupID) async {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);

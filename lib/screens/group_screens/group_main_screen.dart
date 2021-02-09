@@ -66,7 +66,7 @@ class GroupMainScreen extends StatelessWidget {
           );
         } else {
           return Center(
-            child: Text('イベントがありません'),
+            child: Text('予定されているイベントはありません'),
           );
         }
       }),

@@ -1,8 +1,214 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2021, 12, 25);
+
+    // リクエストしているユーザーが認証済みであること
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // リクエストしているユーザーが認証済みかつドキュメントを作った本人であること
+    function isDocumentAuthor(userId) {
+      return isAuthenticated()
+        && userId == request.auth.uid;
+    }
+
+    // リクエストしているユーザーが認証済みかつグループのメンバーであること
+    function isGroupMember(userId, groupId) {
+      return isAuthenticated()
+        && exists(/databases/$(database)/documents/groups/$(groupId)/groupUsers/$(userId));
+    }
+
+    // ユーザーデータのスキーマ検証
+    function isValidUserData(userData) {
+      return userData.size() == 3
+        && 'name' in userData && userData.name is string
+        && 'imageURL' in userData && userData.imageURL is string
+        && 'createdAt' in userData && userData.createdAt is timestamp;
+    }
+
+    // イベントデータのスキーマ検証
+    function isValidEventData(eventData) {
+      return eventData.size() == 9
+        && 'myID' in eventData && eventData.myID is string
+        && 'title' in eventData && eventData.title is string
+        && 'place' in eventData && eventData.place is string
+        && 'memo' in eventData && eventData.memo is string
+        && 'isAllDay' in eventData && eventData.isAllDay is bool
+        && 'monthList' in eventData && eventData.monthList is list
+        && 'dateList' in eventData && eventData.dateList is list
+        && 'start' in eventData && eventData.start is timestamp
+        && 'end' in eventData && eventData.end is timestamp;
+    }
+
+    // ユーザーが参加しているグループデータのスキーマ検証
+    function isValidJoiningGroupData(joiningGroupData) {
+      return joiningGroupData.size() == 3
+        && 'name' in joiningGroupData && joiningGroupData.name is string
+        && 'imageURL' in joiningGroupData && joiningGroupData.imageURL is string
+        && 'joinedAt' in joiningGroupData && joiningGroupData.joinedAt is timestamp;
+    }
+
+    // グループデータのスキーマ検証
+    function isValidGroupData(groupData) {
+      return groupData.size() == 3
+        && 'name' in groupData && groupData.name is string
+        && 'imageURL' in groupData && groupData.imageURL is string
+        && 'createdAt' in groupData && groupData.createdAt is timestamp;
+    }
+
+    // 曲データのスキーマ検証
+    function isValidSongData(songData) {
+      return songData.size() == 3
+        && 'title' in songData && songData.title is string
+        && 'minute' in songData && songData.minute is int
+        && 'createdAt' in songData && songData.createdAt is timestamp;
+    }
+
+    // グループに参加しているユーザーデータのスキーマ検証
+    function isValidGroupUserData(groupUserData) {
+      return groupUserData.size() == 3
+        && 'name' in groupUserData && groupUserData.name is string
+        && 'imageURL' in groupUserData && groupUserData.imageURL is string
+        && 'joinedAt' in groupUserData && groupUserData.joinedAt is timestamp;
+    }
+
+    // /users
+    match /users/{userId} {
+      allow get: if isDocumentAuthor(userId);
+
+      allow create: if isDocumentAuthor(userId)
+        && isValidUserData(request.resource.data)
+        // 名前の文字数の上限を決めたい
+        && request.resource.data.name.size() >= 1
+        && request.resource.data.imageURL == ''
+        && request.resource.data.createdAt == request.time;
+
+      allow update: if isDocumentAuthor(userId)
+        && isValidUserData(request.resource.data)
+        && request.resource.data.name.size() >= 1
+        && request.resource.data.createdAt == resource.data.createdAt;
+
+      allow delete: if isDocumentAuthor(userId);
+
+      // /users/{userId}/events
+      match /events/{eventId} {
+      	allow get: if isDocumentAuthor(userId);
+
+        allow create: if isDocumentAuthor(userId)
+          && isValidEventData(request.resource.data)
+          && request.resource.data.myID == userId
+          && request.resource.data.title.size() >= 1
+          && request.resource.data.monthList.size() >= 1
+          && request.resource.data.dateList.size() >= 1;
+
+        allow update: if isDocumentAuthor(userId)
+          && isValidEventData(request.resource.data)
+          && request.resource.data.myID == resource.data.myID
+          && request.resource.data.title.size() >= 1
+          && request.resource.data.monthList.size() >= 1
+          && request.resource.data.dateList.size() >= 1;
+
+        allow delete: if isDocumentAuthor(userId);
+      }
+
+      // /users/{userId}/joiningGroup
+      match /joiningGroup/{groupId} {
+        allow read: if isDocumentAuthor(userId);
+
+        allow create: if isDocumentAuthor(userId)
+          && isValidJoiningGroupData(request.resource.data)
+          && request.resource.data.name.size() >= 1
+          && request.resource.data.joinedAt == request.time;
+
+        allow update: if isGroupMember(request.auth.uid, groupId)
+          && isValidJoiningGroupData(request.resource.data)
+          && request.resource.data.name.size() >= 1
+          && request.resource.data.joinedAt == resource.data.joinedAt;
+        
+        allow delete: if isGroupMember(request.auth.uid, groupId);
+      }
+    }
+
+    // /groups
+    match /groups/{groupId} {
+      allow get: if isGroupMember(request.auth.uid, groupId);
+
+      allow create: if isAuthenticated()
+        && isValidGroupData(request.resource.data)
+        && request.resource.data.name.size() >= 1
+        && request.resource.data.imageURL == ''
+        && request.resource.data.createdAt == request.time;
+
+      allow update: if isGroupMember(request.auth.uid, groupId)
+        && isValidGroupData(request.resource.data)
+        && request.resource.data.name.size() >= 1
+        && request.resource.data.createdAt == resource.data.createdAt;
+
+      // 現状グループを削除する機能はまだ無い
+      allow delete: if isGroupMember(request.auth.uid, groupId);
+
+      // /groups/{groupId}/events
+      match /events/{eventId} {
+        allow get: if isGroupMember(request.auth.uid, groupId);
+
+        allow create: if isGroupMember(request.auth.uid, groupId)
+          && isValidEventData(request.resource.data)
+          && request.resource.data.myID == groupId
+          && request.resource.data.title.size() >= 1
+          && request.resource.data.monthList.size() >= 1
+          && request.resource.data.dateList.size() >= 1;
+
+        allow update: if isGroupMember(request.auth.uid, groupId)
+          && isValidEventData(request.resource.data)
+          && request.resource.data.myID == resource.data.myID
+          && request.resource.data.title.size() >= 1
+          && request.resource.data.monthList.size() >= 1
+          && request.resource.data.dateList.size() >= 1;
+
+        allow delete: if isGroupMember(request.auth.uid, groupId);
+      }
+
+      // /groups/{groupId}/songs
+      match /songs/{songId} {
+        allow read: if isGroupMember(request.auth.uid, groupId);
+
+        allow create: if isGroupMember(request.auth.uid, groupId)
+          && isValidSongData(request.resource.data)
+          && request.resource.data.title.size() >= 1
+          && request.resource.data.minute >= 0
+          && request.resource.data.createdAt == request.time;
+
+        allow update: if isGroupMember(request.auth.uid, groupId)
+          && isValidSongData(request.resource.data)
+          && request.resource.data.title.size() >= 1
+          && request.resource.data.minute >= 0
+          && request.resource.data.createdAt == resource.data.createdAt;
+
+        allow delete: if isGroupMember(request.auth.uid, groupId);
+      }
+
+      // /groups/{groupId}/groupUsers
+      match /groupUsers/{userId} {
+        allow list: if isGroupMember(request.auth.uid, groupId);
+
+        allow create: if isDocumentAuthor(userId)
+          && isValidGroupUserData(request.resource.data)
+          && request.resource.data.name.size() >= 1
+          && request.resource.data.joinedAt == request.time;
+
+        allow update: if isDocumentAuthor(userId)
+          && isValidGroupUserData(request.resource.data)
+          && request.resource.data.name.size() >= 1
+          && request.resource.data.joinedAt == resource.data.joinedAt;
+
+        allow delete: if isGroupMember(request.auth.uid, groupId);
+      }
+    }
+
+    // /{path=**}
+    match /{path=**}/events/{event} {
+      allow list: if isAuthenticated();
     }
   }
 }

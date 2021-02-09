@@ -3,6 +3,7 @@ import 'package:beet/screens/drawer_screen.dart';
 import 'package:beet/screens/group_screens/group_calendar_screen.dart';
 import 'package:beet/screens/group_screens/group_main_screen.dart';
 import 'package:beet/screens/group_screens/group_song_list_screen.dart';
+import 'package:beet/screens/group_screens/group_todo_screen.dart';
 import 'package:beet/screens/group_setting_screens/group_setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class GroupScreen extends StatelessWidget {
     final List<Widget> switchBody = [
       GroupMainScreen(groupID: groupID),
       GroupCalendarScreen(groupID: groupID),
+      GroupTodoScreen(groupID: groupID),
       GroupSongListScreen(groupID: groupID),
     ];
 
@@ -50,6 +52,7 @@ class GroupScreen extends StatelessWidget {
             ),
             body: switchBody[model.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
               selectedItemColor: Colors.black,
               onTap: model.onTabTapped,
               currentIndex: model.currentIndex,
@@ -61,6 +64,10 @@ class GroupScreen extends StatelessWidget {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.calendar_today),
                   label: 'カレンダー',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.check_box),
+                  label: 'やること',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.library_music),

@@ -176,7 +176,7 @@ class GroupSongListScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           );
         } else if (model.isLoading == true) {
@@ -187,7 +187,7 @@ class GroupSongListScreen extends StatelessWidget {
           return Stack(
             children: <Widget>[
               Center(
-                child: Text('曲がありません'),
+                child: Text('曲が登録されていません'),
               ),
               Container(
                 height: double.infinity,

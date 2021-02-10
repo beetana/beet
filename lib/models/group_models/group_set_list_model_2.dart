@@ -17,15 +17,6 @@ class GroupSetListModel2 extends ChangeNotifier {
     eventDateText = eventDateFormat.format(eventDate);
   }
 
-  void dateUndecided() {
-    if (isShowEventDatePicker == true) {
-      eventDatePickerBox = SizedBox();
-      isShowEventDatePicker = false;
-    }
-    eventDateText = '';
-    notifyListeners();
-  }
-
   void showEventDatePicker() {
     if (isShowEventDatePicker == false) {
       eventDatePickerBox = Column(
@@ -44,7 +35,6 @@ class GroupSetListModel2 extends ChangeNotifier {
               },
             ),
           ),
-          SizedBox(height: 24.0),
           FlatButton.icon(
             icon: Icon(
               Icons.clear,

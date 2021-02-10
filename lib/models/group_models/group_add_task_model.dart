@@ -7,7 +7,7 @@ class GroupAddTaskModel extends ChangeNotifier {
   String groupID = '';
   String taskTitle = '';
   String dueDateText = '';
-  List<String> assignedPersonIDs = [];
+  List<String> assignedMemberIDs = [];
   List<String> userIDs = [];
   List<String> userNames = [];
   List<String> userImageURLs = [];
@@ -52,12 +52,12 @@ class GroupAddTaskModel extends ChangeNotifier {
   }
 
   void assignPerson(userID) {
-    if (assignedPersonIDs.contains(userID)) {
-      assignedPersonIDs.remove(userID);
+    if (assignedMemberIDs.contains(userID)) {
+      assignedMemberIDs.remove(userID);
     } else {
-      assignedPersonIDs.add(userID);
+      assignedMemberIDs.add(userID);
     }
-    print(assignedPersonIDs);
+    print(assignedMemberIDs);
     notifyListeners();
   }
 
@@ -118,7 +118,7 @@ class GroupAddTaskModel extends ChangeNotifier {
           .add({
         'title': taskTitle,
         'dueDate': Timestamp.fromDate(dueDate),
-        'assignedPersonIDs': assignedPersonIDs,
+        'assignedMemberIDs': assignedMemberIDs,
         'isCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),
       });

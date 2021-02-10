@@ -98,7 +98,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                               userName: userName,
                               userImageURL: userImageURL,
                               isChecked:
-                                  model.assignedPersonIDs.contains(userID),
+                                  model.assignedMemberIDs.contains(userID),
                               checkboxCallback: (state) {
                                 model.assignPerson(userID);
                               },

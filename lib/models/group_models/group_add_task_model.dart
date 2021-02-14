@@ -118,7 +118,7 @@ class GroupAddTaskModel extends ChangeNotifier {
           .add({
         'title': taskTitle,
         'dueDate': Timestamp.fromDate(dueDate),
-        'assignedMemberIDs': assignedMemberIDs,
+        'assignedMembers': assignedMemberIDs,
         'isCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),
       });

@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/user_models/user_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_setting_screen.dart';
@@ -50,6 +51,7 @@ class UserScreen extends StatelessWidget {
             ),
             body: switchBody[model.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: kBackGroundColor,
               selectedItemColor: Colors.black,
               onTap: model.onTabTapped,
               currentIndex: model.currentIndex,

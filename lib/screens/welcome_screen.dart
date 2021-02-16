@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/dynamic_links_services.dart';
 import 'package:beet/screens/login_screen.dart';
 import 'package:beet/screens/register_screen.dart';
@@ -30,7 +31,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               textStyle: TextStyle(
                 fontSize: 72.0,
                 fontWeight: FontWeight.w900,
-                color: Colors.grey[800],
+                color: kPrimaryColor,
               ),
               speed: Duration(milliseconds: 480),
               isRepeatingAnimation: false,
@@ -46,7 +47,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                color: Colors.grey[800],
+                color: kPrimaryColor,
                 highlightColor: Colors.white38,
                 child: Text(
                   'ログイン',
@@ -84,7 +85,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: Text(
                   'アカウントを作成',
                   style: TextStyle(
-                    color: Colors.grey[800],
+                    color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

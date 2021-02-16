@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:flutter/material.dart';
 
 class SongListTile extends StatelessWidget {
@@ -30,7 +31,7 @@ class SongListTile extends StatelessWidget {
       trailing: Visibility(
         visible: isVisible,
         child: Checkbox(
-          activeColor: Colors.grey[800],
+          activeColor: kPrimaryColor,
           value: isChecked,
           onChanged: checkboxCallback,
         ),

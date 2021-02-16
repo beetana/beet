@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/my_app_model.dart';
 import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/screens/splash_screen.dart';
@@ -29,12 +30,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'beet',
       theme: ThemeData(
-        primaryColor: Colors.grey[800],
+        primaryColor: kPrimaryColor,
+//        Colors.grey[800],
         primaryTextTheme:
             Theme.of(context).primaryTextTheme.apply(bodyColor: Colors.white),
         primaryIconTheme:
             Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
-        scaffoldBackgroundColor: Color(0xFFf5f5f5),
+        scaffoldBackgroundColor: kBackGroundColor,
       ),
       home: StreamBuilder(
         stream: model.userState,

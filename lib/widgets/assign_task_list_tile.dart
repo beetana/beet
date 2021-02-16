@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:flutter/material.dart';
 
 class AssignTaskListTile extends StatelessWidget {
@@ -28,7 +29,7 @@ class AssignTaskListTile extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       trailing: Checkbox(
-        activeColor: Colors.grey[800],
+        activeColor: kPrimaryColor,
         value: isChecked,
         onChanged: checkboxCallback,
       ),

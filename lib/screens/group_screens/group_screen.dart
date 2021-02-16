@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
 import 'package:beet/screens/group_screens/group_calendar_screen.dart';
@@ -53,6 +54,7 @@ class GroupScreen extends StatelessWidget {
             body: switchBody[model.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
+              backgroundColor: kBackGroundColor,
               selectedItemColor: Colors.black,
               onTap: model.onTabTapped,
               currentIndex: model.currentIndex,

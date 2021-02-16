@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +72,7 @@ class AddGroupScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          color: Colors.grey[800],
+                          color: kPrimaryColor,
                           highlightColor: Colors.white38,
                           child: Text(
                             '決定',

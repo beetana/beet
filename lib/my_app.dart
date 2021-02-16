@@ -30,10 +30,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'beet',
       theme: ThemeData(
+        fontFamily: 'MPLUS1p',
         primaryColor: kPrimaryColor,
-//        Colors.grey[800],
-        primaryTextTheme:
-            Theme.of(context).primaryTextTheme.apply(bodyColor: Colors.white),
+        primaryTextTheme: Theme.of(context).primaryTextTheme.apply(
+              fontFamily: 'MPLUS1p',
+              bodyColor: Colors.white,
+            ),
         primaryIconTheme:
             Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
         scaffoldBackgroundColor: kBackGroundColor,

@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/event.dart';
 import 'package:beet/screens/group_screens/group_add_event_screen.dart';
 import 'package:beet/screens/group_screens/group_event_screen.dart';
@@ -32,20 +33,22 @@ class GroupCalendarScreen extends StatelessWidget {
                   holidays: model.holidays,
                   startingDayOfWeek: StartingDayOfWeek.sunday,
                   daysOfWeekStyle: DaysOfWeekStyle(
-                    weekdayStyle: TextStyle(color: Colors.black),
-                    weekendStyle: TextStyle(color: Colors.deepOrange[400]),
+                    weekendStyle: TextStyle(color: Colors.deepOrange[300]),
                   ),
                   calendarStyle: CalendarStyle(
-                    weekdayStyle: TextStyle(color: Colors.black),
                     weekendStyle: TextStyle(color: Colors.deepOrange[400]),
                     holidayStyle: TextStyle(color: Colors.deepOrange[400]),
-                    selectedColor: Colors.black54,
-                    todayColor: Colors.black26,
+                    selectedColor: kSlightlyTransparentPrimaryColor,
+                    todayColor: kTransparentPrimaryColor,
                     outsideDaysVisible: false,
                   ),
                   headerStyle: HeaderStyle(
                     centerHeaderTitle: true,
                     formatButtonVisible: false,
+                    titleTextStyle: TextStyle(
+                      fontSize: 18.0,
+                      color: kPrimaryColor,
+                    ),
                   ),
                   builders: CalendarBuilders(
                     markersBuilder: (context, date, events, holidays) {
@@ -58,7 +61,7 @@ class GroupCalendarScreen extends StatelessWidget {
                             child: Icon(
                               Icons.event_available,
                               size: 15.0,
-                              color: Colors.blueGrey[800],
+                              color: kPrimaryColor,
                             ),
                           ),
                         );
@@ -71,7 +74,6 @@ class GroupCalendarScreen extends StatelessWidget {
                               model.holidays[date][0],
                               style: TextStyle(
                                 fontSize: 8.0,
-                                color: Colors.black,
                               ),
                             ),
                           ),

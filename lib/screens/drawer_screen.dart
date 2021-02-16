@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/drawer_model.dart';
 import 'package:beet/screens/add_group_screen.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
@@ -66,9 +67,14 @@ class DrawerScreen extends StatelessWidget {
                     child: FlatButton.icon(
                       icon: Icon(
                         Icons.add,
-                        color: Colors.black54,
+                        color: kPrimaryColor,
                       ),
-                      label: Text('グループを作成'),
+                      label: Text(
+                        'グループを作成',
+                        style: TextStyle(
+                          color: kPrimaryColor,
+                        ),
+                      ),
                       onPressed: () {
                         Navigator.push(
                           context,

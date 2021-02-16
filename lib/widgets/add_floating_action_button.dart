@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:flutter/material.dart';
 
 class AddFloatingActionButton extends StatelessWidget {
@@ -22,7 +23,7 @@ class AddFloatingActionButton extends StatelessWidget {
           height: 56.0,
         ),
         shape: CircleBorder(),
-        fillColor: Colors.black54,
+        fillColor: kPrimaryColor,
         onPressed: onPressed,
       ),
     );

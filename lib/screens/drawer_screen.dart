@@ -62,24 +62,26 @@ class DrawerScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  FlatButton.icon(
-                    icon: Icon(
-                      Icons.add,
-                      color: Colors.black54,
-                    ),
-                    label: Text('グループを作成'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddGroupScreen(
-                            userName: model.userName,
-                            userImageURL: model.userImageURL,
+                  SafeArea(
+                    child: FlatButton.icon(
+                      icon: Icon(
+                        Icons.add,
+                        color: Colors.black54,
+                      ),
+                      label: Text('グループを作成'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddGroupScreen(
+                              userName: model.userName,
+                              userImageURL: model.userImageURL,
+                            ),
+                            fullscreenDialog: true,
                           ),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

@@ -9,5 +9,6 @@ import 'package:flutter/material.dart';
 
 const kPrimaryColor = Color(0xFF424242);
 const kSlightlyTransparentPrimaryColor = Color(0xCC424242);
-const kTransparentPrimaryColor = Color(0x66424242);
-const kBackGroundColor = Color(0xFFF5F5F5);
+const kTransparentPrimaryColor = Color(0x55424242);
+const kBackGroundColor = Color(0xFFFFFFFF);
+const kDullGreenColor = Color(0xFF415C59);

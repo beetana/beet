@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/user_setting_models/user_profile_model.dart';
 import 'package:beet/screens/user_setting_screens/user_edit_name_screen.dart';
 import 'package:beet/screens/welcome_screen.dart';
@@ -22,125 +23,140 @@ class UserProfileScreen extends StatelessWidget {
               ),
               body: Padding(
                 padding: EdgeInsets.only(top: 16.0, bottom: 4.0),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          width: 128.0,
-                          height: 128.0,
-                          child: InkWell(
-                            child: CircleAvatar(
-                              backgroundImage: model.imageFile != null
-                                  ? FileImage(model.imageFile)
-                                  : model.userImageURL.isNotEmpty
-                                      ? NetworkImage(model.userImageURL)
-                                      : AssetImage(
-                                          'images/test_user_image.png'),
-                              backgroundColor: Colors.transparent,
-                            ),
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            onTap: () async {
-                              ChangeImage changeImage =
-                                  await _showEditIconBottomSheet(context);
-                              if (changeImage == ChangeImage.delete) {
-                                model.startLoading();
-                                try {
-                                  await model.deleteUserImage();
-                                } catch (e) {
-                                  await _showTextDialog(context, e.toString());
-                                }
-                                model.endLoading();
-                              } else if (changeImage == ChangeImage.select) {
-                                await model.pickImageFile();
-                                if (model.imageFile != null) {
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            width: 128.0,
+                            height: 128.0,
+                            child: InkWell(
+                              child: CircleAvatar(
+                                backgroundImage: model.imageFile != null
+                                    ? FileImage(model.imageFile)
+                                    : model.userImageURL.isNotEmpty
+                                        ? NetworkImage(model.userImageURL)
+                                        : AssetImage(
+                                            'images/test_user_image.png'),
+                                backgroundColor: Colors.transparent,
+                              ),
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onTap: () async {
+                                ChangeImage changeImage =
+                                    await _showEditIconBottomSheet(context);
+                                if (changeImage == ChangeImage.delete) {
                                   model.startLoading();
                                   try {
-                                    await model.updateUserImage();
+                                    await model.deleteUserImage();
                                   } catch (e) {
                                     await _showTextDialog(
                                         context, e.toString());
                                   }
                                   model.endLoading();
+                                } else if (changeImage == ChangeImage.select) {
+                                  await model.pickImageFile();
+                                  if (model.imageFile != null) {
+                                    model.startLoading();
+                                    try {
+                                      await model.updateUserImage();
+                                    } catch (e) {
+                                      await _showTextDialog(
+                                          context, e.toString());
+                                    }
+                                    model.endLoading();
+                                  }
                                 }
-                              }
-                            },
-                          ),
-                        ),
-                        Positioned(
-                          child: CircleAvatar(
-                            child: Icon(
-                              Icons.add_a_photo,
-                              color: Colors.white,
-                              size: 20.0,
+                              },
                             ),
-                            backgroundColor: Colors.black45,
-                            radius: 18.0,
                           ),
-                          bottom: 4.0,
-                          right: 4.0,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.0),
-                    Container(
-                      color: Colors.white,
-                      child: ListTile(
-                        title: Text('アカウント名'),
-                        subtitle: Text(
-                          model.userName,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UserEditNameScreen(
-                                userID: userID,
-                                userName: model.userName,
+                          Positioned(
+                            child: CircleAvatar(
+                              child: Icon(
+                                Icons.add_a_photo,
+                                color: Colors.white,
+                                size: 20.0,
                               ),
+                              backgroundColor: Colors.black45,
+                              radius: 18.0,
                             ),
-                          );
-                          model.init(userID: userID);
-                        },
+                            bottom: 4.0,
+                            right: 4.0,
+                          ),
+                        ],
                       ),
-                    ),
-                    Divider(
-                      height: 0.5,
-                    ),
-                    Expanded(
-                      child: SizedBox(),
-                    ),
-                    FlatButton(
-                      child: Text(
-                        'アカウントを削除',
-                        style: TextStyle(fontSize: 16.0),
+                      SizedBox(height: 16.0),
+                      Divider(
+                        thickness: 0.5,
+                        height: 0.5,
                       ),
-                      onPressed: () async {
-                        String password =
-                            await _showDeleteAccountBottomSheet(context);
-                        if (password.isNotEmpty) {
-                          model.startLoading();
-                          try {
-                            await model.deleteAccount(password: password);
-                            await _showTextDialog(context, 'アカウントを削除しました');
-                            Navigator.pushReplacement(
+                      Container(
+                        color: Colors.white,
+                        child: ListTile(
+                          title: Text('アカウント名'),
+                          subtitle: Text(
+                            model.userName,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          trailing: Icon(Icons.keyboard_arrow_right),
+                          onTap: () async {
+                            await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    WelcomeScreen(),
+                                builder: (context) => UserEditNameScreen(
+                                  userID: userID,
+                                  userName: model.userName,
+                                ),
                               ),
                             );
-                          } catch (e) {
-                            await _showTextDialog(context, e);
+                            model.init(userID: userID);
+                          },
+                        ),
+                      ),
+                      Divider(
+                        thickness: 0.5,
+                        height: 0.5,
+                      ),
+                      Expanded(
+                        child: SizedBox(),
+                      ),
+                      Divider(
+                        thickness: 1.0,
+                        height: 1.0,
+                      ),
+                      FlatButton(
+                        child: Text(
+                          'アカウントを削除',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                        onPressed: () async {
+                          String password =
+                              await _showDeleteAccountBottomSheet(context);
+                          if (password.isNotEmpty) {
+                            model.startLoading();
+                            try {
+                              await model.deleteAccount(password: password);
+                              await _showTextDialog(context, 'アカウントを削除しました');
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      WelcomeScreen(),
+                                ),
+                              );
+                            } catch (e) {
+                              await _showTextDialog(context, e);
+                            }
+                            model.endLoading();
                           }
-                          model.endLoading();
-                        }
-                      },
-                    ),
-                  ],
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -286,7 +302,7 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Container(
-            color: Color(0xff757575),
+            color: Color(0xFF757575),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,

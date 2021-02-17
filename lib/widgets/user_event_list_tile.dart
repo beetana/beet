@@ -27,9 +27,13 @@ class UserEventListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: onTap,
       child: Column(
         children: [
-          EventPlannerImage(imageURL: imageURL, name: name),
+          Padding(
+            padding: EdgeInsets.only(top: 8.0, left: 20.0, right: 20.0),
+            child: EventPlannerImage(imageURL: imageURL, name: name),
+          ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(bottom: 8.0, left: 24.0, right: 24.0),
@@ -51,15 +55,13 @@ class UserEventListTile extends StatelessWidget {
             ),
           ),
           Divider(
-            thickness: 0.1,
-            height: 0.1,
-            indent: 8.0,
-            endIndent: 8.0,
-            color: Colors.grey[800],
+            thickness: 1.0,
+            height: 1.0,
+            indent: 16.0,
+            endIndent: 16.0,
           ),
         ],
       ),
-      onTap: onTap,
     );
   }
 }
@@ -75,30 +77,27 @@ class EventPlannerImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-      child: Row(
-        children: [
-          Container(
-            width: 40.0,
-            height: 40.0,
-            child: CircleAvatar(
-              backgroundImage: imageURL.isNotEmpty
-                  ? NetworkImage(imageURL)
-                  : AssetImage('images/test_user_image.png'),
-              backgroundColor: Colors.transparent,
-            ),
+    return Row(
+      children: [
+        Container(
+          width: 32.0,
+          height: 32.0,
+          child: CircleAvatar(
+            backgroundImage: imageURL.isNotEmpty
+                ? NetworkImage(imageURL)
+                : AssetImage('images/test_user_image.png'),
+            backgroundColor: Colors.transparent,
           ),
-          SizedBox(width: 8.0),
-          Expanded(
-            child: Text(
-              name,
-              style: TextStyle(fontWeight: FontWeight.bold),
-              overflow: TextOverflow.ellipsis,
-            ),
+        ),
+        SizedBox(width: 8.0),
+        Expanded(
+          child: Text(
+            name,
+            style: TextStyle(fontWeight: FontWeight.w500),
+            overflow: TextOverflow.ellipsis,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -122,7 +121,6 @@ class EventOverView extends StatelessWidget {
           children: <Widget>[
             Text(
               eventTitle,
-              style: TextStyle(fontSize: 16.0),
               overflow: TextOverflow.ellipsis,
             ),
             Text(
@@ -140,7 +138,6 @@ class EventOverView extends StatelessWidget {
       return Expanded(
         child: Text(
           eventTitle,
-          style: TextStyle(fontSize: 16.0),
           overflow: TextOverflow.ellipsis,
         ),
       );

@@ -1,5 +1,4 @@
 import 'package:beet/constants.dart';
-import 'package:beet/event.dart';
 import 'package:beet/models/user_models/user_calendar_model.dart';
 import 'package:beet/screens/user_screens/user_add_event_screen.dart';
 import 'package:beet/screens/user_screens/user_event_screen.dart';
@@ -114,39 +113,45 @@ class UserCalendarScreen extends StatelessWidget {
                   color: Colors.grey[800],
                 ),
                 Expanded(
-                  child: ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      itemExtent: 112.0,
-                      itemCount: model.selectedEvents.length,
-                      itemBuilder: (context, index) {
-                        Event event = model.selectedEvents[index];
-                        return UserEventListTile(
-                          imageURL: model.eventPlanner[event.myID].imageURL,
-                          name: model.eventPlanner[event.myID].name,
-                          eventTitle: event.eventTitle,
-                          eventPlace: event.eventPlace,
-                          isAllDay: event.isAllDay,
-                          startingDateTime: event.startingDateTime,
-                          endingDateTime: event.endingDateTime,
-                          onTap: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UserEventScreen(
+                  child: Scrollbar(
+                    child: ListView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemExtent: 96.0,
+                        itemCount: model.selectedEvents.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index < model.selectedEvents.length) {
+                            final event = model.selectedEvents[index];
+                            return UserEventListTile(
+                              imageURL: model.eventPlanner[event.myID].imageURL,
+                              name: model.eventPlanner[event.myID].name,
+                              eventTitle: event.eventTitle,
+                              eventPlace: event.eventPlace,
+                              isAllDay: event.isAllDay,
+                              startingDateTime: event.startingDateTime,
+                              endingDateTime: event.endingDateTime,
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UserEventScreen(
+                                      userID: userID,
+                                      event: event,
+                                    ),
+                                  ),
+                                );
+                                await model.getEvents(
                                   userID: userID,
-                                  event: event,
-                                ),
-                              ),
+                                  first: _calendarController.visibleDays[0],
+                                  last: _calendarController.visibleDays.last,
+                                );
+                                model.getSelectedEvents();
+                              },
                             );
-                            await model.getEvents(
-                              userID: userID,
-                              first: _calendarController.visibleDays[0],
-                              last: _calendarController.visibleDays.last,
-                            );
-                            model.getSelectedEvents();
-                          },
-                        );
-                      }),
+                          } else {
+                            return SizedBox();
+                          }
+                        }),
+                  ),
                 ),
               ],
             ),

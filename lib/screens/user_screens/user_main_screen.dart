@@ -10,6 +10,7 @@ class UserMainScreen extends StatelessWidget {
   UserMainScreen({this.userID});
   final String userID;
   final dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserMainModel>(
@@ -20,68 +21,65 @@ class UserMainScreen extends StatelessWidget {
             padding: EdgeInsets.only(top: 8.0),
             child: Column(
               children: <Widget>[
-                Expanded(
-                  flex: 1,
+                Container(
+                  height: 112.0,
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Container(
-                      width: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            dateFormat.format(model.currentDateTime),
-                            style: TextStyle(
-                              fontSize: 28.0,
-                              fontWeight: FontWeight.w500,
-                              color: kPrimaryColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          dateFormat.format(model.currentDateTime),
+                          style: TextStyle(
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.w500,
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'スケジュール',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
+                                color: kPrimaryColor,
+                              ),
                             ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                'スケジュール',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w500,
-                                  color: kPrimaryColor,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '未完了のタスク',
+                                  style: TextStyle(
+                                    color: kDullGreenColor,
+                                  ),
                                 ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    '未完了のタスク',
-                                    style: TextStyle(
-                                      color: kDullGreenColor,
+                                Row(
+                                  children: [
+                                    Text(
+                                      '3',
+                                      style: TextStyle(
+                                        fontSize: 24.0,
+                                        color: kDullGreenColor,
+                                      ),
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '3',
-                                        style: TextStyle(
-                                          fontSize: 24.0,
-                                          color: kDullGreenColor,
-                                        ),
+                                    Text(
+                                      '件',
+                                      style: TextStyle(
+                                        color: kDullGreenColor,
                                       ),
-                                      Text(
-                                        '件',
-                                        style: TextStyle(
-                                          color: kDullGreenColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -90,7 +88,6 @@ class UserMainScreen extends StatelessWidget {
                   height: 1.0,
                 ),
                 Expanded(
-                  flex: 4,
                   child: Scrollbar(
                     child: ListView.builder(
                       physics: AlwaysScrollableScrollPhysics(),
@@ -132,7 +129,7 @@ class UserMainScreen extends StatelessWidget {
           );
         } else {
           return Center(
-            child: Text('イベントがありません'),
+            child: Text('予定されているイベントはありません'),
           );
         }
       }),

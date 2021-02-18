@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
             ),
         primaryIconTheme:
             Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
+        accentColor: kTransparentPrimaryColor,
         scaffoldBackgroundColor: kBackGroundColor,
       ),
       home: StreamBuilder(

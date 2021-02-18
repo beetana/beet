@@ -58,7 +58,7 @@ class GroupCalendarModel extends ChangeNotifier {
     }
   }
 
-  void getHolidays({DateTime first}) {
+  void fetchHolidays({DateTime first}) {
     holidays = {};
     List<String> holidaysList;
     int year = first.year;

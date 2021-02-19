@@ -1,4 +1,5 @@
 import 'package:beet/models/group_models/group_add_song_model.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -75,10 +76,7 @@ class GroupAddSongScreen extends StatelessWidget {
                               model.songTitle = text;
                             },
                           ),
-                          Divider(
-                            thickness: 1.0,
-                            height: 1.0,
-                          ),
+                          BasicDivider(),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 16.0),
                             child: Row(

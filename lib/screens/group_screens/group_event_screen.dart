@@ -1,6 +1,7 @@
 import 'package:beet/event.dart';
 import 'package:beet/models/group_models/group_event_model.dart';
 import 'package:beet/screens/group_screens/group_edit_event_screen.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -73,10 +74,7 @@ class GroupEventScreen extends StatelessWidget {
                       SizedBox(height: 20.0),
                       model.eventDateWidget(),
                       SizedBox(height: 10.0),
-                      Divider(
-                        thickness: 1.0,
-                        height: 1.0,
-                      ),
+                      BasicDivider(),
                       SizedBox(height: 10.0),
                       model.eventMemoWidget(),
                       SizedBox(height: 56.0),

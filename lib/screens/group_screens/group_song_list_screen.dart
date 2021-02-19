@@ -3,6 +3,7 @@ import 'package:beet/screens/group_screens/group_add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen.dart';
 import 'package:beet/screens/group_screens/group_song_screen.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/song_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,10 +38,7 @@ class GroupSongListScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Divider(
-                    thickness: 1.0,
-                    height: 1.0,
-                  ),
+                  BasicDivider(),
                   Expanded(
                     child: ListView.builder(
                       physics: AlwaysScrollableScrollPhysics(),
@@ -93,10 +91,7 @@ class GroupSongListScreen extends StatelessWidget {
                   children: <Widget>[
                     Visibility(
                       visible: model.isSetListMode,
-                      child: Divider(
-                        thickness: 1.0,
-                        height: 1.0,
-                      ),
+                      child: BasicDivider(),
                     ),
                     Visibility(
                       visible: model.isSetListMode,
@@ -119,9 +114,8 @@ class GroupSongListScreen extends StatelessWidget {
                           Container(
                             height: 40.0,
                             child: VerticalDivider(
-                              thickness: 0.2,
-                              width: 0.2,
-                              color: Colors.grey,
+                              thickness: 1.0,
+                              width: 1.0,
                             ),
                           ),
                           Expanded(

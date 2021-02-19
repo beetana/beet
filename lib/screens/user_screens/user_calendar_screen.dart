@@ -2,7 +2,8 @@ import 'package:beet/constants.dart';
 import 'package:beet/models/user_models/user_calendar_model.dart';
 import 'package:beet/screens/user_screens/user_add_event_screen.dart';
 import 'package:beet/screens/user_screens/user_event_screen.dart';
-import 'package:beet/widgets/user_event_list_tile.dart';
+import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:provider/provider.dart';
@@ -107,10 +108,7 @@ class UserCalendarScreen extends StatelessWidget {
                     model.getSelectedEvents();
                   },
                 ),
-                Divider(
-                  thickness: 1.0,
-                  height: 1.0,
-                ),
+                BasicDivider(),
                 Expanded(
                   child: Scrollbar(
                     child: ListView.builder(
@@ -120,7 +118,7 @@ class UserCalendarScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           if (index < model.selectedEvents.length) {
                             final event = model.selectedEvents[index];
-                            return UserEventListTile(
+                            return EventListTile(
                               imageURL: model.eventPlanner[event.myID].imageURL,
                               name: model.eventPlanner[event.myID].name,
                               eventTitle: event.eventTitle,

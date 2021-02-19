@@ -3,6 +3,7 @@ import 'package:beet/screens/group_setting_screens/group_member_screen.dart';
 import 'package:beet/screens/group_setting_screens/group_profile_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_privacy_policy_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_terms_screen.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,10 +54,7 @@ class GroupSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Divider(
-                thickness: 1.0,
-                height: 1.0,
-              ),
+              BasicDivider(),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -102,10 +100,7 @@ class GroupSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Divider(
-                thickness: 1.0,
-                height: 1.0,
-              ),
+              BasicDivider(),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -121,10 +116,7 @@ class GroupSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Divider(
-                thickness: 1.0,
-                height: 1.0,
-              ),
+              BasicDivider(),
               Container(
                 color: Colors.white,
                 child: ListTile(

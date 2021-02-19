@@ -75,7 +75,10 @@ class GroupAddSongScreen extends StatelessWidget {
                               model.songTitle = text;
                             },
                           ),
-                          Divider(height: 0.5),
+                          Divider(
+                            thickness: 1.0,
+                            height: 1.0,
+                          ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 16.0),
                             child: Row(

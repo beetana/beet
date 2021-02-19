@@ -88,8 +88,8 @@ class UserProfileScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 16.0),
                       Divider(
-                        thickness: 0.5,
-                        height: 0.5,
+                        thickness: 1.0,
+                        height: 1.0,
                       ),
                       Container(
                         color: Colors.white,
@@ -115,8 +115,8 @@ class UserProfileScreen extends StatelessWidget {
                         ),
                       ),
                       Divider(
-                        thickness: 0.5,
-                        height: 0.5,
+                        thickness: 1.0,
+                        height: 1.0,
                       ),
                       Expanded(
                         child: SizedBox(),
@@ -220,7 +220,10 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       Navigator.pop(context);
                     },
                   ),
-                  Divider(height: 0.5),
+                  Divider(
+                    thickness: 1.0,
+                    height: 1.0,
+                  ),
                   FlatButton(
                     child: Text(
                       '写真を削除',
@@ -355,7 +358,10 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                       Navigator.pop(context);
                     },
                   ),
-                  Divider(height: 0.5),
+                  Divider(
+                    thickness: 1.0,
+                    height: 1.0,
+                  ),
                   FlatButton(
                     child: Text(
                       'キャンセル',

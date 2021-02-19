@@ -55,7 +55,10 @@ class RegisterScreen extends StatelessWidget {
                                     model.name = text;
                                   },
                                 ),
-                                Divider(height: 0.5),
+                                Divider(
+                                  thickness: 1.0,
+                                  height: 1.0,
+                                ),
                                 TextField(
                                   controller: emailController,
                                   decoration: InputDecoration(
@@ -68,7 +71,10 @@ class RegisterScreen extends StatelessWidget {
                                     model.email = text;
                                   },
                                 ),
-                                Divider(height: 0.5),
+                                Divider(
+                                  thickness: 1.0,
+                                  height: 1.0,
+                                ),
                                 TextField(
                                   controller: passwordController,
                                   obscureText: true,

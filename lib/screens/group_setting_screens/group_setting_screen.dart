@@ -26,9 +26,9 @@ class GroupSettingScreen extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(
-                  left: 16.0,
                   top: 16.0,
                   bottom: 8.0,
+                  left: 16.0,
                 ),
                 child: Text(
                   'グループ設定',
@@ -38,6 +38,7 @@ class GroupSettingScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              BasicDivider(),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -54,7 +55,9 @@ class GroupSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
-              BasicDivider(),
+              BasicDivider(
+                indent: 16.0,
+              ),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -71,11 +74,14 @@ class GroupSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
+              BasicDivider(
+                indent: 16.0,
+              ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 16.0,
                   top: 16.0,
                   bottom: 8.0,
+                  left: 16.0,
                 ),
                 child: Text(
                   'アプリについて',
@@ -85,6 +91,7 @@ class GroupSettingScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              BasicDivider(),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -100,7 +107,9 @@ class GroupSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
-              BasicDivider(),
+              BasicDivider(
+                indent: 16.0,
+              ),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -116,7 +125,9 @@ class GroupSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
-              BasicDivider(),
+              BasicDivider(
+                indent: 16.0,
+              ),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -126,6 +137,9 @@ class GroupSettingScreen extends StatelessWidget {
                     _showAppInfoDialog(context);
                   },
                 ),
+              ),
+              BasicDivider(
+                indent: 16.0,
               ),
             ],
           );

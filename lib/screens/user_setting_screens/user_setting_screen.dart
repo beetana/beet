@@ -4,6 +4,7 @@ import 'package:beet/screens/user_setting_screens/user_security_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_profile_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_terms_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,9 +27,9 @@ class UserSettingScreen extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(
-                  left: 16.0,
                   top: 16.0,
                   bottom: 8.0,
+                  left: 16.0,
                 ),
                 child: Text(
                   'アカウント設定',
@@ -38,6 +39,7 @@ class UserSettingScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              BasicDivider(),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -53,7 +55,9 @@ class UserSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
-              BasicDivider(),
+              ThinDivider(
+                indent: 16.0,
+              ),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -70,11 +74,14 @@ class UserSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
+              ThinDivider(
+                indent: 16.0,
+              ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 16.0,
                   top: 16.0,
                   bottom: 8.0,
+                  left: 16.0,
                 ),
                 child: Text(
                   'アプリについて',
@@ -84,6 +91,7 @@ class UserSettingScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              BasicDivider(),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -99,7 +107,9 @@ class UserSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
-              BasicDivider(),
+              ThinDivider(
+                indent: 16.0,
+              ),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -115,7 +125,9 @@ class UserSettingScreen extends StatelessWidget {
                   },
                 ),
               ),
-              BasicDivider(),
+              ThinDivider(
+                indent: 16.0,
+              ),
               Container(
                 color: Colors.white,
                 child: ListTile(
@@ -125,6 +137,9 @@ class UserSettingScreen extends StatelessWidget {
                     _showAppInfoDialog(context);
                   },
                 ),
+              ),
+              ThinDivider(
+                indent: 16.0,
               ),
             ],
           );

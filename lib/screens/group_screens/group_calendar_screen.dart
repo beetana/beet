@@ -1,8 +1,8 @@
 import 'package:beet/constants.dart';
-import 'package:beet/event.dart';
 import 'package:beet/screens/group_screens/group_add_event_screen.dart';
 import 'package:beet/screens/group_screens/group_event_screen.dart';
-import 'package:beet/widgets/group_event_list_tile.dart';
+import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/models/group_models/group_calendar_model.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
@@ -94,7 +94,7 @@ class GroupCalendarScreen extends StatelessWidget {
                       first: first,
                       last: last,
                     );
-                    model.getHolidays(first: first);
+                    model.fetchHolidays(first: first);
                     model.getSelectedEvents();
                   },
                   onCalendarCreated: (DateTime first, DateTime last,
@@ -104,47 +104,49 @@ class GroupCalendarScreen extends StatelessWidget {
                       first: first,
                       last: last,
                     );
-                    model.getHolidays(first: first);
+                    model.fetchHolidays(first: first);
                     model.getSelectedEvents();
                   },
                 ),
-                Divider(
-                  thickness: 0.1,
-                  height: 0.1,
-                  color: Colors.grey[800],
-                ),
+                BasicDivider(),
                 Expanded(
-                  child: ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      itemExtent: 96.0,
-                      itemCount: model.selectedEvents.length,
-                      itemBuilder: (context, index) {
-                        Event event = model.selectedEvents[index];
-                        return GroupEventListTile(
-                          eventTitle: event.eventTitle,
-                          eventPlace: event.eventPlace,
-                          isAllDay: event.isAllDay,
-                          startingDateTime: event.startingDateTime,
-                          endingDateTime: event.endingDateTime,
-                          onTap: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => GroupEventScreen(
+                  child: Scrollbar(
+                    child: ListView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemExtent: 64.0,
+                        itemCount: model.selectedEvents.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index < model.selectedEvents.length) {
+                            final event = model.selectedEvents[index];
+                            return EventListTile(
+                              eventTitle: event.eventTitle,
+                              eventPlace: event.eventPlace,
+                              isAllDay: event.isAllDay,
+                              startingDateTime: event.startingDateTime,
+                              endingDateTime: event.endingDateTime,
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GroupEventScreen(
+                                      groupID: groupID,
+                                      event: event,
+                                    ),
+                                  ),
+                                );
+                                await model.getEvents(
                                   groupID: groupID,
-                                  event: event,
-                                ),
-                              ),
+                                  first: _calendarController.visibleDays[0],
+                                  last: _calendarController.visibleDays.last,
+                                );
+                                model.getSelectedEvents();
+                              },
                             );
-                            await model.getEvents(
-                              groupID: groupID,
-                              first: _calendarController.visibleDays[0],
-                              last: _calendarController.visibleDays.last,
-                            );
-                            model.getSelectedEvents();
-                          },
-                        );
-                      }),
+                          } else {
+                            return SizedBox();
+                          }
+                        }),
+                  ),
                 ),
               ],
             ),

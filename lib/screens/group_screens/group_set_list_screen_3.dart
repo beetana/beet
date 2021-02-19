@@ -1,5 +1,6 @@
 import 'package:beet/models/group_models/group_set_list_model_3.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/set_list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -106,10 +107,7 @@ class GroupSetListScreen3 extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  Divider(
-                    thickness: 1.0,
-                    height: 1.0,
-                  ),
+                  BasicDivider(),
                   Row(
                     children: <Widget>[
                       Expanded(
@@ -128,9 +126,8 @@ class GroupSetListScreen3 extends StatelessWidget {
                       Container(
                         height: 40.0,
                         child: VerticalDivider(
-                          thickness: 0.2,
-                          width: 0.2,
-                          color: Colors.grey,
+                          thickness: 1.0,
+                          width: 1.0,
                         ),
                       ),
                       Expanded(
@@ -154,9 +151,8 @@ class GroupSetListScreen3 extends StatelessWidget {
                       Container(
                         height: 40.0,
                         child: VerticalDivider(
-                          thickness: 0.2,
-                          width: 0.2,
-                          color: Colors.grey,
+                          thickness: 1.0,
+                          width: 1.0,
                         ),
                       ),
                       Expanded(

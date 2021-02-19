@@ -1,5 +1,6 @@
 import 'package:beet/constants.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beet/models/welcome_model.dart';
@@ -54,10 +55,7 @@ class LoginScreen extends StatelessWidget {
                                     model.email = text;
                                   },
                                 ),
-                                Divider(
-                                  thickness: 1.0,
-                                  height: 1.0,
-                                ),
+                                BasicDivider(),
                                 TextField(
                                   controller: passwordController,
                                   obscureText: true,

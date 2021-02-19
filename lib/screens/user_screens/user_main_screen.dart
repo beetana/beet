@@ -1,7 +1,8 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/user_models/user_main_model.dart';
 import 'package:beet/screens/user_screens/user_event_screen.dart';
-import 'package:beet/widgets/user_event_list_tile.dart';
+import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/event_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -83,10 +84,7 @@ class UserMainScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Divider(
-                  thickness: 1.0,
-                  height: 1.0,
-                ),
+                BasicDivider(),
                 Expanded(
                   child: Scrollbar(
                     child: ListView.builder(
@@ -95,7 +93,7 @@ class UserMainScreen extends StatelessWidget {
                       itemCount: model.eventList.length,
                       itemBuilder: (context, index) {
                         final event = model.eventList[index];
-                        return UserEventListTile(
+                        return EventListTile(
                           imageURL: model.eventPlanner[event.myID].imageURL,
                           name: model.eventPlanner[event.myID].name,
                           eventTitle: event.eventTitle,

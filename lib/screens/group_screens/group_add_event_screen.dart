@@ -1,4 +1,5 @@
 import 'package:beet/models/group_models/group_add_event_model.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -95,10 +96,7 @@ class GroupAddEventScreen extends StatelessWidget {
                             model.switchIsAllDay(value);
                           },
                         ),
-                        Divider(
-                          thickness: 1.0,
-                          height: 1.0,
-                        ),
+                        BasicDivider(),
                         ListTile(
                           title: Text('開始'),
                           trailing: Text(model.tileDateFormat
@@ -109,10 +107,7 @@ class GroupAddEventScreen extends StatelessWidget {
                           },
                         ),
                         model.startingDateTimePickerBox,
-                        Divider(
-                          thickness: 1.0,
-                          height: 1.0,
-                        ),
+                        BasicDivider(),
                         ListTile(
                           title: Text('終了'),
                           trailing: Text(model.tileDateFormat

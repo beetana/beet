@@ -1,5 +1,6 @@
 import 'package:beet/models/group_models/group_add_task_model.dart';
 import 'package:beet/widgets/assign_task_list_tile.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -75,10 +76,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                         },
                       ),
                       model.dueDatePickerBox,
-                      Divider(
-                        thickness: 1.0,
-                        height: 1.0,
-                      ),
+                      BasicDivider(),
                       SizedBox(height: 16.0),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -112,10 +110,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      Divider(
-                        thickness: 1.0,
-                        height: 1.0,
-                      ),
+                      BasicDivider(),
                     ],
                   ),
                 ),

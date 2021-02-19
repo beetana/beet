@@ -1,5 +1,6 @@
 import 'package:beet/models/group_setting_models/group_profile_model.dart';
 import 'package:beet/screens/group_setting_screens/group_edit_name_screen.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -106,10 +107,7 @@ class GroupProfileScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    Divider(
-                      thickness: 1.0,
-                      height: 1.0,
-                    ),
+                    BasicDivider(),
                   ],
                 ),
               ),
@@ -174,10 +172,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       Navigator.pop(context);
                     },
                   ),
-                  Divider(
-                    thickness: 1.0,
-                    height: 1.0,
-                  ),
+                  BasicDivider(),
                   FlatButton(
                     child: Text(
                       '写真を削除',

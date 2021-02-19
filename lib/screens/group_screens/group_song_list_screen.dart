@@ -51,7 +51,7 @@ class GroupSongListScreen extends StatelessWidget {
                           songMinute: song.playingTime.toString(),
                           isChecked: song.checkboxState,
                           isVisible: model.isSetListMode,
-                          checkboxCallback: (state) {
+                          checkboxCallback: (value) {
                             model.selectSong(song);
                           },
                           tileTappedCallback: () async {

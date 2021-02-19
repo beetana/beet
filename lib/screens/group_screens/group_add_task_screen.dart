@@ -75,7 +75,10 @@ class GroupAddTaskScreen extends StatelessWidget {
                         },
                       ),
                       model.dueDatePickerBox,
-                      Divider(height: 0.5),
+                      Divider(
+                        thickness: 1.0,
+                        height: 1.0,
+                      ),
                       SizedBox(height: 16.0),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -109,7 +112,10 @@ class GroupAddTaskScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      Divider(height: 0.5),
+                      Divider(
+                        thickness: 1.0,
+                        height: 1.0,
+                      ),
                     ],
                   ),
                 ),

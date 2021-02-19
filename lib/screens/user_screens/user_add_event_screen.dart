@@ -95,7 +95,10 @@ class UserAddEventScreen extends StatelessWidget {
                             model.switchIsAllDay(value);
                           },
                         ),
-                        Divider(height: 0.5),
+                        Divider(
+                          thickness: 1.0,
+                          height: 1.0,
+                        ),
                         ListTile(
                           title: Text('開始'),
                           trailing: Text(
@@ -107,7 +110,10 @@ class UserAddEventScreen extends StatelessWidget {
                           },
                         ),
                         model.startingDateTimePickerBox,
-                        Divider(height: 0.5),
+                        Divider(
+                          thickness: 1.0,
+                          height: 1.0,
+                        ),
                         ListTile(
                           title: Text('終了'),
                           trailing: Text(

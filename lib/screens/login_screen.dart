@@ -55,7 +55,8 @@ class LoginScreen extends StatelessWidget {
                                   },
                                 ),
                                 Divider(
-                                  height: 0.5,
+                                  thickness: 1.0,
+                                  height: 1.0,
                                 ),
                                 TextField(
                                   controller: passwordController,

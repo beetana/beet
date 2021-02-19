@@ -76,7 +76,10 @@ class UserEventScreen extends StatelessWidget {
                       SizedBox(height: 20.0),
                       model.eventDateWidget(),
                       SizedBox(height: 10.0),
-                      Divider(height: 0.5),
+                      Divider(
+                        thickness: 1.0,
+                        height: 1.0,
+                      ),
                       SizedBox(height: 10.0),
                       model.eventMemoWidget(),
                       SizedBox(height: 56.0),

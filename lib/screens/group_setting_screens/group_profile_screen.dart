@@ -106,7 +106,10 @@ class GroupProfileScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    Divider(height: 0.5),
+                    Divider(
+                      thickness: 1.0,
+                      height: 1.0,
+                    ),
                   ],
                 ),
               ),
@@ -171,7 +174,10 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       Navigator.pop(context);
                     },
                   ),
-                  Divider(height: 0.5),
+                  Divider(
+                    thickness: 1.0,
+                    height: 1.0,
+                  ),
                   FlatButton(
                     child: Text(
                       '写真を削除',

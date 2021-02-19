@@ -53,7 +53,8 @@ class UserSettingScreen extends StatelessWidget {
                 ),
               ),
               Divider(
-                height: 0.5,
+                thickness: 1.0,
+                height: 1.0,
               ),
               Container(
                 color: Colors.white,
@@ -101,7 +102,8 @@ class UserSettingScreen extends StatelessWidget {
                 ),
               ),
               Divider(
-                height: 0.5,
+                thickness: 1.0,
+                height: 1.0,
               ),
               Container(
                 color: Colors.white,
@@ -119,7 +121,8 @@ class UserSettingScreen extends StatelessWidget {
                 ),
               ),
               Divider(
-                height: 0.5,
+                thickness: 1.0,
+                height: 1.0,
               ),
               Container(
                 color: Colors.white,

@@ -99,9 +99,8 @@ class GroupSetListScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Divider(
-                    thickness: 0.1,
-                    height: 0.1,
-                    color: Colors.grey[800],
+                    thickness: 1.0,
+                    height: 1.0,
                   ),
                   Row(
                     children: <Widget>[

@@ -8,9 +8,11 @@ class UserPrivacyPolicyScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('プライバシーポリシー'),
       ),
-      body: WebView(
-        initialUrl: 'https://beetana.github.io/beet-privacy-policy/',
-        javascriptMode: JavascriptMode.unrestricted,
+      body: SafeArea(
+        child: WebView(
+          initialUrl: 'https://beetana.github.io/beet-privacy-policy/',
+          javascriptMode: JavascriptMode.unrestricted,
+        ),
       ),
     );
   }

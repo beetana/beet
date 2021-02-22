@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_setting_models/group_profile_model.dart';
 import 'package:beet/screens/group_setting_screens/group_edit_name_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
@@ -20,96 +21,104 @@ class GroupProfileScreen extends StatelessWidget {
                 title: Text('グループ情報'),
                 centerTitle: true,
               ),
-              body: Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          width: 128.0,
-                          height: 128.0,
-                          child: InkWell(
-                            child: CircleAvatar(
-                              backgroundImage: model.imageFile != null
-                                  ? FileImage(model.imageFile)
-                                  : model.groupImageURL.isNotEmpty
-                                      ? NetworkImage(model.groupImageURL)
-                                      : AssetImage(
-                                          'images/test_user_image.png'),
-                              backgroundColor: Colors.transparent,
-                            ),
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            onTap: () async {
-                              ChangeImage changeImage =
-                                  await _showEditIconBottomSheet(context);
-                              if (changeImage == ChangeImage.delete) {
-                                model.startLoading();
-                                try {
-                                  await model.deleteGroupImage();
-                                } catch (e) {
-                                  await _showTextDialog(context, e.toString());
-                                }
-                                model.endLoading();
-                              } else if (changeImage == ChangeImage.select) {
-                                await model.pickImageFile();
-                                if (model.imageFile != null) {
-                                  model.startLoading();
-                                  try {
-                                    await model.updateGroupImage();
-                                  } catch (e) {
-                                    await _showTextDialog(
-                                        context, e.toString());
+              body: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    color: kDullWhiteColor,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      child: Center(
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 128.0,
+                              height: 128.0,
+                              child: InkWell(
+                                child: CircleAvatar(
+                                  backgroundImage: model.imageFile != null
+                                      ? FileImage(model.imageFile)
+                                      : model.groupImageURL.isNotEmpty
+                                          ? NetworkImage(model.groupImageURL)
+                                          : AssetImage(
+                                              'images/test_user_image.png'),
+                                  backgroundColor: Colors.transparent,
+                                ),
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () async {
+                                  ChangeImage changeImage =
+                                      await _showEditIconBottomSheet(context);
+                                  if (changeImage == ChangeImage.delete) {
+                                    model.startLoading();
+                                    try {
+                                      await model.deleteGroupImage();
+                                    } catch (e) {
+                                      await _showTextDialog(
+                                          context, e.toString());
+                                    }
+                                    model.endLoading();
+                                  } else if (changeImage ==
+                                      ChangeImage.select) {
+                                    await model.pickImageFile();
+                                    if (model.imageFile != null) {
+                                      model.startLoading();
+                                      try {
+                                        await model.updateGroupImage();
+                                      } catch (e) {
+                                        await _showTextDialog(
+                                            context, e.toString());
+                                      }
+                                      model.endLoading();
+                                    }
                                   }
-                                  model.endLoading();
-                                }
-                              }
-                            },
-                          ),
-                        ),
-                        Positioned(
-                          child: CircleAvatar(
-                            child: Icon(
-                              Icons.add_a_photo,
-                              color: Colors.white,
-                              size: 20.0,
-                            ),
-                            backgroundColor: Colors.black45,
-                            radius: 18.0,
-                          ),
-                          bottom: 4.0,
-                          right: 4.0,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.0),
-                    Container(
-                      color: Colors.white,
-                      child: ListTile(
-                        title: Text('グループ名'),
-                        subtitle: Text(
-                          model.groupName,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => GroupEditNameScreen(
-                                groupID: groupID,
-                                groupName: model.groupName,
+                                },
                               ),
                             ),
-                          );
-                          model.init(groupID: groupID);
-                        },
+                            Positioned(
+                              child: CircleAvatar(
+                                child: Icon(
+                                  Icons.add_a_photo,
+                                  color: Colors.white,
+                                  size: 20.0,
+                                ),
+                                backgroundColor: Colors.black45,
+                                radius: 18.0,
+                              ),
+                              bottom: 4.0,
+                              right: 4.0,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    BasicDivider(),
-                  ],
-                ),
+                  ),
+                  ListTile(
+                    title: Text('グループ名'),
+                    subtitle: Text(
+                      model.groupName,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GroupEditNameScreen(
+                            groupID: groupID,
+                            groupName: model.groupName,
+                          ),
+                        ),
+                      );
+                      model.init(groupID: groupID);
+                    },
+                  ),
+                  Expanded(
+                    child: Container(
+                      color: kDullWhiteColor,
+                    ),
+                  ),
+                ],
               ),
             ),
             model.isLoading
@@ -155,42 +164,44 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  FlatButton(
-                    child: Text(
-                      'ライブラリから選択',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 18.0,
+              child: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        'ライブラリから選択',
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 18.0,
+                        ),
                       ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      onPressed: () async {
+                        changeImage = ChangeImage.select;
+                        Navigator.pop(context);
+                      },
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    onPressed: () async {
-                      changeImage = ChangeImage.select;
-                      Navigator.pop(context);
-                    },
-                  ),
-                  BasicDivider(),
-                  FlatButton(
-                    child: Text(
-                      '写真を削除',
-                      style: TextStyle(
-                        color: Colors.redAccent,
-                        fontSize: 18.0,
+                    BasicDivider(),
+                    FlatButton(
+                      child: Text(
+                        '写真を削除',
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 18.0,
+                        ),
                       ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      onPressed: () async {
+                        bool isDelete = await _showConfirmDialog(context);
+                        isDelete
+                            ? changeImage = ChangeImage.delete
+                            : changeImage = ChangeImage.cancel;
+                        Navigator.pop(context);
+                      },
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    onPressed: () async {
-                      bool isDelete = await _showConfirmDialog(context);
-                      isDelete
-                          ? changeImage = ChangeImage.delete
-                          : changeImage = ChangeImage.cancel;
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

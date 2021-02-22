@@ -22,74 +22,76 @@ class GroupMemberScreen extends StatelessWidget {
                 title: Text('メンバー'),
                 centerTitle: true,
               ),
-              body: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      itemCount: model.userNames.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        String userID = model.userIDs[index];
-                        String userName = model.userNames[index];
-                        String userImageURL = model.userImageURLs[index];
-                        return ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: userImageURL.isNotEmpty
-                                ? NetworkImage(userImageURL)
-                                : AssetImage('images/test_user_image.png'),
-                            backgroundColor: Colors.transparent,
-                          ),
-                          title: Text(
-                            userName,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          onTap: () async {
-                            bool isMe = userID == model.myID;
-                            bool isDelete = await _showMemberBottomSheet(
-                              context,
-                              isMe,
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemCount: model.userNames.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          String userID = model.userIDs[index];
+                          String userName = model.userNames[index];
+                          String userImageURL = model.userImageURLs[index];
+                          return ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: userImageURL.isNotEmpty
+                                  ? NetworkImage(userImageURL)
+                                  : AssetImage('images/test_user_image.png'),
+                              backgroundColor: Colors.transparent,
+                            ),
+                            title: Text(
                               userName,
-                            );
-                            if (isDelete == true) {
-                              model.startLoading();
-                              try {
-                                await model.deleteMember(userID: userID);
-                                isMe
-                                    ? Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              UserScreen(userID: userID),
-                                        ),
-                                      )
-                                    : model.init(groupID: groupID);
-                              } catch (e) {
-                                _showTextDialog(context, e.toString());
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            onTap: () async {
+                              bool isMe = userID == model.myID;
+                              bool isDelete = await _showMemberBottomSheet(
+                                context,
+                                isMe,
+                                userName,
+                              );
+                              if (isDelete == true) {
+                                model.startLoading();
+                                try {
+                                  await model.deleteMember(userID: userID);
+                                  isMe
+                                      ? Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                UserScreen(userID: userID),
+                                          ),
+                                        )
+                                      : model.init(groupID: groupID);
+                                } catch (e) {
+                                  _showTextDialog(context, e.toString());
+                                }
+                                model.endLoading();
                               }
-                              model.endLoading();
-                            }
-                          },
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                    FlatButton.icon(
+                      icon: Icon(
+                        Icons.group_add,
+                        color: Colors.black54,
+                      ),
+                      label: Text('メンバーを招待'),
+                      onPressed: () async {
+                        model.startLoading();
+                        Uri link = await dynamicLinks.createDynamicLink(
+                          groupID: groupID,
+                          groupName: model.groupName,
                         );
+                        model.endLoading();
+                        await _inviteMemberDialog(context, link);
                       },
                     ),
-                  ),
-                  FlatButton.icon(
-                    icon: Icon(
-                      Icons.group_add,
-                      color: Colors.black54,
-                    ),
-                    label: Text('メンバーを招待'),
-                    onPressed: () async {
-                      model.startLoading();
-                      Uri link = await dynamicLinks.createDynamicLink(
-                        groupID: groupID,
-                        groupName: model.groupName,
-                      );
-                      model.endLoading();
-                      await _inviteMemberDialog(context, link);
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             model.isLoading
@@ -130,32 +132,34 @@ Future<bool> _showMemberBottomSheet(
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text(
-                    userName,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24.0,
-                    ),
-                  ),
-                  SizedBox(height: 8.0),
-                  FlatButton(
-                    child: Text(
-                      buttonText,
+              child: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Text(
+                      userName,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
+                        fontSize: 24.0,
                       ),
                     ),
-                    color: Colors.redAccent,
-                    onPressed: () async {
-                      isDelete =
-                          await _showConfirmDialog(context, isMe, userName);
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
+                    SizedBox(height: 8.0),
+                    FlatButton(
+                      child: Text(
+                        buttonText,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      color: Colors.redAccent,
+                      onPressed: () async {
+                        isDelete =
+                            await _showConfirmDialog(context, isMe, userName);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

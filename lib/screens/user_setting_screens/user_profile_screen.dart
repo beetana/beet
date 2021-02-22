@@ -3,6 +3,7 @@ import 'package:beet/models/user_setting_models/user_profile_model.dart';
 import 'package:beet/screens/user_setting_screens/user_edit_name_screen.dart';
 import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,133 +23,135 @@ class UserProfileScreen extends StatelessWidget {
                 title: Text('アカウント情報'),
                 centerTitle: true,
               ),
-              body: Padding(
-                padding: EdgeInsets.only(top: 16.0, bottom: 4.0),
-                child: SafeArea(
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            width: 128.0,
-                            height: 128.0,
-                            child: InkWell(
-                              child: CircleAvatar(
-                                backgroundImage: model.imageFile != null
-                                    ? FileImage(model.imageFile)
-                                    : model.userImageURL.isNotEmpty
-                                        ? NetworkImage(model.userImageURL)
-                                        : AssetImage(
-                                            'images/test_user_image.png'),
-                                backgroundColor: Colors.transparent,
-                              ),
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () async {
-                                ChangeImage changeImage =
-                                    await _showEditIconBottomSheet(context);
-                                if (changeImage == ChangeImage.delete) {
-                                  model.startLoading();
-                                  try {
-                                    await model.deleteUserImage();
-                                  } catch (e) {
-                                    await _showTextDialog(
-                                        context, e.toString());
-                                  }
-                                  model.endLoading();
-                                } else if (changeImage == ChangeImage.select) {
-                                  await model.pickImageFile();
-                                  if (model.imageFile != null) {
-                                    model.startLoading();
-                                    try {
-                                      await model.updateUserImage();
-                                    } catch (e) {
-                                      await _showTextDialog(
-                                          context, e.toString());
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      color: kDullWhiteColor,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        child: Center(
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: 128.0,
+                                height: 128.0,
+                                child: InkWell(
+                                  child: CircleAvatar(
+                                    backgroundImage: model.imageFile != null
+                                        ? FileImage(model.imageFile)
+                                        : model.userImageURL.isNotEmpty
+                                            ? NetworkImage(model.userImageURL)
+                                            : AssetImage(
+                                                'images/test_user_image.png'),
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  onTap: () async {
+                                    ChangeImage changeImage =
+                                        await _showEditIconBottomSheet(context);
+                                    if (changeImage == ChangeImage.delete) {
+                                      model.startLoading();
+                                      try {
+                                        await model.deleteUserImage();
+                                      } catch (e) {
+                                        await _showTextDialog(
+                                            context, e.toString());
+                                      }
+                                      model.endLoading();
+                                    } else if (changeImage ==
+                                        ChangeImage.select) {
+                                      await model.pickImageFile();
+                                      if (model.imageFile != null) {
+                                        model.startLoading();
+                                        try {
+                                          await model.updateUserImage();
+                                        } catch (e) {
+                                          await _showTextDialog(
+                                              context, e.toString());
+                                        }
+                                        model.endLoading();
+                                      }
                                     }
-                                    model.endLoading();
-                                  }
-                                }
-                              },
-                            ),
-                          ),
-                          Positioned(
-                            child: CircleAvatar(
-                              child: Icon(
-                                Icons.add_a_photo,
-                                color: Colors.white,
-                                size: 20.0,
+                                  },
+                                ),
                               ),
-                              backgroundColor: Colors.black45,
-                              radius: 18.0,
-                            ),
-                            bottom: 4.0,
-                            right: 4.0,
+                              Positioned(
+                                child: CircleAvatar(
+                                  child: Icon(
+                                    Icons.add_a_photo,
+                                    color: Colors.white,
+                                    size: 20.0,
+                                  ),
+                                  backgroundColor: Colors.black45,
+                                  radius: 18.0,
+                                ),
+                                bottom: 4.0,
+                                right: 4.0,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                      SizedBox(height: 16.0),
-                      BasicDivider(),
-                      Container(
-                        color: Colors.white,
-                        child: ListTile(
-                          title: Text('アカウント名'),
-                          subtitle: Text(
-                            model.userName,
-                            overflow: TextOverflow.ellipsis,
+                    ),
+                    ListTile(
+                      title: Text('アカウント名'),
+                      subtitle: Text(
+                        model.userName,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: Icon(Icons.keyboard_arrow_right),
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserEditNameScreen(
+                              userID: userID,
+                              userName: model.userName,
+                            ),
                           ),
-                          trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () async {
-                            await Navigator.push(
+                        );
+                        model.init(userID: userID);
+                      },
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: kDullWhiteColor,
+                      ),
+                    ),
+                    FlatButton(
+                      child: Text(
+                        'アカウントを削除',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                      onPressed: () async {
+                        String password =
+                            await _showDeleteAccountBottomSheet(context);
+                        if (password.isNotEmpty) {
+                          model.startLoading();
+                          try {
+                            await model.deleteAccount(password: password);
+                            await _showTextDialog(context, 'アカウントを削除しました');
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => UserEditNameScreen(
-                                  userID: userID,
-                                  userName: model.userName,
-                                ),
+                                builder: (BuildContext context) =>
+                                    WelcomeScreen(),
                               ),
                             );
-                            model.init(userID: userID);
-                          },
-                        ),
-                      ),
-                      BasicDivider(),
-                      Expanded(
-                        child: SizedBox(),
-                      ),
-                      BasicDivider(),
-                      FlatButton(
-                        child: Text(
-                          'アカウントを削除',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                        onPressed: () async {
-                          String password =
-                              await _showDeleteAccountBottomSheet(context);
-                          if (password.isNotEmpty) {
-                            model.startLoading();
-                            try {
-                              await model.deleteAccount(password: password);
-                              await _showTextDialog(context, 'アカウントを削除しました');
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      WelcomeScreen(),
-                                ),
-                              );
-                            } catch (e) {
-                              await _showTextDialog(context, e);
-                            }
-                            model.endLoading();
+                          } catch (e) {
+                            await _showTextDialog(context, e);
                           }
-                        },
-                      ),
-                    ],
-                  ),
+                          model.endLoading();
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -195,45 +198,47 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  FlatButton(
-                    child: Text(
-                      'ライブラリから選択',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 17.0,
+              child: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        'ライブラリから選択',
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 17.0,
+                        ),
                       ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      onPressed: () async {
+                        changeImage = ChangeImage.select;
+                        Navigator.pop(context);
+                      },
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    onPressed: () async {
-                      changeImage = ChangeImage.select;
-                      Navigator.pop(context);
-                    },
-                  ),
-                  BasicDivider(),
-                  FlatButton(
-                    child: Text(
-                      '写真を削除',
-                      style: TextStyle(
-                        color: Colors.redAccent,
-                        fontSize: 17.0,
+                    ThinDivider(),
+                    FlatButton(
+                      child: Text(
+                        '写真を削除',
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 17.0,
+                        ),
                       ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      onPressed: () async {
+                        bool isDelete =
+                            await _showConfirmDialog(context, 'プロフィール画像');
+                        if (isDelete == true) {
+                          changeImage = ChangeImage.delete;
+                        } else {
+                          changeImage = ChangeImage.cancel;
+                        }
+                        Navigator.pop(context);
+                      },
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    onPressed: () async {
-                      bool isDelete =
-                          await _showConfirmDialog(context, 'プロフィール画像');
-                      if (isDelete == true) {
-                        changeImage = ChangeImage.delete;
-                      } else {
-                        changeImage = ChangeImage.cancel;
-                      }
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -303,66 +308,68 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                      'パスワードを入力してアカウントを削除',
-                      style: TextStyle(
-                        fontSize: 16.0,
+              child: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        'パスワードを入力してアカウントを削除',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: TextField(
-                      autofocus: true,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: 'パスワード',
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: TextField(
+                        autofocus: true,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: 'パスワード',
+                        ),
+                        onChanged: (text) {
+                          password = text;
+                        },
                       ),
-                      onChanged: (text) {
-                        password = text;
+                    ),
+                    FlatButton(
+                      child: Text(
+                        'アカウントを削除',
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 17.0,
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      onPressed: () async {
+                        FocusScope.of(context).unfocus();
+                        bool isDelete =
+                            await _showConfirmDialog(context, 'このアカウント');
+                        if (isDelete != true) {
+                          password = '';
+                        }
+                        Navigator.pop(context);
                       },
                     ),
-                  ),
-                  FlatButton(
-                    child: Text(
-                      'アカウントを削除',
-                      style: TextStyle(
-                        color: Colors.redAccent,
-                        fontSize: 17.0,
+                    ThinDivider(),
+                    FlatButton(
+                      child: Text(
+                        'キャンセル',
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 17.0,
+                        ),
                       ),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    onPressed: () async {
-                      FocusScope.of(context).unfocus();
-                      bool isDelete =
-                          await _showConfirmDialog(context, 'このアカウント');
-                      if (isDelete != true) {
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      onPressed: () {
                         password = '';
-                      }
-                      Navigator.pop(context);
-                    },
-                  ),
-                  BasicDivider(),
-                  FlatButton(
-                    child: Text(
-                      'キャンセル',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 17.0,
-                      ),
+                        Navigator.pop(context);
+                      },
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    onPressed: () {
-                      password = '';
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

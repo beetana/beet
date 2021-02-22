@@ -1,8 +1,10 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/user_setting_models/user_security_model.dart';
 import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_update_email_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_update_password_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,8 +23,7 @@ class UserSecurityScreen extends StatelessWidget {
                 title: Text('ログインとセキュリティ'),
                 centerTitle: true,
               ),
-              body: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
+              body: SafeArea(
                 child: Column(
                   children: [
                     Container(
@@ -44,7 +45,9 @@ class UserSecurityScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    BasicDivider(),
+                    ThinDivider(
+                      indent: 16.0,
+                    ),
                     Container(
                       color: Colors.white,
                       child: ListTile(
@@ -62,7 +65,9 @@ class UserSecurityScreen extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: SizedBox(),
+                      child: Container(
+                        color: kDullWhiteColor,
+                      ),
                     ),
                     FlatButton(
                       child: Row(

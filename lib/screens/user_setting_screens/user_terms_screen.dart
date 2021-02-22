@@ -8,8 +8,10 @@ class UserTermsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('利用規約'),
       ),
-      body: WebView(
-        initialUrl: 'https://beetana.github.io/beet-terms/',
+      body: SafeArea(
+        child: WebView(
+          initialUrl: 'https://beetana.github.io/beet-terms/',
+        ),
       ),
     );
   }

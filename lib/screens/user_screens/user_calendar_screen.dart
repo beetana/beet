@@ -4,6 +4,7 @@ import 'package:beet/screens/user_screens/user_add_event_screen.dart';
 import 'package:beet/screens/user_screens/user_event_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/event_list_tile.dart';
+import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:provider/provider.dart';
@@ -108,7 +109,7 @@ class UserCalendarScreen extends StatelessWidget {
                     model.getSelectedEvents();
                   },
                 ),
-                BasicDivider(),
+                ThinDivider(),
                 Expanded(
                   child: Scrollbar(
                     child: ListView.builder(

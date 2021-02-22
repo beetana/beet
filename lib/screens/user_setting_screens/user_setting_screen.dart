@@ -1,9 +1,9 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/user_setting_models/user_setting_model.dart';
 import 'package:beet/screens/user_setting_screens/user_privacy_policy_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_security_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_profile_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_terms_screen.dart';
-import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,123 +23,111 @@ class UserSettingScreen extends StatelessWidget {
         ),
         body: Consumer<UserSettingModel>(builder: (context, model, child) {
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 16.0,
-                  bottom: 8.0,
-                  left: 16.0,
-                ),
-                child: Text(
-                  'アカウント設定',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
+              Container(
+                color: kDullWhiteColor,
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 16.0,
+                    bottom: 8.0,
+                    left: 16.0,
+                  ),
+                  child: Text(
+                    'アカウント設定',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-              BasicDivider(),
-              Container(
-                color: Colors.white,
-                child: ListTile(
-                  title: Text('アカウント情報'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserProfileScreen(userID: userID),
-                      ),
-                    );
-                  },
-                ),
+              ListTile(
+                title: Text('アカウント情報'),
+                trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserProfileScreen(userID: userID),
+                    ),
+                  );
+                },
               ),
               ThinDivider(
                 indent: 16.0,
               ),
+              ListTile(
+                title: Text('ログインとセキュリティ'),
+                trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserSecurityScreen(userID: userID),
+                    ),
+                  );
+                },
+              ),
               Container(
-                color: Colors.white,
-                child: ListTile(
-                  title: Text('ログインとセキュリティ'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            UserSecurityScreen(userID: userID),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              ThinDivider(
-                indent: 16.0,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 16.0,
-                  bottom: 8.0,
-                  left: 16.0,
-                ),
-                child: Text(
-                  'アプリについて',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
+                color: kDullWhiteColor,
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 16.0,
+                    bottom: 8.0,
+                    left: 16.0,
+                  ),
+                  child: Text(
+                    'アプリについて',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-              BasicDivider(),
-              Container(
-                color: Colors.white,
-                child: ListTile(
-                  title: Text('利用規約'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserTermsScreen(),
-                      ),
-                    );
-                  },
-                ),
+              ListTile(
+                title: Text('利用規約'),
+                trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserTermsScreen(),
+                    ),
+                  );
+                },
               ),
               ThinDivider(
                 indent: 16.0,
               ),
-              Container(
-                color: Colors.white,
-                child: ListTile(
-                  title: Text('プライバシーポリシー'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserPrivacyPolicyScreen(),
-                      ),
-                    );
-                  },
-                ),
+              ListTile(
+                title: Text('プライバシーポリシー'),
+                trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserPrivacyPolicyScreen(),
+                    ),
+                  );
+                },
               ),
               ThinDivider(
                 indent: 16.0,
               ),
-              Container(
-                color: Colors.white,
-                child: ListTile(
-                  title: Text('アプリの詳細'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    _showAppInfoDialog(context);
-                  },
-                ),
+              ListTile(
+                title: Text('アプリの詳細'),
+                trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () {
+                  _showAppInfoDialog(context);
+                },
               ),
-              ThinDivider(
-                indent: 16.0,
+              Expanded(
+                child: Container(
+                  color: kDullWhiteColor,
+                ),
               ),
             ],
           );

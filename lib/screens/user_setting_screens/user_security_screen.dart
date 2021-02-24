@@ -69,19 +69,14 @@ class UserSecurityScreen extends StatelessWidget {
                         color: kDullWhiteColor,
                       ),
                     ),
-                    FlatButton(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.exit_to_app,
-                            color: Colors.black54,
-                          ),
-                          Text(
-                            'ログアウト',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ],
+                    FlatButton.icon(
+                      icon: Icon(
+                        Icons.exit_to_app,
+                        color: Colors.black54,
+                      ),
+                      label: Text(
+                        'ログアウト',
+                        style: TextStyle(fontSize: 16.0),
                       ),
                       onPressed: () async {
                         bool isLogout =

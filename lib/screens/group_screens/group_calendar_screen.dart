@@ -112,40 +112,41 @@ class GroupCalendarScreen extends StatelessWidget {
                 Expanded(
                   child: Scrollbar(
                     child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemExtent: 64.0,
-                        itemCount: model.selectedEvents.length + 1,
-                        itemBuilder: (context, index) {
-                          if (index < model.selectedEvents.length) {
-                            final event = model.selectedEvents[index];
-                            return EventListTile(
-                              eventTitle: event.eventTitle,
-                              eventPlace: event.eventPlace,
-                              isAllDay: event.isAllDay,
-                              startingDateTime: event.startingDateTime,
-                              endingDateTime: event.endingDateTime,
-                              onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GroupEventScreen(
-                                      groupID: groupID,
-                                      event: event,
-                                    ),
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemExtent: 64.0,
+                      itemCount: model.selectedEvents.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index < model.selectedEvents.length) {
+                          final event = model.selectedEvents[index];
+                          return EventListTile(
+                            eventTitle: event.eventTitle,
+                            eventPlace: event.eventPlace,
+                            isAllDay: event.isAllDay,
+                            startingDateTime: event.startingDateTime,
+                            endingDateTime: event.endingDateTime,
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GroupEventScreen(
+                                    groupID: groupID,
+                                    event: event,
                                   ),
-                                );
-                                await model.getEvents(
-                                  groupID: groupID,
-                                  first: _calendarController.visibleDays[0],
-                                  last: _calendarController.visibleDays.last,
-                                );
-                                model.getSelectedEvents();
-                              },
-                            );
-                          } else {
-                            return SizedBox();
-                          }
-                        }),
+                                ),
+                              );
+                              await model.getEvents(
+                                groupID: groupID,
+                                first: _calendarController.visibleDays[0],
+                                last: _calendarController.visibleDays.last,
+                              );
+                              model.getSelectedEvents();
+                            },
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+                      },
+                    ),
                   ),
                 ),
               ],

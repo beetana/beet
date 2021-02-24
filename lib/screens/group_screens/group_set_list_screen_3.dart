@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_set_list_model_3.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
@@ -30,6 +31,7 @@ class GroupSetListScreen3 extends StatelessWidget {
       create: (_) => GroupSetListModel3(),
       child: Consumer<GroupSetListModel3>(builder: (context, model, child) {
         return Scaffold(
+          backgroundColor: kDullWhiteColor,
           body: Stack(
             children: <Widget>[
               SafeArea(

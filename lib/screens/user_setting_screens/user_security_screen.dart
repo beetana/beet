@@ -3,7 +3,6 @@ import 'package:beet/models/user_setting_models/user_security_model.dart';
 import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_update_email_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_update_password_screen.dart';
-import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -3,7 +3,6 @@ import 'package:beet/models/drawer_model.dart';
 import 'package:beet/screens/add_group_screen.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
-import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -17,12 +17,12 @@ class GroupSongEditModel extends ChangeNotifier {
     this.songPlayingTime = song.playingTime;
   }
 
-  startLoading() {
+  void startLoading() {
     isLoading = true;
     notifyListeners();
   }
 
-  endLoading() {
+  void endLoading() {
     isLoading = false;
     notifyListeners();
   }

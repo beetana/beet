@@ -18,12 +18,12 @@ class GroupAddTaskModel extends ChangeNotifier {
   DateTime dueDate;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
-  startLoading() {
+  void startLoading() {
     isLoading = true;
     notifyListeners();
   }
 
-  endLoading() {
+  void endLoading() {
     isLoading = false;
     notifyListeners();
   }

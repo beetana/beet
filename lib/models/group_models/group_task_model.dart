@@ -59,7 +59,10 @@ class GroupTaskModel extends ChangeNotifier {
           .map((doc) => Task(
                 id: doc.id,
                 title: doc['title'],
-                dueDate: doc['dueDate'].toDate(),
+                isDecidedDueDate: doc['isDecidedDueDate'],
+                dueDate: doc['isDecidedDueDate']
+                    ? doc['dueDate'].toDate()
+                    : DateTime.now(),
                 assignedMembers: doc['assignedMembers'],
                 isCompleted: doc['isCompleted'],
               ))

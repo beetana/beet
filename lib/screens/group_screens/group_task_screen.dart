@@ -1,6 +1,7 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_task_model.dart';
 import 'package:beet/screens/group_screens/group_add_task_screen.dart';
+import 'package:beet/screens/group_screens/group_edit_task_screen.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:beet/widgets/group_task_list_tile.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
@@ -71,7 +72,20 @@ class GroupTaskScreen extends StatelessWidget {
                                   checkboxCallback: (value) {
                                     model.toggleCheckState(task);
                                   },
-                                  tileTappedCallback: () {},
+                                  tileTappedCallback: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            GroupEditTaskScreen(
+                                          groupID: groupID,
+                                          task: task,
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                    model.getTaskList(groupID: groupID);
+                                  },
                                 );
                               } else {
                                 return SizedBox();
@@ -96,7 +110,20 @@ class GroupTaskScreen extends StatelessWidget {
                                   checkboxCallback: (value) {
                                     model.toggleCheckState(task);
                                   },
-                                  tileTappedCallback: () {},
+                                  tileTappedCallback: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            GroupEditTaskScreen(
+                                          groupID: groupID,
+                                          task: task,
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                    model.getTaskList(groupID: groupID);
+                                  },
                                 );
                               } else {
                                 return SizedBox();

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GroupTaskListTile extends StatelessWidget {
+  /// 細かく分けずにTask型のままもらってきた方がいいかも
   GroupTaskListTile({
     @required this.taskTitle,
     @required this.dueDate,

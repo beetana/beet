@@ -1,13 +1,15 @@
+import 'package:beet/task.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-class GroupAddTaskModel extends ChangeNotifier {
+class GroupEditTaskModel extends ChangeNotifier {
   String groupID = '';
+  String taskID = '';
   String taskTitle = '';
   String dueDateText = '';
-  bool isDecidedDueDate = true;
+  bool isDecidedDueDate;
   List<String> assignedMemberIDs = [];
   List<String> userIDs = [];
   List<String> userNames = [];
@@ -15,7 +17,6 @@ class GroupAddTaskModel extends ChangeNotifier {
   bool isLoading = false;
   bool isShowDueDatePicker = false;
   Widget dueDatePickerBox = SizedBox();
-  DateTime now = DateTime.now();
   DateTime dueDate;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
@@ -29,11 +30,16 @@ class GroupAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String groupID}) async {
+  void init({String groupID, Task task}) async {
     startLoading();
     this.groupID = groupID;
-    this.dueDate = DateTime(now.year, now.month, now.day, 12);
-    this.dueDateText = dateFormat.format(dueDate);
+    this.taskID = task.id;
+    this.taskTitle = task.title;
+    this.isDecidedDueDate = task.isDecidedDueDate;
+    this.dueDate = task.dueDate;
+    this.dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
+    this.assignedMemberIDs =
+        task.assignedMembers.map((id) => id.toString()).toList();
     try {
       QuerySnapshot groupUsers = await FirebaseFirestore.instance
           .collection('groups')
@@ -109,7 +115,7 @@ class GroupAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addTask() async {
+  Future updateTask() async {
     if (taskTitle.isEmpty) {
       throw ('やることを入力してください');
     }
@@ -118,7 +124,8 @@ class GroupAddTaskModel extends ChangeNotifier {
           .collection('groups')
           .doc(groupID)
           .collection('tasks')
-          .add({
+          .doc(taskID)
+          .set({
         'title': taskTitle,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
@@ -126,6 +133,20 @@ class GroupAddTaskModel extends ChangeNotifier {
         'isCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),
       });
+    } catch (e) {
+      print(e);
+      throw ('エラーが発生しました');
+    }
+  }
+
+  Future deleteTask() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupID)
+          .collection('tasks')
+          .doc(taskID)
+          .delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

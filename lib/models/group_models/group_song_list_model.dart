@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupSongListModel extends ChangeNotifier {
   List<Song> songList = [];
-  List<String> selectedSongs;
+  List<String> selectedSongs = [];
   int songNum;
   int totalPlayTime;
   bool isLoading = false;

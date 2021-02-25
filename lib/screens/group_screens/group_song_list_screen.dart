@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_song_list_model.dart';
 import 'package:beet/screens/group_screens/group_add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen.dart';
@@ -5,6 +6,7 @@ import 'package:beet/screens/group_screens/group_song_screen.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/song_list_tile.dart';
+import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,46 +40,99 @@ class GroupSongListScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  BasicDivider(),
+                  ThinDivider(),
                   Expanded(
-                    child: ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      itemExtent: 60.0,
-                      itemCount: model.songList.length,
-                      itemBuilder: (context, index) {
-                        final song = model.songList[index];
-                        return SongListTile(
-                          songTitle: song.title,
-                          songMinute: song.playingTime.toString(),
-                          isChecked: song.checkboxState,
-                          isVisible: model.isSetListMode,
-                          checkboxCallback: (value) {
-                            model.selectSong(song);
-                          },
-                          tileTappedCallback: () async {
-                            if (model.isSetListMode == true) {
-                              model.selectSong(song);
-                            } else {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GroupSongScreen(
-                                    groupID: groupID,
-                                    song: song,
-                                  ),
-                                ),
-                              );
-                              model.getSongList(groupID);
-                            }
-                          },
-                        );
-                      },
+                    child: Scrollbar(
+                      child: ListView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemExtent: 60.0,
+                        itemCount: model.songList.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index < model.songList.length) {
+                            final song = model.songList[index];
+                            return SongListTile(
+                              songTitle: song.title,
+                              songMinute: song.playingTime.toString(),
+                              isChecked: song.checkboxState,
+                              isVisible: model.isSetListMode,
+                              checkboxCallback: (value) {
+                                model.selectSong(song);
+                              },
+                              tileTappedCallback: () async {
+                                if (model.isSetListMode == true) {
+                                  model.selectSong(song);
+                                } else {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => GroupSongScreen(
+                                        groupID: groupID,
+                                        song: song,
+                                      ),
+                                    ),
+                                  );
+                                  model.getSongList(groupID);
+                                }
+                              },
+                            );
+                          } else {
+                            return SizedBox();
+                          }
+                        },
+                      ),
                     ),
                   ),
                   Visibility(
                     visible: model.isSetListMode,
-                    child: SizedBox(
-                      height: 40.0,
+                    child: ThinDivider(),
+                  ),
+                  Visibility(
+                    visible: model.isSetListMode,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text('${model.songNum} 曲'),
+                              Text('${model.totalPlayTime} 分'),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: FlatButton(
+                              onPressed: model.selectedSongs.isEmpty
+                                  ? null
+                                  : () async {
+                                      List<String> setList =
+                                          await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              GroupSetListScreen(
+                                            selectedSongs: model.selectedSongs,
+                                            songNum: model.songNum,
+                                            totalPlayTime: model.totalPlayTime,
+                                            groupID: groupID,
+                                          ),
+                                        ),
+                                      );
+                                      model.selectedSongs = setList;
+                                    },
+                              child: Text(
+                                '決定',
+                                style: TextStyle(
+                                  color: model.selectedSongs.isEmpty
+                                      ? kInvalidEnterButtonColor
+                                      : kEnterButtonColor,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -89,67 +144,6 @@ class GroupSongListScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    Visibility(
-                      visible: model.isSetListMode,
-                      child: BasicDivider(),
-                    ),
-                    Visibility(
-                      visible: model.isSetListMode,
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 3,
-                            child: Container(
-                              height: 40.0,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Text('${model.songNum} 曲'),
-                                  Text('${model.totalPlayTime} 分'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 40.0,
-                            child: VerticalDivider(
-                              thickness: 1.0,
-                              width: 1.0,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              height: 40.0,
-                              child: FlatButton(
-                                child: Text(
-                                  '決定',
-                                  style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 17.0,
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  List<String> setList = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => GroupSetListScreen(
-                                        selectedSongs: model.selectedSongs,
-                                        songNum: model.songNum,
-                                        totalPlayTime: model.totalPlayTime,
-                                        groupID: groupID,
-                                      ),
-                                    ),
-                                  );
-                                  model.selectedSongs = setList;
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                     Visibility(
                       visible: !model.isSetListMode,
                       child: AddFloatingActionButton(

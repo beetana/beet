@@ -3,6 +3,7 @@ import 'package:beet/models/group_models/group_set_list_model_3.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/set_list_tile.dart';
+import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,162 +33,129 @@ class GroupSetListScreen3 extends StatelessWidget {
       child: Consumer<GroupSetListModel3>(builder: (context, model, child) {
         return Scaffold(
           backgroundColor: kDullWhiteColor,
-          body: Stack(
-            children: <Widget>[
-              SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      AspectRatio(
-                        aspectRatio: 1.0 / 1.415,
-                        child: RepaintBoundary(
-                          key: model.globalKey,
-                          child: Container(
-                            color: Colors.white,
+          body: SafeArea(
+            child: Column(
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: 1.0 / 1.415,
+                  child: RepaintBoundary(
+                    key: model.globalKey,
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 16.0, left: 16.0, right: 16.0),
                             child: Column(
                               children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 16.0, right: 16.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: <Widget>[
-                                          Text(
-                                            eventTitle,
-                                            style: TextStyle(fontSize: 17.0),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: <Widget>[
-                                          Text(
-                                            eventDateText,
-                                            style: TextStyle(fontSize: 13.0),
-                                          ),
-                                          eventPlace.isNotEmpty
-                                              ? Text(
-                                                  ' @$eventPlace',
-                                                  style:
-                                                      TextStyle(fontSize: 13.0),
-                                                )
-                                              : Text(''),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Text(
+                                      eventTitle,
+                                      style: TextStyle(fontSize: 17.0),
+                                    ),
+                                  ],
                                 ),
-                                Expanded(
-                                  child: ListView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: setList.length,
-                                    itemExtent: 30.5,
-                                    itemBuilder: (context, index) {
-                                      return SetListTile(
-                                        setList: setList,
-                                        index: index,
-                                      );
-                                    },
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Text(
+                                      eventDateText,
+                                      style: TextStyle(fontSize: 13.0),
+                                    ),
+                                    eventPlace.isNotEmpty
+                                        ? Text(
+                                            ' @$eventPlace',
+                                            style: TextStyle(fontSize: 13.0),
+                                          )
+                                        : Text(''),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
-                        ),
+                          Expanded(
+                            child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: setList.length,
+                              itemExtent: 30.5,
+                              itemBuilder: (context, index) {
+                                return SetListTile(
+                                  setList: setList,
+                                  index: index,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 40.0,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  BasicDivider(),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          height: 40.0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text('$songNum 曲'),
-                              Text('$totalPlayTime 分'),
-                            ],
-                          ),
-                        ),
+                Expanded(
+                  child: SizedBox(),
+                ),
+                ThinDivider(),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text('$songNum 曲'),
+                          Text('$totalPlayTime 分'),
+                        ],
                       ),
-                      Container(
-                        height: 40.0,
-                        child: VerticalDivider(
-                          thickness: 1.0,
-                          width: 1.0,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          height: 40.0,
-                          child: FlatButton(
-                            child: Text(
-                              '戻る',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 17.0,
-                              ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Center(
+                        child: FlatButton(
+                          child: Text(
+                            '戻る',
+                            style: TextStyle(
+                              color: kSlightlyTransparentPrimaryColor,
+                              fontSize: 16.0,
                             ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
                           ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
-                      Container(
-                        height: 40.0,
-                        child: VerticalDivider(
-                          thickness: 1.0,
-                          width: 1.0,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          height: 40.0,
-                          child: FlatButton(
-                            child: Text(
-                              '保存',
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontSize: 17.0,
-                              ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Center(
+                        child: FlatButton(
+                          child: Text(
+                            '保存',
+                            style: TextStyle(
+                              color: kEnterButtonColor,
+                              fontSize: 16.0,
                             ),
-                            onPressed: () async {
-                              await model.saveSetListImage();
-                              await _showTextDialog(context, '画像を保存しました');
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      GroupScreen(groupID: groupID),
-                                ),
-                              );
-                            },
                           ),
+                          onPressed: () async {
+                            await model.saveSetListImage();
+                            await _showTextDialog(context, '画像を保存しました');
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    GroupScreen(groupID: groupID),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       }),

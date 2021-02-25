@@ -14,3 +14,5 @@ const kBackGroundColor = Color(0xFFFFFFFF);
 const kDullGreenColor = Color(0xFF415C59);
 const kDullWhiteColor = Color(0xFFF5F5F5);
 const kTransparentDullWhiteColor = Color(0x55E5E5E5);
+const kEnterButtonColor = Color(0xFF448AFF);
+const kInvalidEnterButtonColor = Color(0x55448AFF);

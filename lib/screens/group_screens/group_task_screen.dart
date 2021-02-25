@@ -52,61 +52,59 @@ class GroupTaskScreen extends StatelessWidget {
                     ],
                   ),
                   Expanded(
-                    child: Container(
-                      child: TabBarView(
-                        children: [
-                          Scrollbar(
-                            child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
-                              itemExtent: 80.0,
-                              itemCount: model.notCompletedTasks.length + 1,
-                              itemBuilder: (context, index) {
-                                if (index < model.notCompletedTasks.length) {
-                                  final task = model.notCompletedTasks[index];
-                                  return GroupTaskListTile(
-                                    taskTitle: task.title,
-                                    dueDate: task.dueDate,
-                                    isCompleted: task.isCompleted,
-                                    assignedMembers: task.assignedMembers,
-                                    memberImages: model.memberImages,
-                                    checkboxCallback: (value) {
-                                      model.toggleCheckState(task);
-                                    },
-                                    tileTappedCallback: () {},
-                                  );
-                                } else {
-                                  return SizedBox();
-                                }
-                              },
-                            ),
+                    child: TabBarView(
+                      children: [
+                        Scrollbar(
+                          child: ListView.builder(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            itemExtent: 80.0,
+                            itemCount: model.notCompletedTasks.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index < model.notCompletedTasks.length) {
+                                final task = model.notCompletedTasks[index];
+                                return GroupTaskListTile(
+                                  taskTitle: task.title,
+                                  dueDate: task.dueDate,
+                                  isCompleted: task.isCompleted,
+                                  assignedMembers: task.assignedMembers,
+                                  memberImages: model.memberImages,
+                                  checkboxCallback: (value) {
+                                    model.toggleCheckState(task);
+                                  },
+                                  tileTappedCallback: () {},
+                                );
+                              } else {
+                                return SizedBox();
+                              }
+                            },
                           ),
-                          Scrollbar(
-                            child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
-                              itemExtent: 80.0,
-                              itemCount: model.completedTasks.length + 1,
-                              itemBuilder: (context, index) {
-                                if (index < model.completedTasks.length) {
-                                  final task = model.completedTasks[index];
-                                  return GroupTaskListTile(
-                                    taskTitle: task.title,
-                                    dueDate: task.dueDate,
-                                    isCompleted: task.isCompleted,
-                                    assignedMembers: task.assignedMembers,
-                                    memberImages: model.memberImages,
-                                    checkboxCallback: (value) {
-                                      model.toggleCheckState(task);
-                                    },
-                                    tileTappedCallback: () {},
-                                  );
-                                } else {
-                                  return SizedBox();
-                                }
-                              },
-                            ),
+                        ),
+                        Scrollbar(
+                          child: ListView.builder(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            itemExtent: 80.0,
+                            itemCount: model.completedTasks.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index < model.completedTasks.length) {
+                                final task = model.completedTasks[index];
+                                return GroupTaskListTile(
+                                  taskTitle: task.title,
+                                  dueDate: task.dueDate,
+                                  isCompleted: task.isCompleted,
+                                  assignedMembers: task.assignedMembers,
+                                  memberImages: model.memberImages,
+                                  checkboxCallback: (value) {
+                                    model.toggleCheckState(task);
+                                  },
+                                  tileTappedCallback: () {},
+                                );
+                              } else {
+                                return SizedBox();
+                              }
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -134,8 +132,8 @@ class GroupTaskScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16.0,
                         color: model.changeStateTasks.isEmpty
-                            ? Color(0x55448AFF)
-                            : Colors.blueAccent,
+                            ? kInvalidEnterButtonColor
+                            : kEnterButtonColor,
                       ),
                     ),
                   ),

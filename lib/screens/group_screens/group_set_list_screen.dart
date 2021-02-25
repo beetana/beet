@@ -1,6 +1,7 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_set_list_model.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen_2.dart';
-import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:provider/provider.dart';
@@ -55,11 +56,11 @@ class GroupSetListScreen extends StatelessWidget {
               },
             ),
           ),
-          body: Stack(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Expanded(
+          body: SafeArea(
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Scrollbar(
                     child: ImplicitlyAnimatedReorderableList(
                       items: model.setList,
                       areItemsTheSame: (oldItem, newItem) => oldItem == newItem,
@@ -91,70 +92,49 @@ class GroupSetListScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  BasicDivider(),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          height: 40.0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text('$songNum 曲'),
-                              Text('$totalPlayTime 分'),
-                            ],
-                          ),
-                        ),
+                ),
+                ThinDivider(),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text('$songNum 曲'),
+                          Text('$totalPlayTime 分'),
+                        ],
                       ),
-                      Container(
-                        height: 40.0,
-                        child: VerticalDivider(
-                          thickness: 1.0,
-                          width: 1.0,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          height: 40.0,
-                          child: FlatButton(
-                            child: Text(
-                              '決定',
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontSize: 17.0,
-                              ),
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: FlatButton(
+                          child: Text(
+                            '決定',
+                            style: TextStyle(
+                              color: kEnterButtonColor,
+                              fontSize: 16.0,
                             ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GroupSetListScreen2(
-                                    setList: model.setList,
-                                    songNum: songNum,
-                                    totalPlayTime: totalPlayTime,
-                                    groupID: groupID,
-                                  ),
-                                ),
-                              );
-                            },
                           ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GroupSetListScreen2(
+                                  setList: model.setList,
+                                  songNum: songNum,
+                                  totalPlayTime: totalPlayTime,
+                                  groupID: groupID,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       }),

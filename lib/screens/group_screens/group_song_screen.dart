@@ -1,5 +1,5 @@
 import 'package:beet/models/group_models/group_song_model.dart';
-import 'package:beet/screens/group_screens/group_song_edit_screen.dart';
+import 'package:beet/screens/group_screens/group_edit_song_screen.dart';
 import 'package:beet/song.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +32,7 @@ class GroupSongScreen extends StatelessWidget {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GroupSongEditScreen(
+                      builder: (context) => GroupEditSongScreen(
                         groupID: groupID,
                         song: model.song,
                       ),

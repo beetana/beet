@@ -1,11 +1,12 @@
 import 'package:beet/task.dart';
+import 'package:beet/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class GroupTaskListModel extends ChangeNotifier {
   final firestore = FirebaseFirestore.instance;
   String groupID = '';
-  Map<String, String> memberImages = {};
+  Map<String, User> members = {};
   List<Task> tasks = [];
   List<Task> completedTasks = [];
   List<Task> notCompletedTasks = [];
@@ -31,13 +32,10 @@ class GroupTaskListModel extends ChangeNotifier {
           .doc(groupID)
           .collection('groupUsers')
           .get();
-      groupUsers.docs.map((doc) => memberImages[doc.id] = doc['imageURL']);
-      final userIDs = (groupUsers.docs.map((doc) => doc.id).toList());
-      final userImageURLs =
-          (groupUsers.docs.map((doc) => doc['imageURL']).toList());
-      for (int i = 0; i < userIDs.length; i++) {
-        memberImages[userIDs[i]] = userImageURLs[i];
-      }
+      final users = groupUsers.docs.map((doc) => User.doc(doc)).toList();
+      users.forEach((user) {
+        members[user.id] = user;
+      });
       getTaskList(groupID: groupID);
     } catch (e) {
       print(e);
@@ -50,12 +48,12 @@ class GroupTaskListModel extends ChangeNotifier {
     notCompletedTasks = [];
     changeStateTasks = [];
     try {
-      QuerySnapshot taskDoc = await firestore
+      QuerySnapshot taskQuery = await firestore
           .collection('groups')
           .doc(groupID)
           .collection('tasks')
           .get();
-      tasks = taskDoc.docs
+      tasks = taskQuery.docs
           .map((doc) => Task(
                 id: doc.id,
                 title: doc['title'],
@@ -64,6 +62,7 @@ class GroupTaskListModel extends ChangeNotifier {
                     ? doc['dueDate'].toDate()
                     : DateTime.now(),
                 assignedMembers: doc['assignedMembers'],
+                ownerID: doc['ownerID'],
                 isCompleted: doc['isCompleted'],
               ))
           .toList();

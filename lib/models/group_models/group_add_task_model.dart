@@ -123,6 +123,7 @@ class GroupAddTaskModel extends ChangeNotifier {
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
         'assignedMembers': assignedMemberIDs,
+        'ownerID': groupID,
         'isCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),
       });

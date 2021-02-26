@@ -3,7 +3,7 @@ import 'package:beet/models/group_models/group_task_list_model.dart';
 import 'package:beet/screens/group_screens/group_add_task_screen.dart';
 import 'package:beet/screens/group_screens/group_edit_task_screen.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
-import 'package:beet/widgets/group_task_list_tile.dart';
+import 'package:beet/widgets/task_list_tile.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -63,12 +63,12 @@ class GroupTaskListScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               if (index < model.notCompletedTasks.length) {
                                 final task = model.notCompletedTasks[index];
-                                return GroupTaskListTile(
+                                return TaskListTile(
                                   taskTitle: task.title,
                                   dueDate: task.dueDate,
                                   isCompleted: task.isCompleted,
                                   assignedMembers: task.assignedMembers,
-                                  memberImages: model.memberImages,
+                                  users: model.members,
                                   checkboxCallback: (value) {
                                     model.toggleCheckState(task);
                                   },
@@ -101,12 +101,12 @@ class GroupTaskListScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               if (index < model.completedTasks.length) {
                                 final task = model.completedTasks[index];
-                                return GroupTaskListTile(
+                                return TaskListTile(
                                   taskTitle: task.title,
                                   dueDate: task.dueDate,
                                   isCompleted: task.isCompleted,
                                   assignedMembers: task.assignedMembers,
-                                  memberImages: model.memberImages,
+                                  users: model.members,
                                   checkboxCallback: (value) {
                                     model.toggleCheckState(task);
                                   },

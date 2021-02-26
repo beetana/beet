@@ -125,7 +125,7 @@ class UserProfileScreen extends StatelessWidget {
                         'アカウントを削除',
                         style: TextStyle(
                           fontSize: 16.0,
-                          color: kPrimaryColor,
+                          color: kDeleteButtonColor,
                         ),
                       ),
                       onPressed: () async {

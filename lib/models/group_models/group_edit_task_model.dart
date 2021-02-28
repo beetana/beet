@@ -10,7 +10,7 @@ class GroupEditTaskModel extends ChangeNotifier {
   String taskTitle = '';
   String dueDateText = '';
   bool isDecidedDueDate;
-  List<String> assignedMemberIDs = [];
+  List<String> assignedMembersID = [];
   List<String> userIDs = [];
   List<String> userNames = [];
   List<String> userImageURLs = [];
@@ -38,8 +38,8 @@ class GroupEditTaskModel extends ChangeNotifier {
     this.isDecidedDueDate = task.isDecidedDueDate;
     this.dueDate = task.dueDate;
     this.dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
-    this.assignedMemberIDs =
-        task.assignedMembers.map((id) => id.toString()).toList();
+    this.assignedMembersID =
+        task.assignedMembersID.map((id) => id.toString()).toList();
     try {
       QuerySnapshot groupUsers = await FirebaseFirestore.instance
           .collection('groups')
@@ -59,12 +59,12 @@ class GroupEditTaskModel extends ChangeNotifier {
   }
 
   void assignPerson(userID) {
-    if (assignedMemberIDs.contains(userID)) {
-      assignedMemberIDs.remove(userID);
+    if (assignedMembersID.contains(userID)) {
+      assignedMembersID.remove(userID);
     } else {
-      assignedMemberIDs.add(userID);
+      assignedMembersID.add(userID);
     }
-    print(assignedMemberIDs);
+    print(assignedMembersID);
     notifyListeners();
   }
 
@@ -129,7 +129,7 @@ class GroupEditTaskModel extends ChangeNotifier {
         'title': taskTitle,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
-        'assignedMembers': assignedMemberIDs,
+        'assignedMembersID': assignedMembersID,
         'ownerID': groupID,
         'isCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),

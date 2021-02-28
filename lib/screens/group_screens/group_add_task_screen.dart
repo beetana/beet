@@ -89,7 +89,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                       Container(
                         height: 300,
                         child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
+                          physics: ScrollPhysics(),
                           itemCount: model.userNames.length,
                           itemBuilder: (BuildContext context, int index) {
                             String userID = model.userIDs[index];
@@ -99,7 +99,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                               userName: userName,
                               userImageURL: userImageURL,
                               isChecked:
-                                  model.assignedMemberIDs.contains(userID),
+                                  model.assignedMembersID.contains(userID),
                               checkboxCallback: (state) {
                                 model.assignPerson(userID);
                               },

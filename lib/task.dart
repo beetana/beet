@@ -1,19 +1,19 @@
 class Task {
+  final String ownerID;
   final String id;
   final String title;
   final bool isDecidedDueDate;
   final DateTime dueDate;
-  final List<dynamic> assignedMembers;
-  final String ownerID;
+  final List<dynamic> assignedMembersID;
   bool isCompleted;
 
   Task(
-      {this.id,
+      {this.ownerID,
+      this.id,
       this.title,
       this.isDecidedDueDate,
       this.dueDate,
-      this.assignedMembers,
-      this.ownerID,
+      this.assignedMembersID,
       this.isCompleted});
 
   void toggleCheckState() {

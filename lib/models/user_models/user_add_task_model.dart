@@ -8,10 +8,7 @@ class UserAddTaskModel extends ChangeNotifier {
   String taskTitle = '';
   String dueDateText = '';
   bool isDecidedDueDate = true;
-  List<String> assignedMemberIDs = [];
-  List<String> userIDs = [];
-  List<String> userNames = [];
-  List<String> userImageURLs = [];
+  List<String> assignedUserID = [];
   bool isLoading = false;
   bool isShowDueDatePicker = false;
   Widget dueDatePickerBox = SizedBox();
@@ -32,7 +29,7 @@ class UserAddTaskModel extends ChangeNotifier {
   void init({String userID}) async {
     startLoading();
     this.userID = userID;
-    this.assignedMemberIDs = [userID];
+    this.assignedUserID = [userID];
     this.dueDate = DateTime(now.year, now.month, now.day, 12);
     this.dueDateText = dateFormat.format(dueDate);
     try {
@@ -123,7 +120,7 @@ class UserAddTaskModel extends ChangeNotifier {
         'title': taskTitle,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
-        'assignedMembers': assignedMemberIDs,
+        'assignedMembersID': assignedUserID,
         'ownerID': userID,
         'isCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),

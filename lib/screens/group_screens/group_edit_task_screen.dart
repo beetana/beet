@@ -110,7 +110,7 @@ class GroupEditTaskScreen extends StatelessWidget {
                                     return AssignTaskListTile(
                                       userName: userName,
                                       userImageURL: userImageURL,
-                                      isChecked: model.assignedMemberIDs
+                                      isChecked: model.assignedMembersID
                                           .contains(userID),
                                       checkboxCallback: (state) {
                                         model.assignPerson(userID);

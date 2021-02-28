@@ -61,7 +61,7 @@ class GroupTaskListModel extends ChangeNotifier {
                 dueDate: doc['isDecidedDueDate']
                     ? doc['dueDate'].toDate()
                     : DateTime.now(),
-                assignedMembers: doc['assignedMembers'],
+                assignedMembersID: doc['assignedMembersID'],
                 ownerID: doc['ownerID'],
                 isCompleted: doc['isCompleted'],
               ))

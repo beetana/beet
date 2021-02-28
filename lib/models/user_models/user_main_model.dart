@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class UserMainModel extends ChangeNotifier {
   DateTime currentDateTime = DateTime.now();
   List<Event> eventList = [];
-  Map<String, ContentOwnerInfo> eventPlanner = {};
+  Map<String, ContentOwner> eventPlanner = {};
   bool isLoading = false;
 
   Future getEventList(userID) async {
@@ -57,12 +57,12 @@ class UserMainModel extends ChangeNotifier {
       if (id.length == 28) {
         DocumentSnapshot userDoc =
             await FirebaseFirestore.instance.collection('users').doc(id).get();
-        ContentOwnerInfo info = ContentOwnerInfo.doc(userDoc);
+        ContentOwner info = ContentOwner.doc(userDoc);
         eventPlanner[id] = info;
       } else {
         DocumentSnapshot groupDoc =
             await FirebaseFirestore.instance.collection('groups').doc(id).get();
-        ContentOwnerInfo info = ContentOwnerInfo.doc(groupDoc);
+        ContentOwner info = ContentOwner.doc(groupDoc);
         eventPlanner[id] = info;
       }
     }

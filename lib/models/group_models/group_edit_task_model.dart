@@ -10,6 +10,7 @@ class GroupEditTaskModel extends ChangeNotifier {
   String taskTitle = '';
   String dueDateText = '';
   bool isDecidedDueDate;
+  bool isCompleted;
   List<String> assignedMembersID = [];
   List<String> userIDs = [];
   List<String> userNames = [];
@@ -36,6 +37,7 @@ class GroupEditTaskModel extends ChangeNotifier {
     this.taskID = task.id;
     this.taskTitle = task.title;
     this.isDecidedDueDate = task.isDecidedDueDate;
+    this.isCompleted = task.isCompleted;
     this.dueDate = task.dueDate;
     this.dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
     this.assignedMembersID =
@@ -131,7 +133,7 @@ class GroupEditTaskModel extends ChangeNotifier {
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
         'assignedMembersID': assignedMembersID,
         'ownerID': groupID,
-        'isCompleted': false,
+        'isCompleted': isCompleted,
         'createdAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {

@@ -9,7 +9,7 @@ class TaskListTile extends StatelessWidget {
     @required this.taskTitle,
     @required this.dueDate,
     @required this.isCompleted,
-    @required this.assignedMembers,
+    @required this.assignedMembersID,
     @required this.users,
     @required this.checkboxCallback,
     @required this.tileTappedCallback,
@@ -18,7 +18,7 @@ class TaskListTile extends StatelessWidget {
   final String taskTitle;
   final DateTime dueDate;
   final bool isCompleted;
-  final List<dynamic> assignedMembers;
+  final List<dynamic> assignedMembersID;
   final Map<String, User> users;
   final Function checkboxCallback;
   final Function tileTappedCallback;
@@ -57,19 +57,24 @@ class TaskListTile extends StatelessWidget {
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: assignedMembers.length,
+                        itemCount: assignedMembersID.length,
                         itemBuilder: (context, index) {
                           return Container(
                             width: 24.0,
                             height: 24.0,
                             child: CircleAvatar(
-                              backgroundImage: users[assignedMembers[index]]
-                                      .imageURL
-                                      .isNotEmpty
-                                  ? NetworkImage(
-                                      users[assignedMembers[index]].imageURL,
-                                    )
-                                  : AssetImage('images/test_user_image.png'),
+                              backgroundImage:
+                                  users[assignedMembersID[index]] == null
+                                      ? AssetImage('images/test_user_image.png')
+                                      : users[assignedMembersID[index]]
+                                              .imageURL
+                                              .isNotEmpty
+                                          ? NetworkImage(
+                                              users[assignedMembersID[index]]
+                                                  .imageURL,
+                                            )
+                                          : AssetImage(
+                                              'images/test_user_image.png'),
                               backgroundColor: Colors.transparent,
                             ),
                           );

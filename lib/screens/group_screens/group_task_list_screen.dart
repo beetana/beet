@@ -67,7 +67,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                   taskTitle: task.title,
                                   dueDate: task.dueDate,
                                   isCompleted: task.isCompleted,
-                                  assignedMembers: task.assignedMembers,
+                                  assignedMembersID: task.assignedMembersID,
                                   users: model.members,
                                   checkboxCallback: (value) {
                                     model.toggleCheckState(task);
@@ -105,7 +105,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                   taskTitle: task.title,
                                   dueDate: task.dueDate,
                                   isCompleted: task.isCompleted,
-                                  assignedMembers: task.assignedMembers,
+                                  assignedMembersID: task.assignedMembersID,
                                   users: model.members,
                                   checkboxCallback: (value) {
                                     model.toggleCheckState(task);

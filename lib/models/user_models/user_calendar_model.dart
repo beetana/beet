@@ -11,7 +11,7 @@ class UserCalendarModel extends ChangeNotifier {
   List<Event> selectedEvents = [];
   Map<DateTime, List> events = {};
   Map<DateTime, List> holidays = {};
-  Map<String, ContentOwnerInfo> eventPlanner = {};
+  Map<String, ContentOwner> eventPlanner = {};
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
 
@@ -75,12 +75,12 @@ class UserCalendarModel extends ChangeNotifier {
       if (id.length == 28) {
         DocumentSnapshot userDoc =
             await FirebaseFirestore.instance.collection('users').doc(id).get();
-        ContentOwnerInfo info = ContentOwnerInfo.doc(userDoc);
+        ContentOwner info = ContentOwner.doc(userDoc);
         eventPlanner[id] = info;
       } else {
         DocumentSnapshot groupDoc =
             await FirebaseFirestore.instance.collection('groups').doc(id).get();
-        ContentOwnerInfo info = ContentOwnerInfo.doc(groupDoc);
+        ContentOwner info = ContentOwner.doc(groupDoc);
         eventPlanner[id] = info;
       }
     }

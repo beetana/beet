@@ -1,6 +1,6 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_main_model.dart';
-import 'package:beet/screens/group_screens/group_event_screen.dart';
+import 'package:beet/screens/group_screens/group_event_details_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/event_list_tile.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +103,7 @@ class GroupMainScreen extends StatelessWidget {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => GroupEventScreen(
+                                builder: (context) => GroupEventDetailsScreen(
                                   groupID: groupID,
                                   event: event,
                                 ),

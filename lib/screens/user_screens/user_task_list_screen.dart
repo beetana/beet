@@ -1,7 +1,7 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/user_models/user_task_list_model.dart';
 import 'package:beet/screens/user_screens/user_add_task_screen.dart';
-import 'package:beet/screens/user_screens/user_task_screen.dart';
+import 'package:beet/screens/user_screens/user_task_details_screen.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:beet/widgets/task_list_tile.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
@@ -81,7 +81,7 @@ class UserTaskListScreen extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  UserTaskScreen(
+                                                  UserTaskDetailsScreen(
                                                 userID: userID,
                                                 task: task,
                                               ),
@@ -125,7 +125,7 @@ class UserTaskListScreen extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  UserTaskScreen(
+                                                  UserTaskDetailsScreen(
                                                 userID: userID,
                                                 task: task,
                                               ),

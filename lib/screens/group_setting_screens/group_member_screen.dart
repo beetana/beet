@@ -78,9 +78,14 @@ class GroupMemberScreen extends StatelessWidget {
                     FlatButton.icon(
                       icon: Icon(
                         Icons.group_add,
-                        color: Colors.black54,
+                        color: kSlightlyTransparentPrimaryColor,
                       ),
-                      label: Text('メンバーを招待'),
+                      label: Text(
+                        'メンバーを招待',
+                        style: TextStyle(
+                          color: kSlightlyTransparentPrimaryColor,
+                        ),
+                      ),
                       onPressed: () async {
                         model.startLoading();
                         Uri link = await dynamicLinks.createDynamicLink(

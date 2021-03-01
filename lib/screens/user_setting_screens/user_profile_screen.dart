@@ -79,10 +79,40 @@ class UserProfileScreen extends StatelessWidget {
                               ),
                               Positioned(
                                 child: CircleAvatar(
-                                  child: Icon(
-                                    Icons.add_a_photo,
-                                    color: Colors.white,
-                                    size: 20.0,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.add_a_photo,
+                                      color: Colors.white,
+                                      size: 20.0,
+                                    ),
+                                    onPressed: () async {
+                                      ChangeImage changeImage =
+                                          await _showEditIconBottomSheet(
+                                              context);
+                                      if (changeImage == ChangeImage.delete) {
+                                        model.startLoading();
+                                        try {
+                                          await model.deleteUserImage();
+                                        } catch (e) {
+                                          await _showTextDialog(
+                                              context, e.toString());
+                                        }
+                                        model.endLoading();
+                                      } else if (changeImage ==
+                                          ChangeImage.select) {
+                                        await model.pickImageFile();
+                                        if (model.imageFile != null) {
+                                          model.startLoading();
+                                          try {
+                                            await model.updateUserImage();
+                                          } catch (e) {
+                                            await _showTextDialog(
+                                                context, e.toString());
+                                          }
+                                          model.endLoading();
+                                        }
+                                      }
+                                    },
                                   ),
                                   backgroundColor: Colors.black45,
                                   radius: 18.0,
@@ -202,8 +232,9 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       child: Text(
                         'ライブラリから選択',
                         style: TextStyle(
-                          color: Colors.black87,
+                          color: kPrimaryColor,
                           fontSize: 17.0,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                       padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -219,6 +250,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 17.0,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                       padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -331,6 +363,7 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 17.0,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                       padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -349,8 +382,9 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                       child: Text(
                         'キャンセル',
                         style: TextStyle(
-                          color: Colors.black87,
+                          color: kSlightlyTransparentPrimaryColor,
                           fontSize: 17.0,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                       padding: EdgeInsets.symmetric(vertical: 16.0),

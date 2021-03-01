@@ -71,12 +71,12 @@ class UserSecurityScreen extends StatelessWidget {
                     FlatButton.icon(
                       icon: Icon(
                         Icons.exit_to_app,
-                        color: Colors.black54,
+                        color: kSlightlyTransparentPrimaryColor,
                       ),
                       label: Text(
                         'ログアウト',
                         style: TextStyle(
-                          color: Colors.black54,
+                          color: kSlightlyTransparentPrimaryColor,
                         ),
                       ),
                       onPressed: () async {

@@ -38,6 +38,19 @@ class MyApp extends StatelessWidget {
             ),
         primaryIconTheme:
             Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
+        dialogTheme: DialogTheme(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+          ),
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontFamily: 'MPLUS1p',
+            fontWeight: FontWeight.normal,
+          ),
+        ),
         accentColor: kTransparentPrimaryColor,
         scaffoldBackgroundColor: kBackGroundColor,
       ),

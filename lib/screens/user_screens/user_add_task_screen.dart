@@ -104,11 +104,6 @@ Future _showTextDialog(context, message) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
         title: Text(message),
         actions: <Widget>[
           FlatButton(

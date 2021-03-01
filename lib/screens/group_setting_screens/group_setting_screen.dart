@@ -143,11 +143,6 @@ Future _showAppInfoDialog(context) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -74,11 +74,6 @@ class DynamicLinksServices {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10.0),
-            ),
-          ),
           title: Text('$groupNameに招待されました。\n参加しますか？'),
           actions: <Widget>[
             FlatButton(
@@ -139,11 +134,6 @@ class DynamicLinksServices {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10.0),
-            ),
-          ),
           title: Text(message),
           actions: <Widget>[
             FlatButton(

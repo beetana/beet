@@ -75,7 +75,9 @@ class UserSecurityScreen extends StatelessWidget {
                       ),
                       label: Text(
                         'ログアウト',
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(
+                          color: Colors.black54,
+                        ),
                       ),
                       onPressed: () async {
                         bool isLogout =
@@ -122,11 +124,6 @@ Future _showTextDialog(context, message) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
         title: Text(message),
         actions: <Widget>[
           FlatButton(
@@ -147,19 +144,12 @@ Future _confirmLogoutDialog(context, message) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
         title: Text(message),
         actions: <Widget>[
           FlatButton(
             child: Text(
               'キャンセル',
-              style: TextStyle(
-                color: Colors.black54,
-              ),
+              style: kCancelButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context, false);
@@ -168,9 +158,7 @@ Future _confirmLogoutDialog(context, message) async {
           FlatButton(
             child: Text(
               'ログアウト',
-              style: TextStyle(
-                color: Colors.redAccent,
-              ),
+              style: kDeleteButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context, true);

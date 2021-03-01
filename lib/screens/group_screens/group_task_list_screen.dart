@@ -1,7 +1,7 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_task_list_model.dart';
 import 'package:beet/screens/group_screens/group_add_task_screen.dart';
-import 'package:beet/screens/group_screens/group_edit_task_screen.dart';
+import 'package:beet/screens/group_screens/group_task_details_screen.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:beet/widgets/task_list_tile.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
@@ -55,82 +55,98 @@ class GroupTaskListScreen extends StatelessWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        Scrollbar(
-                          child: ListView.builder(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            itemExtent: 80.0,
-                            itemCount: model.notCompletedTasks.length + 1,
-                            itemBuilder: (context, index) {
-                              if (index < model.notCompletedTasks.length) {
-                                final task = model.notCompletedTasks[index];
-                                return TaskListTile(
-                                  taskTitle: task.title,
-                                  dueDate: task.dueDate,
-                                  isCompleted: task.isCompleted,
-                                  assignedMembersID: task.assignedMembersID,
-                                  users: model.members,
-                                  checkboxCallback: (value) {
-                                    model.toggleCheckState(task);
+                        model.notCompletedTasks.isNotEmpty
+                            ? Scrollbar(
+                                child: ListView.builder(
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  itemExtent: 80.0,
+                                  itemCount: model.notCompletedTasks.length + 1,
+                                  itemBuilder: (context, index) {
+                                    if (index <
+                                        model.notCompletedTasks.length) {
+                                      final task =
+                                          model.notCompletedTasks[index];
+                                      return TaskListTile(
+                                        taskTitle: task.title,
+                                        dueDate: task.dueDate,
+                                        isCompleted: task.isCompleted,
+                                        assignedMembersID:
+                                            task.assignedMembersID,
+                                        users: model.members,
+                                        checkboxCallback: (value) {
+                                          model.toggleCheckState(task);
+                                        },
+                                        tileTappedCallback: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GroupTaskDetailsScreen(
+                                                groupID: groupID,
+                                                task: task,
+                                              ),
+                                              fullscreenDialog: true,
+                                            ),
+                                          );
+                                          model.getTaskList(groupID: groupID);
+                                        },
+                                      );
+                                    } else {
+                                      return SizedBox();
+                                    }
                                   },
-                                  tileTappedCallback: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            GroupEditTaskScreen(
-                                          groupID: groupID,
-                                          task: task,
-                                        ),
-                                        fullscreenDialog: true,
-                                      ),
-                                    );
-                                    model.getTaskList(groupID: groupID);
+                                ),
+                              )
+                            : model.isLoading
+                                ? SizedBox()
+                                : Center(
+                                    child: Text('未完了のタスクはありません'),
+                                  ),
+                        model.completedTasks.isNotEmpty
+                            ? Scrollbar(
+                                child: ListView.builder(
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  itemExtent: 80.0,
+                                  itemCount: model.completedTasks.length + 1,
+                                  itemBuilder: (context, index) {
+                                    if (index < model.completedTasks.length) {
+                                      final task = model.completedTasks[index];
+                                      return TaskListTile(
+                                        taskTitle: task.title,
+                                        dueDate: task.dueDate,
+                                        isCompleted: task.isCompleted,
+                                        assignedMembersID:
+                                            task.assignedMembersID,
+                                        users: model.members,
+                                        checkboxCallback: (value) {
+                                          model.toggleCheckState(task);
+                                        },
+                                        tileTappedCallback: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GroupTaskDetailsScreen(
+                                                groupID: groupID,
+                                                task: task,
+                                              ),
+                                              fullscreenDialog: true,
+                                            ),
+                                          );
+                                          model.getTaskList(groupID: groupID);
+                                        },
+                                      );
+                                    } else {
+                                      return SizedBox();
+                                    }
                                   },
-                                );
-                              } else {
-                                return SizedBox();
-                              }
-                            },
-                          ),
-                        ),
-                        Scrollbar(
-                          child: ListView.builder(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            itemExtent: 80.0,
-                            itemCount: model.completedTasks.length + 1,
-                            itemBuilder: (context, index) {
-                              if (index < model.completedTasks.length) {
-                                final task = model.completedTasks[index];
-                                return TaskListTile(
-                                  taskTitle: task.title,
-                                  dueDate: task.dueDate,
-                                  isCompleted: task.isCompleted,
-                                  assignedMembersID: task.assignedMembersID,
-                                  users: model.members,
-                                  checkboxCallback: (value) {
-                                    model.toggleCheckState(task);
-                                  },
-                                  tileTappedCallback: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            GroupEditTaskScreen(
-                                          groupID: groupID,
-                                          task: task,
-                                        ),
-                                        fullscreenDialog: true,
-                                      ),
-                                    );
-                                    model.getTaskList(groupID: groupID);
-                                  },
-                                );
-                              } else {
-                                return SizedBox();
-                              }
-                            },
-                          ),
-                        ),
+                                ),
+                              )
+                            : model.isLoading
+                                ? SizedBox()
+                                : Center(
+                                    child: Text('完了済みのタスクはありません'),
+                                  ),
                       ],
                     ),
                   ),
@@ -191,11 +207,8 @@ class GroupTaskListScreen extends StatelessWidget {
               ),
             ),
             model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                ? Center(
+                    child: CircularProgressIndicator(),
                   )
                 : SizedBox(),
           ],

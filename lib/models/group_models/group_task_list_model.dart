@@ -36,7 +36,7 @@ class GroupTaskListModel extends ChangeNotifier {
       users.forEach((user) {
         members[user.id] = user;
       });
-      getTaskList(groupID: groupID);
+      await getTaskList(groupID: groupID);
     } catch (e) {
       print(e);
     }

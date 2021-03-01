@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/dynamic_links_services.dart';
 import 'package:beet/models/group_setting_models/group_member_model.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
@@ -178,17 +179,12 @@ Future<bool> _showConfirmDialog(context, isMe, userName) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
         title: Text(titleText),
         actions: <Widget>[
           FlatButton(
             child: Text(
               'キャンセル',
-              style: TextStyle(color: Colors.black54),
+              style: kCancelButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context, false);
@@ -197,7 +193,7 @@ Future<bool> _showConfirmDialog(context, isMe, userName) async {
           FlatButton(
             child: Text(
               buttonText,
-              style: TextStyle(color: Colors.redAccent),
+              style: kDeleteButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context, true);
@@ -215,11 +211,6 @@ Future _showTextDialog(context, message) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
         title: Text(message),
         actions: <Widget>[
           FlatButton(

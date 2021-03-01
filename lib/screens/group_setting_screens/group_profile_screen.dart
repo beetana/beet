@@ -218,17 +218,12 @@ Future<bool> _showConfirmDialog(context) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
         title: Text('プロフィール画像を削除しますか?'),
         actions: <Widget>[
           FlatButton(
             child: Text(
               'キャンセル',
-              style: TextStyle(color: Colors.black54),
+              style: kCancelButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context, false);
@@ -237,7 +232,7 @@ Future<bool> _showConfirmDialog(context) async {
           FlatButton(
             child: Text(
               '削除',
-              style: TextStyle(color: Colors.redAccent),
+              style: kDeleteButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context, true);
@@ -255,11 +250,6 @@ Future _showTextDialog(context, message) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
         title: Text(message),
         actions: <Widget>[
           FlatButton(

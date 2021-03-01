@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/event.dart';
 import 'package:beet/models/user_models/user_event_details_model.dart';
 import 'package:beet/screens/user_screens/user_edit_event_screen.dart';
@@ -139,11 +140,6 @@ Future _showTextDialog(context, message) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
         title: Text(message),
         actions: <Widget>[
           FlatButton(
@@ -164,19 +160,12 @@ Future _confirmDeleteDialog(context, message) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
         title: Text(message),
         actions: <Widget>[
           FlatButton(
             child: Text(
               'キャンセル',
-              style: TextStyle(
-                color: Colors.black54,
-              ),
+              style: kCancelButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context, false);
@@ -185,9 +174,7 @@ Future _confirmDeleteDialog(context, message) async {
           FlatButton(
             child: Text(
               '削除',
-              style: TextStyle(
-                color: Colors.redAccent,
-              ),
+              style: kDeleteButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context, true);

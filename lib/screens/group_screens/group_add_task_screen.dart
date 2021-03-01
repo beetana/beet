@@ -76,7 +76,10 @@ class GroupAddTaskScreen extends StatelessWidget {
                         },
                       ),
                       model.dueDatePickerBox,
-                      BasicDivider(),
+                      BasicDivider(
+                        indent: 16.0,
+                        endIndent: 16.0,
+                      ),
                       SizedBox(height: 16.0),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),

@@ -77,10 +77,39 @@ class GroupProfileScreen extends StatelessWidget {
                             ),
                             Positioned(
                               child: CircleAvatar(
-                                child: Icon(
-                                  Icons.add_a_photo,
-                                  color: Colors.white,
-                                  size: 20.0,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.add_a_photo,
+                                    color: Colors.white,
+                                    size: 20.0,
+                                  ),
+                                  onPressed: () async {
+                                    ChangeImage changeImage =
+                                        await _showEditIconBottomSheet(context);
+                                    if (changeImage == ChangeImage.delete) {
+                                      model.startLoading();
+                                      try {
+                                        await model.deleteGroupImage();
+                                      } catch (e) {
+                                        await _showTextDialog(
+                                            context, e.toString());
+                                      }
+                                      model.endLoading();
+                                    } else if (changeImage ==
+                                        ChangeImage.select) {
+                                      await model.pickImageFile();
+                                      if (model.imageFile != null) {
+                                        model.startLoading();
+                                        try {
+                                          await model.updateGroupImage();
+                                        } catch (e) {
+                                          await _showTextDialog(
+                                              context, e.toString());
+                                        }
+                                        model.endLoading();
+                                      }
+                                    }
+                                  },
                                 ),
                                 backgroundColor: Colors.black45,
                                 radius: 18.0,
@@ -172,8 +201,9 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       child: Text(
                         'ライブラリから選択',
                         style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 18.0,
+                          color: kPrimaryColor,
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                       padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -188,7 +218,8 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                         '写真を削除',
                         style: TextStyle(
                           color: Colors.redAccent,
-                          fontSize: 18.0,
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                       padding: EdgeInsets.symmetric(vertical: 16.0),

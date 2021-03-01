@@ -68,12 +68,12 @@ class DrawerScreen extends StatelessWidget {
                     child: FlatButton.icon(
                       icon: Icon(
                         Icons.add,
-                        color: kPrimaryColor,
+                        color: kSlightlyTransparentPrimaryColor,
                       ),
                       label: Text(
                         'グループを作成',
                         style: TextStyle(
-                          color: kPrimaryColor,
+                          color: kSlightlyTransparentPrimaryColor,
                         ),
                       ),
                       onPressed: () {

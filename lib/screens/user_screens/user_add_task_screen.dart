@@ -1,5 +1,4 @@
 import 'package:beet/models/user_models/user_add_task_model.dart';
-import 'package:beet/widgets/assign_task_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,41 +75,10 @@ class UserAddTaskScreen extends StatelessWidget {
                         },
                       ),
                       model.dueDatePickerBox,
-                      BasicDivider(),
-//                      SizedBox(height: 16.0),
-//                      Padding(
-//                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-//                        child: Text(
-//                          'だれが',
-//                          style: TextStyle(fontSize: 17.0),
-//                        ),
-//                      ),
-//                      SizedBox(height: 8.0),
-//                      Container(
-//                        height: 300,
-//                        child: ListView.builder(
-//                          physics: BouncingScrollPhysics(),
-//                          itemCount: model.userNames.length,
-//                          itemBuilder: (BuildContext context, int index) {
-//                            String userID = model.userIDs[index];
-//                            String userName = model.userNames[index];
-//                            String userImageURL = model.userImageURLs[index];
-//                            return AssignTaskListTile(
-//                              userName: userName,
-//                              userImageURL: userImageURL,
-//                              isChecked:
-//                              model.assignedMemberIDs.contains(userID),
-//                              checkboxCallback: (state) {
-//                                model.assignPerson(userID);
-//                              },
-//                              tileTappedCallback: () {
-//                                model.assignPerson(userID);
-//                              },
-//                            );
-//                          },
-//                        ),
-//                      ),
-//                      BasicDivider(),
+                      BasicDivider(
+                        indent: 16.0,
+                        endIndent: 16.0,
+                      ),
                     ],
                   ),
                 ),

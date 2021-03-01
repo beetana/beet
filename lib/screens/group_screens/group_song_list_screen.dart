@@ -4,7 +4,6 @@ import 'package:beet/screens/group_screens/group_add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen.dart';
 import 'package:beet/screens/group_screens/group_song_screen.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
-import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/song_list_tile.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';

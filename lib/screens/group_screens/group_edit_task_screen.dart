@@ -1,4 +1,3 @@
-import 'package:beet/models/group_models/group_add_task_model.dart';
 import 'package:beet/models/group_models/group_edit_task_model.dart';
 import 'package:beet/task.dart';
 import 'package:beet/widgets/assign_task_list_tile.dart';

@@ -1,6 +1,7 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/user_models/user_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
+import 'package:beet/screens/user_screens/user_task_list_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_setting_screen.dart';
 import 'package:beet/screens/user_screens/user_calendar_screen.dart';
 import 'package:beet/screens/user_screens/user_main_screen.dart';
@@ -17,6 +18,7 @@ class UserScreen extends StatelessWidget {
     final List<Widget> switchBody = [
       UserMainScreen(userID: userID),
       UserCalendarScreen(userID: userID),
+      UserTaskListScreen(userID: userID),
     ];
     return ChangeNotifierProvider<UserModel>(
       create: (_) => UserModel()..init(userID: userID, context: context),
@@ -66,6 +68,10 @@ class UserScreen extends StatelessWidget {
                   BottomNavigationBarItem(
                     icon: Icon(Icons.calendar_today),
                     label: 'カレンダー',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.format_list_bulleted),
+                    label: 'やること',
                   ),
                 ],
               ),

@@ -112,7 +112,7 @@ class GroupCalendarScreen extends StatelessWidget {
                 Expanded(
                   child: Scrollbar(
                     child: ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
+                      physics: ScrollPhysics(),
                       itemExtent: 64.0,
                       itemCount: model.selectedEvents.length + 1,
                       itemBuilder: (context, index) {

@@ -131,7 +131,14 @@ class UserTaskListScreen extends StatelessWidget {
                                               ),
                                             ),
                                           );
-                                          model.getTaskList(userID: userID);
+                                          model.startLoading();
+                                          try {
+                                            model.getTaskList(userID: userID);
+                                          } catch (e) {
+                                            _showTextDialog(
+                                                context, e.toString());
+                                          }
+                                          model.endLoading();
                                         },
                                       );
                                     } else {

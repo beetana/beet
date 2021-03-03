@@ -1,19 +1,63 @@
 import 'package:beet/event.dart';
 import 'package:beet/content_owner_info.dart';
+import 'package:beet/task.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UserMainModel extends ChangeNotifier {
-  DateTime currentDateTime = DateTime.now();
   List<Event> eventList = [];
   Map<String, ContentOwner> eventPlanner = {};
+  int taskCount = 0;
   bool isLoading = false;
+  DateTime currentDateTime = DateTime.now();
+  final firestore = FirebaseFirestore.instance;
 
-  Future getEventList(userID) async {
+  void startLoading() {
     isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future init({String userID}) async {
+    taskCount = 0;
+    startLoading();
+    try {
+      final taskQuery = await firestore
+          .collectionGroup('tasks')
+          .where('assignedMembersID', arrayContains: userID)
+          .get();
+      final tasks = taskQuery.docs
+          .map((doc) => Task(
+                id: doc.id,
+                title: doc['title'],
+                isDecidedDueDate: doc['isDecidedDueDate'],
+                dueDate: doc['isDecidedDueDate']
+                    ? doc['dueDate'].toDate()
+                    : DateTime.now(),
+                assignedMembersID: doc['assignedMembersID'],
+                ownerID: doc['ownerID'],
+                isCompleted: doc['isCompleted'],
+              ))
+          .toList();
+      tasks.forEach((task) {
+        if (task.isCompleted == false) {
+          taskCount += 1;
+        }
+      });
+      await getEventList(userID: userID);
+    } catch (e) {
+      print(e);
+    }
+    endLoading();
+  }
+
+  Future getEventList({String userID}) async {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
     List<String> myIDList = [userID];
-
     try {
       QuerySnapshot joiningGroupDoc = await FirebaseFirestore.instance
           .collection('users')
@@ -48,7 +92,6 @@ class UserMainModel extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    isLoading = false;
     notifyListeners();
   }
 

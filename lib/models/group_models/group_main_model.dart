@@ -1,15 +1,61 @@
 import 'package:beet/event.dart';
+import 'package:beet/task.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class GroupMainModel extends ChangeNotifier {
-  DateTime currentDateTime = DateTime.now();
   List<Event> eventList = [];
+  int taskCount = 0;
   bool isLoading = false;
+  DateTime currentDateTime = DateTime.now();
+  final firestore = FirebaseFirestore.instance;
 
-  Future getEventList(groupID) async {
-    final currentTimestamp = Timestamp.fromDate(currentDateTime);
+  void startLoading() {
     isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future init({String groupID}) async {
+    taskCount = 0;
+    startLoading();
+    try {
+      final taskQuery = await firestore
+          .collection('groups')
+          .doc(groupID)
+          .collection('tasks')
+          .get();
+      final tasks = taskQuery.docs
+          .map((doc) => Task(
+                id: doc.id,
+                title: doc['title'],
+                isDecidedDueDate: doc['isDecidedDueDate'],
+                dueDate: doc['isDecidedDueDate']
+                    ? doc['dueDate'].toDate()
+                    : DateTime.now(),
+                assignedMembersID: doc['assignedMembersID'],
+                ownerID: doc['ownerID'],
+                isCompleted: doc['isCompleted'],
+              ))
+          .toList();
+      tasks.forEach((task) {
+        if (task.isCompleted == false) {
+          taskCount += 1;
+        }
+      });
+      await getEventList(groupID: groupID);
+    } catch (e) {
+      print(e);
+    }
+    endLoading();
+  }
+
+  Future getEventList({String groupID}) async {
+    final currentTimestamp = Timestamp.fromDate(currentDateTime);
     try {
       QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collection('groups')
@@ -35,7 +81,6 @@ class GroupMainModel extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    isLoading = false;
     notifyListeners();
   }
 }

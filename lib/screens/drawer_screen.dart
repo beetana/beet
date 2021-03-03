@@ -28,7 +28,12 @@ class DrawerScreen extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    title: Text('マイページ'),
+                    title: Text(
+                      'マイページ',
+                      style: TextStyle(
+                        color: kPrimaryColor,
+                      ),
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -40,27 +45,32 @@ class DrawerScreen extends StatelessWidget {
                     },
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      physics: ScrollPhysics(),
-                      itemCount: model.groupName.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                          title: Text(
-                            model.groupName[index],
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => GroupScreen(
-                                  groupID: model.groupID[index],
-                                ),
+                    child: Scrollbar(
+                      child: ListView.builder(
+                        physics: ScrollPhysics(),
+                        itemCount: model.groupName.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            title: Text(
+                              model.groupName[index],
+                              style: TextStyle(
+                                color: kPrimaryColor,
                               ),
-                            );
-                          },
-                        );
-                      },
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GroupScreen(
+                                    groupID: model.groupID[index],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                   SafeArea(

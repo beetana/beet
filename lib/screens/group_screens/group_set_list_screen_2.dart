@@ -28,6 +28,9 @@ class GroupSetListScreen2 extends StatelessWidget {
       child: Consumer<GroupSetListModel2>(builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
+            if (model.isShowEventDatePicker == true) {
+              model.showEventDatePicker();
+            }
             FocusScope.of(context).unfocus();
           },
           child: Scaffold(
@@ -69,7 +72,12 @@ class GroupSetListScreen2 extends StatelessWidget {
                             },
                           ),
                           ListTile(
-                            title: Text('日付'),
+                            title: Text(
+                              '日付',
+                              style: TextStyle(
+                                color: kSlightlyTransparentPrimaryColor,
+                              ),
+                            ),
                             trailing: Text(model.eventDateText),
                             onTap: () async {
                               FocusScope.of(context).unfocus();

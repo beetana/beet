@@ -18,6 +18,16 @@ class UserEventDetailsModel extends ChangeNotifier {
   final dateFormat = DateFormat('y/M/d(E)  H:mm', 'ja_JP');
   final allDayDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
+  void startLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
+
   void init(Event event) {
     this.event = event;
     myID = event.myID;
@@ -28,16 +38,6 @@ class UserEventDetailsModel extends ChangeNotifier {
     isAllDay = event.isAllDay;
     startingDateTime = event.startingDateTime;
     endingDateTime = event.endingDateTime;
-  }
-
-  void startLoading() {
-    isLoading = true;
-    notifyListeners();
-  }
-
-  void endLoading() {
-    isLoading = false;
-    notifyListeners();
   }
 
   Future getEvent({String userID}) async {
@@ -108,14 +108,6 @@ class UserEventDetailsModel extends ChangeNotifier {
           Text('終了  ${allDayDateFormat.format(endingDateTime)}'),
         ],
       );
-    }
-  }
-
-  Widget eventMemoWidget() {
-    if (eventMemo.isEmpty) {
-      return Text('メモ');
-    } else {
-      return Text(eventMemo);
     }
   }
 }

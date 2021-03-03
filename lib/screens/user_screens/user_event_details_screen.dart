@@ -57,63 +57,87 @@ class UserEventDetailsScreen extends StatelessWidget {
           ),
           body: Stack(
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: 16.0),
-                      Text(
-                        model.eventTitle,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Visibility(
-                        visible: model.eventPlace.isNotEmpty,
-                        child: Text('@${model.eventPlace}'),
-                      ),
-                      SizedBox(height: 20.0),
-                      model.eventDateWidget(),
-                      SizedBox(height: 10.0),
-                      BasicDivider(),
-                      SizedBox(height: 10.0),
-                      model.eventMemoWidget(),
-                      SizedBox(height: 56.0),
-                    ],
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: model.myID == userID,
+              SafeArea(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 40.0,
-                      width: double.infinity,
-                      color: Colors.redAccent,
-                      child: FlatButton(
-                        child: Text(
-                          '削除',
-                          style: TextStyle(color: Colors.white),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: 16.0),
+                          Text(
+                            model.eventTitle,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Visibility(
+                            visible: model.eventPlace.isNotEmpty,
+                            child: Text('@${model.eventPlace}'),
+                          ),
+                          SizedBox(
+                            height: 8.0,
+                          ),
+                          model.eventDateWidget(),
+                          SizedBox(
+                            height: 16.0,
+                          ),
+                          Text('メモ'),
+                          SizedBox(
+                            height: 4.0,
+                          ),
+                          BasicDivider(),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Scrollbar(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          child: SingleChildScrollView(
+                            child: Text(
+                              model.eventMemo,
+                              style: TextStyle(),
+                            ),
+                          ),
                         ),
-                        onPressed: () async {
-                          bool isDelete = await _confirmDeleteDialog(
-                              context, 'このイベントを削除しますか？');
-                          if (isDelete == true) {
-                            model.startLoading();
-                            try {
-                              await model.deleteEvent(userID: userID);
-                              Navigator.pop(context);
-                            } catch (e) {
-                              _showTextDialog(context, e.toString());
+                      ),
+                    ),
+                    BasicDivider(
+                      indent: 16.0,
+                      endIndent: 16.0,
+                    ),
+                    SizedBox(
+                      height: 32.0,
+                    ),
+                    Visibility(
+                      visible: model.myID == userID,
+                      child: Center(
+                        child: FlatButton(
+                          child: Text(
+                            '削除',
+                            style: TextStyle(
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                          onPressed: () async {
+                            bool isDelete = await _confirmDeleteDialog(
+                                context, 'このイベントを削除しますか？');
+                            if (isDelete == true) {
+                              model.startLoading();
+                              try {
+                                await model.deleteEvent(userID: userID);
+                                Navigator.pop(context);
+                              } catch (e) {
+                                _showTextDialog(context, e.toString());
+                              }
+                              model.endLoading();
                             }
-                            model.endLoading();
-                          }
-                        },
+                          },
+                        ),
                       ),
                     ),
                   ],

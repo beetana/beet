@@ -17,6 +17,16 @@ class GroupEventDetailsModel extends ChangeNotifier {
   final dateFormat = DateFormat('y/M/d(E)  H:mm', 'ja_JP');
   final allDayDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
+  void startLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
+
   void init(Event event) {
     this.event = event;
     eventID = event.eventID;
@@ -26,16 +36,6 @@ class GroupEventDetailsModel extends ChangeNotifier {
     isAllDay = event.isAllDay;
     startingDateTime = event.startingDateTime;
     endingDateTime = event.endingDateTime;
-  }
-
-  void startLoading() {
-    isLoading = true;
-    notifyListeners();
-  }
-
-  void endLoading() {
-    isLoading = false;
-    notifyListeners();
   }
 
   Future getEvent({String groupID}) async {
@@ -105,14 +105,6 @@ class GroupEventDetailsModel extends ChangeNotifier {
           Text('終了  ${allDayDateFormat.format(endingDateTime)}'),
         ],
       );
-    }
-  }
-
-  Widget eventMemoWidget() {
-    if (eventMemo.isEmpty) {
-      return Text('メモ');
-    } else {
-      return Text(eventMemo);
     }
   }
 }

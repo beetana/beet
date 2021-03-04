@@ -5,7 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:nholiday_jp/nholiday_jp.dart';
 
 class GroupCalendarModel extends ChangeNotifier {
+  String groupID = '';
   DateTime now = DateTime.now();
+  DateTime first;
+  DateTime last;
   DateTime selectedDay;
   List<Event> selectedEvents = [];
   Map<DateTime, List> events = {};
@@ -13,11 +16,12 @@ class GroupCalendarModel extends ChangeNotifier {
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
 
-  void init() {
-    selectedDay = DateTime(now.year, now.month, now.day, 12);
+  void init({String groupID}) {
+    this.groupID = groupID;
+    this.selectedDay = DateTime(now.year, now.month, now.day, 12);
   }
 
-  Future getEvents({groupID, first, last}) async {
+  Future getEvents() async {
     events = {};
     List<Event> eventList;
     List<Event> eventsOfDay;
@@ -58,7 +62,7 @@ class GroupCalendarModel extends ChangeNotifier {
     }
   }
 
-  void fetchHolidays({DateTime first}) {
+  void fetchHolidays() {
     holidays = {};
     List<String> holidaysList;
     int year = first.year;

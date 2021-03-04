@@ -6,7 +6,10 @@ import 'package:nholiday_jp/nholiday_jp.dart';
 import 'package:beet/content_owner_info.dart';
 
 class UserCalendarModel extends ChangeNotifier {
+  String userID = '';
   DateTime now = DateTime.now();
+  DateTime first;
+  DateTime last;
   DateTime selectedDay;
   List<Event> selectedEvents = [];
   Map<DateTime, List> events = {};
@@ -15,11 +18,12 @@ class UserCalendarModel extends ChangeNotifier {
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
 
-  void init() {
-    selectedDay = DateTime(now.year, now.month, now.day, 12);
+  void init({String userID}) {
+    this.userID = userID;
+    this.selectedDay = DateTime(now.year, now.month, now.day, 12);
   }
 
-  Future getEvents({userID, first, last}) async {
+  Future getEvents() async {
     events = {};
     List<String> myIDList = [userID];
     List<Event> eventList;
@@ -86,7 +90,7 @@ class UserCalendarModel extends ChangeNotifier {
     }
   }
 
-  void fetchHolidays({DateTime first}) {
+  void fetchHolidays() {
     holidays = {};
     List<String> holidaysList;
     int year = first.year;

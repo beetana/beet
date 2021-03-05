@@ -26,39 +26,39 @@ class UserCalendarScreen extends StatelessWidget {
                 Expanded(
                   child: Scrollbar(
                     child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemExtent: 96.0,
-                        itemCount: model.selectedEvents.length + 1,
-                        itemBuilder: (context, index) {
-                          if (index < model.selectedEvents.length) {
-                            final event = model.selectedEvents[index];
-                            return EventListTile(
-                              imageURL: model.eventPlanner[event.myID].imageURL,
-                              name: model.eventPlanner[event.myID].name,
-                              eventTitle: event.eventTitle,
-                              eventPlace: event.eventPlace,
-                              isAllDay: event.isAllDay,
-                              startingDateTime: event.startingDateTime,
-                              endingDateTime: event.endingDateTime,
-                              onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        UserEventDetailsScreen(
-                                      userID: userID,
-                                      event: event,
-                                    ),
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemExtent: 96.0,
+                      itemCount: model.selectedEvents.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index < model.selectedEvents.length) {
+                          final event = model.selectedEvents[index];
+                          return EventListTile(
+                            imageURL: model.eventPlanner[event.myID].imageURL,
+                            name: model.eventPlanner[event.myID].name,
+                            eventTitle: event.eventTitle,
+                            eventPlace: event.eventPlace,
+                            isAllDay: event.isAllDay,
+                            startingDateTime: event.startingDateTime,
+                            endingDateTime: event.endingDateTime,
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UserEventDetailsScreen(
+                                    userID: userID,
+                                    event: event,
                                   ),
-                                );
-                                await model.getEvents();
-                                model.getSelectedEvents();
-                              },
-                            );
-                          } else {
-                            return SizedBox();
-                          }
-                        }),
+                                ),
+                              );
+                              await model.getEvents();
+                              model.getSelectedEvents();
+                            },
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+                      },
+                    ),
                   ),
                 ),
               ],

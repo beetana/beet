@@ -68,25 +68,29 @@ class GroupSongDetailsScreen extends StatelessWidget {
                             children: <Widget>[
                               SizedBox(height: 16.0),
                               Text(
-                                'タイトル：',
-                                style: TextStyle(fontSize: 18.0),
+                                'タイトル',
+                                style: TextStyle(
+                                  color: kSlightlyTransparentPrimaryColor,
+                                ),
                               ),
                               Text(
                                 model.songTitle,
                                 style: TextStyle(
-                                  fontSize: 20.0,
+                                  fontSize: 18.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                               SizedBox(height: 16.0),
                               Text(
-                                '演奏時間：',
-                                style: TextStyle(fontSize: 18.0),
+                                '演奏時間',
+                                style: TextStyle(
+                                  color: kSlightlyTransparentPrimaryColor,
+                                ),
                               ),
                               Text(
                                 '${model.songPlayingTime.toString()}分',
                                 style: TextStyle(
-                                  fontSize: 20.0,
+                                  fontSize: 18.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

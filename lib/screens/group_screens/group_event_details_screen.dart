@@ -3,6 +3,7 @@ import 'package:beet/event.dart';
 import 'package:beet/models/group_models/group_event_details_model.dart';
 import 'package:beet/screens/group_screens/group_edit_event_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/event_date_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -78,7 +79,11 @@ class GroupEventDetailsScreen extends StatelessWidget {
                           SizedBox(
                             height: 8.0,
                           ),
-                          model.eventDateWidget(),
+                          EventDateWidget(
+                            isAllDay: model.isAllDay,
+                            startingDateTime: model.startingDateTime,
+                            endingDateTime: model.endingDateTime,
+                          ),
                           SizedBox(
                             height: 16.0,
                           ),
@@ -99,7 +104,6 @@ class GroupEventDetailsScreen extends StatelessWidget {
                           child: SingleChildScrollView(
                             child: Text(
                               model.eventMemo,
-                              style: TextStyle(),
                             ),
                           ),
                         ),

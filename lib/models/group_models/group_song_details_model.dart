@@ -8,6 +8,7 @@ class GroupSongDetailsModel extends ChangeNotifier {
   Song song;
   String songID = '';
   String songTitle = '';
+  String songMemo = '';
   int songPlayingTime;
   bool isLoading = false;
 
@@ -16,6 +17,7 @@ class GroupSongDetailsModel extends ChangeNotifier {
     this.song = song;
     this.songID = song.id;
     this.songTitle = song.title;
+    this.songMemo = song.memo;
     this.songPlayingTime = song.playingTime;
     notifyListeners();
   }
@@ -41,10 +43,12 @@ class GroupSongDetailsModel extends ChangeNotifier {
       song = Song(
         id: songDoc.id,
         title: songDoc['title'],
+        memo: songDoc['memo'],
         playingTime: songDoc['minute'],
       );
       songID = song.id;
       songTitle = song.title;
+      songMemo = song.memo;
       songPlayingTime = song.playingTime;
     } catch (e) {
       print(e);

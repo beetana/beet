@@ -6,14 +6,16 @@ class GroupEditSongModel extends ChangeNotifier {
   String groupID = '';
   String songID = '';
   String songTitle = '';
+  String songMemo = '';
   int songPlayingTime;
   bool isLoading = false;
-  final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   void init({String groupID, Song song}) {
     this.groupID = groupID;
     this.songID = song.id;
     this.songTitle = song.title;
+    this.songMemo = song.memo;
     this.songPlayingTime = song.playingTime;
   }
 
@@ -39,6 +41,7 @@ class GroupEditSongModel extends ChangeNotifier {
           .doc(songID)
           .update({
         'title': songTitle,
+        'memo': songMemo,
         'minute': songPlayingTime,
       });
     } catch (e) {

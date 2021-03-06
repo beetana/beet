@@ -34,6 +34,7 @@ class GroupSongListModel extends ChangeNotifier {
         .map((doc) => Song(
               id: doc.id,
               title: doc['title'],
+              memo: doc['memo'],
               playingTime: doc['minute'],
             ))
         .toList();

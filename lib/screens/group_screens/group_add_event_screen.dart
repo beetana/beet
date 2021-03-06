@@ -64,7 +64,11 @@ class GroupAddEventScreen extends StatelessWidget {
                           children: <Widget>[
                             TextField(
                               controller: eventTitleController,
-                              decoration: InputDecoration(hintText: 'タイトル'),
+                              autofocus: true,
+                              decoration: InputDecoration(
+                                hintText: 'タイトル',
+                                border: InputBorder.none,
+                              ),
                               onTap: () {
                                 if (model.isShowStartingPicker == true) {
                                   model.showStartingDateTimePicker();
@@ -77,9 +81,13 @@ class GroupAddEventScreen extends StatelessWidget {
                                 model.eventTitle = text;
                               },
                             ),
+                            BasicDivider(),
                             TextField(
                               controller: eventPlaceController,
-                              decoration: InputDecoration(hintText: '場所'),
+                              decoration: InputDecoration(
+                                hintText: '場所',
+                                border: InputBorder.none,
+                              ),
                               onTap: () {
                                 if (model.isShowStartingPicker == true) {
                                   model.showStartingDateTimePicker();
@@ -92,6 +100,7 @@ class GroupAddEventScreen extends StatelessWidget {
                                 model.eventPlace = text;
                               },
                             ),
+                            BasicDivider(),
                             SizedBox(
                               height: 16.0,
                             ),
@@ -128,7 +137,10 @@ class GroupAddEventScreen extends StatelessWidget {
                               child: TextField(
                                 controller: eventMemoController,
                                 maxLines: 10,
-                                decoration: InputDecoration(hintText: 'メモ'),
+                                decoration: InputDecoration(
+                                  hintText: 'メモ',
+                                  border: InputBorder.none,
+                                ),
                                 onTap: () {
                                   if (model.isShowStartingPicker == true) {
                                     model.showStartingDateTimePicker();
@@ -142,6 +154,7 @@ class GroupAddEventScreen extends StatelessWidget {
                                 },
                               ),
                             ),
+                            BasicDivider(),
                             SizedBox(
                               height: 16.0,
                             ),

@@ -90,9 +90,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                           Text(
                             'メモ',
                           ),
-                          SizedBox(
-                            height: 4.0,
-                          ),
+                          SizedBox(height: 4.0),
                           BasicDivider(),
                         ],
                       ),
@@ -102,9 +100,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: SingleChildScrollView(
-                            child: Text(
-                              model.eventMemo,
-                            ),
+                            child: Text(model.eventMemo),
                           ),
                         ),
                       ),

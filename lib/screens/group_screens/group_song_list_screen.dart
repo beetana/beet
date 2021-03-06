@@ -58,17 +58,21 @@ class GroupSongListScreen extends StatelessWidget {
                                 model.selectSong(song);
                               },
                               tileTappedCallback: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        GroupSongDetailsScreen(
-                                      groupID: groupID,
-                                      song: song,
+                                if (model.isSetListMode == true) {
+                                  model.selectSong(song);
+                                } else {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          GroupSongDetailsScreen(
+                                        groupID: groupID,
+                                        song: song,
+                                      ),
                                     ),
-                                  ),
-                                );
-                                model.getSongList(groupID);
+                                  );
+                                  model.getSongList(groupID);
+                                }
                               },
                             );
                           } else {

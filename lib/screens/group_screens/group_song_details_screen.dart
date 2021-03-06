@@ -2,6 +2,7 @@ import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_song_details_model.dart';
 import 'package:beet/screens/group_screens/group_edit_song_screen.dart';
 import 'package:beet/song.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,80 +55,98 @@ class GroupSongDetailsScreen extends StatelessWidget {
           ),
           body: Stack(
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: LayoutBuilder(builder: (context, constraint) {
-                  return SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints:
-                          BoxConstraints(minHeight: constraint.maxHeight),
-                      child: IntrinsicHeight(
-                        child: SafeArea(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(height: 16.0),
-                              Text(
-                                'タイトル',
-                                style: TextStyle(
-                                  color: kSlightlyTransparentPrimaryColor,
-                                ),
-                              ),
-                              Text(
-                                model.songTitle,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(height: 16.0),
-                              Text(
-                                '演奏時間',
-                                style: TextStyle(
-                                  color: kSlightlyTransparentPrimaryColor,
-                                ),
-                              ),
-                              Text(
-                                '${model.songPlayingTime.toString()}分',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Expanded(
-                                child: SizedBox(),
-                              ),
-                              Center(
-                                child: FlatButton(
-                                  child: Text(
-                                    '削除',
-                                    style: TextStyle(
-                                      color: Colors.redAccent,
-                                    ),
-                                  ),
-                                  onPressed: () async {
-                                    bool isDelete = await _confirmDeleteDialog(
-                                        context, 'この曲を削除しますか？');
-                                    if (isDelete == true) {
-                                      model.startLoading();
-                                      try {
-                                        await model.deleteSong();
-                                        Navigator.pop(context);
-                                      } catch (e) {
-                                        _showTextDialog(context, e.toString());
-                                      }
-                                      model.endLoading();
-                                    }
-                                  },
-                                ),
-                              ),
-                            ],
+              SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: 16.0),
+                          Text(
+                            'タイトル',
+                            style: TextStyle(
+                              color: kSlightlyTransparentPrimaryColor,
+                            ),
+                          ),
+                          Text(
+                            model.songTitle,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: 16.0),
+                          Text(
+                            '演奏時間',
+                            style: TextStyle(
+                              color: kSlightlyTransparentPrimaryColor,
+                            ),
+                          ),
+                          Text(
+                            '${model.songPlayingTime.toString()}分',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: 16.0),
+                          Text(
+                            'メモ',
+                            style: TextStyle(
+                              color: kSlightlyTransparentPrimaryColor,
+                            ),
+                          ),
+                          SizedBox(height: 4.0),
+                          BasicDivider(),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Scrollbar(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          child: SingleChildScrollView(
+                            child: Text(model.songMemo),
                           ),
                         ),
                       ),
                     ),
-                  );
-                }),
+                    BasicDivider(
+                      indent: 16.0,
+                      endIndent: 16.0,
+                    ),
+                    SizedBox(
+                      height: 32.0,
+                    ),
+                    Center(
+                      child: FlatButton(
+                        child: Text(
+                          '削除',
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                        onPressed: () async {
+                          bool isDelete = await _confirmDeleteDialog(
+                              context, 'この曲を削除しますか？');
+                          if (isDelete == true) {
+                            model.startLoading();
+                            try {
+                              await model.deleteSong();
+                              Navigator.pop(context);
+                            } catch (e) {
+                              _showTextDialog(context, e.toString());
+                            }
+                            model.endLoading();
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
               model.isLoading
                   ? Container(

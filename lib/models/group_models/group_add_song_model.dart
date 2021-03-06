@@ -3,9 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupAddSongModel extends ChangeNotifier {
   String songTitle = '';
+  String songMemo = '';
   bool isLoading = false;
   int songPlayingTime = 0;
-  final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   void startLoading() {
     isLoading = true;
@@ -29,6 +30,7 @@ class GroupAddSongModel extends ChangeNotifier {
           .add({
         'title': songTitle,
         'minute': songPlayingTime,
+        'memo': songMemo,
         'createdAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {

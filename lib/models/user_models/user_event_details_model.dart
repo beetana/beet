@@ -2,7 +2,6 @@ import 'package:beet/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class UserEventDetailsModel extends ChangeNotifier {
   Event event;
@@ -15,8 +14,6 @@ class UserEventDetailsModel extends ChangeNotifier {
   DateTime startingDateTime;
   DateTime endingDateTime;
   bool isLoading = false;
-  final dateFormat = DateFormat('y/M/d(E)  H:mm', 'ja_JP');
-  final allDayDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   void startLoading() {
     isLoading = true;
@@ -85,29 +82,6 @@ class UserEventDetailsModel extends ChangeNotifier {
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');
-    }
-  }
-
-  Widget eventDateWidget() {
-    String startingDay = allDayDateFormat.format(startingDateTime);
-    String endingDay = allDayDateFormat.format(endingDateTime);
-
-    if (isAllDay == false) {
-      return Column(
-        children: <Widget>[
-          Text('開始  ${dateFormat.format(startingDateTime)}'),
-          Text('終了  ${dateFormat.format(endingDateTime)}'),
-        ],
-      );
-    } else if (isAllDay == true && startingDay == endingDay) {
-      return Text(allDayDateFormat.format(startingDateTime));
-    } else {
-      return Column(
-        children: <Widget>[
-          Text('開始  ${allDayDateFormat.format(startingDateTime)}'),
-          Text('終了  ${allDayDateFormat.format(endingDateTime)}'),
-        ],
-      );
     }
   }
 }

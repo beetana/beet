@@ -22,6 +22,7 @@ class GroupAddEventScreen extends StatelessWidget {
         return WillPopScope(
           onWillPop: () async {
             FocusScope.of(context).unfocus();
+            await Future.delayed(Duration(milliseconds: 80));
             return true;
           },
           child: GestureDetector(
@@ -63,7 +64,6 @@ class GroupAddEventScreen extends StatelessWidget {
                         children: <Widget>[
                           TextField(
                             controller: eventTitleController,
-                            autofocus: true,
                             decoration: InputDecoration(
                               hintText: 'タイトル',
                               border: InputBorder.none,

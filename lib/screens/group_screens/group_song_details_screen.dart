@@ -78,7 +78,7 @@ class GroupSongDetailsScreen extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          SizedBox(height: 16.0),
+                          SizedBox(height: 8.0),
                           Text(
                             '演奏時間',
                             style: TextStyle(
@@ -92,7 +92,7 @@ class GroupSongDetailsScreen extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          SizedBox(height: 16.0),
+                          SizedBox(height: 8.0),
                           Text(
                             'メモ',
                             style: TextStyle(
@@ -105,11 +105,14 @@ class GroupSongDetailsScreen extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Scrollbar(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Scrollbar(
                           child: SingleChildScrollView(
-                            child: Text(model.songMemo),
+                            child: Container(
+                              width: double.infinity,
+                              child: Text(model.songMemo),
+                            ),
                           ),
                         ),
                       ),

@@ -76,17 +76,13 @@ class GroupEventDetailsScreen extends StatelessWidget {
                             visible: model.eventPlace.isNotEmpty,
                             child: Text('@${model.eventPlace}'),
                           ),
-                          SizedBox(
-                            height: 8.0,
-                          ),
+                          SizedBox(height: 8.0),
                           EventDateWidget(
                             isAllDay: model.isAllDay,
                             startingDateTime: model.startingDateTime,
                             endingDateTime: model.endingDateTime,
                           ),
-                          SizedBox(
-                            height: 16.0,
-                          ),
+                          SizedBox(height: 16.0),
                           Text(
                             'メモ',
                           ),
@@ -96,11 +92,14 @@ class GroupEventDetailsScreen extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Scrollbar(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Scrollbar(
                           child: SingleChildScrollView(
-                            child: Text(model.eventMemo),
+                            child: Container(
+                              width: double.infinity,
+                              child: Text(model.eventMemo),
+                            ),
                           ),
                         ),
                       ),
@@ -109,9 +108,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                       indent: 16.0,
                       endIndent: 16.0,
                     ),
-                    SizedBox(
-                      height: 32.0,
-                    ),
+                    SizedBox(height: 8.0),
                     Center(
                       child: FlatButton(
                         child: Text(

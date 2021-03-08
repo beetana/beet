@@ -145,10 +145,7 @@ class GroupEditSongScreen extends StatelessWidget {
                                 decoration: InputDecoration(
                                   hintText: 'メモ',
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    vertical: 0.0,
-                                    horizontal: 4.0,
-                                  ),
+                                  contentPadding: EdgeInsets.all(0.0),
                                 ),
                                 onTap: () async {
                                   await Future.delayed(

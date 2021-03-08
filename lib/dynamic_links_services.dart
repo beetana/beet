@@ -75,7 +75,7 @@ class DynamicLinksServices {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('$groupNameに招待されました。\n参加しますか？'),
-          actions: <Widget>[
+          actions: [
             FlatButton(
               child: Text('参加'),
               onPressed: () async {
@@ -135,7 +135,7 @@ class DynamicLinksServices {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(message),
-          actions: <Widget>[
+          actions: [
             FlatButton(
               child: Text('OK'),
               onPressed: () {

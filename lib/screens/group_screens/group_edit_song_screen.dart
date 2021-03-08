@@ -27,34 +27,34 @@ class GroupEditSongScreen extends StatelessWidget {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text('曲を編集'),
-              centerTitle: true,
-              actions: [
-                FlatButton(
-                  child: Text(
-                    '保存',
-                    style: TextStyle(
-                      color: Colors.white,
+          child: Stack(
+            children: [
+              Scaffold(
+                appBar: AppBar(
+                  title: Text('曲を編集'),
+                  centerTitle: true,
+                  actions: [
+                    FlatButton(
+                      child: Text(
+                        '保存',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () async {
+                        model.startLoading();
+                        try {
+                          await model.editSong();
+                          Navigator.pop(context);
+                        } catch (e) {
+                          _showTextDialog(context, e.toString());
+                        }
+                        model.endLoading();
+                      },
                     ),
-                  ),
-                  onPressed: () async {
-                    model.startLoading();
-                    try {
-                      await model.editSong();
-                      Navigator.pop(context);
-                    } catch (e) {
-                      _showTextDialog(context, e.toString());
-                    }
-                    model.endLoading();
-                  },
+                  ],
                 ),
-              ],
-            ),
-            body: Stack(
-              children: <Widget>[
-                Scrollbar(
+                body: Scrollbar(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: SingleChildScrollView(
@@ -140,15 +140,8 @@ class GroupEditSongScreen extends StatelessWidget {
                             onNotification: (_) => true,
                             child: Scrollbar(
                               child: TextField(
-                                onTap: () async {
-                                  await Future.delayed(
-                                    Duration(milliseconds: 100),
-                                  );
-                                  scrollController.jumpTo(scrollController
-                                      .position.maxScrollExtent);
-                                },
                                 controller: songMemoController,
-                                maxLines: 7,
+                                maxLines: 8,
                                 decoration: InputDecoration(
                                   hintText: 'メモ',
                                   border: InputBorder.none,
@@ -157,6 +150,13 @@ class GroupEditSongScreen extends StatelessWidget {
                                     horizontal: 4.0,
                                   ),
                                 ),
+                                onTap: () async {
+                                  await Future.delayed(
+                                    Duration(milliseconds: 100),
+                                  );
+                                  scrollController.jumpTo(scrollController
+                                      .position.maxScrollExtent);
+                                },
                                 onChanged: (text) {
                                   model.songMemo = text;
                                 },
@@ -164,24 +164,22 @@ class GroupEditSongScreen extends StatelessWidget {
                             ),
                           ),
                           BasicDivider(),
-                          SizedBox(
-                            height: 16.0,
-                          ),
+                          SizedBox(height: 16.0),
                         ],
                       ),
                     ),
                   ),
                 ),
-                model.isLoading
-                    ? Container(
-                        color: Colors.black.withOpacity(0.3),
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    : SizedBox(),
-              ],
-            ),
+              ),
+              model.isLoading
+                  ? Container(
+                      color: Colors.black.withOpacity(0.3),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : SizedBox(),
+            ],
           ),
         );
       }),
@@ -195,7 +193,7 @@ Future _showTextDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text('OK'),
             onPressed: () {

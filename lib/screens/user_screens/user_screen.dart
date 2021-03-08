@@ -34,7 +34,7 @@ class UserScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 centerTitle: true,
-                actions: <Widget>[
+                actions: [
                   IconButton(
                     icon: Icon(
                       Icons.settings,

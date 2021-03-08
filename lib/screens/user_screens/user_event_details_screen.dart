@@ -22,7 +22,7 @@ class UserEventDetailsScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text('イベント詳細'),
             centerTitle: true,
-            actions: <Widget>[
+            actions: [
               Visibility(
                 visible: model.myID == userID,
                 child: FlatButton(
@@ -170,7 +170,7 @@ Future _showTextDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text('OK'),
             onPressed: () {
@@ -190,7 +190,7 @@ Future _confirmDeleteDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text(
               'キャンセル',

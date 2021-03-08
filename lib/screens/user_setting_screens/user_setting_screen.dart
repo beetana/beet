@@ -180,7 +180,7 @@ Future _showAppInfoDialog(context) async {
             ),
           ],
         ),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text('ライセンスを表示'),
             onPressed: () {

@@ -1,4 +1,5 @@
 import 'package:beet/models/user_models/user_add_event_model.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class UserAddEventScreen extends StatelessWidget {
   final eventTitleController = TextEditingController();
   final eventPlaceController = TextEditingController();
   final eventMemoController = TextEditingController();
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,9 @@ class UserAddEventScreen extends StatelessWidget {
         return WillPopScope(
           onWillPop: () async {
             FocusScope.of(context).unfocus();
+            await Future.delayed(
+              Duration(milliseconds: 80),
+            );
             return true;
           },
           child: GestureDetector(
@@ -55,81 +60,19 @@ class UserAddEventScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  body: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          TextField(
-                            controller: eventTitleController,
-                            decoration: InputDecoration(hintText: 'タイトル'),
-                            onTap: () {
-                              if (model.isShowStartingPicker == true) {
-                                model.showStartingDateTimePicker();
-                              }
-                              if (model.isShowEndingPicker == true) {
-                                model.showEndingDateTimePicker();
-                              }
-                            },
-                            onChanged: (text) {
-                              model.eventTitle = text;
-                            },
-                          ),
-                          TextField(
-                            controller: eventPlaceController,
-                            decoration: InputDecoration(hintText: '場所'),
-                            onTap: () {
-                              if (model.isShowStartingPicker == true) {
-                                model.showStartingDateTimePicker();
-                              }
-                              if (model.isShowEndingPicker == true) {
-                                model.showEndingDateTimePicker();
-                              }
-                            },
-                            onChanged: (text) {
-                              model.eventPlace = text;
-                            },
-                          ),
-                          SizedBox(
-                            height: 16.0,
-                          ),
-                          SwitchListTile(
-                            value: model.isAllDay,
-                            title: Text('終日'),
-                            onChanged: (value) {
-                              model.switchIsAllDay(value);
-                            },
-                          ),
-                          ThinDivider(),
-                          ListTile(
-                            title: Text('開始'),
-                            trailing: Text(
-                              model.tileDateFormat
-                                  .format(model.startingDateTime),
-                            ),
-                            onTap: () {
-                              FocusScope.of(context).unfocus();
-                              model.showStartingDateTimePicker();
-                            },
-                          ),
-                          model.startingDateTimePickerBox,
-                          ThinDivider(),
-                          ListTile(
-                            title: Text('終了'),
-                            trailing: Text(
-                              model.tileDateFormat.format(model.endingDateTime),
-                            ),
-                            onTap: () {
-                              FocusScope.of(context).unfocus();
-                              model.showEndingDateTimePicker();
-                            },
-                          ),
-                          model.endingDateTimePickerBox,
-                          Scrollbar(
-                            child: TextField(
-                              controller: eventMemoController,
-                              maxLines: 8,
-                              decoration: InputDecoration(hintText: 'メモ'),
+                  body: Scrollbar(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: Column(
+                          children: <Widget>[
+                            TextField(
+                              controller: eventTitleController,
+                              decoration: InputDecoration(
+                                hintText: 'タイトル',
+                                border: InputBorder.none,
+                              ),
                               onTap: () {
                                 if (model.isShowStartingPicker == true) {
                                   model.showStartingDateTimePicker();
@@ -139,14 +82,93 @@ class UserAddEventScreen extends StatelessWidget {
                                 }
                               },
                               onChanged: (text) {
-                                model.eventMemo = text;
+                                model.eventTitle = text;
                               },
                             ),
-                          ),
-                          SizedBox(
-                            height: 16.0,
-                          ),
-                        ],
+                            BasicDivider(),
+                            TextField(
+                              controller: eventPlaceController,
+                              decoration: InputDecoration(
+                                hintText: '場所',
+                                border: InputBorder.none,
+                              ),
+                              onTap: () {
+                                if (model.isShowStartingPicker == true) {
+                                  model.showStartingDateTimePicker();
+                                }
+                                if (model.isShowEndingPicker == true) {
+                                  model.showEndingDateTimePicker();
+                                }
+                              },
+                              onChanged: (text) {
+                                model.eventPlace = text;
+                              },
+                            ),
+                            BasicDivider(),
+                            SwitchListTile(
+                              value: model.isAllDay,
+                              title: Text('終日'),
+                              onChanged: (value) {
+                                model.switchIsAllDay(value);
+                              },
+                            ),
+                            BasicDivider(),
+                            ListTile(
+                              title: Text('開始'),
+                              trailing: Text(model.tileDateFormat
+                                  .format(model.startingDateTime)),
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                model.showStartingDateTimePicker();
+                              },
+                            ),
+                            model.startingDateTimePickerBox,
+                            BasicDivider(),
+                            ListTile(
+                              title: Text('終了'),
+                              trailing: Text(model.tileDateFormat
+                                  .format(model.endingDateTime)),
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                model.showEndingDateTimePicker();
+                              },
+                            ),
+                            model.endingDateTimePickerBox,
+                            BasicDivider(),
+                            NotificationListener<ScrollNotification>(
+                              onNotification: (_) => true,
+                              child: Scrollbar(
+                                child: TextField(
+                                  controller: eventMemoController,
+                                  maxLines: 8,
+                                  decoration: InputDecoration(
+                                    hintText: 'メモ',
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.all(0.0),
+                                  ),
+                                  onTap: () async {
+                                    if (model.isShowStartingPicker == true) {
+                                      model.showStartingDateTimePicker();
+                                    }
+                                    if (model.isShowEndingPicker == true) {
+                                      model.showEndingDateTimePicker();
+                                    }
+                                    await Future.delayed(
+                                      Duration(milliseconds: 100),
+                                    );
+                                    scrollController.jumpTo(scrollController
+                                        .position.maxScrollExtent);
+                                  },
+                                  onChanged: (text) {
+                                    model.eventMemo = text;
+                                  },
+                                ),
+                              ),
+                            ),
+                            BasicDivider(),
+                            SizedBox(height: 16.0),
+                          ],
+                        ),
                       ),
                     ),
                   ),

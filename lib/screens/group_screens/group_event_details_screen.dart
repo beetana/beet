@@ -18,43 +18,43 @@ class GroupEventDetailsScreen extends StatelessWidget {
     return ChangeNotifierProvider<GroupEventDetailsModel>(
       create: (_) => GroupEventDetailsModel()..init(event),
       child: Consumer<GroupEventDetailsModel>(builder: (context, model, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('イベント詳細'),
-            centerTitle: true,
-            actions: [
-              FlatButton(
-                child: Text(
-                  '編集',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => GroupEditEventScreen(
-                        groupID: groupID,
-                        event: model.event,
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(
+                title: Text('イベント詳細'),
+                centerTitle: true,
+                actions: [
+                  FlatButton(
+                    child: Text(
+                      '編集',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      fullscreenDialog: true,
                     ),
-                  );
-                  model.startLoading();
-                  try {
-                    await model.getEvent(groupID: groupID);
-                  } catch (e) {
-                    _showTextDialog(context, e.toString());
-                  }
-                  model.endLoading();
-                },
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GroupEditEventScreen(
+                            groupID: groupID,
+                            event: model.event,
+                          ),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                      model.startLoading();
+                      try {
+                        await model.getEvent(groupID: groupID);
+                      } catch (e) {
+                        _showTextDialog(context, e.toString());
+                      }
+                      model.endLoading();
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-          body: Stack(
-            children: [
-              SafeArea(
+              body: SafeArea(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -135,16 +135,16 @@ class GroupEventDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              model.isLoading
-                  ? Container(
-                      color: Colors.black.withOpacity(0.3),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : SizedBox(),
-            ],
-          ),
+            ),
+            model.isLoading
+                ? Container(
+                    color: Colors.black.withOpacity(0.3),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : SizedBox(),
+          ],
         );
       }),
     );

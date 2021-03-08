@@ -20,43 +20,43 @@ class GroupTaskDetailsScreen extends StatelessWidget {
       create: (_) =>
           GroupTaskDetailsModel()..init(groupID: groupID, task: task),
       child: Consumer<GroupTaskDetailsModel>(builder: (context, model, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('タスク'),
-            centerTitle: true,
-            actions: [
-              FlatButton(
-                child: Text(
-                  '編集',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => GroupEditTaskScreen(
-                        groupID: groupID,
-                        task: model.task,
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(
+                title: Text('タスク'),
+                centerTitle: true,
+                actions: [
+                  FlatButton(
+                    child: Text(
+                      '編集',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      fullscreenDialog: true,
                     ),
-                  );
-                  model.startLoading();
-                  try {
-                    await model.getTask(task: task);
-                  } catch (e) {
-                    _showTextDialog(context, e.toString());
-                  }
-                  model.endLoading();
-                },
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GroupEditTaskScreen(
+                            groupID: groupID,
+                            task: model.task,
+                          ),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                      model.startLoading();
+                      try {
+                        await model.getTask(task: task);
+                      } catch (e) {
+                        _showTextDialog(context, e.toString());
+                      }
+                      model.endLoading();
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-          body: Stack(
-            children: [
-              model.groupMembers.isNotEmpty
+              body: model.groupMembers.isNotEmpty
                   ? Padding(
                       padding:
                           EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
@@ -179,16 +179,16 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                       }),
                     )
                   : SizedBox(),
-              model.isLoading
-                  ? Container(
+            ),
+            model.isLoading
+                ? Container(
 //                      color: Colors.black.withOpacity(0.3),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : SizedBox(),
-            ],
-          ),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : SizedBox(),
+          ],
         );
       }),
     );

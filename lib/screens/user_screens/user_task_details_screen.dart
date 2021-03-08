@@ -19,43 +19,43 @@ class UserTaskDetailsScreen extends StatelessWidget {
     return ChangeNotifierProvider<UserTaskDetailsModel>(
       create: (_) => UserTaskDetailsModel()..init(userID: userID, task: task),
       child: Consumer<UserTaskDetailsModel>(builder: (context, model, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('タスク'),
-            centerTitle: true,
-            actions: [
-              FlatButton(
-                child: Text(
-                  '編集',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserEditTaskScreen(
-                        userID: userID,
-                        task: model.task,
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(
+                title: Text('タスク'),
+                centerTitle: true,
+                actions: [
+                  FlatButton(
+                    child: Text(
+                      '編集',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      fullscreenDialog: true,
                     ),
-                  );
-                  model.startLoading();
-                  try {
-                    await model.getTask(userID: userID, task: task);
-                  } catch (e) {
-                    _showTextDialog(context, e.toString());
-                  }
-                  model.endLoading();
-                },
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserEditTaskScreen(
+                            userID: userID,
+                            task: model.task,
+                          ),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                      model.startLoading();
+                      try {
+                        await model.getTask(userID: userID, task: task);
+                      } catch (e) {
+                        _showTextDialog(context, e.toString());
+                      }
+                      model.endLoading();
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-          body: Stack(
-            children: [
-              model.owner != null
+              body: model.owner != null
                   ? Padding(
                       padding:
                           EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
@@ -213,16 +213,16 @@ class UserTaskDetailsScreen extends StatelessWidget {
                       }),
                     )
                   : SizedBox(),
-              model.isLoading
-                  ? Container(
+            ),
+            model.isLoading
+                ? Container(
 //                      color: Colors.black.withOpacity(0.3),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : SizedBox(),
-            ],
-          ),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : SizedBox(),
+          ],
         );
       }),
     );

@@ -13,6 +13,7 @@ class GroupAddEventScreen extends StatelessWidget {
   final eventTitleController = TextEditingController();
   final eventPlaceController = TextEditingController();
   final eventMemoController = TextEditingController();
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,9 @@ class GroupAddEventScreen extends StatelessWidget {
         return WillPopScope(
           onWillPop: () async {
             FocusScope.of(context).unfocus();
-            await Future.delayed(Duration(milliseconds: 80));
+            await Future.delayed(
+              Duration(milliseconds: 80),
+            );
             return true;
           },
           child: GestureDetector(
@@ -35,7 +38,7 @@ class GroupAddEventScreen extends StatelessWidget {
                   appBar: AppBar(
                     title: Text('イベントを追加'),
                     centerTitle: true,
-                    actions: <Widget>[
+                    actions: [
                       FlatButton(
                         child: Text(
                           '追加',
@@ -56,87 +59,17 @@ class GroupAddEventScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  body: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          TextField(
-                            controller: eventTitleController,
-                            decoration: InputDecoration(
-                              hintText: 'タイトル',
-                              border: InputBorder.none,
-                            ),
-                            onTap: () {
-                              if (model.isShowStartingPicker == true) {
-                                model.showStartingDateTimePicker();
-                              }
-                              if (model.isShowEndingPicker == true) {
-                                model.showEndingDateTimePicker();
-                              }
-                            },
-                            onChanged: (text) {
-                              model.eventTitle = text;
-                            },
-                          ),
-                          BasicDivider(),
-                          TextField(
-                            controller: eventPlaceController,
-                            decoration: InputDecoration(
-                              hintText: '場所',
-                              border: InputBorder.none,
-                            ),
-                            onTap: () {
-                              if (model.isShowStartingPicker == true) {
-                                model.showStartingDateTimePicker();
-                              }
-                              if (model.isShowEndingPicker == true) {
-                                model.showEndingDateTimePicker();
-                              }
-                            },
-                            onChanged: (text) {
-                              model.eventPlace = text;
-                            },
-                          ),
-                          BasicDivider(),
-                          SizedBox(
-                            height: 16.0,
-                          ),
-                          SwitchListTile(
-                            value: model.isAllDay,
-                            title: Text('終日'),
-                            onChanged: (value) {
-                              model.switchIsAllDay(value);
-                            },
-                          ),
-                          BasicDivider(),
-                          ListTile(
-                            title: Text('開始'),
-                            trailing: Text(model.tileDateFormat
-                                .format(model.startingDateTime)),
-                            onTap: () {
-                              FocusScope.of(context).unfocus();
-                              model.showStartingDateTimePicker();
-                            },
-                          ),
-                          model.startingDateTimePickerBox,
-                          BasicDivider(),
-                          ListTile(
-                            title: Text('終了'),
-                            trailing: Text(model.tileDateFormat
-                                .format(model.endingDateTime)),
-                            onTap: () {
-                              FocusScope.of(context).unfocus();
-                              model.showEndingDateTimePicker();
-                            },
-                          ),
-                          model.endingDateTimePickerBox,
-                          Scrollbar(
-                            child: TextField(
-                              controller: eventMemoController,
-                              maxLines: 10,
+                  body: Scrollbar(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: Column(
+                          children: <Widget>[
+                            TextField(
+                              controller: eventTitleController,
                               decoration: InputDecoration(
-                                hintText: 'メモ',
+                                hintText: 'タイトル',
                                 border: InputBorder.none,
                               ),
                               onTap: () {
@@ -148,15 +81,96 @@ class GroupAddEventScreen extends StatelessWidget {
                                 }
                               },
                               onChanged: (text) {
-                                model.eventMemo = text;
+                                model.eventTitle = text;
                               },
                             ),
-                          ),
-                          BasicDivider(),
-                          SizedBox(
-                            height: 16.0,
-                          ),
-                        ],
+                            BasicDivider(),
+                            TextField(
+                              controller: eventPlaceController,
+                              decoration: InputDecoration(
+                                hintText: '場所',
+                                border: InputBorder.none,
+                              ),
+                              onTap: () {
+                                if (model.isShowStartingPicker == true) {
+                                  model.showStartingDateTimePicker();
+                                }
+                                if (model.isShowEndingPicker == true) {
+                                  model.showEndingDateTimePicker();
+                                }
+                              },
+                              onChanged: (text) {
+                                model.eventPlace = text;
+                              },
+                            ),
+                            BasicDivider(),
+                            SwitchListTile(
+                              value: model.isAllDay,
+                              title: Text('終日'),
+                              onChanged: (value) {
+                                model.switchIsAllDay(value);
+                              },
+                            ),
+                            BasicDivider(),
+                            ListTile(
+                              title: Text('開始'),
+                              trailing: Text(model.tileDateFormat
+                                  .format(model.startingDateTime)),
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                model.showStartingDateTimePicker();
+                              },
+                            ),
+                            model.startingDateTimePickerBox,
+                            BasicDivider(),
+                            ListTile(
+                              title: Text('終了'),
+                              trailing: Text(model.tileDateFormat
+                                  .format(model.endingDateTime)),
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                model.showEndingDateTimePicker();
+                              },
+                            ),
+                            model.endingDateTimePickerBox,
+                            BasicDivider(),
+                            NotificationListener<ScrollNotification>(
+                              onNotification: (_) => true,
+                              child: Scrollbar(
+                                child: TextField(
+                                  controller: eventMemoController,
+                                  maxLines: 8,
+                                  decoration: InputDecoration(
+                                    hintText: 'メモ',
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: 0.0,
+                                      horizontal: 4.0,
+                                    ),
+                                  ),
+                                  onTap: () async {
+                                    if (model.isShowStartingPicker == true) {
+                                      model.showStartingDateTimePicker();
+                                    }
+                                    if (model.isShowEndingPicker == true) {
+                                      model.showEndingDateTimePicker();
+                                    }
+                                    await Future.delayed(
+                                      Duration(milliseconds: 100),
+                                    );
+                                    scrollController.jumpTo(scrollController
+                                        .position.maxScrollExtent);
+                                  },
+                                  onChanged: (text) {
+                                    model.eventMemo = text;
+                                  },
+                                ),
+                              ),
+                            ),
+                            BasicDivider(),
+                            SizedBox(height: 16.0),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -184,7 +198,7 @@ Future _showTextDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text('OK'),
             onPressed: () {

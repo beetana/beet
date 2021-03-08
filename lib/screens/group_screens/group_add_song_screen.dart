@@ -21,34 +21,34 @@ class GroupAddSongScreen extends StatelessWidget {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text('曲を追加'),
-              centerTitle: true,
-              actions: [
-                FlatButton(
-                  child: Text(
-                    '保存',
-                    style: TextStyle(
-                      color: Colors.white,
+          child: Stack(
+            children: [
+              Scaffold(
+                appBar: AppBar(
+                  title: Text('曲を追加'),
+                  centerTitle: true,
+                  actions: [
+                    FlatButton(
+                      child: Text(
+                        '保存',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () async {
+                        model.startLoading();
+                        try {
+                          await model.addSong(groupID);
+                          Navigator.pop(context);
+                        } catch (e) {
+                          _showTextDialog(context, e.toString());
+                        }
+                        model.endLoading();
+                      },
                     ),
-                  ),
-                  onPressed: () async {
-                    model.startLoading();
-                    try {
-                      await model.addSong(groupID);
-                      Navigator.pop(context);
-                    } catch (e) {
-                      _showTextDialog(context, e.toString());
-                    }
-                    model.endLoading();
-                  },
+                  ],
                 ),
-              ],
-            ),
-            body: Stack(
-              children: <Widget>[
-                Scrollbar(
+                body: Scrollbar(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: SingleChildScrollView(
@@ -155,16 +155,16 @@ class GroupAddSongScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                model.isLoading
-                    ? Container(
-                        color: Colors.black.withOpacity(0.3),
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    : SizedBox(),
-              ],
-            ),
+              ),
+              model.isLoading
+                  ? Container(
+                      color: Colors.black.withOpacity(0.3),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : SizedBox(),
+            ],
           ),
         );
       }),

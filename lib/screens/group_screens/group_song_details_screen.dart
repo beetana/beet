@@ -18,43 +18,43 @@ class GroupSongDetailsScreen extends StatelessWidget {
       create: (_) =>
           GroupSongDetailsModel()..init(groupID: groupID, song: song),
       child: Consumer<GroupSongDetailsModel>(builder: (context, model, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('曲詳細'),
-            centerTitle: true,
-            actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  '編集',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => GroupEditSongScreen(
-                        groupID: groupID,
-                        song: model.song,
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(
+                title: Text('曲詳細'),
+                centerTitle: true,
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      '編集',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      fullscreenDialog: true,
                     ),
-                  );
-                  model.startLoading();
-                  try {
-                    await model.getSong();
-                  } catch (e) {
-                    _showTextDialog(context, e.toString());
-                  }
-                  model.endLoading();
-                },
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GroupEditSongScreen(
+                            groupID: groupID,
+                            song: model.song,
+                          ),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                      model.startLoading();
+                      try {
+                        await model.getSong();
+                      } catch (e) {
+                        _showTextDialog(context, e.toString());
+                      }
+                      model.endLoading();
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-          body: Stack(
-            children: [
-              SafeArea(
+              body: SafeArea(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -148,16 +148,16 @@ class GroupSongDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              model.isLoading
-                  ? Container(
-                      color: Colors.black.withOpacity(0.3),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : SizedBox(),
-            ],
-          ),
+            ),
+            model.isLoading
+                ? Container(
+                    color: Colors.black.withOpacity(0.3),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : SizedBox(),
+          ],
         );
       }),
     );

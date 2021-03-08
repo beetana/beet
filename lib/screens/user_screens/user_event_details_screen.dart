@@ -18,46 +18,46 @@ class UserEventDetailsScreen extends StatelessWidget {
     return ChangeNotifierProvider<UserEventDetailsModel>(
       create: (_) => UserEventDetailsModel()..init(event),
       child: Consumer<UserEventDetailsModel>(builder: (context, model, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('イベント詳細'),
-            centerTitle: true,
-            actions: [
-              Visibility(
-                visible: model.myID == userID,
-                child: FlatButton(
-                  child: Text(
-                    '編集',
-                    style: TextStyle(
-                      color: Colors.white,
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(
+                title: Text('イベント詳細'),
+                centerTitle: true,
+                actions: [
+                  Visibility(
+                    visible: model.myID == userID,
+                    child: FlatButton(
+                      child: Text(
+                        '編集',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserEditEventScreen(
+                              userID: userID,
+                              event: model.event,
+                            ),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                        model.startLoading();
+                        try {
+                          await model.getEvent(userID: userID);
+                        } catch (e) {
+                          _showTextDialog(context, e.toString());
+                        }
+                        model.endLoading();
+                      },
                     ),
                   ),
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserEditEventScreen(
-                          userID: userID,
-                          event: model.event,
-                        ),
-                        fullscreenDialog: true,
-                      ),
-                    );
-                    model.startLoading();
-                    try {
-                      await model.getEvent(userID: userID);
-                    } catch (e) {
-                      _showTextDialog(context, e.toString());
-                    }
-                    model.endLoading();
-                  },
-                ),
+                ],
               ),
-            ],
-          ),
-          body: Stack(
-            children: [
-              SafeArea(
+              body: SafeArea(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -148,16 +148,16 @@ class UserEventDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              model.isLoading
-                  ? Container(
-                      color: Colors.black.withOpacity(0.3),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : SizedBox(),
-            ],
-          ),
+            ),
+            model.isLoading
+                ? Container(
+                    color: Colors.black.withOpacity(0.3),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : SizedBox(),
+          ],
         );
       }),
     );

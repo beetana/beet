@@ -23,7 +23,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text('タスク'),
             centerTitle: true,
-            actions: <Widget>[
+            actions: [
               FlatButton(
                 child: Text(
                   '編集',
@@ -235,7 +235,7 @@ Future _showTextDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text('OK'),
             onPressed: () {
@@ -255,7 +255,7 @@ Future _confirmDeleteDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text(
               'キャンセル',

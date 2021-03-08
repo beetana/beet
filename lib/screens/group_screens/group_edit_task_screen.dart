@@ -29,7 +29,7 @@ class GroupEditTaskScreen extends StatelessWidget {
                 appBar: AppBar(
                   title: Text('タスク編集'),
                   centerTitle: true,
-                  actions: <Widget>[
+                  actions: [
                     FlatButton(
                       child: Text(
                         '更新',
@@ -156,7 +156,7 @@ Future _showTextDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text('OK'),
             onPressed: () {

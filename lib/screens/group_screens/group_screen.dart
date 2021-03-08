@@ -37,7 +37,7 @@ class GroupScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 centerTitle: true,
-                actions: <Widget>[
+                actions: [
                   IconButton(
                     icon: Icon(Icons.settings),
                     onPressed: () async {

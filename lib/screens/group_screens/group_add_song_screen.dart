@@ -123,15 +123,8 @@ class GroupAddSongScreen extends StatelessWidget {
                             onNotification: (_) => true,
                             child: Scrollbar(
                               child: TextField(
-                                onTap: () async {
-                                  await Future.delayed(
-                                    Duration(milliseconds: 100),
-                                  );
-                                  scrollController.jumpTo(scrollController
-                                      .position.maxScrollExtent);
-                                },
                                 controller: songMemoController,
-                                maxLines: 7,
+                                maxLines: 8,
                                 decoration: InputDecoration(
                                   hintText: 'メモ',
                                   border: InputBorder.none,
@@ -140,6 +133,13 @@ class GroupAddSongScreen extends StatelessWidget {
                                     horizontal: 4.0,
                                   ),
                                 ),
+                                onTap: () async {
+                                  await Future.delayed(
+                                    Duration(milliseconds: 100),
+                                  );
+                                  scrollController.jumpTo(scrollController
+                                      .position.maxScrollExtent);
+                                },
                                 onChanged: (text) {
                                   model.songMemo = text;
                                 },
@@ -147,9 +147,7 @@ class GroupAddSongScreen extends StatelessWidget {
                             ),
                           ),
                           BasicDivider(),
-                          SizedBox(
-                            height: 16.0,
-                          ),
+                          SizedBox(height: 16.0),
                         ],
                       ),
                     ),
@@ -178,7 +176,7 @@ Future _showTextDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text('OK'),
             onPressed: () {

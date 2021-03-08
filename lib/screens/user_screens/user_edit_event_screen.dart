@@ -33,7 +33,7 @@ class UserEditEventScreen extends StatelessWidget {
                 appBar: AppBar(
                   title: Text('イベントを編集'),
                   centerTitle: true,
-                  actions: <Widget>[
+                  actions: [
                     FlatButton(
                       child: Text(
                         '完了',
@@ -123,7 +123,7 @@ class UserEditEventScreen extends StatelessWidget {
                         model.endingDateTimePickerBox,
                         TextField(
                           controller: eventMemoController,
-                          maxLines: 10,
+                          maxLines: 8,
                           maxLength: 200,
                           decoration: InputDecoration(hintText: 'メモ'),
                           onTap: () {
@@ -165,7 +165,7 @@ Future _showTextDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text('OK'),
             onPressed: () {

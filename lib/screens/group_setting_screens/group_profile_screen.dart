@@ -250,7 +250,7 @@ Future<bool> _showConfirmDialog(context) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text('プロフィール画像を削除しますか?'),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text(
               'キャンセル',
@@ -282,7 +282,7 @@ Future _showTextDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text('OK'),
             onPressed: () {

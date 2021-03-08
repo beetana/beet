@@ -185,7 +185,7 @@ Future<bool> _showConfirmDialog(context, isMe, userName) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(titleText),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text(
               'キャンセル',
@@ -217,7 +217,7 @@ Future _showTextDialog(context, message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-        actions: <Widget>[
+        actions: [
           FlatButton(
             child: Text('OK'),
             onPressed: () {

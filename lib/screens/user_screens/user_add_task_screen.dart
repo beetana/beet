@@ -30,7 +30,6 @@ class UserAddTaskScreen extends StatelessWidget {
                         '追加',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
                         ),
                       ),
                       onPressed: () async {

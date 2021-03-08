@@ -35,7 +35,6 @@ class GroupEditTaskScreen extends StatelessWidget {
                         '更新',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
                         ),
                       ),
                       onPressed: () async {

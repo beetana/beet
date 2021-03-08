@@ -39,7 +39,6 @@ class GroupEditEventScreen extends StatelessWidget {
                         '完了',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
                         ),
                       ),
                       onPressed: () async {

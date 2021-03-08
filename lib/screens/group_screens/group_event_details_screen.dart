@@ -28,7 +28,6 @@ class GroupEventDetailsScreen extends StatelessWidget {
                   '編集',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16.0,
                   ),
                 ),
                 onPressed: () async {

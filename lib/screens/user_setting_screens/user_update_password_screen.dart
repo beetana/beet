@@ -29,7 +29,6 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                         '保存',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
                         ),
                       ),
                       onPressed: () async {

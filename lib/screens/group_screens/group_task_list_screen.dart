@@ -85,7 +85,6 @@ class GroupTaskListScreen extends StatelessWidget {
                                                 groupID: groupID,
                                                 task: task,
                                               ),
-                                              fullscreenDialog: true,
                                             ),
                                           );
                                           model.getTaskList(groupID: groupID);
@@ -130,7 +129,6 @@ class GroupTaskListScreen extends StatelessWidget {
                                                 groupID: groupID,
                                                 task: task,
                                               ),
-                                              fullscreenDialog: true,
                                             ),
                                           );
                                           model.getTaskList(groupID: groupID);

@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/task.dart';
 import 'package:beet/user.dart';
 import 'package:flutter/cupertino.dart';
@@ -104,7 +105,7 @@ class UserEditTaskModel extends ChangeNotifier {
             ),
             label: Text(
               '未定',
-              style: TextStyle(color: Colors.black54),
+              style: kCancelButtonTextStyle,
             ),
             onPressed: () {
               this.dueDate = null;

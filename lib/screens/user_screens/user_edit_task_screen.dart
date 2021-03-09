@@ -1,4 +1,3 @@
-import 'package:beet/constants.dart';
 import 'package:beet/models/user_models/user_edit_task_model.dart';
 import 'package:beet/task.dart';
 import 'package:beet/widgets/assign_task_list_tile.dart';

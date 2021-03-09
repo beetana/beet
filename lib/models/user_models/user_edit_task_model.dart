@@ -74,7 +74,6 @@ class UserEditTaskModel extends ChangeNotifier {
     } else {
       assignedMembersID.add(userID);
     }
-    print(assignedMembersID);
     notifyListeners();
   }
 

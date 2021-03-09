@@ -68,7 +68,6 @@ class GroupEditTaskModel extends ChangeNotifier {
     } else {
       assignedMembersID.add(userID);
     }
-    print(assignedMembersID);
     notifyListeners();
   }
 

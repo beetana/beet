@@ -17,6 +17,8 @@ class AssignTaskListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: tileTappedCallback,
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
       child: Stack(
         children: [
           Padding(

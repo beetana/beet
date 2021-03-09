@@ -8,6 +8,7 @@ class GroupEditTaskModel extends ChangeNotifier {
   String groupID = '';
   String taskID = '';
   String taskTitle = '';
+  String taskMemo = '';
   String dueDateText = '';
   bool isDecidedDueDate;
   bool isCompleted;
@@ -36,6 +37,7 @@ class GroupEditTaskModel extends ChangeNotifier {
     this.groupID = groupID;
     this.taskID = task.id;
     this.taskTitle = task.title;
+    this.taskMemo = task.memo;
     this.isDecidedDueDate = task.isDecidedDueDate;
     this.isCompleted = task.isCompleted;
     this.dueDate = task.dueDate;
@@ -129,6 +131,7 @@ class GroupEditTaskModel extends ChangeNotifier {
           .doc(taskID)
           .set({
         'title': taskTitle,
+        'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
         'assignedMembersID': assignedMembersID,
@@ -136,20 +139,6 @@ class GroupEditTaskModel extends ChangeNotifier {
         'isCompleted': isCompleted,
         'createdAt': FieldValue.serverTimestamp(),
       });
-    } catch (e) {
-      print(e);
-      throw ('エラーが発生しました');
-    }
-  }
-
-  Future deleteTask() async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupID)
-          .collection('tasks')
-          .doc(taskID)
-          .delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

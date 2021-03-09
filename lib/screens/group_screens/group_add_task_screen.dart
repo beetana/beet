@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_add_task_model.dart';
 import 'package:beet/widgets/assign_task_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
@@ -9,6 +10,8 @@ class GroupAddTaskScreen extends StatelessWidget {
   GroupAddTaskScreen({this.groupID});
   final String groupID;
   final taskTitleController = TextEditingController();
+  final taskMemoController = TextEditingController();
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,74 +49,116 @@ class GroupAddTaskScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                body: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding:
-                            EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-                        child: TextField(
-                          controller: taskTitleController,
-                          decoration: InputDecoration(hintText: 'やること'),
-                          onTap: () {
-                            if (model.isShowDueDatePicker == true) {
-                              model.showDueDatePicker();
-                            }
-                          },
-                          onChanged: (text) {
-                            model.taskTitle = text;
-                          },
-                        ),
-                      ),
-                      ListTile(
-                        title: Text('いつまでに'),
-                        trailing: Text(model.dueDateText),
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          model.showDueDatePicker();
-                        },
-                      ),
-                      model.dueDatePickerBox,
-                      BasicDivider(
-                        indent: 16.0,
-                        endIndent: 16.0,
-                      ),
-                      SizedBox(height: 16.0),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Text(
-                          'だれが',
-                          style: TextStyle(fontSize: 17.0),
-                        ),
-                      ),
-                      SizedBox(height: 8.0),
-                      Container(
-                        height: 300,
-                        child: ListView.builder(
-                          physics: ScrollPhysics(),
-                          itemCount: model.userNames.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            String userID = model.userIDs[index];
-                            String userName = model.userNames[index];
-                            String userImageURL = model.userImageURLs[index];
-                            return AssignTaskListTile(
-                              userName: userName,
-                              userImageURL: userImageURL,
-                              isChecked:
-                                  model.assignedMembersID.contains(userID),
-                              checkboxCallback: (state) {
-                                model.assignPerson(userID);
+                body: SafeArea(
+                  child: Scrollbar(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            TextField(
+                              controller: taskTitleController,
+                              decoration: InputDecoration(
+                                hintText: 'やること',
+                                border: InputBorder.none,
+                              ),
+                              onTap: () {
+                                if (model.isShowDueDatePicker == true) {
+                                  model.showDueDatePicker();
+                                }
                               },
-                              tileTappedCallback: () {
-                                model.assignPerson(userID);
+                              onChanged: (text) {
+                                model.taskTitle = text;
                               },
-                            );
-                          },
+                            ),
+                            BasicDivider(),
+                            ListTile(
+                              title: Text('いつまでに'),
+                              trailing: Text(model.dueDateText),
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 0.0),
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                model.showDueDatePicker();
+                              },
+                            ),
+                            model.dueDatePickerBox,
+                            BasicDivider(),
+                            SizedBox(height: 16.0),
+                            Text(
+                              'だれが',
+                              style: TextStyle(fontSize: 17.0),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 4.0),
+                              child: Container(
+                                height: 72,
+                                child: NotificationListener<ScrollNotification>(
+                                  onNotification: (_) => true,
+                                  child: Scrollbar(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      physics: ScrollPhysics(),
+                                      itemExtent: 60.0,
+                                      itemCount: model.userNames.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        String userID = model.userIDs[index];
+                                        String userName =
+                                            model.userNames[index];
+                                        String userImageURL =
+                                            model.userImageURLs[index];
+                                        return AssignTaskListTile(
+                                          userName: userName,
+                                          userImageURL: userImageURL,
+                                          isChecked: model.assignedMembersID
+                                              .contains(userID),
+                                          tileTappedCallback: () {
+                                            model.assignPerson(userID);
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            BasicDivider(),
+                            NotificationListener<ScrollNotification>(
+                              onNotification: (_) => true,
+                              child: Scrollbar(
+                                child: TextField(
+                                  controller: taskMemoController,
+                                  maxLines: 8,
+                                  decoration: InputDecoration(
+                                    hintText: 'メモ',
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.all(0.0),
+                                  ),
+                                  onTap: () async {
+                                    if (model.isShowDueDatePicker == true) {
+                                      model.showDueDatePicker();
+                                    }
+                                    await Future.delayed(
+                                      Duration(milliseconds: 100),
+                                    );
+                                    scrollController.jumpTo(scrollController
+                                        .position.maxScrollExtent);
+                                  },
+                                  onChanged: (text) {
+                                    model.taskMemo = text;
+                                  },
+                                ),
+                              ),
+                            ),
+                            BasicDivider(),
+                            SizedBox(height: 16.0),
+                          ],
                         ),
                       ),
-                      BasicDivider(),
-                    ],
+                    ),
                   ),
                 ),
               ),

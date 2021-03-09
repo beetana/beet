@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 class GroupAddTaskModel extends ChangeNotifier {
   String groupID = '';
   String taskTitle = '';
+  String taskMemo = '';
   String dueDateText = '';
   bool isDecidedDueDate = true;
   List<String> assignedMembersID = [];
@@ -119,6 +120,7 @@ class GroupAddTaskModel extends ChangeNotifier {
           .collection('tasks')
           .add({
         'title': taskTitle,
+        'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
         'assignedMembersID': assignedMembersID,

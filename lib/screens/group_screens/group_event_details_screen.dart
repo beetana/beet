@@ -82,9 +82,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                             endingDateTime: model.endingDateTime,
                           ),
                           SizedBox(height: 16.0),
-                          Text(
-                            'メモ',
-                          ),
+                          Text('メモ'),
                           SizedBox(height: 4.0),
                           BasicDivider(),
                         ],

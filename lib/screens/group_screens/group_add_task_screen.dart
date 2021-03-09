@@ -1,4 +1,3 @@
-import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_add_task_model.dart';
 import 'package:beet/widgets/assign_task_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
@@ -86,7 +85,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                             ),
                             model.dueDatePickerBox,
                             BasicDivider(),
-                            SizedBox(height: 16.0),
+                            SizedBox(height: 8.0),
                             Text(
                               'だれが',
                               style: TextStyle(fontSize: 17.0),

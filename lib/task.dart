@@ -14,7 +14,7 @@ class Task {
     this.ownerID,
     this.id,
     this.title,
-    @required this.memo,
+    this.memo,
     this.isDecidedDueDate,
     this.dueDate,
     this.assignedMembersID,

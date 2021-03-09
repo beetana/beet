@@ -77,7 +77,6 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                     ? Text(
                                         '期限  ${dueDateFormat.format(model.dueDate)}')
                                     : Text('期限なし'),
-                                SizedBox(height: 8.0),
                                 Container(
                                   height: 72.0,
                                   child: Scrollbar(
@@ -135,7 +134,6 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 8.0),
                                 Text('メモ'),
                                 SizedBox(height: 4.0),
                                 BasicDivider(),

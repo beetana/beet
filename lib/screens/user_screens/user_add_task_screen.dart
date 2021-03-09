@@ -8,6 +8,8 @@ class UserAddTaskScreen extends StatelessWidget {
   UserAddTaskScreen({this.userID});
   final String userID;
   final taskTitleController = TextEditingController();
+  final taskMemoController = TextEditingController();
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,40 +47,76 @@ class UserAddTaskScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                body: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding:
-                            EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-                        child: TextField(
-                          controller: taskTitleController,
-                          decoration: InputDecoration(hintText: 'やること'),
-                          onTap: () {
-                            if (model.isShowDueDatePicker == true) {
-                              model.showDueDatePicker();
-                            }
-                          },
-                          onChanged: (text) {
-                            model.taskTitle = text;
-                          },
+                body: SafeArea(
+                  child: Scrollbar(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            TextField(
+                              controller: taskTitleController,
+                              decoration: InputDecoration(
+                                hintText: 'やること',
+                                border: InputBorder.none,
+                              ),
+                              onTap: () {
+                                if (model.isShowDueDatePicker == true) {
+                                  model.showDueDatePicker();
+                                }
+                              },
+                              onChanged: (text) {
+                                model.taskTitle = text;
+                              },
+                            ),
+                            BasicDivider(),
+                            ListTile(
+                              title: Text('いつまでに'),
+                              trailing: Text(model.dueDateText),
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 0.0),
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                model.showDueDatePicker();
+                              },
+                            ),
+                            model.dueDatePickerBox,
+                            BasicDivider(),
+                            NotificationListener<ScrollNotification>(
+                              onNotification: (_) => true,
+                              child: Scrollbar(
+                                child: TextField(
+                                  controller: taskMemoController,
+                                  maxLines: 8,
+                                  decoration: InputDecoration(
+                                    hintText: 'メモ',
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.all(0.0),
+                                  ),
+                                  onTap: () async {
+                                    if (model.isShowDueDatePicker == true) {
+                                      model.showDueDatePicker();
+                                    }
+                                    await Future.delayed(
+                                      Duration(milliseconds: 100),
+                                    );
+                                    scrollController.jumpTo(scrollController
+                                        .position.maxScrollExtent);
+                                  },
+                                  onChanged: (text) {
+                                    model.taskMemo = text;
+                                  },
+                                ),
+                              ),
+                            ),
+                            BasicDivider(),
+                            SizedBox(height: 16.0),
+                          ],
                         ),
                       ),
-                      ListTile(
-                        title: Text('いつまでに'),
-                        trailing: Text(model.dueDateText),
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          model.showDueDatePicker();
-                        },
-                      ),
-                      model.dueDatePickerBox,
-                      BasicDivider(
-                        indent: 16.0,
-                        endIndent: 16.0,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 class UserAddTaskModel extends ChangeNotifier {
   String userID = '';
   String taskTitle = '';
+  String taskMemo = '';
   String dueDateText = '';
   bool isDecidedDueDate = true;
   List<String> assignedUserID = [];
@@ -32,33 +33,12 @@ class UserAddTaskModel extends ChangeNotifier {
     this.assignedUserID = [userID];
     this.dueDate = DateTime(now.year, now.month, now.day, 12);
     this.dueDateText = dateFormat.format(dueDate);
-    try {
-//      QuerySnapshot groupUsers = await FirebaseFirestore.instance
-//          .collection('groups')
-//          .doc(groupID)
-//          .collection('groupUsers')
-//          .get();
-//      userIDs = (groupUsers.docs.map((doc) => doc.id).toList());
-//      userNames =
-//      (groupUsers.docs.map((doc) => doc['name'].toString()).toList());
-//      userImageURLs =
-//      (groupUsers.docs.map((doc) => doc['imageURL'].toString()).toList());
-    } catch (e) {
+    try {} catch (e) {
       print(e);
     } finally {
       endLoading();
     }
   }
-
-//  void assignPerson(userID) {
-//    if (assignedMemberIDs.contains(userID)) {
-//      assignedMemberIDs.remove(userID);
-//    } else {
-//      assignedMemberIDs.add(userID);
-//    }
-//    print(assignedMemberIDs);
-//    notifyListeners();
-//  }
 
   void showDueDatePicker() {
     if (isShowDueDatePicker == false) {
@@ -118,6 +98,7 @@ class UserAddTaskModel extends ChangeNotifier {
           .collection('tasks')
           .add({
         'title': taskTitle,
+        'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
         'assignedMembersID': assignedUserID,

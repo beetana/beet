@@ -9,6 +9,7 @@ class UserEditTaskModel extends ChangeNotifier {
   String taskID = '';
   String ownerID = '';
   String taskTitle = '';
+  String taskMemo = '';
   String dueDateText = '';
   bool isDecidedDueDate;
   bool isCompleted;
@@ -38,6 +39,7 @@ class UserEditTaskModel extends ChangeNotifier {
     this.taskID = task.id;
     this.ownerID = task.ownerID;
     this.taskTitle = task.title;
+    this.taskMemo = task.memo;
     this.isDecidedDueDate = task.isDecidedDueDate;
     this.isCompleted = task.isCompleted;
     this.dueDate = task.dueDate;
@@ -130,6 +132,7 @@ class UserEditTaskModel extends ChangeNotifier {
     try {
       await ownerDocRef.collection('tasks').doc(taskID).update({
         'title': taskTitle,
+        'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
         'assignedMembersID': assignedMembersID,

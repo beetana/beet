@@ -89,7 +89,7 @@ class GroupEditTaskScreen extends StatelessWidget {
                             ),
                             model.dueDatePickerBox,
                             BasicDivider(),
-                            SizedBox(height: 16.0),
+                            SizedBox(height: 8.0),
                             Text(
                               'だれが',
                               style: TextStyle(fontSize: 17.0),

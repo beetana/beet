@@ -56,161 +56,156 @@ class UserTaskDetailsScreen extends StatelessWidget {
                 ],
               ),
               body: model.owner != null
-                  ? Padding(
-                      padding:
-                          EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
-                      child: LayoutBuilder(builder: (context, constraint) {
-                        return SingleChildScrollView(
-                          child: ConstrainedBox(
-                            constraints:
-                                BoxConstraints(minHeight: constraint.maxHeight),
-                            child: IntrinsicHeight(
-                              child: SafeArea(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: 40.0,
-                                          height: 40.0,
-                                          child: CircleAvatar(
-                                            backgroundImage: model
-                                                        .owner.imageURL ==
-                                                    null
-                                                ? AssetImage(
-                                                    'images/test_user_image.png')
-                                                : model.owner.imageURL
-                                                        .isNotEmpty
-                                                    ? NetworkImage(
-                                                        model.owner.imageURL)
-                                                    : AssetImage(
-                                                        'images/test_user_image.png'),
-                                            backgroundColor: Colors.transparent,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        Text(
-                                          model.owner.name,
-                                          style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 16.0,
-                                    ),
-                                    Text(
-                                      model.taskTitle,
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    model.isDecidedDueDate
-                                        ? Text(
-                                            '期限  ${dueDateFormat.format(model.dueDate)}')
-                                        : Text('期限なし'),
-                                    SizedBox(
-                                      height: 16.0,
-                                    ),
-                                    BasicDivider(),
-                                    SizedBox(
-                                      height: 8.0,
-                                    ),
+                  ? SafeArea(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(height: 16.0),
+                                Row(
+                                  children: [
                                     Container(
-                                      height: 300,
-                                      child: ListView.builder(
-                                        physics: ScrollPhysics(),
-                                        itemExtent: 40.0,
-                                        itemCount:
-                                            model.assignedMembersID.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          String imageURL = model
-                                              .groupMembers[model
-                                                  .assignedMembersID[index]]
-                                              .imageURL;
-                                          String name = model
-                                              .groupMembers[model
-                                                  .assignedMembersID[index]]
-                                              .name;
-                                          return Container(
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 32.0,
-                                                  height: 32.0,
-                                                  child: CircleAvatar(
-                                                    backgroundImage: imageURL ==
-                                                            null
-                                                        ? AssetImage(
-                                                            'images/test_user_image.png')
-                                                        : imageURL.isNotEmpty
-                                                            ? NetworkImage(
-                                                                imageURL)
-                                                            : AssetImage(
-                                                                'images/test_user_image.png'),
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 8.0,
-                                                ),
-                                                Text(
-                                                  name,
-                                                  style: TextStyle(
-//                                            fontSize: 18.0,
-//                                                    fontWeight: FontWeight.w500,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        },
+                                      width: 32.0,
+                                      height: 32.0,
+                                      child: CircleAvatar(
+                                        backgroundImage: model.owner.imageURL ==
+                                                null
+                                            ? AssetImage(
+                                                'images/test_user_image.png')
+                                            : model.owner.imageURL.isNotEmpty
+                                                ? NetworkImage(
+                                                    model.owner.imageURL)
+                                                : AssetImage(
+                                                    'images/test_user_image.png'),
+                                        backgroundColor: Colors.transparent,
                                       ),
                                     ),
-                                    Expanded(
-                                      child: SizedBox(),
-                                    ),
-                                    Center(
-                                      child: FlatButton(
-                                        child: Text(
-                                          '削除',
-                                          style: TextStyle(
-                                            color: Colors.redAccent,
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          bool isDelete =
-                                              await _confirmDeleteDialog(
-                                                  context, 'このタスクを削除しますか？');
-                                          if (isDelete == true) {
-                                            model.startLoading();
-                                            try {
-                                              await model.deleteTask();
-                                              Navigator.pop(context);
-                                            } catch (e) {
-                                              _showTextDialog(
-                                                  context, e.toString());
-                                            }
-                                            model.endLoading();
-                                          }
-                                        },
-                                      ),
-                                    ),
+                                    SizedBox(width: 8.0),
+                                    Text(model.owner.name),
                                   ],
+                                ),
+                                SizedBox(height: 8.0),
+                                Text(
+                                  model.taskTitle,
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                model.isDecidedDueDate
+                                    ? Text(
+                                        '期限  ${dueDateFormat.format(model.dueDate)}')
+                                    : Text('期限なし'),
+                                Container(
+                                  height: 72.0,
+                                  child: Scrollbar(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      physics: ScrollPhysics(),
+                                      itemExtent: 60.0,
+                                      itemCount: model.assignedMembersID.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        String imageURL = model
+                                            .groupMembers[
+                                                model.assignedMembersID[index]]
+                                            .imageURL;
+                                        String name = model
+                                            .groupMembers[
+                                                model.assignedMembersID[index]]
+                                            .name;
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 2.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: 40.0,
+                                                height: 40.0,
+                                                child: CircleAvatar(
+                                                  backgroundImage: imageURL ==
+                                                          null
+                                                      ? AssetImage(
+                                                          'images/test_user_image.png')
+                                                      : imageURL.isNotEmpty
+                                                          ? NetworkImage(
+                                                              imageURL)
+                                                          : AssetImage(
+                                                              'images/test_user_image.png'),
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                ),
+                                              ),
+                                              SizedBox(height: 2.0),
+                                              Text(
+                                                name,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(fontSize: 9.0),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Text('メモ'),
+                                SizedBox(height: 4.0),
+                                BasicDivider(),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Scrollbar(
+                                child: SingleChildScrollView(
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: Text(model.taskMemo),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        );
-                      }),
+                          BasicDivider(
+                            indent: 16.0,
+                            endIndent: 16.0,
+                          ),
+                          SizedBox(height: 8.0),
+                          Center(
+                            child: FlatButton(
+                              child: Text(
+                                '削除',
+                                style: TextStyle(
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                              onPressed: () async {
+                                bool isDelete = await _confirmDeleteDialog(
+                                    context, 'このタスクを削除しますか？');
+                                if (isDelete == true) {
+                                  model.startLoading();
+                                  try {
+                                    await model.deleteTask();
+                                    Navigator.pop(context);
+                                  } catch (e) {
+                                    _showTextDialog(context, e.toString());
+                                  }
+                                  model.endLoading();
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     )
                   : SizedBox(),
             ),

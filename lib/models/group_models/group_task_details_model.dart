@@ -9,6 +9,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
   Task task;
   String taskID = '';
   String taskTitle = '';
+  String taskMemo = '';
   bool isDecidedDueDate;
   DateTime dueDate;
   List<dynamic> assignedMembersID = [];
@@ -34,6 +35,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
     this.task = task;
     this.taskID = task.id;
     this.taskTitle = task.title;
+    this.taskMemo = task.memo;
     this.isDecidedDueDate = task.isDecidedDueDate;
     this.dueDate = task.dueDate;
     this.assignedMembersID = task.assignedMembersID;
@@ -59,6 +61,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
       this.task = Task(
         id: taskDoc.id,
         title: taskDoc['title'],
+        memo: taskDoc['memo'],
         isDecidedDueDate: taskDoc['isDecidedDueDate'],
         dueDate: taskDoc['isDecidedDueDate']
             ? taskDoc['dueDate'].toDate()
@@ -68,6 +71,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
         isCompleted: taskDoc['isCompleted'],
       );
       this.taskTitle = this.task.title;
+      this.taskMemo = this.task.memo;
       this.isDecidedDueDate = this.task.isDecidedDueDate;
       this.dueDate = this.task.dueDate;
       this.assignedMembersID = this.task.assignedMembersID;

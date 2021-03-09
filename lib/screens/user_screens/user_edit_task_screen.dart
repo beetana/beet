@@ -132,9 +132,6 @@ class UserEditTaskScreen extends StatelessWidget {
                                             userImageURL: userImageURL,
                                             isChecked: model.assignedMembersID
                                                 .contains(userID),
-                                            checkboxCallback: (state) {
-                                              model.assignPerson(userID);
-                                            },
                                             tileTappedCallback: () {
                                               model.assignPerson(userID);
                                             },

@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:beet/task.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +99,7 @@ class GroupEditTaskModel extends ChangeNotifier {
             ),
             label: Text(
               '未定',
-              style: TextStyle(color: Colors.black54),
+              style: kCancelButtonTextStyle,
             ),
             onPressed: () {
               this.dueDate = null;

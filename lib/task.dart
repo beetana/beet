@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class Task {
   final String ownerID;
   final String id;

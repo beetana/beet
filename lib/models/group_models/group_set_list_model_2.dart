@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -42,7 +43,7 @@ class GroupSetListModel2 extends ChangeNotifier {
             ),
             label: Text(
               '未定',
-              style: TextStyle(color: Colors.black54),
+              style: kCancelButtonTextStyle,
             ),
             onPressed: () {
               eventDate = DateTime.now();

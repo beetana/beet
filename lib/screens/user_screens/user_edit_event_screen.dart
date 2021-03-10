@@ -45,7 +45,7 @@ class UserEditEventScreen extends StatelessWidget {
                       onPressed: () async {
                         model.startLoading();
                         try {
-                          await model.editEvent(userID: userID);
+                          await model.updateEvent(userID: userID);
                           Navigator.pop(context);
                         } catch (e) {
                           _showTextDialog(context, e.toString());

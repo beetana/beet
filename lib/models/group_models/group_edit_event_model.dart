@@ -168,7 +168,7 @@ class GroupEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future editEvent({groupID}) async {
+  Future updateEvent({groupID}) async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
@@ -220,8 +220,7 @@ class GroupEditEventModel extends ChangeNotifier {
           .doc(groupID)
           .collection('events')
           .doc(eventID)
-          .set({
-        'ownerID': ownerID,
+          .update({
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,
@@ -230,6 +229,7 @@ class GroupEditEventModel extends ChangeNotifier {
         'dateList': dateList,
         'start': Timestamp.fromDate(startingDateTime),
         'end': Timestamp.fromDate(endingDateTime),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

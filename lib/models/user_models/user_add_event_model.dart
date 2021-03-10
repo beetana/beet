@@ -195,6 +195,8 @@ class UserAddEventModel extends ChangeNotifier {
         'dateList': dateList,
         'start': Timestamp.fromDate(startingDateTime),
         'end': Timestamp.fromDate(endingDateTime),
+        'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

@@ -45,7 +45,7 @@ class GroupEditEventScreen extends StatelessWidget {
                       onPressed: () async {
                         model.startLoading();
                         try {
-                          await model.editEvent(groupID: groupID);
+                          await model.updateEvent(groupID: groupID);
                           Navigator.pop(context);
                         } catch (e) {
                           _showTextDialog(context, e.toString());

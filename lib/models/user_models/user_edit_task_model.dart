@@ -7,8 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class UserEditTaskModel extends ChangeNotifier {
-  String taskID = '';
   String ownerID = '';
+  String taskID = '';
   String taskTitle = '';
   String taskMemo = '';
   String dueDateText = '';

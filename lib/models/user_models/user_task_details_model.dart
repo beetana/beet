@@ -65,19 +65,18 @@ class UserTaskDetailsModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future getTask({String userID, Task task}) async {
-    final ownerID = task.ownerID;
-    final taskDocRef = ownerID == userID
+  Future getTask() async {
+    final taskDocRef = this.ownerID == this.userID
         ? firestore
             .collection('users')
-            .doc(userID)
+            .doc(this.userID)
             .collection('tasks')
-            .doc(task.id)
+            .doc(this.taskID)
         : firestore
             .collection('groups')
-            .doc(ownerID)
+            .doc(this.ownerID)
             .collection('tasks')
-            .doc(task.id);
+            .doc(this.taskID);
     try {
       DocumentSnapshot taskDoc = await taskDocRef.get();
       this.task = Task(
@@ -107,11 +106,11 @@ class UserTaskDetailsModel extends ChangeNotifier {
   }
 
   Future deleteTask() async {
+    final ownerDocRef = this.ownerID == this.userID
+        ? firestore.collection('users').doc(this.userID)
+        : firestore.collection('groups').doc(this.ownerID);
     try {
-      final ownerDocRef = ownerID == userID
-          ? firestore.collection('users').doc(ownerID)
-          : firestore.collection('groups').doc(ownerID);
-      await ownerDocRef.collection('tasks').doc(taskID).delete();
+      await ownerDocRef.collection('tasks').doc(this.taskID).delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

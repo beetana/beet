@@ -29,7 +29,7 @@ service cloud.firestore {
 
     // イベントデータのスキーマ検証
     function isValidEventData(eventData) {
-      return eventData.size() == 9
+      return eventData.size() == 11
         && 'ownerID' in eventData && eventData.ownerID is string
         && 'title' in eventData && eventData.title is string
         && 'place' in eventData && eventData.place is string
@@ -38,7 +38,9 @@ service cloud.firestore {
         && 'monthList' in eventData && eventData.monthList is list
         && 'dateList' in eventData && eventData.dateList is list
         && 'start' in eventData && eventData.start is timestamp
-        && 'end' in eventData && eventData.end is timestamp;
+        && 'end' in eventData && eventData.end is timestamp
+        && 'createdAt' in eventData && eventData.createdAt is timestamp
+        && 'updatedAt' in eventData && eventData.updatedAt is timestamp;
     }
 
     // ユーザーが参加しているグループデータのスキーマ検証
@@ -101,14 +103,18 @@ service cloud.firestore {
           && request.resource.data.ownerID == userId
           && request.resource.data.title.size() >= 1
           && request.resource.data.monthList.size() >= 1
-          && request.resource.data.dateList.size() >= 1;
+          && request.resource.data.dateList.size() >= 1
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.updatedAt == request.time;
 
         allow update: if isDocumentAuthor(userId)
           && isValidEventData(request.resource.data)
           && request.resource.data.ownerID == resource.data.ownerID
           && request.resource.data.title.size() >= 1
           && request.resource.data.monthList.size() >= 1
-          && request.resource.data.dateList.size() >= 1;
+          && request.resource.data.dateList.size() >= 1
+          && request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.updatedAt == request.time;
 
         allow delete: if isDocumentAuthor(userId);
       }
@@ -163,14 +169,18 @@ service cloud.firestore {
           && request.resource.data.ownerID == groupId
           && request.resource.data.title.size() >= 1
           && request.resource.data.monthList.size() >= 1
-          && request.resource.data.dateList.size() >= 1;
+          && request.resource.data.dateList.size() >= 1
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.updatedAt == request.time;
 
         allow update: if isGroupMember(request.auth.uid, groupId)
           && isValidEventData(request.resource.data)
           && request.resource.data.ownerID == resource.data.ownerID
           && request.resource.data.title.size() >= 1
           && request.resource.data.monthList.size() >= 1
-          && request.resource.data.dateList.size() >= 1;
+          && request.resource.data.dateList.size() >= 1
+          && request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.updatedAt == request.time;
 
         allow delete: if isGroupMember(request.auth.uid, groupId);
       }

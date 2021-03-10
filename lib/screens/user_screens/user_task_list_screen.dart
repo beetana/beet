@@ -87,7 +87,15 @@ class UserTaskListScreen extends StatelessWidget {
                                               ),
                                             ),
                                           );
-                                          model.getTaskList(userID: userID);
+                                          model.startLoading();
+                                          try {
+                                            await model.getTaskList(
+                                                userID: userID);
+                                          } catch (e) {
+                                            _showTextDialog(
+                                                context, e.toString());
+                                          }
+                                          model.endLoading();
                                         },
                                       );
                                     } else {
@@ -133,7 +141,8 @@ class UserTaskListScreen extends StatelessWidget {
                                           );
                                           model.startLoading();
                                           try {
-                                            model.getTaskList(userID: userID);
+                                            await model.getTaskList(
+                                                userID: userID);
                                           } catch (e) {
                                             _showTextDialog(
                                                 context, e.toString());

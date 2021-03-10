@@ -22,7 +22,7 @@ class UserEditEventScreen extends StatelessWidget {
     eventPlaceController.text = event.place;
     eventMemoController.text = event.memo;
     return ChangeNotifierProvider<UserEditEventModel>(
-      create: (_) => UserEditEventModel()..init(event: event),
+      create: (_) => UserEditEventModel()..init(userID: userID, event: event),
       child: Consumer<UserEditEventModel>(builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
@@ -45,7 +45,7 @@ class UserEditEventScreen extends StatelessWidget {
                       onPressed: () async {
                         model.startLoading();
                         try {
-                          await model.updateEvent(userID: userID);
+                          await model.updateEvent();
                           Navigator.pop(context);
                         } catch (e) {
                           _showTextDialog(context, e.toString());

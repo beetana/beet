@@ -59,9 +59,10 @@ service cloud.firestore {
 
     // 曲データのスキーマ検証
     function isValidSongData(songData) {
-      return songData.size() == 3
+      return songData.size() == 4
         && 'title' in songData && songData.title is string
         && 'minute' in songData && songData.minute is int
+        && 'memo' in songData && songData.memo is string
         && 'createdAt' in songData && songData.createdAt is timestamp;
     }
 
@@ -111,6 +112,11 @@ service cloud.firestore {
 
         allow delete: if isDocumentAuthor(userId);
       }
+
+      // users/{userId}/tasks
+      // match /tasks/{taskId} {
+      //   allow read, write: if true;
+      // }
 
       // /users/{userId}/joiningGroup
       match /joiningGroup/{groupId} {
@@ -169,6 +175,11 @@ service cloud.firestore {
         allow delete: if isGroupMember(request.auth.uid, groupId);
       }
 
+      // groups/{groupId}/tasks
+      // match /tasks/{taskId} {
+      //   allow read, write: if true;
+      // }
+
       // /groups/{groupId}/songs
       match /songs/{songId} {
         allow read: if isGroupMember(request.auth.uid, groupId);
@@ -209,6 +220,9 @@ service cloud.firestore {
     // /{path=**}
     match /{path=**}/events/{event} {
       allow list: if isAuthenticated();
+    }
+    match /{path=**}/tasks/{task} {
+      allow read, write: if true;
     }
   }
 }

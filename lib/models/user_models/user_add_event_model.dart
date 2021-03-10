@@ -186,7 +186,7 @@ class UserAddEventModel extends ChangeNotifier {
           .doc(userID)
           .collection('events')
           .add({
-        'myID': userID,
+        'ownerID': userID,
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,

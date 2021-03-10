@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GroupEditEventModel extends ChangeNotifier {
-  String myID;
+  String ownerID;
   String eventID;
   String eventTitle = '';
   String eventPlace = '';
@@ -60,11 +60,11 @@ class GroupEditEventModel extends ChangeNotifier {
         );
       }
     }
-    myID = event.myID;
-    eventID = event.eventID;
-    eventTitle = event.eventTitle;
-    eventPlace = event.eventPlace;
-    eventMemo = event.eventMemo;
+    ownerID = event.ownerID;
+    eventID = event.id;
+    eventTitle = event.title;
+    eventPlace = event.place;
+    eventMemo = event.memo;
     isAllDay = event.isAllDay;
     startingDateTime = event.startingDateTime;
     endingDateTime = event.endingDateTime;
@@ -221,7 +221,7 @@ class GroupEditEventModel extends ChangeNotifier {
           .collection('events')
           .doc(eventID)
           .set({
-        'myID': myID,
+        'ownerID': ownerID,
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,

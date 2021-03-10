@@ -18,9 +18,9 @@ class UserEditEventScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    eventTitleController.text = event.eventTitle;
-    eventPlaceController.text = event.eventPlace;
-    eventMemoController.text = event.eventMemo;
+    eventTitleController.text = event.title;
+    eventPlaceController.text = event.place;
+    eventMemoController.text = event.memo;
     return ChangeNotifierProvider<UserEditEventModel>(
       create: (_) => UserEditEventModel()..init(event: event),
       child: Consumer<UserEditEventModel>(builder: (context, model, child) {

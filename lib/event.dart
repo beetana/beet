@@ -1,25 +1,40 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
-  final String myID;
-  final String eventID;
-  final String eventTitle;
-  final String eventPlace;
-  final String eventMemo;
+  final String id;
+  final String ownerID;
+  final String title;
+  final String place;
+  final String memo;
   final bool isAllDay;
   DateTime startingDateTime;
   DateTime endingDateTime;
   final List<dynamic> dateList;
 
-  Event({
-    @required this.eventID,
-    @required this.myID,
-    @required this.eventTitle,
-    @required this.eventPlace,
-    @required this.eventMemo,
-    @required this.isAllDay,
-    @required this.startingDateTime,
-    @required this.endingDateTime,
-    @required this.dateList,
-  });
+  Event._(
+    this.id,
+    this.ownerID,
+    this.title,
+    this.place,
+    this.memo,
+    this.isAllDay,
+    this.startingDateTime,
+    this.endingDateTime,
+    this.dateList,
+  );
+
+  factory Event.doc(DocumentSnapshot doc) {
+    final data = doc.data();
+    return Event._(
+      doc.id,
+      data['ownerID'],
+      data['title'],
+      data['place'],
+      data['memo'],
+      data['isAllDay'],
+      data['start'].toDate(),
+      data['end'].toDate(),
+      data['dateList'].map((date) => date.toDate()).toList(),
+    );
+  }
 }

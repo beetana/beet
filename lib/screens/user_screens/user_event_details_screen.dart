@@ -26,7 +26,7 @@ class UserEventDetailsScreen extends StatelessWidget {
                 centerTitle: true,
                 actions: [
                   Visibility(
-                    visible: model.myID == userID,
+                    visible: model.ownerID == userID,
                     child: FlatButton(
                       child: Text(
                         '編集',
@@ -112,7 +112,7 @@ class UserEventDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 8.0),
                     Visibility(
-                      visible: model.myID == userID,
+                      visible: model.ownerID == userID,
                       child: Center(
                         child: FlatButton(
                           child: Text(

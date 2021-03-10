@@ -95,10 +95,11 @@ class UserMainScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final event = model.eventList[index];
                           return EventListTile(
-                            imageURL: model.eventPlanner[event.myID].imageURL,
-                            name: model.eventPlanner[event.myID].name,
-                            eventTitle: event.eventTitle,
-                            eventPlace: event.eventPlace,
+                            imageURL:
+                                model.eventPlanner[event.ownerID].imageURL,
+                            name: model.eventPlanner[event.ownerID].name,
+                            eventTitle: event.title,
+                            eventPlace: event.place,
                             isAllDay: event.isAllDay,
                             startingDateTime: event.startingDateTime,
                             endingDateTime: event.endingDateTime,

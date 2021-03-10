@@ -30,7 +30,7 @@ service cloud.firestore {
     // イベントデータのスキーマ検証
     function isValidEventData(eventData) {
       return eventData.size() == 9
-        && 'myID' in eventData && eventData.myID is string
+        && 'ownerID' in eventData && eventData.ownerID is string
         && 'title' in eventData && eventData.title is string
         && 'place' in eventData && eventData.place is string
         && 'memo' in eventData && eventData.memo is string
@@ -98,14 +98,14 @@ service cloud.firestore {
 
         allow create: if isDocumentAuthor(userId)
           && isValidEventData(request.resource.data)
-          && request.resource.data.myID == userId
+          && request.resource.data.ownerID == userId
           && request.resource.data.title.size() >= 1
           && request.resource.data.monthList.size() >= 1
           && request.resource.data.dateList.size() >= 1;
 
         allow update: if isDocumentAuthor(userId)
           && isValidEventData(request.resource.data)
-          && request.resource.data.myID == resource.data.myID
+          && request.resource.data.ownerID == resource.data.ownerID
           && request.resource.data.title.size() >= 1
           && request.resource.data.monthList.size() >= 1
           && request.resource.data.dateList.size() >= 1;
@@ -160,14 +160,14 @@ service cloud.firestore {
 
         allow create: if isGroupMember(request.auth.uid, groupId)
           && isValidEventData(request.resource.data)
-          && request.resource.data.myID == groupId
+          && request.resource.data.ownerID == groupId
           && request.resource.data.title.size() >= 1
           && request.resource.data.monthList.size() >= 1
           && request.resource.data.dateList.size() >= 1;
 
         allow update: if isGroupMember(request.auth.uid, groupId)
           && isValidEventData(request.resource.data)
-          && request.resource.data.myID == resource.data.myID
+          && request.resource.data.ownerID == resource.data.ownerID
           && request.resource.data.title.size() >= 1
           && request.resource.data.monthList.size() >= 1
           && request.resource.data.dateList.size() >= 1;

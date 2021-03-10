@@ -58,35 +58,23 @@ class UserMainModel extends ChangeNotifier {
 
   Future getEventList({String userID}) async {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
-    List<String> myIDList = [userID];
+    List<String> ownerIDList = [userID];
     try {
       QuerySnapshot joiningGroupDoc = await FirebaseFirestore.instance
           .collection('users')
           .doc(userID)
           .collection('joiningGroup')
           .get();
-      myIDList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
+      ownerIDList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
 
-      await fetchContentOwnerInfo(myIDList: myIDList);
+      await fetchContentOwnerInfo(ownerIDList: ownerIDList);
 
       QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collectionGroup('events')
-          .where('myID', whereIn: myIDList)
+          .where('ownerID', whereIn: ownerIDList)
           .where('end', isGreaterThan: currentTimestamp)
           .get();
-      eventList = eventDoc.docs
-          .map((doc) => Event(
-                eventID: doc.id,
-                myID: doc['myID'],
-                eventTitle: doc['title'],
-                eventPlace: doc['place'],
-                eventMemo: doc['memo'],
-                isAllDay: doc['isAllDay'],
-                startingDateTime: doc['start'].toDate(),
-                endingDateTime: doc['end'].toDate(),
-                dateList: doc['dateList'].map((date) => date.toDate()).toList(),
-              ))
-          .toList();
+      eventList = eventDoc.docs.map((doc) => Event.doc(doc)).toList();
 
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
@@ -96,8 +84,8 @@ class UserMainModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future fetchContentOwnerInfo({myIDList}) async {
-    for (String id in myIDList) {
+  Future fetchContentOwnerInfo({ownerIDList}) async {
+    for (String id in ownerIDList) {
       if (id.length == 28) {
         DocumentSnapshot userDoc =
             await FirebaseFirestore.instance.collection('users').doc(id).get();

@@ -18,9 +18,9 @@ class GroupEditEventScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    eventTitleController.text = event.eventTitle;
-    eventPlaceController.text = event.eventPlace;
-    eventMemoController.text = event.eventMemo;
+    eventTitleController.text = event.title;
+    eventPlaceController.text = event.place;
+    eventMemoController.text = event.memo;
     return ChangeNotifierProvider<GroupEditEventModel>(
       create: (_) => GroupEditEventModel()..init(event: event),
       child: Consumer<GroupEditEventModel>(builder: (context, model, child) {

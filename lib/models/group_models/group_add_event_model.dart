@@ -186,7 +186,7 @@ class GroupAddEventModel extends ChangeNotifier {
           .doc(groupID)
           .collection('events')
           .add({
-        'myID': groupID,
+        'ownerID': groupID,
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,

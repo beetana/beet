@@ -53,23 +53,29 @@ class UserEventDetailsModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future getEvent({String userID}) async {
+  Future getEvent() async {
+    final eventDocRef = this.ownerID == this.userID
+        ? firestore
+            .collection('users')
+            .doc(this.userID)
+            .collection('events')
+            .doc(this.eventID)
+        : firestore
+            .collection('groups')
+            .doc(this.ownerID)
+            .collection('events')
+            .doc(this.eventID);
     try {
-      DocumentSnapshot eventDoc = await firestore
-          .collection('users')
-          .doc(userID)
-          .collection('events')
-          .doc(eventID)
-          .get();
-      event = Event.doc(eventDoc);
-      ownerID = event.ownerID;
-      eventID = event.id;
-      eventTitle = event.title;
-      eventPlace = event.place;
-      eventMemo = event.memo;
-      isAllDay = event.isAllDay;
-      startingDateTime = event.startingDateTime;
-      endingDateTime = event.endingDateTime;
+      DocumentSnapshot eventDoc = await eventDocRef.get();
+      this.event = Event.doc(eventDoc);
+      this.ownerID = event.ownerID;
+      this.eventID = event.id;
+      this.eventTitle = event.title;
+      this.eventPlace = event.place;
+      this.eventMemo = event.memo;
+      this.isAllDay = event.isAllDay;
+      this.startingDateTime = event.startingDateTime;
+      this.endingDateTime = event.endingDateTime;
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');
@@ -78,13 +84,11 @@ class UserEventDetailsModel extends ChangeNotifier {
   }
 
   Future deleteEvent() async {
+    final ownerDocRef = this.ownerID == this.userID
+        ? firestore.collection('users').doc(this.userID)
+        : firestore.collection('groups').doc(this.ownerID);
     try {
-      await firestore
-          .collection('users')
-          .doc(userID)
-          .collection('events')
-          .doc(eventID)
-          .delete();
+      await ownerDocRef.collection('events').doc(this.eventID).delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

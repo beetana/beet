@@ -26,35 +26,32 @@ class UserEventDetailsScreen extends StatelessWidget {
                 title: Text('イベント詳細'),
                 centerTitle: true,
                 actions: [
-                  Visibility(
-                    visible: model.ownerID == userID,
-                    child: FlatButton(
-                      child: Text(
-                        '編集',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                  FlatButton(
+                    child: Text(
+                      '編集',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => UserEditEventScreen(
-                              userID: userID,
-                              event: model.event,
-                            ),
-                            fullscreenDialog: true,
-                          ),
-                        );
-                        model.startLoading();
-                        try {
-                          await model.getEvent(userID: userID);
-                        } catch (e) {
-                          _showTextDialog(context, e.toString());
-                        }
-                        model.endLoading();
-                      },
                     ),
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserEditEventScreen(
+                            userID: userID,
+                            event: model.event,
+                          ),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                      model.startLoading();
+                      try {
+                        await model.getEvent();
+                      } catch (e) {
+                        _showTextDialog(context, e.toString());
+                      }
+                      model.endLoading();
+                    },
                   ),
                 ],
               ),
@@ -136,31 +133,28 @@ class UserEventDetailsScreen extends StatelessWidget {
                             endIndent: 16.0,
                           ),
                           SizedBox(height: 8.0),
-                          Visibility(
-                            visible: model.ownerID == userID,
-                            child: Center(
-                              child: FlatButton(
-                                child: Text(
-                                  '削除',
-                                  style: TextStyle(
-                                    color: Colors.redAccent,
-                                  ),
+                          Center(
+                            child: FlatButton(
+                              child: Text(
+                                '削除',
+                                style: TextStyle(
+                                  color: Colors.redAccent,
                                 ),
-                                onPressed: () async {
-                                  bool isDelete = await _confirmDeleteDialog(
-                                      context, 'このイベントを削除しますか？');
-                                  if (isDelete == true) {
-                                    model.startLoading();
-                                    try {
-                                      await model.deleteEvent();
-                                      Navigator.pop(context);
-                                    } catch (e) {
-                                      _showTextDialog(context, e.toString());
-                                    }
-                                    model.endLoading();
-                                  }
-                                },
                               ),
+                              onPressed: () async {
+                                bool isDelete = await _confirmDeleteDialog(
+                                    context, 'このイベントを削除しますか？');
+                                if (isDelete == true) {
+                                  model.startLoading();
+                                  try {
+                                    await model.deleteEvent();
+                                    Navigator.pop(context);
+                                  } catch (e) {
+                                    _showTextDialog(context, e.toString());
+                                  }
+                                  model.endLoading();
+                                }
+                              },
                             ),
                           ),
                         ],

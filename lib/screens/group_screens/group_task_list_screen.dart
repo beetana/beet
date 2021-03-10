@@ -87,7 +87,15 @@ class GroupTaskListScreen extends StatelessWidget {
                                               ),
                                             ),
                                           );
-                                          model.getTaskList(groupID: groupID);
+                                          model.startLoading();
+                                          try {
+                                            await model.getTaskList(
+                                                groupID: groupID);
+                                          } catch (e) {
+                                            _showTextDialog(
+                                                context, e.toString());
+                                          }
+                                          model.endLoading();
                                         },
                                       );
                                     } else {
@@ -131,7 +139,15 @@ class GroupTaskListScreen extends StatelessWidget {
                                               ),
                                             ),
                                           );
-                                          model.getTaskList(groupID: groupID);
+                                          model.startLoading();
+                                          try {
+                                            await model.getTaskList(
+                                                groupID: groupID);
+                                          } catch (e) {
+                                            _showTextDialog(
+                                                context, e.toString());
+                                          }
+                                          model.endLoading();
                                         },
                                       );
                                     } else {
@@ -214,4 +230,23 @@ class GroupTaskListScreen extends StatelessWidget {
       }),
     );
   }
+}
+
+Future _showTextDialog(context, message) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(message),
+        actions: [
+          FlatButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

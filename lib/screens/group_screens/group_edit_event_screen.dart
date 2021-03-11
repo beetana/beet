@@ -1,4 +1,4 @@
-import 'package:beet/event.dart';
+import 'package:beet/objects/event.dart';
 import 'package:beet/models/group_models/group_edit_event_model.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';

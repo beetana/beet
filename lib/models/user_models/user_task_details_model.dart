@@ -1,6 +1,6 @@
-import 'package:beet/content_owner.dart';
-import 'package:beet/task.dart';
-import 'package:beet/user.dart';
+import 'package:beet/objects/content_owner.dart';
+import 'package:beet/objects/task.dart';
+import 'package:beet/objects/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

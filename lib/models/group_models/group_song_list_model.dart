@@ -1,5 +1,5 @@
-import 'package:beet/constants.dart';
-import 'package:beet/song.dart';
+import 'package:beet/utilities/constants.dart';
+import 'package:beet/objects/song.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

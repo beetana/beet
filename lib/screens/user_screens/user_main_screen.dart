@@ -1,4 +1,4 @@
-import 'package:beet/constants.dart';
+import 'package:beet/utilities/constants.dart';
 import 'package:beet/models/user_models/user_main_model.dart';
 import 'package:beet/screens/user_screens/user_event_details_screen.dart';
 import 'package:beet/widgets/event_list_tile.dart';

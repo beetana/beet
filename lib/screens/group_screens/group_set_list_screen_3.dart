@@ -1,4 +1,4 @@
-import 'package:beet/constants.dart';
+import 'package:beet/utilities/constants.dart';
 import 'package:beet/models/group_models/group_set_list_model_3.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/widgets/set_list_tile.dart';

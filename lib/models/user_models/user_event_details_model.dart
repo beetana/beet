@@ -1,5 +1,5 @@
-import 'package:beet/content_owner.dart';
-import 'package:beet/event.dart';
+import 'package:beet/objects/content_owner.dart';
+import 'package:beet/objects/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

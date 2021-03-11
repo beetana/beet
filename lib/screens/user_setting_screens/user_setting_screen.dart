@@ -1,4 +1,4 @@
-import 'package:beet/constants.dart';
+import 'package:beet/utilities/constants.dart';
 import 'package:beet/models/user_setting_models/user_setting_model.dart';
 import 'package:beet/screens/user_setting_screens/user_privacy_policy_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_security_screen.dart';

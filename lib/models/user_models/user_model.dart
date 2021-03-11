@@ -1,4 +1,4 @@
-import 'package:beet/dynamic_links_services.dart';
+import 'package:beet/services/dynamic_links_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 

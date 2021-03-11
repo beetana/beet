@@ -1,7 +1,7 @@
-import 'package:beet/constants.dart';
+import 'package:beet/utilities/constants.dart';
 import 'package:beet/models/group_models/group_song_details_model.dart';
 import 'package:beet/screens/group_screens/group_edit_song_screen.dart';
-import 'package:beet/song.dart';
+import 'package:beet/objects/song.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

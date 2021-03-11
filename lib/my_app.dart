@@ -1,4 +1,4 @@
-import 'package:beet/constants.dart';
+import 'package:beet/utilities/constants.dart';
 import 'package:beet/my_app_model.dart';
 import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/screens/splash_screen.dart';

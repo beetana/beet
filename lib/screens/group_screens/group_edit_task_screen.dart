@@ -1,5 +1,5 @@
 import 'package:beet/models/group_models/group_edit_task_model.dart';
-import 'package:beet/task.dart';
+import 'package:beet/objects/task.dart';
 import 'package:beet/widgets/assign_task_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';

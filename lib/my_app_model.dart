@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:beet/user.dart';
+import 'package:beet/objects/user.dart';
 import 'package:beet/user_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;

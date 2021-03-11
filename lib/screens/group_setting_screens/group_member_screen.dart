@@ -1,5 +1,5 @@
-import 'package:beet/constants.dart';
-import 'package:beet/dynamic_links_services.dart';
+import 'package:beet/utilities/constants.dart';
+import 'package:beet/services/dynamic_links_services.dart';
 import 'package:beet/models/group_setting_models/group_member_model.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:flutter/material.dart';

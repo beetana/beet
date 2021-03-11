@@ -1,11 +1,12 @@
+import 'package:beet/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class UserEditEventModel extends ChangeNotifier {
-  String myID;
-  String eventID;
+  String ownerID = '';
+  String eventID = '';
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
@@ -19,9 +20,11 @@ class UserEditEventModel extends ChangeNotifier {
   Widget endingDateTimePickerBox = SizedBox();
   CupertinoDatePickerMode cupertinoDatePickerMode =
       CupertinoDatePickerMode.dateAndTime;
+  DocumentReference ownerDocRef;
   DateFormat tileDateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_JP');
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
+  final firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -33,10 +36,10 @@ class UserEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({event}) {
+  void init({String userID, Event event}) {
     if (event.isAllDay == true) {
-      tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
-      cupertinoDatePickerMode = CupertinoDatePickerMode.date;
+      this.tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+      this.cupertinoDatePickerMode = CupertinoDatePickerMode.date;
       DateTime start = event.startingDateTime;
       DateTime end = event.endingDateTime;
       event.startingDateTime = DateTime(
@@ -60,14 +63,18 @@ class UserEditEventModel extends ChangeNotifier {
         );
       }
     }
-    myID = event.myID;
-    eventID = event.eventID;
-    eventTitle = event.eventTitle;
-    eventPlace = event.eventPlace;
-    eventMemo = event.eventMemo;
-    isAllDay = event.isAllDay;
-    startingDateTime = event.startingDateTime;
-    endingDateTime = event.endingDateTime;
+    this.ownerID = event.ownerID;
+    this.eventID = event.id;
+    this.eventTitle = event.title;
+    this.eventPlace = event.place;
+    this.eventMemo = event.memo;
+    this.isAllDay = event.isAllDay;
+    this.startingDateTime = event.startingDateTime;
+    this.endingDateTime = event.endingDateTime;
+    this.ownerDocRef = ownerID == userID
+        ? firestore.collection('users').doc(userID)
+        : firestore.collection('groups').doc(ownerID);
+    notifyListeners();
   }
 
   void switchIsAllDay(bool value) {
@@ -168,7 +175,7 @@ class UserEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future editEvent({userID}) async {
+  Future updateEvent() async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
@@ -215,21 +222,16 @@ class UserEditEventModel extends ChangeNotifier {
     }
 
     try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userID)
-          .collection('events')
-          .doc(eventID)
-          .set({
-        'myID': myID,
-        'title': eventTitle,
-        'place': eventPlace,
-        'memo': eventMemo,
-        'isAllDay': isAllDay,
+      await this.ownerDocRef.collection('events').doc(this.eventID).update({
+        'title': this.eventTitle,
+        'place': this.eventPlace,
+        'memo': this.eventMemo,
+        'isAllDay': this.isAllDay,
         'monthList': monthList,
         'dateList': dateList,
-        'start': Timestamp.fromDate(startingDateTime),
-        'end': Timestamp.fromDate(endingDateTime),
+        'start': Timestamp.fromDate(this.startingDateTime),
+        'end': Timestamp.fromDate(this.endingDateTime),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

@@ -36,19 +36,7 @@ class GroupCalendarModel extends ChangeNotifier {
           .collection('events')
           .where('monthList', arrayContains: monthForm)
           .get();
-      eventList = eventDoc.docs
-          .map((doc) => Event(
-                eventID: doc.id,
-                myID: doc['myID'],
-                eventTitle: doc['title'],
-                eventPlace: doc['place'],
-                eventMemo: doc['memo'],
-                isAllDay: doc['isAllDay'],
-                startingDateTime: doc['start'].toDate(),
-                endingDateTime: doc['end'].toDate(),
-                dateList: doc['dateList'].map((date) => date.toDate()).toList(),
-              ))
-          .toList();
+      eventList = eventDoc.docs.map((doc) => Event.doc(doc)).toList();
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
       for (int i = 0; i <= durationDays; i++) {

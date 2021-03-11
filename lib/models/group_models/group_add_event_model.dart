@@ -186,7 +186,7 @@ class GroupAddEventModel extends ChangeNotifier {
           .doc(groupID)
           .collection('events')
           .add({
-        'myID': groupID,
+        'ownerID': groupID,
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,
@@ -195,6 +195,8 @@ class GroupAddEventModel extends ChangeNotifier {
         'dateList': dateList,
         'start': Timestamp.fromDate(startingDateTime),
         'end': Timestamp.fromDate(endingDateTime),
+        'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

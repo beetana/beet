@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GroupEditEventModel extends ChangeNotifier {
-  String myID;
+  String ownerID;
   String eventID;
   String eventTitle = '';
   String eventPlace = '';
@@ -60,11 +60,11 @@ class GroupEditEventModel extends ChangeNotifier {
         );
       }
     }
-    myID = event.myID;
-    eventID = event.eventID;
-    eventTitle = event.eventTitle;
-    eventPlace = event.eventPlace;
-    eventMemo = event.eventMemo;
+    ownerID = event.ownerID;
+    eventID = event.id;
+    eventTitle = event.title;
+    eventPlace = event.place;
+    eventMemo = event.memo;
     isAllDay = event.isAllDay;
     startingDateTime = event.startingDateTime;
     endingDateTime = event.endingDateTime;
@@ -168,7 +168,7 @@ class GroupEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future editEvent({groupID}) async {
+  Future updateEvent({groupID}) async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
@@ -220,8 +220,7 @@ class GroupEditEventModel extends ChangeNotifier {
           .doc(groupID)
           .collection('events')
           .doc(eventID)
-          .set({
-        'myID': myID,
+          .update({
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,
@@ -230,6 +229,7 @@ class GroupEditEventModel extends ChangeNotifier {
         'dateList': dateList,
         'start': Timestamp.fromDate(startingDateTime),
         'end': Timestamp.fromDate(endingDateTime),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

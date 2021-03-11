@@ -79,18 +79,7 @@ class UserTaskDetailsModel extends ChangeNotifier {
             .doc(this.taskID);
     try {
       DocumentSnapshot taskDoc = await taskDocRef.get();
-      this.task = Task(
-        id: taskDoc.id,
-        title: taskDoc['title'],
-        memo: taskDoc['memo'],
-        isDecidedDueDate: taskDoc['isDecidedDueDate'],
-        dueDate: taskDoc['isDecidedDueDate']
-            ? taskDoc['dueDate'].toDate()
-            : DateTime.now(),
-        assignedMembersID: taskDoc['assignedMembersID'],
-        ownerID: taskDoc['ownerID'],
-        isCompleted: taskDoc['isCompleted'],
-      );
+      this.task = Task.doc(taskDoc);
       this.ownerID = this.task.ownerID;
       this.taskTitle = this.task.title;
       this.taskMemo = this.task.memo;

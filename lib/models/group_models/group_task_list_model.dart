@@ -53,20 +53,7 @@ class GroupTaskListModel extends ChangeNotifier {
           .doc(groupID)
           .collection('tasks')
           .get();
-      tasks = taskQuery.docs
-          .map((doc) => Task(
-                id: doc.id,
-                title: doc['title'],
-                memo: doc['memo'],
-                isDecidedDueDate: doc['isDecidedDueDate'],
-                dueDate: doc['isDecidedDueDate']
-                    ? doc['dueDate'].toDate()
-                    : DateTime.now(),
-                assignedMembersID: doc['assignedMembersID'],
-                ownerID: doc['ownerID'],
-                isCompleted: doc['isCompleted'],
-              ))
-          .toList();
+      tasks = taskQuery.docs.map((doc) => Task.doc(doc)).toList();
       tasks.forEach((task) {
         task.isCompleted
             ? completedTasks.add(task)

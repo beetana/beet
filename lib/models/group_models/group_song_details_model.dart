@@ -40,12 +40,7 @@ class GroupSongDetailsModel extends ChangeNotifier {
           .collection('songs')
           .doc(songID)
           .get();
-      song = Song(
-        id: songDoc.id,
-        title: songDoc['title'],
-        memo: songDoc['memo'],
-        playingTime: songDoc['minute'],
-      );
+      song = Song.doc(songDoc);
       songID = song.id;
       songTitle = song.title;
       songMemo = song.memo;

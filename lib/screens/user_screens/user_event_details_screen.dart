@@ -16,7 +16,8 @@ class UserEventDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserEventDetailsModel>(
-      create: (_) => UserEventDetailsModel()..init(event),
+      create: (_) =>
+          UserEventDetailsModel()..init(userID: userID, event: event),
       child: Consumer<UserEventDetailsModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -25,122 +26,141 @@ class UserEventDetailsScreen extends StatelessWidget {
                 title: Text('イベント詳細'),
                 centerTitle: true,
                 actions: [
-                  Visibility(
-                    visible: model.myID == userID,
-                    child: FlatButton(
-                      child: Text(
-                        '編集',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                  FlatButton(
+                    child: Text(
+                      '編集',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => UserEditEventScreen(
-                              userID: userID,
-                              event: model.event,
-                            ),
-                            fullscreenDialog: true,
-                          ),
-                        );
-                        model.startLoading();
-                        try {
-                          await model.getEvent(userID: userID);
-                        } catch (e) {
-                          _showTextDialog(context, e.toString());
-                        }
-                        model.endLoading();
-                      },
                     ),
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserEditEventScreen(
+                            userID: userID,
+                            event: model.event,
+                          ),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                      model.startLoading();
+                      try {
+                        await model.getEvent();
+                      } catch (e) {
+                        _showTextDialog(context, e.toString());
+                      }
+                      model.endLoading();
+                    },
                   ),
                 ],
               ),
-              body: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+              body: model.owner != null
+                  ? SafeArea(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(height: 16.0),
-                          Text(
-                            model.eventTitle,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w500,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(height: 16.0),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 32.0,
+                                      height: 32.0,
+                                      child: CircleAvatar(
+                                        backgroundImage: model.owner.imageURL ==
+                                                null
+                                            ? AssetImage(
+                                                'images/test_user_image.png')
+                                            : model.owner.imageURL.isNotEmpty
+                                                ? NetworkImage(
+                                                    model.owner.imageURL)
+                                                : AssetImage(
+                                                    'images/test_user_image.png'),
+                                        backgroundColor: Colors.transparent,
+                                      ),
+                                    ),
+                                    SizedBox(width: 8.0),
+                                    Text(model.owner.name),
+                                  ],
+                                ),
+                                SizedBox(height: 8.0),
+                                Text(
+                                  model.eventTitle,
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: model.eventPlace.isNotEmpty,
+                                  child: Text('@${model.eventPlace}'),
+                                ),
+                                SizedBox(height: 8.0),
+                                EventDateWidget(
+                                  isAllDay: model.isAllDay,
+                                  startingDateTime: model.startingDateTime,
+                                  endingDateTime: model.endingDateTime,
+                                ),
+                                SizedBox(height: 16.0),
+                                Text(
+                                  'メモ',
+                                ),
+                                SizedBox(height: 4.0),
+                                BasicDivider(),
+                              ],
                             ),
                           ),
-                          Visibility(
-                            visible: model.eventPlace.isNotEmpty,
-                            child: Text('@${model.eventPlace}'),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Scrollbar(
+                                child: SingleChildScrollView(
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: Text(model.eventMemo),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          BasicDivider(
+                            indent: 16.0,
+                            endIndent: 16.0,
                           ),
                           SizedBox(height: 8.0),
-                          EventDateWidget(
-                            isAllDay: model.isAllDay,
-                            startingDateTime: model.startingDateTime,
-                            endingDateTime: model.endingDateTime,
+                          Center(
+                            child: FlatButton(
+                              child: Text(
+                                '削除',
+                                style: TextStyle(
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                              onPressed: () async {
+                                bool isDelete = await _confirmDeleteDialog(
+                                    context, 'このイベントを削除しますか？');
+                                if (isDelete == true) {
+                                  model.startLoading();
+                                  try {
+                                    await model.deleteEvent();
+                                    Navigator.pop(context);
+                                  } catch (e) {
+                                    _showTextDialog(context, e.toString());
+                                  }
+                                  model.endLoading();
+                                }
+                              },
+                            ),
                           ),
-                          SizedBox(height: 16.0),
-                          Text(
-                            'メモ',
-                          ),
-                          SizedBox(height: 4.0),
-                          BasicDivider(),
                         ],
                       ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Scrollbar(
-                          child: SingleChildScrollView(
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(model.eventMemo),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    BasicDivider(
-                      indent: 16.0,
-                      endIndent: 16.0,
-                    ),
-                    SizedBox(height: 8.0),
-                    Visibility(
-                      visible: model.myID == userID,
-                      child: Center(
-                        child: FlatButton(
-                          child: Text(
-                            '削除',
-                            style: TextStyle(
-                              color: Colors.redAccent,
-                            ),
-                          ),
-                          onPressed: () async {
-                            bool isDelete = await _confirmDeleteDialog(
-                                context, 'このイベントを削除しますか？');
-                            if (isDelete == true) {
-                              model.startLoading();
-                              try {
-                                await model.deleteEvent(userID: userID);
-                                Navigator.pop(context);
-                              } catch (e) {
-                                _showTextDialog(context, e.toString());
-                              }
-                              model.endLoading();
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                    )
+                  : SizedBox(),
             ),
             model.isLoading
                 ? Container(

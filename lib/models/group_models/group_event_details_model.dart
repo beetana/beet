@@ -26,10 +26,10 @@ class GroupEventDetailsModel extends ChangeNotifier {
 
   void init(Event event) {
     this.event = event;
-    eventID = event.eventID;
-    eventTitle = event.eventTitle;
-    eventPlace = event.eventPlace;
-    eventMemo = event.eventMemo;
+    eventID = event.id;
+    eventTitle = event.title;
+    eventPlace = event.place;
+    eventMemo = event.memo;
     isAllDay = event.isAllDay;
     startingDateTime = event.startingDateTime;
     endingDateTime = event.endingDateTime;
@@ -43,21 +43,11 @@ class GroupEventDetailsModel extends ChangeNotifier {
           .collection('events')
           .doc(eventID)
           .get();
-      event = Event(
-        eventID: eventDoc.id,
-        myID: eventDoc['myID'],
-        eventTitle: eventDoc['title'],
-        eventPlace: eventDoc['place'],
-        eventMemo: eventDoc['memo'],
-        isAllDay: eventDoc['isAllDay'],
-        startingDateTime: eventDoc['start'].toDate(),
-        endingDateTime: eventDoc['end'].toDate(),
-        dateList: eventDoc['dateList'].map((date) => date.toDate()).toList(),
-      );
-      eventID = event.eventID;
-      eventTitle = event.eventTitle;
-      eventPlace = event.eventPlace;
-      eventMemo = event.eventMemo;
+      event = Event.doc(eventDoc);
+      eventID = event.id;
+      eventTitle = event.title;
+      eventPlace = event.place;
+      eventMemo = event.memo;
       isAllDay = event.isAllDay;
       startingDateTime = event.startingDateTime;
       endingDateTime = event.endingDateTime;

@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nholiday_jp/nholiday_jp.dart';
-import 'package:beet/content_owner_info.dart';
+import 'package:beet/content_owner.dart';
 
 class UserCalendarModel extends ChangeNotifier {
   String userID = '';
@@ -25,7 +25,7 @@ class UserCalendarModel extends ChangeNotifier {
 
   Future getEvents() async {
     events = {};
-    List<String> myIDList = [userID];
+    List<String> ownerIDList = [userID];
     List<Event> eventList;
     List<Event> eventsOfDay;
     DateTime firstDate = DateTime(first.year, first.month, first.day, 12);
@@ -38,29 +38,17 @@ class UserCalendarModel extends ChangeNotifier {
           .doc(userID)
           .collection('joiningGroup')
           .get();
-      myIDList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
+      ownerIDList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
 
-      await fetchContentOwnerInfo(myIDList: myIDList);
+      await fetchContentOwnerInfo(ownerIDList: ownerIDList);
 
       QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collectionGroup('events')
-          .where('myID', whereIn: myIDList)
+          .where('ownerID', whereIn: ownerIDList)
           .where('monthList', arrayContains: monthForm)
           .get();
 
-      eventList = eventDoc.docs
-          .map((doc) => Event(
-                eventID: doc.id,
-                myID: doc['myID'],
-                eventTitle: doc['title'],
-                eventPlace: doc['place'],
-                eventMemo: doc['memo'],
-                isAllDay: doc['isAllDay'],
-                startingDateTime: doc['start'].toDate(),
-                endingDateTime: doc['end'].toDate(),
-                dateList: doc['dateList'].map((date) => date.toDate()).toList(),
-              ))
-          .toList();
+      eventList = eventDoc.docs.map((doc) => Event.doc(doc)).toList();
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
       for (int i = 0; i <= durationDays; i++) {
@@ -74,8 +62,8 @@ class UserCalendarModel extends ChangeNotifier {
     }
   }
 
-  Future fetchContentOwnerInfo({myIDList}) async {
-    for (String id in myIDList) {
+  Future fetchContentOwnerInfo({ownerIDList}) async {
+    for (String id in ownerIDList) {
       if (id.length == 28) {
         DocumentSnapshot userDoc =
             await FirebaseFirestore.instance.collection('users').doc(id).get();

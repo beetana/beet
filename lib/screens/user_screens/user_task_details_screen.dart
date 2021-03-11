@@ -46,7 +46,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
                       );
                       model.startLoading();
                       try {
-                        await model.getTask(userID: userID, task: task);
+                        await model.getTask();
                       } catch (e) {
                         _showTextDialog(context, e.toString());
                       }

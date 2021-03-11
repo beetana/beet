@@ -30,15 +30,7 @@ class GroupSongListModel extends ChangeNotifier {
         .collection('songs')
         .orderBy('createdAt', descending: false)
         .get();
-    songList = songDoc.docs
-        .map((doc) => Song(
-              id: doc.id,
-              title: doc['title'],
-              memo: doc['memo'],
-              playingTime: doc['minute'],
-            ))
-        .toList();
-
+    songList = songDoc.docs.map((doc) => Song.doc(doc)).toList();
     selectedSongs = [];
     songNum = 0;
     totalPlayTime = 0;

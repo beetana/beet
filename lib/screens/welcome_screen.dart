@@ -1,9 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:beet/constants.dart';
-import 'package:beet/dynamic_links_services.dart';
+import 'package:beet/utilities/constants.dart';
+import 'package:beet/services/dynamic_links_services.dart';
 import 'package:beet/screens/login_screen.dart';
 import 'package:beet/screens/register_screen.dart';
-import 'package:beet/will_pop_callback.dart';
+import 'package:beet/utilities/will_pop_callback.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {

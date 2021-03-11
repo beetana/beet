@@ -1,4 +1,4 @@
-import 'package:beet/constants.dart';
+import 'package:beet/utilities/constants.dart';
 import 'package:beet/models/group_models/group_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
 import 'package:beet/screens/group_screens/group_calendar_screen.dart';
@@ -6,7 +6,7 @@ import 'package:beet/screens/group_screens/group_main_screen.dart';
 import 'package:beet/screens/group_screens/group_song_list_screen.dart';
 import 'package:beet/screens/group_screens/group_task_list_screen.dart';
 import 'package:beet/screens/group_setting_screens/group_setting_screen.dart';
-import 'package:beet/will_pop_callback.dart';
+import 'package:beet/utilities/will_pop_callback.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

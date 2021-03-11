@@ -1,5 +1,5 @@
-import 'package:beet/constants.dart';
-import 'package:beet/event.dart';
+import 'package:beet/utilities/constants.dart';
+import 'package:beet/objects/event.dart';
 import 'package:beet/models/group_models/group_event_details_model.dart';
 import 'package:beet/screens/group_screens/group_edit_event_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';

@@ -47,7 +47,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                       );
                       model.startLoading();
                       try {
-                        await model.getTask(task: task);
+                        await model.getTask();
                       } catch (e) {
                         _showTextDialog(context, e.toString());
                       }

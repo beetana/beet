@@ -40,7 +40,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
     this.dueDate = task.dueDate;
     this.assignedMembersID = task.assignedMembersID;
     this.isCompleted = task.isCompleted;
-    groupDocRef = firestore.collection('groups').doc(groupID);
+    this.groupDocRef = firestore.collection('groups').doc(groupID);
     try {
       QuerySnapshot groupUsers =
           await groupDocRef.collection('groupUsers').get();
@@ -54,17 +54,17 @@ class GroupTaskDetailsModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future getTask({Task task}) async {
-    final taskDocRef = groupDocRef.collection('tasks').doc(task.id);
+  Future getTask() async {
+    final taskDocRef = groupDocRef.collection('tasks').doc(taskID);
     try {
       DocumentSnapshot taskDoc = await taskDocRef.get();
       this.task = Task.doc(taskDoc);
-      this.taskTitle = this.task.title;
-      this.taskMemo = this.task.memo;
-      this.isDecidedDueDate = this.task.isDecidedDueDate;
-      this.dueDate = this.task.dueDate;
-      this.assignedMembersID = this.task.assignedMembersID;
-      this.isCompleted = this.task.isCompleted;
+      this.taskTitle = task.title;
+      this.taskMemo = task.memo;
+      this.isDecidedDueDate = task.isDecidedDueDate;
+      this.dueDate = task.dueDate;
+      this.assignedMembersID = task.assignedMembersID;
+      this.isCompleted = task.isCompleted;
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

@@ -131,6 +131,7 @@ class GroupSetListScreen2 extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
+                              FocusScope.of(context).unfocus();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

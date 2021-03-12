@@ -2,7 +2,7 @@ import 'package:beet/screens/group_screens/group_add_event_screen.dart';
 import 'package:beet/screens/group_screens/group_event_details_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/event_list_tile.dart';
-import 'package:beet/widgets/group_calendar.dart';
+import 'package:beet/widgets/calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/models/group_models/group_calendar_model.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
@@ -21,7 +21,7 @@ class GroupCalendarScreen extends StatelessWidget {
           children: <Widget>[
             Column(
               children: <Widget>[
-                GroupCalendar(model: model),
+                Calendar(model: model),
                 BasicDivider(),
                 Expanded(
                   child: Scrollbar(

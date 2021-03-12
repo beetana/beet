@@ -61,11 +61,12 @@ service cloud.firestore {
 
     // 曲データのスキーマ検証
     function isValidSongData(songData) {
-      return songData.size() == 4
+      return songData.size() == 5
         && 'title' in songData && songData.title is string
         && 'minute' in songData && songData.minute is int
         && 'memo' in songData && songData.memo is string
-        && 'createdAt' in songData && songData.createdAt is timestamp;
+        && 'createdAt' in songData && songData.createdAt is timestamp
+        && 'updatedAt' in songData && songData.updatedAt is timestamp;
     }
 
     // グループに参加しているユーザーデータのスキーマ検証
@@ -198,13 +199,15 @@ service cloud.firestore {
           && isValidSongData(request.resource.data)
           && request.resource.data.title.size() >= 1
           && request.resource.data.minute >= 0
-          && request.resource.data.createdAt == request.time;
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.updatedAt == request.time;
 
         allow update: if isGroupMember(request.auth.uid, groupId)
           && isValidSongData(request.resource.data)
           && request.resource.data.title.size() >= 1
           && request.resource.data.minute >= 0
-          && request.resource.data.createdAt == resource.data.createdAt;
+          && request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.updatedAt == request.time;
 
         allow delete: if isGroupMember(request.auth.uid, groupId);
       }

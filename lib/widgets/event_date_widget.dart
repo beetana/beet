@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EventDateWidget extends StatelessWidget {
-  EventDateWidget({
-    this.isAllDay,
-    this.startingDateTime,
-    this.endingDateTime,
-  });
-
   final bool isAllDay;
   final DateTime startingDateTime;
   final DateTime endingDateTime;
   final dateFormat = DateFormat('y/M/d(E)  H:mm', 'ja_JP');
   final allDayDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+
+  EventDateWidget({
+    this.isAllDay,
+    this.startingDateTime,
+    this.endingDateTime,
+  });
 
   @override
   Widget build(BuildContext context) {

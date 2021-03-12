@@ -7,11 +7,12 @@ class AssignTaskListTile extends StatelessWidget {
   final bool isChecked;
   final Function tileTappedCallback;
 
-  AssignTaskListTile(
-      {this.userName,
-      this.userImageURL,
-      this.isChecked,
-      this.tileTappedCallback});
+  AssignTaskListTile({
+    this.userName,
+    this.userImageURL,
+    this.isChecked,
+    this.tileTappedCallback,
+  });
 
   @override
   Widget build(BuildContext context) {

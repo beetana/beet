@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class GroupCalendar extends StatefulWidget {
-  GroupCalendar({Key key, this.model}) : super(key: key);
   final model;
+
+  GroupCalendar({Key key, this.model}) : super(key: key);
 
   @override
   _GroupCalendarState createState() => _GroupCalendarState();

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ThinDivider extends StatelessWidget {
-  ThinDivider({this.indent, this.endIndent});
   final double indent;
   final double endIndent;
+
+  ThinDivider({this.indent, this.endIndent});
 
   @override
   Widget build(BuildContext context) {

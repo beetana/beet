@@ -129,15 +129,13 @@ class GroupEditTaskModel extends ChangeNotifier {
           .doc(groupID)
           .collection('tasks')
           .doc(taskID)
-          .set({
+          .update({
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
         'assignedMembersID': assignedMembersID,
-        'ownerID': groupID,
-        'isCompleted': isCompleted,
-        'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

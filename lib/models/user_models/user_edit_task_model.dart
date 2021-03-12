@@ -136,6 +136,7 @@ class UserEditTaskModel extends ChangeNotifier {
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
         'assignedMembersID': assignedMembersID,
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

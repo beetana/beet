@@ -128,6 +128,7 @@ class GroupAddTaskModel extends ChangeNotifier {
         'ownerID': groupID,
         'isCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

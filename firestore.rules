@@ -27,6 +27,14 @@ service cloud.firestore {
         && 'createdAt' in userData && userData.createdAt is timestamp;
     }
 
+    // グループデータのスキーマ検証
+    function isValidGroupData(groupData) {
+      return groupData.size() == 3
+        && 'name' in groupData && groupData.name is string
+        && 'imageURL' in groupData && groupData.imageURL is string
+        && 'createdAt' in groupData && groupData.createdAt is timestamp;
+    }
+
     // イベントデータのスキーマ検証
     function isValidEventData(eventData) {
       return eventData.size() == 11
@@ -43,20 +51,26 @@ service cloud.firestore {
         && 'updatedAt' in eventData && eventData.updatedAt is timestamp;
     }
 
+    // タスクデータのスキーマ検証
+    function isValidTaskData(taskData) {
+      return taskData.size() == 9
+        && 'ownerID' in taskData && taskData.ownerID is string
+        && 'title' in taskData && taskData.title is string
+        && 'memo' in taskData && taskData.memo is string
+        && 'isCompleted' in taskData && taskData.isCompleted is bool
+        && 'isDecidedDueDate' in taskData && taskData.isDecidedDueDate is bool
+        && 'dueDate' in taskData && (taskData.dueDate is timestamp || taskData.dueDate == null)
+        && 'assignedMembersID' in taskData && taskData.assignedMembersID is list
+        && 'createdAt' in taskData && taskData.createdAt is timestamp
+        && 'updatedAt' in taskData && taskData.updatedAt is timestamp;
+    }
+
     // ユーザーが参加しているグループデータのスキーマ検証
     function isValidJoiningGroupData(joiningGroupData) {
       return joiningGroupData.size() == 3
         && 'name' in joiningGroupData && joiningGroupData.name is string
         && 'imageURL' in joiningGroupData && joiningGroupData.imageURL is string
         && 'joinedAt' in joiningGroupData && joiningGroupData.joinedAt is timestamp;
-    }
-
-    // グループデータのスキーマ検証
-    function isValidGroupData(groupData) {
-      return groupData.size() == 3
-        && 'name' in groupData && groupData.name is string
-        && 'imageURL' in groupData && groupData.imageURL is string
-        && 'createdAt' in groupData && groupData.createdAt is timestamp;
     }
 
     // 曲データのスキーマ検証
@@ -83,7 +97,6 @@ service cloud.firestore {
 
       allow create: if isDocumentAuthor(userId)
         && isValidUserData(request.resource.data)
-        // 名前の文字数の上限を決めたい
         && request.resource.data.name.size() >= 1
         && request.resource.data.imageURL == ''
         && request.resource.data.createdAt == request.time;
@@ -121,9 +134,29 @@ service cloud.firestore {
       }
 
       // users/{userId}/tasks
-      // match /tasks/{taskId} {
-      //   allow read, write: if true;
-      // }
+      match /tasks/{taskId} {
+        allow get: if isDocumentAuthor(userId);
+
+        allow create: if isDocumentAuthor(userId)
+          && isValidTaskData(request.resource.data)
+          && request.resource.data.ownerID == userId
+          && request.resource.data.title.size() >= 1
+          && request.resource.data.assignedMembersID.size() == 1
+          && request.resource.data.assignedMembersID.hasOnly([userId])
+          && request.resource.data.isCompleted == false
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.updatedAt == request.time;
+
+        allow update: if isDocumentAuthor(userId)
+          && isValidTaskData(request.resource.data)
+          && request.resource.data.ownerID == resource.data.ownerID
+          && request.resource.data.title.size() >= 1
+          && request.resource.data.assignedMembersID == resource.data.assignedMembersID
+          && request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.updatedAt == request.time;
+
+        allow delete: if isDocumentAuthor(userId);
+      }
 
       // /users/{userId}/joiningGroup
       match /joiningGroup/{groupId} {
@@ -187,9 +220,26 @@ service cloud.firestore {
       }
 
       // groups/{groupId}/tasks
-      // match /tasks/{taskId} {
-      //   allow read, write: if true;
-      // }
+      match /tasks/{taskId} {
+        allow get: if isGroupMember(request.auth.uid, groupId);
+
+        allow create: if isGroupMember(request.auth.uid, groupId)
+          && isValidTaskData(request.resource.data)
+          && request.resource.data.ownerID == groupId
+          && request.resource.data.title.size() >= 1
+          && request.resource.data.isCompleted == false
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.updatedAt == request.time;
+
+        allow update: if isGroupMember(request.auth.uid, groupId)
+          && isValidTaskData(request.resource.data)
+          && request.resource.data.ownerID == resource.data.ownerID
+          && request.resource.data.title.size() >= 1
+          && request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.updatedAt == request.time;
+
+        allow delete: if isGroupMember(request.auth.uid, groupId);
+      }
 
       // /groups/{groupId}/songs
       match /songs/{songId} {
@@ -235,7 +285,7 @@ service cloud.firestore {
       allow list: if isAuthenticated();
     }
     match /{path=**}/tasks/{task} {
-      allow read, write: if true;
+      allow list: if isAuthenticated();
     }
   }
 }

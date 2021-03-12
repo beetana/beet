@@ -19,6 +19,7 @@ class UserTaskDetailsModel extends ChangeNotifier {
   bool isCompleted;
   bool isLoading = false;
   ContentOwner owner;
+  DocumentReference ownerDocRef;
   final firestore = FirebaseFirestore.instance;
 
   void startLoading() {
@@ -43,8 +44,8 @@ class UserTaskDetailsModel extends ChangeNotifier {
     this.dueDate = task.dueDate;
     this.assignedMembersID = task.assignedMembersID;
     this.isCompleted = task.isCompleted;
-    final ownerDocRef = ownerID == userID
-        ? firestore.collection('users').doc(ownerID)
+    this.ownerDocRef = ownerID == userID
+        ? firestore.collection('users').doc(userID)
         : firestore.collection('groups').doc(ownerID);
     try {
       final ownerDoc = await ownerDocRef.get();
@@ -66,27 +67,17 @@ class UserTaskDetailsModel extends ChangeNotifier {
   }
 
   Future getTask() async {
-    final taskDocRef = this.ownerID == this.userID
-        ? firestore
-            .collection('users')
-            .doc(this.userID)
-            .collection('tasks')
-            .doc(this.taskID)
-        : firestore
-            .collection('groups')
-            .doc(this.ownerID)
-            .collection('tasks')
-            .doc(this.taskID);
     try {
-      DocumentSnapshot taskDoc = await taskDocRef.get();
+      DocumentSnapshot taskDoc =
+          await ownerDocRef.collection('tasks').doc(taskID).get();
       this.task = Task.doc(taskDoc);
-      this.ownerID = this.task.ownerID;
-      this.taskTitle = this.task.title;
-      this.taskMemo = this.task.memo;
-      this.isDecidedDueDate = this.task.isDecidedDueDate;
-      this.dueDate = this.task.dueDate;
-      this.assignedMembersID = this.task.assignedMembersID;
-      this.isCompleted = this.task.isCompleted;
+      this.ownerID = task.ownerID;
+      this.taskTitle = task.title;
+      this.taskMemo = task.memo;
+      this.isDecidedDueDate = task.isDecidedDueDate;
+      this.dueDate = task.dueDate;
+      this.assignedMembersID = task.assignedMembersID;
+      this.isCompleted = task.isCompleted;
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');
@@ -95,11 +86,8 @@ class UserTaskDetailsModel extends ChangeNotifier {
   }
 
   Future deleteTask() async {
-    final ownerDocRef = this.ownerID == this.userID
-        ? firestore.collection('users').doc(this.userID)
-        : firestore.collection('groups').doc(this.ownerID);
     try {
-      await ownerDocRef.collection('tasks').doc(this.taskID).delete();
+      await ownerDocRef.collection('tasks').doc(taskID).delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

@@ -67,14 +67,26 @@ class GroupTaskListScreen extends StatelessWidget {
                                       final task =
                                           model.notCompletedTasks[index];
                                       return TaskListTile(
-                                        taskTitle: task.title,
-                                        dueDate: task.dueDate,
-                                        isCompleted: task.isCompleted,
-                                        assignedMembersID:
-                                            task.assignedMembersID,
+                                        task: task,
                                         users: model.members,
                                         checkboxCallback: (value) {
-                                          model.toggleCheckState(task);
+                                          model.toggleCheckState(task: task);
+                                        },
+                                        longPressedCallBack: () async {
+                                          bool isDelete =
+                                              await _confirmDeleteDialog(
+                                                  context, 'このタスクを削除しますか？');
+                                          if (isDelete == true) {
+                                            model.startLoading();
+                                            try {
+                                              await model.deleteTask(
+                                                  task: task);
+                                            } catch (e) {
+                                              _showTextDialog(
+                                                  context, e.toString());
+                                            }
+                                            model.endLoading();
+                                          }
                                         },
                                         tileTappedCallback: () async {
                                           await Navigator.push(
@@ -89,8 +101,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                           );
                                           model.startLoading();
                                           try {
-                                            await model.getTaskList(
-                                                groupID: groupID);
+                                            await model.getTaskList();
                                           } catch (e) {
                                             _showTextDialog(
                                                 context, e.toString());
@@ -119,14 +130,26 @@ class GroupTaskListScreen extends StatelessWidget {
                                     if (index < model.completedTasks.length) {
                                       final task = model.completedTasks[index];
                                       return TaskListTile(
-                                        taskTitle: task.title,
-                                        dueDate: task.dueDate,
-                                        isCompleted: task.isCompleted,
-                                        assignedMembersID:
-                                            task.assignedMembersID,
+                                        task: task,
                                         users: model.members,
                                         checkboxCallback: (value) {
-                                          model.toggleCheckState(task);
+                                          model.toggleCheckState(task: task);
+                                        },
+                                        longPressedCallBack: () async {
+                                          bool isDelete =
+                                              await _confirmDeleteDialog(
+                                                  context, 'このタスクを削除しますか？');
+                                          if (isDelete == true) {
+                                            model.startLoading();
+                                            try {
+                                              await model.deleteTask(
+                                                  task: task);
+                                            } catch (e) {
+                                              _showTextDialog(
+                                                  context, e.toString());
+                                            }
+                                            model.endLoading();
+                                          }
                                         },
                                         tileTappedCallback: () async {
                                           await Navigator.push(
@@ -141,8 +164,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                           );
                                           model.startLoading();
                                           try {
-                                            await model.getTaskList(
-                                                groupID: groupID);
+                                            await model.getTaskList();
                                           } catch (e) {
                                             _showTextDialog(
                                                 context, e.toString());
@@ -180,7 +202,7 @@ class GroupTaskListScreen extends StatelessWidget {
                         : () async {
                             model.startLoading();
                             await model.updateCheckState();
-                            await model.getTaskList(groupID: groupID);
+                            await model.getTaskList();
                             model.endLoading();
                           },
                     disabledTextColor: kTransparentPrimaryColor,
@@ -214,7 +236,7 @@ class GroupTaskListScreen extends StatelessWidget {
                           fullscreenDialog: true,
                         ),
                       );
-                      model.getTaskList(groupID: groupID);
+                      model.getTaskList();
                     },
                   ),
                 ],
@@ -249,4 +271,37 @@ Future _showTextDialog(context, message) async {
       );
     },
   );
+}
+
+Future _confirmDeleteDialog(context, message) async {
+  bool _isDelete;
+  _isDelete = await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(message),
+        actions: [
+          FlatButton(
+            child: Text(
+              'キャンセル',
+              style: kCancelButtonTextStyle,
+            ),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+          FlatButton(
+            child: Text(
+              '削除',
+              style: kDeleteButtonTextStyle,
+            ),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+        ],
+      );
+    },
+  );
+  return _isDelete;
 }

@@ -49,7 +49,10 @@ class GroupSetListScreen2 extends StatelessWidget {
                         children: <Widget>[
                           TextField(
                             controller: eventTitleController,
-                            decoration: InputDecoration(hintText: 'イベントタイトル'),
+                            decoration: InputDecoration(
+                              hintText: 'イベントタイトル',
+                              border: InputBorder.none,
+                            ),
                             onTap: () {
                               if (model.isShowEventDatePicker == true) {
                                 model.showEventDatePicker();
@@ -59,9 +62,13 @@ class GroupSetListScreen2 extends StatelessWidget {
                               model.eventTitle = text;
                             },
                           ),
+                          BasicDivider(),
                           TextField(
                             controller: eventPlaceController,
-                            decoration: InputDecoration(hintText: '会場'),
+                            decoration: InputDecoration(
+                              hintText: '会場',
+                              border: InputBorder.none,
+                            ),
                             onTap: () {
                               if (model.isShowEventDatePicker == true) {
                                 model.showEventDatePicker();
@@ -71,7 +78,10 @@ class GroupSetListScreen2 extends StatelessWidget {
                               model.eventPlace = text;
                             },
                           ),
+                          BasicDivider(),
                           ListTile(
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 0.0),
                             title: Text(
                               '日付',
                               style: TextStyle(

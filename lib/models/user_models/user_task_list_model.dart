@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UserTaskListModel extends ChangeNotifier {
-  final firestore = FirebaseFirestore.instance;
   String userID = '';
   Map<String, User> joiningGroupUsers = {};
   List<Task> tasks = [];
@@ -12,6 +11,7 @@ class UserTaskListModel extends ChangeNotifier {
   List<Task> notCompletedTasks = [];
   List<Task> changeStateTasks = [];
   bool isLoading = false;
+  final firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -107,5 +107,29 @@ class UserTaskListModel extends ChangeNotifier {
         ? changeStateTasks.remove(task)
         : changeStateTasks.add(task);
     notifyListeners();
+  }
+
+  Future deleteTask({Task task}) async {
+    final taskDocRef = task.ownerID == userID
+        ? firestore
+            .collection('users')
+            .doc(userID)
+            .collection('tasks')
+            .doc(task.id)
+        : firestore
+            .collection('groups')
+            .doc(task.ownerID)
+            .collection('tasks')
+            .doc(task.id);
+    try {
+      await taskDocRef.delete();
+      tasks.remove(task);
+      completedTasks.remove(task);
+      notCompletedTasks.remove(task);
+      changeStateTasks.remove(task);
+    } catch (e) {
+      print(e);
+      throw ('エラーが発生しました');
+    }
   }
 }

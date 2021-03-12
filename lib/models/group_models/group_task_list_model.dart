@@ -4,14 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class GroupTaskListModel extends ChangeNotifier {
-  final firestore = FirebaseFirestore.instance;
-  String groupID = '';
   Map<String, User> members = {};
   List<Task> tasks = [];
   List<Task> completedTasks = [];
   List<Task> notCompletedTasks = [];
   List<Task> changeStateTasks = [];
   bool isLoading = false;
+  DocumentReference groupDocRef;
+  final firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -25,34 +25,27 @@ class GroupTaskListModel extends ChangeNotifier {
 
   Future init({String groupID}) async {
     startLoading();
-    this.groupID = groupID;
+    groupDocRef = firestore.collection('groups').doc(groupID);
     try {
-      QuerySnapshot groupUsers = await firestore
-          .collection('groups')
-          .doc(groupID)
-          .collection('groupUsers')
-          .get();
+      QuerySnapshot groupUsers =
+          await groupDocRef.collection('groupUsers').get();
       final users = groupUsers.docs.map((doc) => User.doc(doc)).toList();
       users.forEach((user) {
         members[user.id] = user;
       });
-      await getTaskList(groupID: groupID);
+      await getTaskList();
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future getTaskList({String groupID}) async {
+  Future getTaskList() async {
     completedTasks = [];
     notCompletedTasks = [];
     changeStateTasks = [];
     try {
-      QuerySnapshot taskQuery = await firestore
-          .collection('groups')
-          .doc(groupID)
-          .collection('tasks')
-          .get();
+      QuerySnapshot taskQuery = await groupDocRef.collection('tasks').get();
       tasks = taskQuery.docs.map((doc) => Task.doc(doc)).toList();
       tasks.forEach((task) {
         task.isCompleted
@@ -71,11 +64,7 @@ class GroupTaskListModel extends ChangeNotifier {
     try {
       final batch = firestore.batch();
       changeStateTasks.forEach((task) {
-        final taskDocRef = firestore
-            .collection('groups')
-            .doc(groupID)
-            .collection('tasks')
-            .doc(task.id);
+        final taskDocRef = groupDocRef.collection('tasks').doc(task.id);
         batch.update(taskDocRef, {
           'isCompleted': task.isCompleted,
         });
@@ -87,11 +76,24 @@ class GroupTaskListModel extends ChangeNotifier {
     }
   }
 
-  void toggleCheckState(Task task) {
+  void toggleCheckState({Task task}) {
     task.toggleCheckState();
     changeStateTasks.contains(task)
         ? changeStateTasks.remove(task)
         : changeStateTasks.add(task);
     notifyListeners();
+  }
+
+  Future deleteTask({Task task}) async {
+    try {
+      await groupDocRef.collection('tasks').doc(task.id).delete();
+      tasks.remove(task);
+      completedTasks.remove(task);
+      notCompletedTasks.remove(task);
+      changeStateTasks.remove(task);
+    } catch (e) {
+      print(e);
+      throw ('エラーが発生しました');
+    }
   }
 }

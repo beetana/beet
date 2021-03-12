@@ -32,6 +32,7 @@ class GroupAddSongModel extends ChangeNotifier {
         'minute': songPlayingTime,
         'memo': songMemo,
         'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

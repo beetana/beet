@@ -2,16 +2,16 @@ import 'package:beet/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class GroupCalendar extends StatefulWidget {
+class Calendar extends StatefulWidget {
   final model;
 
-  GroupCalendar({Key key, this.model}) : super(key: key);
+  Calendar({Key key, this.model}) : super(key: key);
 
   @override
-  _GroupCalendarState createState() => _GroupCalendarState();
+  _CalendarState createState() => _CalendarState();
 }
 
-class _GroupCalendarState extends State<GroupCalendar> {
+class _CalendarState extends State<Calendar> {
   CalendarController _calendarController;
 
   @override

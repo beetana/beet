@@ -225,29 +225,19 @@ class UserTaskListScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  AddFloatingActionButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserAddTaskScreen(
-                            userID: userID,
-                          ),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                      model.getTaskList(userID: userID);
-                    },
+            AddFloatingActionButton(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserAddTaskScreen(
+                      userID: userID,
+                    ),
+                    fullscreenDialog: true,
                   ),
-                ],
-              ),
+                );
+                model.getTaskList(userID: userID);
+              },
             ),
             model.isLoading
                 ? Center(

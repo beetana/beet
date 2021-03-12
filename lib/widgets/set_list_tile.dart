@@ -28,13 +28,13 @@ class SetListTile extends StatelessWidget {
         songNum.add(numText);
       }
     }
-    return ListTile(
-      title: Text(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Text(
         '${songNum[index]} ${setList[index]}',
         style: TextStyle(fontSize: 20.0),
         overflow: TextOverflow.ellipsis,
       ),
-      onTap: () {},
     );
   }
 }

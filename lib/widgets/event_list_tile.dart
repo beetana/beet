@@ -1,29 +1,22 @@
+import 'package:beet/objects/event.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EventListTile extends StatelessWidget {
-  EventListTile({
-    this.imageURL,
-    this.name,
-    @required this.eventTitle,
-    @required this.eventPlace,
-    @required this.isAllDay,
-    @required this.startingDateTime,
-    @required this.endingDateTime,
-    @required this.onTap,
-  });
-
+  final Event event;
+  final Function onTap;
   final String imageURL;
   final String name;
-  final String eventTitle;
-  final String eventPlace;
-  final bool isAllDay;
-  final DateTime startingDateTime;
-  final DateTime endingDateTime;
-  final Function onTap;
   final DateFormat dateFormat = DateFormat('M/d');
   final DateFormat timeFormat = DateFormat('H:mm');
+
+  EventListTile({
+    @required this.event,
+    @required this.onTap,
+    this.imageURL,
+    this.name,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +39,14 @@ class EventListTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   EventOverView(
-                    eventTitle: eventTitle,
-                    eventPlace: eventPlace,
+                    eventTitle: event.title,
+                    eventPlace: event.place,
                   ),
                   EventDateTime(
-                      isAllDay: isAllDay,
+                      isAllDay: event.isAllDay,
                       dateFormat: dateFormat,
-                      startingDateTime: startingDateTime,
-                      endingDateTime: endingDateTime,
+                      startingDateTime: event.startingDateTime,
+                      endingDateTime: event.endingDateTime,
                       timeFormat: timeFormat),
                 ],
               ),

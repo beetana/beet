@@ -219,28 +219,17 @@ class GroupTaskListScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  AddFloatingActionButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              GroupAddTaskScreen(groupID: groupID),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                      model.getTaskList();
-                    },
+            AddFloatingActionButton(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GroupAddTaskScreen(groupID: groupID),
+                    fullscreenDialog: true,
                   ),
-                ],
-              ),
+                );
+                model.getTaskList();
+              },
             ),
             model.isLoading
                 ? Center(

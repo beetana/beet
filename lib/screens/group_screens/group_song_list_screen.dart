@@ -50,9 +50,7 @@ class GroupSongListScreen extends StatelessWidget {
                           if (index < model.songList.length) {
                             final song = model.songList[index];
                             return SongListTile(
-                              songTitle: song.title,
-                              songMinute: song.playingTime.toString(),
-                              isChecked: song.checkboxState,
+                              song: song,
                               isVisible: model.isSetListMode,
                               checkboxCallback: (value) {
                                 model.selectSong(song);
@@ -137,30 +135,20 @@ class GroupSongListScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Visibility(
-                      visible: !model.isSetListMode,
-                      child: AddFloatingActionButton(
-                        onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  GroupAddSongScreen(groupID: groupID),
-                              fullscreenDialog: true,
-                            ),
-                          );
-                          model.getSongList(groupID);
-                        },
+              Visibility(
+                visible: !model.isSetListMode,
+                child: AddFloatingActionButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            GroupAddSongScreen(groupID: groupID),
+                        fullscreenDialog: true,
                       ),
-                    ),
-                  ],
+                    );
+                    model.getSongList(groupID);
+                  },
                 ),
               ),
             ],
@@ -175,28 +163,18 @@ class GroupSongListScreen extends StatelessWidget {
               Center(
                 child: Text('曲が登録されていません'),
               ),
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    AddFloatingActionButton(
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                GroupAddSongScreen(groupID: groupID),
-                            fullscreenDialog: true,
-                          ),
-                        );
-                        model.getSongList(groupID);
-                      },
+              AddFloatingActionButton(
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          GroupAddSongScreen(groupID: groupID),
+                      fullscreenDialog: true,
                     ),
-                  ],
-                ),
+                  );
+                  model.getSongList(groupID);
+                },
               ),
             ],
           );

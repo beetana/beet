@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class UserCalendar extends StatefulWidget {
-  UserCalendar({Key key, this.model}) : super(key: key);
   final model;
+
+  UserCalendar({Key key, this.model}) : super(key: key);
 
   @override
   _UserCalendarState createState() => _UserCalendarState();

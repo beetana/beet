@@ -33,14 +33,10 @@ class UserCalendarScreen extends StatelessWidget {
                         if (index < model.selectedEvents.length) {
                           final event = model.selectedEvents[index];
                           return EventListTile(
+                            event: event,
                             imageURL:
                                 model.eventPlanner[event.ownerID].imageURL,
                             name: model.eventPlanner[event.ownerID].name,
-                            eventTitle: event.title,
-                            eventPlace: event.place,
-                            isAllDay: event.isAllDay,
-                            startingDateTime: event.startingDateTime,
-                            endingDateTime: event.endingDateTime,
                             onTap: () async {
                               await Navigator.push(
                                 context,
@@ -64,31 +60,21 @@ class UserCalendarScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  AddFloatingActionButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserAddEventScreen(
-                            userID: userID,
-                            dateTime: model.selectedDay,
-                          ),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                      await model.getEvents();
-                      model.getSelectedEvents();
-                    },
+            AddFloatingActionButton(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserAddEventScreen(
+                      userID: userID,
+                      dateTime: model.selectedDay,
+                    ),
+                    fullscreenDialog: true,
                   ),
-                ],
-              ),
+                );
+                await model.getEvents();
+                model.getSelectedEvents();
+              },
             ),
           ],
         );

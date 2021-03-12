@@ -8,6 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSetListScreen3 extends StatelessWidget {
+  final List<String> setList;
+  final String eventTitle;
+  final String eventPlace;
+  final String eventDateText;
+  final int songNum;
+  final int totalPlayTime;
+  final String groupID;
+
   GroupSetListScreen3({
     this.setList,
     this.eventTitle,
@@ -17,13 +25,6 @@ class GroupSetListScreen3 extends StatelessWidget {
     this.totalPlayTime,
     this.groupID,
   });
-  final List<String> setList;
-  final String eventTitle;
-  final String eventPlace;
-  final String eventDateText;
-  final int songNum;
-  final int totalPlayTime;
-  final String groupID;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +76,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                               ],
                             ),
                           ),
+                          SizedBox(height: 8.0),
                           Expanded(
                             child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),

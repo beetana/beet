@@ -4,6 +4,12 @@ import 'package:beet/objects/user.dart';
 import 'package:flutter/material.dart';
 
 class TaskListTile extends StatelessWidget {
+  final Task task;
+  final Map<String, User> users;
+  final Function checkboxCallback;
+  final Function longPressedCallBack;
+  final Function tileTappedCallback;
+
   TaskListTile({
     @required this.task,
     @required this.users,
@@ -11,12 +17,6 @@ class TaskListTile extends StatelessWidget {
     @required this.longPressedCallBack,
     @required this.tileTappedCallback,
   });
-
-  final Task task;
-  final Map<String, User> users;
-  final Function checkboxCallback;
-  final Function longPressedCallBack;
-  final Function tileTappedCallback;
 
   @override
   Widget build(BuildContext context) {

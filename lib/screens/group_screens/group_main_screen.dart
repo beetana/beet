@@ -95,11 +95,7 @@ class GroupMainScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final event = model.eventList[index];
                           return EventListTile(
-                            eventTitle: event.title,
-                            eventPlace: event.place,
-                            isAllDay: event.isAllDay,
-                            startingDateTime: event.startingDateTime,
-                            endingDateTime: event.endingDateTime,
+                            event: event,
                             onTap: () async {
                               await Navigator.push(
                                 context,

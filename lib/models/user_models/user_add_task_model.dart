@@ -106,6 +106,7 @@ class UserAddTaskModel extends ChangeNotifier {
         'ownerID': userID,
         'isCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print(e);

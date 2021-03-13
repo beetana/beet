@@ -1,4 +1,5 @@
 import 'package:beet/screens/group_screens/group_screen.dart';
+import 'package:beet/utilities/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
@@ -77,15 +78,20 @@ class DynamicLinksServices {
           title: Text('$groupNameに招待されました。\n参加しますか？'),
           actions: [
             FlatButton(
+              child: Text(
+                'キャンセル',
+                style: kCancelButtonTextStyle,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
               child: Text('参加'),
               onPressed: () async {
                 showIndicator(context);
-                final isAlreadyJoin = await joinGroup(groupId: groupId);
-                if (isAlreadyJoin == true) {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  await alertMessageDialog(context, 'すでにグループに参加しています');
-                } else {
+                final joiningState = await joinGroup(groupId: groupId);
+                if (joiningState == JoiningState.notYet) {
                   Navigator.pop(context);
                   Navigator.pushReplacement(
                     context,
@@ -95,13 +101,19 @@ class DynamicLinksServices {
                       ),
                     ),
                   );
+                } else if (joiningState == JoiningState.already) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  await alertMessageDialog(context, 'すでにグループに参加しています');
+                } else if (joiningState == JoiningState.noMore) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  await alertMessageDialog(context, '参加できるグループの数は8個までです');
+                } else {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  await alertMessageDialog(context, '不明なエラーです');
                 }
-              },
-            ),
-            FlatButton(
-              child: Text('キャンセル'),
-              onPressed: () {
-                Navigator.pop(context);
               },
             ),
           ],
@@ -148,24 +160,29 @@ class DynamicLinksServices {
     );
   }
 
-  Future<bool> joinGroup({String groupId}) async {
+  Future<JoiningState> joinGroup({String groupId}) async {
     String userId = user.uid;
     String userName = '';
     String userImageURL = '';
     String groupName = '';
     String groupImageURL = '';
-    bool isAlreadyJoin = false;
+    JoiningState joiningState;
     final userDocRef =
         FirebaseFirestore.instance.collection('users').doc(userId);
     final groupDocRef =
         FirebaseFirestore.instance.collection('groups').doc(groupId);
 
     try {
+      final joiningGroupQuery =
+          await userDocRef.collection('joiningGroup').get();
       final joiningGroupDoc =
           await userDocRef.collection('joiningGroup').doc(groupId).get();
-      print(!joiningGroupDoc.exists);
 
-      if (!joiningGroupDoc.exists) {
+      if (joiningGroupQuery.size >= 8) {
+        joiningState = JoiningState.noMore;
+      } else if (joiningGroupDoc.exists) {
+        joiningState = JoiningState.already;
+      } else {
         final userDoc = await userDocRef.get();
         userName = userDoc['name'];
         userImageURL = userDoc['imageURL'];
@@ -185,14 +202,13 @@ class DynamicLinksServices {
           'imageURL': groupImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
         });
-      } else {
-        isAlreadyJoin = true;
+        joiningState = JoiningState.notYet;
       }
     } catch (e) {
       print(e);
     }
-    print(isAlreadyJoin);
-    return isAlreadyJoin;
+    print(joiningState);
+    return joiningState;
   }
 
   void showIndicator(context) {
@@ -208,4 +224,15 @@ class DynamicLinksServices {
       },
     );
   }
+}
+
+enum JoiningState {
+  // まだ参加してない
+  notYet,
+
+  // すでに参加している
+  already,
+
+  // これ以上は参加できない
+  noMore,
 }

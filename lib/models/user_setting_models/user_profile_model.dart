@@ -7,22 +7,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserProfileModel extends ChangeNotifier {
-  String userID = '';
+  String userId = '';
   String userName = '';
   String userImageURL = '';
   File imageFile;
   bool isLoading = false;
-  List<String> joiningGroupsID = [];
+  List<String> joiningGroupsId = [];
   final _auth = Auth.FirebaseAuth.instance;
-
-  Future init({userID}) async {
-    this.userID = userID;
-    DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(userID).get();
-    userName = userDoc['name'];
-    userImageURL = userDoc['imageURL'];
-    notifyListeners();
-  }
 
   void startLoading() {
     isLoading = true;
@@ -32,6 +23,22 @@ class UserProfileModel extends ChangeNotifier {
   void endLoading() {
     isLoading = false;
     notifyListeners();
+  }
+
+  Future init({String userId}) async {
+    startLoading();
+    this.userId = userId;
+    try {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+      userName = userDoc['name'];
+      userImageURL = userDoc['imageURL'];
+    } catch (e) {
+      print(e);
+    }
+    endLoading();
   }
 
   Future pickImageFile() async {
@@ -75,24 +82,24 @@ class UserProfileModel extends ChangeNotifier {
     try {
       TaskSnapshot snapshot = await FirebaseStorage.instance
           .ref()
-          .child("userImage/$userID")
+          .child("userImage/$userId")
           .putFile(imageFile);
       userImageURL = await snapshot.ref.getDownloadURL();
       final joiningGroups = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userID)
+          .doc(userId)
           .collection('joiningGroup')
           .get();
-      joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
-      await FirebaseFirestore.instance.collection('users').doc(userID).update({
+      joiningGroupsId = (joiningGroups.docs.map((doc) => doc.id).toList());
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
         'imageURL': userImageURL,
       });
-      for (String groupID in joiningGroupsID) {
+      for (String groupId in joiningGroupsId) {
         await FirebaseFirestore.instance
             .collection('groups')
-            .doc(groupID)
+            .doc(groupId)
             .collection('groupUsers')
-            .doc(userID)
+            .doc(userId)
             .update({
           'imageURL': userImageURL,
         });
@@ -109,22 +116,22 @@ class UserProfileModel extends ChangeNotifier {
     }
 
     try {
-      await FirebaseStorage.instance.ref().child("userImage/$userID").delete();
+      await FirebaseStorage.instance.ref().child("userImage/$userId").delete();
       final joiningGroups = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userID)
+          .doc(userId)
           .collection('joiningGroup')
           .get();
-      joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
-      await FirebaseFirestore.instance.collection('users').doc(userID).update({
+      joiningGroupsId = (joiningGroups.docs.map((doc) => doc.id).toList());
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
         'imageURL': '',
       });
-      for (String groupID in joiningGroupsID) {
+      for (String groupId in joiningGroupsId) {
         await FirebaseFirestore.instance
             .collection('groups')
-            .doc(groupID)
+            .doc(groupId)
             .collection('groupUsers')
-            .doc(userID)
+            .doc(userId)
             .update({
           'imageURL': '',
         });
@@ -140,7 +147,7 @@ class UserProfileModel extends ChangeNotifier {
   Future deleteAccount({String password}) async {
     final user = _auth.currentUser;
     final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(userID);
+        FirebaseFirestore.instance.collection('users').doc(userId);
     try {
       await user.reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
         email: user.email,
@@ -150,19 +157,19 @@ class UserProfileModel extends ChangeNotifier {
       if (userImageURL.isNotEmpty) {
         await FirebaseStorage.instance
             .ref()
-            .child("userImage/$userID")
+            .child("userImage/$userId")
             .delete();
       }
       // 参加しているグループから自分のドキュメントを削除
       final joiningGroups = await userDocRef.collection('joiningGroup').get();
       print(joiningGroups);
-      joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
-      print(joiningGroupsID);
-      if (joiningGroupsID.isNotEmpty) {
-        for (String groupID in joiningGroupsID) {
+      joiningGroupsId = (joiningGroups.docs.map((doc) => doc.id).toList());
+      print(joiningGroupsId);
+      if (joiningGroupsId.isNotEmpty) {
+        for (String groupId in joiningGroupsId) {
           final groupDocRef =
-              FirebaseFirestore.instance.collection('groups').doc(groupID);
-          await groupDocRef.collection('groupUsers').doc(userID).delete();
+              FirebaseFirestore.instance.collection('groups').doc(groupId);
+          await groupDocRef.collection('groupUsers').doc(userId).delete();
           print('削除');
         }
       }

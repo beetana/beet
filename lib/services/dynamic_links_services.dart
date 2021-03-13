@@ -9,10 +9,10 @@ class DynamicLinksServices {
   BuildContext context;
   Auth.User user = Auth.FirebaseAuth.instance.currentUser;
 
-  Future<Uri> createDynamicLink({String groupID, String groupName}) async {
+  Future<Uri> createDynamicLink({String groupId, String groupName}) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://beetana.page.link',
-      link: Uri.parse('https://beetana.page.link/?id=$groupID&name=$groupName'),
+      link: Uri.parse('https://beetana.page.link/?id=$groupId&name=$groupName'),
       androidParameters: AndroidParameters(
         packageName: 'com.beetana.beet',
         minimumVersion: 1,
@@ -53,15 +53,15 @@ class DynamicLinksServices {
   }
 
   void handleLinkData(PendingDynamicLinkData data) {
-    String invitedGroupID = '';
+    String invitedGroupId = '';
     String invitedGroupName = '';
 
     final Uri deepLink = data?.link;
     if (deepLink != null) {
       final queryParams = deepLink.queryParameters;
-      invitedGroupID = queryParams['id'];
+      invitedGroupId = queryParams['id'];
       invitedGroupName = queryParams['name'];
-      invitedDialog(context, invitedGroupID, invitedGroupName);
+      invitedDialog(context, invitedGroupId, invitedGroupName);
 
       print(queryParams);
       print('招待されたグループのIDは${queryParams['id']}');
@@ -69,7 +69,7 @@ class DynamicLinksServices {
     }
   }
 
-  Future invitedDialog(context, groupID, groupName) async {
+  Future invitedDialog(context, groupId, groupName) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -80,7 +80,7 @@ class DynamicLinksServices {
               child: Text('参加'),
               onPressed: () async {
                 showIndicator(context);
-                final isAlreadyJoin = await joinGroup(groupID);
+                final isAlreadyJoin = await joinGroup(groupId: groupId);
                 if (isAlreadyJoin == true) {
                   Navigator.pop(context);
                   Navigator.pop(context);
@@ -91,7 +91,7 @@ class DynamicLinksServices {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => GroupScreen(
-                        groupID: groupID,
+                        groupId: groupId,
                       ),
                     ),
                   );
@@ -148,21 +148,21 @@ class DynamicLinksServices {
     );
   }
 
-  Future<bool> joinGroup(groupID) async {
-    String userID = user.uid;
+  Future<bool> joinGroup({String groupId}) async {
+    String userId = user.uid;
     String userName = '';
     String userImageURL = '';
     String groupName = '';
     String groupImageURL = '';
     bool isAlreadyJoin = false;
     final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(userID);
+        FirebaseFirestore.instance.collection('users').doc(userId);
     final groupDocRef =
-        FirebaseFirestore.instance.collection('groups').doc(groupID);
+        FirebaseFirestore.instance.collection('groups').doc(groupId);
 
     try {
       final joiningGroupDoc =
-          await userDocRef.collection('joiningGroup').doc(groupID).get();
+          await userDocRef.collection('joiningGroup').doc(groupId).get();
       print(!joiningGroupDoc.exists);
 
       if (!joiningGroupDoc.exists) {
@@ -170,7 +170,7 @@ class DynamicLinksServices {
         userName = userDoc['name'];
         userImageURL = userDoc['imageURL'];
 
-        await groupDocRef.collection('groupUsers').doc(userID).set({
+        await groupDocRef.collection('groupUsers').doc(userId).set({
           'name': userName,
           'imageURL': userImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
@@ -180,7 +180,7 @@ class DynamicLinksServices {
         groupName = groupDoc['name'];
         groupImageURL = groupDoc['imageURL'];
 
-        await userDocRef.collection('joiningGroup').doc(groupID).set({
+        await userDocRef.collection('joiningGroup').doc(groupId).set({
           'name': groupName,
           'imageURL': groupImageURL,
           'joinedAt': FieldValue.serverTimestamp(),

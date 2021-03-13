@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class UserEditEventModel extends ChangeNotifier {
-  String ownerID = '';
-  String eventID = '';
+  String ownerId = '';
+  String eventId = '';
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
@@ -36,7 +36,7 @@ class UserEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String userID, Event event}) {
+  void init({String userId, Event event}) {
     if (event.isAllDay == true) {
       this.tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       this.cupertinoDatePickerMode = CupertinoDatePickerMode.date;
@@ -63,17 +63,17 @@ class UserEditEventModel extends ChangeNotifier {
         );
       }
     }
-    this.ownerID = event.ownerID;
-    this.eventID = event.id;
+    this.ownerId = event.ownerId;
+    this.eventId = event.id;
     this.eventTitle = event.title;
     this.eventPlace = event.place;
     this.eventMemo = event.memo;
     this.isAllDay = event.isAllDay;
     this.startingDateTime = event.startingDateTime;
     this.endingDateTime = event.endingDateTime;
-    this.ownerDocRef = ownerID == userID
-        ? firestore.collection('users').doc(userID)
-        : firestore.collection('groups').doc(ownerID);
+    this.ownerDocRef = ownerId == userId
+        ? firestore.collection('users').doc(userId)
+        : firestore.collection('groups').doc(ownerId);
     notifyListeners();
   }
 
@@ -222,7 +222,7 @@ class UserEditEventModel extends ChangeNotifier {
     }
 
     try {
-      await this.ownerDocRef.collection('events').doc(this.eventID).update({
+      await this.ownerDocRef.collection('events').doc(this.eventId).update({
         'title': this.eventTitle,
         'place': this.eventPlace,
         'memo': this.eventMemo,

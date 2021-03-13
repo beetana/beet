@@ -12,12 +12,12 @@ class GroupSetListScreen2 extends StatelessWidget {
     this.setList,
     this.songNum,
     this.totalPlayTime,
-    this.groupID,
+    this.groupId,
   });
   final List<String> setList;
   final int songNum;
   final int totalPlayTime;
-  final String groupID;
+  final String groupId;
   final eventTitleController = TextEditingController();
   final eventPlaceController = TextEditingController();
 
@@ -142,7 +142,7 @@ class GroupSetListScreen2 extends StatelessWidget {
                                     eventDateText: model.eventDateText,
                                     songNum: songNum,
                                     totalPlayTime: totalPlayTime,
-                                    groupID: groupID,
+                                    groupId: groupId,
                                   ),
                                 ),
                               );

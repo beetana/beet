@@ -10,13 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSongListScreen extends StatelessWidget {
-  GroupSongListScreen({this.groupID});
-  final String groupID;
+  GroupSongListScreen({this.groupId});
+  final String groupId;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupSongListModel>(
-      create: (_) => GroupSongListModel()..getSongList(groupID),
+      create: (_) => GroupSongListModel()..getSongList(groupId: groupId),
       child: Consumer<GroupSongListModel>(builder: (context, model, child) {
         if (model.songList.isNotEmpty) {
           return Stack(
@@ -53,23 +53,23 @@ class GroupSongListScreen extends StatelessWidget {
                               song: song,
                               isVisible: model.isSetListMode,
                               checkboxCallback: (value) {
-                                model.selectSong(song);
+                                model.selectSong(song: song);
                               },
                               tileTappedCallback: () async {
                                 if (model.isSetListMode == true) {
-                                  model.selectSong(song);
+                                  model.selectSong(song: song);
                                 } else {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           GroupSongDetailsScreen(
-                                        groupID: groupID,
+                                        groupId: groupId,
                                         song: song,
                                       ),
                                     ),
                                   );
-                                  model.getSongList(groupID);
+                                  model.getSongList(groupId: groupId);
                                 }
                               },
                             );
@@ -112,7 +112,7 @@ class GroupSongListScreen extends StatelessWidget {
                                             selectedSongs: model.selectedSongs,
                                             songNum: model.songNum,
                                             totalPlayTime: model.totalPlayTime,
-                                            groupID: groupID,
+                                            groupId: groupId,
                                           ),
                                         ),
                                       );
@@ -143,11 +143,11 @@ class GroupSongListScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            GroupAddSongScreen(groupID: groupID),
+                            GroupAddSongScreen(groupId: groupId),
                         fullscreenDialog: true,
                       ),
                     );
-                    model.getSongList(groupID);
+                    model.getSongList(groupId: groupId);
                   },
                 ),
               ),
@@ -169,11 +169,11 @@ class GroupSongListScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          GroupAddSongScreen(groupID: groupID),
+                          GroupAddSongScreen(groupId: groupId),
                       fullscreenDialog: true,
                     ),
                   );
-                  model.getSongList(groupID);
+                  model.getSongList(groupId: groupId);
                 },
               ),
             ],

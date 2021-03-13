@@ -134,7 +134,7 @@ class GroupAddEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addEvent({groupID}) async {
+  Future addEvent({groupId}) async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
@@ -183,10 +183,10 @@ class GroupAddEventModel extends ChangeNotifier {
     try {
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('events')
           .add({
-        'ownerID': groupID,
+        'ownerId': groupId,
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,

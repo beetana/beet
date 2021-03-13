@@ -6,14 +6,9 @@ class AddGroupModel extends ChangeNotifier {
   String userName = '';
   String userImageURL = '';
   String groupName = '';
-  String groupID;
+  String groupId;
   bool isLoading = false;
   final _auth = Auth.FirebaseAuth.instance;
-
-  void init({String userName, String userImageURL}) {
-    this.userName = userName;
-    this.userImageURL = userImageURL;
-  }
 
   void startLoading() {
     isLoading = true;
@@ -23,6 +18,11 @@ class AddGroupModel extends ChangeNotifier {
   void endLoading() {
     isLoading = false;
     notifyListeners();
+  }
+
+  void init({String userName, String userImageURL}) {
+    this.userName = userName;
+    this.userImageURL = userImageURL;
   }
 
   Future addGroup() async {
@@ -37,10 +37,10 @@ class AddGroupModel extends ChangeNotifier {
         'imageURL': '',
         'createdAt': FieldValue.serverTimestamp(),
       });
-      groupID = newGroup.id;
+      groupId = newGroup.id;
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('groupUsers')
           .doc(user.uid)
           .set({
@@ -52,7 +52,7 @@ class AddGroupModel extends ChangeNotifier {
           .collection('users')
           .doc(user.uid)
           .collection('joiningGroup')
-          .doc(groupID)
+          .doc(groupId)
           .set({
         'name': groupName,
         'imageURL': '',

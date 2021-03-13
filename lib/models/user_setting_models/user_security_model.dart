@@ -2,14 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 
 class UserSecurityModel extends ChangeNotifier {
-  String userID;
+  String userId;
   String email;
   bool isLoading = false;
 
-  void init({userID}) {
-    this.userID = userID;
+  void init({String userId}) {
+    this.userId = userId;
     final firebaseUser = Auth.FirebaseAuth.instance.currentUser;
-    email = firebaseUser.email;
+    this.email = firebaseUser.email;
     notifyListeners();
   }
 

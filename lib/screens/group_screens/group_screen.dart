@@ -11,20 +11,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupScreen extends StatelessWidget {
-  GroupScreen({this.groupID});
-  final String groupID;
+  GroupScreen({this.groupId});
+  final String groupId;
 
   @override
   Widget build(BuildContext context) {
     final List<Widget> switchBody = [
-      GroupMainScreen(groupID: groupID),
-      GroupCalendarScreen(groupID: groupID),
-      GroupTaskListScreen(groupID: groupID),
-      GroupSongListScreen(groupID: groupID),
+      GroupMainScreen(groupId: groupId),
+      GroupCalendarScreen(groupId: groupId),
+      GroupTaskListScreen(groupId: groupId),
+      GroupSongListScreen(groupId: groupId),
     ];
 
     return ChangeNotifierProvider<GroupModel>(
-      create: (_) => GroupModel()..init(groupID: groupID),
+      create: (_) => GroupModel()..init(groupId: groupId),
       child: Consumer<GroupModel>(builder: (context, model, child) {
         if (model.groupName.isNotEmpty) {
           return WillPopScope(
@@ -45,11 +45,11 @@ class GroupScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              GroupSettingScreen(groupID: groupID),
+                              GroupSettingScreen(groupId: groupId),
                           fullscreenDialog: true,
                         ),
                       );
-                      model.init(groupID: groupID);
+                      model.init(groupId: groupId);
                     },
                   ),
                 ],

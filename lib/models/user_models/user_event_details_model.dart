@@ -5,10 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserEventDetailsModel extends ChangeNotifier {
-  String userID = '';
+  String userId = '';
   Event event;
-  String ownerID = '';
-  String eventID = '';
+  String ownerId = '';
+  String eventId = '';
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
@@ -29,21 +29,21 @@ class UserEventDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userID, Event event}) async {
+  Future init({String userId, Event event}) async {
     startLoading();
-    this.userID = userID;
+    this.userId = userId;
     this.event = event;
-    this.ownerID = event.ownerID;
-    this.eventID = event.id;
+    this.ownerId = event.ownerId;
+    this.eventId = event.id;
     this.eventTitle = event.title;
     this.eventPlace = event.place;
     this.eventMemo = event.memo;
     this.isAllDay = event.isAllDay;
     this.startingDateTime = event.startingDateTime;
     this.endingDateTime = event.endingDateTime;
-    final ownerDocRef = ownerID == userID
-        ? firestore.collection('users').doc(ownerID)
-        : firestore.collection('groups').doc(ownerID);
+    final ownerDocRef = ownerId == userId
+        ? firestore.collection('users').doc(ownerId)
+        : firestore.collection('groups').doc(ownerId);
     try {
       final ownerDoc = await ownerDocRef.get();
       this.owner = ContentOwner.doc(ownerDoc);
@@ -54,22 +54,22 @@ class UserEventDetailsModel extends ChangeNotifier {
   }
 
   Future getEvent() async {
-    final eventDocRef = this.ownerID == this.userID
+    final eventDocRef = this.ownerId == this.userId
         ? firestore
             .collection('users')
-            .doc(this.userID)
+            .doc(this.userId)
             .collection('events')
-            .doc(this.eventID)
+            .doc(this.eventId)
         : firestore
             .collection('groups')
-            .doc(this.ownerID)
+            .doc(this.ownerId)
             .collection('events')
-            .doc(this.eventID);
+            .doc(this.eventId);
     try {
       DocumentSnapshot eventDoc = await eventDocRef.get();
       this.event = Event.doc(eventDoc);
-      this.ownerID = event.ownerID;
-      this.eventID = event.id;
+      this.ownerId = event.ownerId;
+      this.eventId = event.id;
       this.eventTitle = event.title;
       this.eventPlace = event.place;
       this.eventMemo = event.memo;
@@ -84,11 +84,11 @@ class UserEventDetailsModel extends ChangeNotifier {
   }
 
   Future deleteEvent() async {
-    final ownerDocRef = this.ownerID == this.userID
-        ? firestore.collection('users').doc(this.userID)
-        : firestore.collection('groups').doc(this.ownerID);
+    final ownerDocRef = this.ownerId == this.userId
+        ? firestore.collection('users').doc(this.userId)
+        : firestore.collection('groups').doc(this.ownerId);
     try {
-      await ownerDocRef.collection('events').doc(this.eventID).delete();
+      await ownerDocRef.collection('events').doc(this.eventId).delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

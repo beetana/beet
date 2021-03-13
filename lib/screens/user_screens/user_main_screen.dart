@@ -8,14 +8,14 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserMainScreen extends StatelessWidget {
-  UserMainScreen({this.userID});
-  final String userID;
+  UserMainScreen({this.userId});
+  final String userId;
   final dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserMainModel>(
-      create: (_) => UserMainModel()..init(userID: userID),
+      create: (_) => UserMainModel()..init(userId: userId),
       child: Consumer<UserMainModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -97,21 +97,21 @@ class UserMainScreen extends StatelessWidget {
                           return EventListTile(
                             event: event,
                             imageURL:
-                                model.eventPlanner[event.ownerID].imageURL,
-                            name: model.eventPlanner[event.ownerID].name,
+                                model.eventPlanner[event.ownerId].imageURL,
+                            name: model.eventPlanner[event.ownerId].name,
                             onTap: () async {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => UserEventDetailsScreen(
-                                    userID: userID,
+                                    userId: userId,
                                     event: event,
                                   ),
                                 ),
                               );
                               model.startLoading();
                               try {
-                                await model.getEventList(userID: userID);
+                                await model.getEventList(userId: userId);
                               } catch (e) {
                                 _showTextDialog(context, e.toString());
                               }

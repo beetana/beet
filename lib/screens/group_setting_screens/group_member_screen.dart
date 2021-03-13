@@ -7,14 +7,14 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class GroupMemberScreen extends StatelessWidget {
-  GroupMemberScreen({this.groupID});
-  final groupID;
+  GroupMemberScreen({this.groupId});
+  final groupId;
   final dynamicLinks = DynamicLinksServices();
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupMemberModel>(
-      create: (_) => GroupMemberModel()..init(groupID: groupID),
+      create: (_) => GroupMemberModel()..init(groupId: groupId),
       child: Consumer<GroupMemberModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -31,7 +31,7 @@ class GroupMemberScreen extends StatelessWidget {
                         physics: AlwaysScrollableScrollPhysics(),
                         itemCount: model.userNames.length,
                         itemBuilder: (BuildContext context, int index) {
-                          String userID = model.userIDs[index];
+                          String userId = model.usersId[index];
                           String userName = model.userNames[index];
                           String userImageURL = model.userImageURLs[index];
                           return ListTile(
@@ -46,7 +46,7 @@ class GroupMemberScreen extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             onTap: () async {
-                              bool isMe = userID == model.myID;
+                              bool isMe = userId == model.myId;
                               bool isDelete = await _showMemberBottomSheet(
                                 context,
                                 isMe,
@@ -55,16 +55,16 @@ class GroupMemberScreen extends StatelessWidget {
                               if (isDelete == true) {
                                 model.startLoading();
                                 try {
-                                  await model.deleteMember(userID: userID);
+                                  await model.deleteMember(userId: userId);
                                   isMe
                                       ? Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                UserScreen(userID: userID),
+                                                UserScreen(userId: userId),
                                           ),
                                         )
-                                      : model.init(groupID: groupID);
+                                      : model.init(groupId: groupId);
                                 } catch (e) {
                                   _showTextDialog(context, e.toString());
                                 }
@@ -89,7 +89,7 @@ class GroupMemberScreen extends StatelessWidget {
                       onPressed: () async {
                         model.startLoading();
                         Uri link = await dynamicLinks.createDynamicLink(
-                          groupID: groupID,
+                          groupId: groupId,
                           groupName: model.groupName,
                         );
                         model.endLoading();

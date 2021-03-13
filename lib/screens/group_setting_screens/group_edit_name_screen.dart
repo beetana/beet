@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupEditNameScreen extends StatelessWidget {
-  GroupEditNameScreen({this.groupID, this.groupName});
-  final String groupID;
+  GroupEditNameScreen({this.groupId, this.groupName});
+  final String groupId;
   final String groupName;
   final groupNameController = TextEditingController();
 
@@ -13,7 +13,7 @@ class GroupEditNameScreen extends StatelessWidget {
     groupNameController.text = groupName;
     return ChangeNotifierProvider<GroupEditNameModel>(
       create: (_) =>
-          GroupEditNameModel()..init(groupID: groupID, groupName: groupName),
+          GroupEditNameModel()..init(groupId: groupId, groupName: groupName),
       child: Consumer<GroupEditNameModel>(builder: (context, model, child) {
         return Stack(
           children: [

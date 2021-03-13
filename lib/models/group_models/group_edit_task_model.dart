@@ -6,15 +6,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class GroupEditTaskModel extends ChangeNotifier {
-  String groupID = '';
-  String taskID = '';
+  String groupId = '';
+  String taskId = '';
   String taskTitle = '';
   String taskMemo = '';
   String dueDateText = '';
   bool isDecidedDueDate;
   bool isCompleted;
-  List<String> assignedMembersID = [];
-  List<String> userIDs = [];
+  List<String> assignedMembersId = [];
+  List<String> usersId = [];
   List<String> userNames = [];
   List<String> userImageURLs = [];
   bool isLoading = false;
@@ -33,25 +33,25 @@ class GroupEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String groupID, Task task}) async {
+  void init({String groupId, Task task}) async {
     startLoading();
-    this.groupID = groupID;
-    this.taskID = task.id;
+    this.groupId = groupId;
+    this.taskId = task.id;
     this.taskTitle = task.title;
     this.taskMemo = task.memo;
     this.isDecidedDueDate = task.isDecidedDueDate;
     this.isCompleted = task.isCompleted;
     this.dueDate = task.dueDate;
     this.dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
-    this.assignedMembersID =
-        task.assignedMembersID.map((id) => id.toString()).toList();
+    this.assignedMembersId =
+        task.assignedMembersId.map((id) => id.toString()).toList();
     try {
       QuerySnapshot groupUsers = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('groupUsers')
           .get();
-      userIDs = (groupUsers.docs.map((doc) => doc.id).toList());
+      usersId = (groupUsers.docs.map((doc) => doc.id).toList());
       userNames =
           (groupUsers.docs.map((doc) => doc['name'].toString()).toList());
       userImageURLs =
@@ -63,11 +63,11 @@ class GroupEditTaskModel extends ChangeNotifier {
     }
   }
 
-  void assignPerson(userID) {
-    if (assignedMembersID.contains(userID)) {
-      assignedMembersID.remove(userID);
+  void assignPerson(userId) {
+    if (assignedMembersId.contains(userId)) {
+      assignedMembersId.remove(userId);
     } else {
-      assignedMembersID.add(userID);
+      assignedMembersId.add(userId);
     }
     notifyListeners();
   }
@@ -126,15 +126,15 @@ class GroupEditTaskModel extends ChangeNotifier {
     try {
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('tasks')
-          .doc(taskID)
+          .doc(taskId)
           .update({
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
-        'assignedMembersID': assignedMembersID,
+        'assignedMembersId': assignedMembersId,
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {

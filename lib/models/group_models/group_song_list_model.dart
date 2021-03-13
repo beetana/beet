@@ -22,11 +22,11 @@ class GroupSongListModel extends ChangeNotifier {
   );
   MainAxisAlignment buttonAlignment = MainAxisAlignment.center;
 
-  Future getSongList(groupID) async {
+  Future getSongList({String groupId}) async {
     isLoading = true;
     var songDoc = await FirebaseFirestore.instance
         .collection('groups')
-        .doc(groupID)
+        .doc(groupId)
         .collection('songs')
         .orderBy('createdAt', descending: false)
         .get();
@@ -68,7 +68,7 @@ class GroupSongListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectSong(Song song) {
+  void selectSong({Song song}) {
     song.toggleCheckBoxState();
     if (song.checkboxState == true) {
       selectedSongs.add(song.title);

@@ -8,14 +8,14 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GroupMainScreen extends StatelessWidget {
-  GroupMainScreen({this.groupID});
-  final String groupID;
+  GroupMainScreen({this.groupId});
+  final String groupId;
   final dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupMainModel>(
-      create: (_) => GroupMainModel()..init(groupID: groupID),
+      create: (_) => GroupMainModel()..init(groupId: groupId),
       child: Consumer<GroupMainModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -101,14 +101,14 @@ class GroupMainScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => GroupEventDetailsScreen(
-                                    groupID: groupID,
+                                    groupId: groupId,
                                     event: event,
                                   ),
                                 ),
                               );
                               model.startLoading();
                               try {
-                                await model.getEventList(groupID: groupID);
+                                await model.getEventList(groupId: groupId);
                               } catch (e) {
                                 _showTextDialog(context, e.toString());
                               }

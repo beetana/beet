@@ -23,9 +23,9 @@ class GroupTaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String groupID}) async {
+  Future init({String groupId}) async {
     startLoading();
-    groupDocRef = firestore.collection('groups').doc(groupID);
+    groupDocRef = firestore.collection('groups').doc(groupId);
     try {
       QuerySnapshot groupUsers =
           await groupDocRef.collection('groupUsers').get();

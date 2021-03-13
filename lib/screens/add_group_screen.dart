@@ -96,7 +96,7 @@ class AddGroupScreen extends StatelessWidget {
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
                                         GroupScreen(
-                                      groupID: model.groupID,
+                                      groupId: model.groupId,
                                     ),
                                   ),
                                 );

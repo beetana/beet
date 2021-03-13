@@ -5,14 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GroupTaskDetailsModel extends ChangeNotifier {
-  String groupID = '';
+  String groupId = '';
   Task task;
-  String taskID = '';
+  String taskId = '';
   String taskTitle = '';
   String taskMemo = '';
   bool isDecidedDueDate;
   DateTime dueDate;
-  List<dynamic> assignedMembersID = [];
+  List<dynamic> assignedMembersId = [];
   Map<String, User> groupMembers = {};
   bool isCompleted;
   bool isLoading = false;
@@ -29,18 +29,18 @@ class GroupTaskDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String groupID, Task task}) async {
+  Future init({String groupId, Task task}) async {
     startLoading();
-    this.groupID = groupID;
+    this.groupId = groupId;
     this.task = task;
-    this.taskID = task.id;
+    this.taskId = task.id;
     this.taskTitle = task.title;
     this.taskMemo = task.memo;
     this.isDecidedDueDate = task.isDecidedDueDate;
     this.dueDate = task.dueDate;
-    this.assignedMembersID = task.assignedMembersID;
+    this.assignedMembersId = task.assignedMembersId;
     this.isCompleted = task.isCompleted;
-    this.groupDocRef = firestore.collection('groups').doc(groupID);
+    this.groupDocRef = firestore.collection('groups').doc(groupId);
     try {
       QuerySnapshot groupUsers =
           await groupDocRef.collection('groupUsers').get();
@@ -55,7 +55,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
   }
 
   Future getTask() async {
-    final taskDocRef = groupDocRef.collection('tasks').doc(taskID);
+    final taskDocRef = groupDocRef.collection('tasks').doc(taskId);
     try {
       DocumentSnapshot taskDoc = await taskDocRef.get();
       this.task = Task.doc(taskDoc);
@@ -63,7 +63,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
       this.taskMemo = task.memo;
       this.isDecidedDueDate = task.isDecidedDueDate;
       this.dueDate = task.dueDate;
-      this.assignedMembersID = task.assignedMembersID;
+      this.assignedMembersId = task.assignedMembersId;
       this.isCompleted = task.isCompleted;
     } catch (e) {
       print(e);
@@ -74,7 +74,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
 
   Future deleteTask() async {
     try {
-      await groupDocRef.collection('tasks').doc(taskID).delete();
+      await groupDocRef.collection('tasks').doc(taskId).delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

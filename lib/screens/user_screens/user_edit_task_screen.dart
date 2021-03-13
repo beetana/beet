@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserEditTaskScreen extends StatelessWidget {
-  UserEditTaskScreen({this.userID, this.task});
-  final String userID;
+  UserEditTaskScreen({this.userId, this.task});
+  final String userId;
   final Task task;
   final taskTitleController = TextEditingController();
   final taskMemoController = TextEditingController();
@@ -19,7 +19,7 @@ class UserEditTaskScreen extends StatelessWidget {
     taskTitleController.text = task.title;
     taskMemoController.text = task.memo;
     return ChangeNotifierProvider<UserEditTaskModel>(
-      create: (_) => UserEditTaskModel()..init(userID: userID, task: task),
+      create: (_) => UserEditTaskModel()..init(userId: userId, task: task),
       child: Consumer<UserEditTaskModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -90,7 +90,7 @@ class UserEditTaskScreen extends StatelessWidget {
                             model.dueDatePickerBox,
                             BasicDivider(),
                             Visibility(
-                              visible: model.ownerID != userID,
+                              visible: model.ownerId != userId,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -116,21 +116,22 @@ class UserEditTaskScreen extends StatelessWidget {
                                                 model.groupMembers.length,
                                             itemBuilder: (BuildContext context,
                                                 int index) {
-                                              String userID =
-                                                  model.usersID[index];
+                                              String userId =
+                                                  model.usersId[index];
                                               String userName = model
-                                                  .groupMembers[userID].name;
+                                                  .groupMembers[userId].name;
                                               String userImageURL = model
-                                                  .groupMembers[userID]
+                                                  .groupMembers[userId]
                                                   .imageURL;
                                               return AssignTaskListTile(
                                                 userName: userName,
                                                 userImageURL: userImageURL,
                                                 isChecked: model
-                                                    .assignedMembersID
-                                                    .contains(userID),
+                                                    .assignedMembersId
+                                                    .contains(userId),
                                                 tileTappedCallback: () {
-                                                  model.assignPerson(userID);
+                                                  model.assignPerson(
+                                                      userId: userId);
                                                 },
                                               );
                                             },

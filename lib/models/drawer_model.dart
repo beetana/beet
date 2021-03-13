@@ -4,11 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DrawerModel extends ChangeNotifier {
   final _auth = Auth.FirebaseAuth.instance;
-  String userID;
+  String userId;
   String userImageURL = '';
   String userName = '';
-  List<String> groupName = [];
-  List<String> groupID = [];
+  List<String> groupsName = [];
+  List<String> groupsId = [];
   bool isLoading = false;
 
   void startLoading() {
@@ -23,23 +23,23 @@ class DrawerModel extends ChangeNotifier {
 
   Future init() async {
     startLoading();
-    userID = _auth.currentUser.uid;
+    userId = _auth.currentUser.uid;
     try {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userID)
+          .doc(userId)
           .get();
 
       QuerySnapshot joiningGroup = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userID)
+          .doc(userId)
           .collection('joiningGroup')
           .get();
 
       userImageURL = userDoc['imageURL'];
       userName = userDoc['name'];
-      groupID = (joiningGroup.docs.map((doc) => doc.id).toList());
-      groupName =
+      groupsId = (joiningGroup.docs.map((doc) => doc.id).toList());
+      groupsName =
           (joiningGroup.docs.map((doc) => doc['name'].toString()).toList());
     } catch (e) {
       print(e);

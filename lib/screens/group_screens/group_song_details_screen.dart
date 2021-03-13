@@ -8,15 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSongDetailsScreen extends StatelessWidget {
-  GroupSongDetailsScreen({this.groupID, this.song});
-  final String groupID;
+  GroupSongDetailsScreen({this.groupId, this.song});
+  final String groupId;
   final Song song;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupSongDetailsModel>(
       create: (_) =>
-          GroupSongDetailsModel()..init(groupID: groupID, song: song),
+          GroupSongDetailsModel()..init(groupId: groupId, song: song),
       child: Consumer<GroupSongDetailsModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -37,7 +37,7 @@ class GroupSongDetailsScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => GroupEditSongScreen(
-                            groupID: groupID,
+                            groupId: groupId,
                             song: model.song,
                           ),
                           fullscreenDialog: true,

@@ -5,12 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class UserAddTaskModel extends ChangeNotifier {
-  String userID = '';
+  String userId = '';
   String taskTitle = '';
   String taskMemo = '';
   String dueDateText = '';
   bool isDecidedDueDate = true;
-  List<String> assignedUserID = [];
+  List<String> assignedUserId = [];
   bool isLoading = false;
   bool isShowDueDatePicker = false;
   Widget dueDatePickerBox = SizedBox();
@@ -28,10 +28,10 @@ class UserAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String userID}) async {
+  void init({String userId}) async {
     startLoading();
-    this.userID = userID;
-    this.assignedUserID = [userID];
+    this.userId = userId;
+    this.assignedUserId = [userId];
     this.dueDate = DateTime(now.year, now.month, now.day, 12);
     this.dueDateText = dateFormat.format(dueDate);
     try {} catch (e) {
@@ -95,15 +95,15 @@ class UserAddTaskModel extends ChangeNotifier {
     try {
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(userID)
+          .doc(userId)
           .collection('tasks')
           .add({
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
-        'assignedMembersID': assignedUserID,
-        'ownerID': userID,
+        'assignedMembersId': assignedUserId,
+        'ownerId': userId,
         'isCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),
         'updatedAt': FieldValue.serverTimestamp(),

@@ -14,7 +14,7 @@ class GroupSetListScreen3 extends StatelessWidget {
   final String eventDateText;
   final int songNum;
   final int totalPlayTime;
-  final String groupID;
+  final String groupId;
 
   GroupSetListScreen3({
     this.setList,
@@ -23,7 +23,7 @@ class GroupSetListScreen3 extends StatelessWidget {
     this.eventDateText,
     this.songNum,
     this.totalPlayTime,
-    this.groupID,
+    this.groupId,
   });
 
   @override
@@ -146,7 +146,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    GroupScreen(groupID: groupID),
+                                    GroupScreen(groupId: groupId),
                               ),
                             );
                           },

@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupEditSongScreen extends StatelessWidget {
-  GroupEditSongScreen({this.groupID, this.song});
-  final String groupID;
+  GroupEditSongScreen({this.groupId, this.song});
+  final String groupId;
   final Song song;
   final songTitleController = TextEditingController();
   final songMemoController = TextEditingController();
@@ -21,7 +21,7 @@ class GroupEditSongScreen extends StatelessWidget {
     songTitleController.text = song.title;
     songMemoController.text = song.memo;
     return ChangeNotifierProvider<GroupEditSongModel>(
-      create: (_) => GroupEditSongModel()..init(groupID: groupID, song: song),
+      create: (_) => GroupEditSongModel()..init(groupId: groupId, song: song),
       child: Consumer<GroupEditSongModel>(builder: (context, model, child) {
         return GestureDetector(
           onTap: () {

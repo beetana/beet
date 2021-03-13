@@ -8,10 +8,6 @@ class UserUpdateEmailModel extends ChangeNotifier {
   bool isAuthRequired = false;
   final _auth = Auth.FirebaseAuth.instance;
 
-  void init({email}) {
-    this.email = email;
-  }
-
   void startLoading() {
     isLoading = true;
     notifyListeners();
@@ -20,6 +16,10 @@ class UserUpdateEmailModel extends ChangeNotifier {
   void endLoading() {
     isLoading = false;
     notifyListeners();
+  }
+
+  void init({String email}) {
+    this.email = email;
   }
 
   Future updateEmail() async {

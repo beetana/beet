@@ -11,12 +11,12 @@ class GroupSetListScreen extends StatelessWidget {
     this.selectedSongs,
     this.songNum,
     this.totalPlayTime,
-    this.groupID,
+    this.groupId,
   });
   final List<String> selectedSongs;
   final int songNum;
   final int totalPlayTime;
-  final String groupID;
+  final String groupId;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +123,7 @@ class GroupSetListScreen extends StatelessWidget {
                                   setList: model.setList,
                                   songNum: songNum,
                                   totalPlayTime: totalPlayTime,
-                                  groupID: groupID,
+                                  groupId: groupId,
                                 ),
                               ),
                             );

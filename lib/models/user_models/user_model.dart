@@ -8,12 +8,12 @@ class UserModel extends ChangeNotifier {
   BuildContext context;
   final dynamicLinks = DynamicLinksServices();
 
-  Future init({String userID, BuildContext context}) async {
+  Future init({String userId, BuildContext context}) async {
     this.context = context;
     dynamicLinks.fetchLinkData(this.context);
 
     DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(userID).get();
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
     userName = userDoc['name'];
     notifyListeners();
   }

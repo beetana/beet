@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupEventDetailsScreen extends StatelessWidget {
-  GroupEventDetailsScreen({this.groupID, this.event});
-  final String groupID;
+  GroupEventDetailsScreen({this.groupId, this.event});
+  final String groupId;
   final Event event;
 
   @override
@@ -37,7 +37,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => GroupEditEventScreen(
-                            groupID: groupID,
+                            groupId: groupId,
                             event: model.event,
                           ),
                           fullscreenDialog: true,
@@ -45,7 +45,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                       );
                       model.startLoading();
                       try {
-                        await model.getEvent(groupID: groupID);
+                        await model.getEvent(groupId: groupId);
                       } catch (e) {
                         _showTextDialog(context, e.toString());
                       }
@@ -120,7 +120,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                           if (isDelete == true) {
                             model.startLoading();
                             try {
-                              await model.deleteEvent(groupID: groupID);
+                              await model.deleteEvent(groupId: groupId);
                               Navigator.pop(context);
                             } catch (e) {
                               _showTextDialog(context, e.toString());

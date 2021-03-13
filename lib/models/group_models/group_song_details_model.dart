@@ -4,18 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GroupSongDetailsModel extends ChangeNotifier {
-  String groupID = '';
+  String groupId = '';
   Song song;
-  String songID = '';
+  String songId = '';
   String songTitle = '';
   String songMemo = '';
   int songPlayingTime;
   bool isLoading = false;
 
-  void init({String groupID, Song song}) {
-    this.groupID = groupID;
+  void init({String groupId, Song song}) {
+    this.groupId = groupId;
     this.song = song;
-    this.songID = song.id;
+    this.songId = song.id;
     this.songTitle = song.title;
     this.songMemo = song.memo;
     this.songPlayingTime = song.playingTime;
@@ -36,12 +36,12 @@ class GroupSongDetailsModel extends ChangeNotifier {
     try {
       DocumentSnapshot songDoc = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('songs')
-          .doc(songID)
+          .doc(songId)
           .get();
       song = Song.doc(songDoc);
-      songID = song.id;
+      songId = song.id;
       songTitle = song.title;
       songMemo = song.memo;
       songPlayingTime = song.playingTime;
@@ -55,9 +55,9 @@ class GroupSongDetailsModel extends ChangeNotifier {
     try {
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('songs')
-          .doc(songID)
+          .doc(songId)
           .delete();
     } catch (e) {
       print(e);

@@ -18,14 +18,14 @@ class GroupAddSongModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addSong(groupID) async {
+  Future addSong({String groupId}) async {
     if (songTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
     try {
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('songs')
           .add({
         'title': songTitle,

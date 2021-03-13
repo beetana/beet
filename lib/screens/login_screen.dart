@@ -101,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        UserScreen(userID: model.userID),
+                                        UserScreen(userId: model.userId),
                                   ),
                                 );
                               } catch (e) {

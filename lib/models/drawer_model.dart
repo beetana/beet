@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DrawerModel extends ChangeNotifier {
-  final _auth = Auth.FirebaseAuth.instance;
+  final auth = Auth.FirebaseAuth.instance;
   String userId;
   String userImageURL = '';
   String userName = '';
@@ -23,7 +23,7 @@ class DrawerModel extends ChangeNotifier {
 
   Future init() async {
     startLoading();
-    userId = _auth.currentUser.uid;
+    userId = auth.currentUser.uid;
     try {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance
           .collection('users')

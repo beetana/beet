@@ -90,10 +90,7 @@ class DrawerScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddGroupScreen(
-                              userName: model.userName,
-                              userImageURL: model.userImageURL,
-                            ),
+                            builder: (context) => AddGroupScreen(),
                             fullscreenDialog: true,
                           ),
                         );

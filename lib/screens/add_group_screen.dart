@@ -5,16 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:beet/models/add_group_model.dart';
 
 class AddGroupScreen extends StatelessWidget {
-  AddGroupScreen({this.userName, this.userImageURL});
-  final String userName;
-  final String userImageURL;
   final groupNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AddGroupModel>(
-      create: (_) =>
-          AddGroupModel()..init(userName: userName, userImageURL: userImageURL),
+      create: (_) => AddGroupModel()..init(),
       child: WillPopScope(
         onWillPop: () async {
           FocusScope.of(context).unfocus();
@@ -90,16 +86,23 @@ class AddGroupScreen extends StatelessWidget {
                               model.startLoading();
                               try {
                                 await model.addGroup();
-                                await _showTextDialog(context, '新規グループを作成しました');
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        GroupScreen(
-                                      groupId: model.groupId,
+                                if (model.groupId.isNotEmpty) {
+                                  await _showTextDialog(
+                                      context, '新規グループを作成しました');
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          GroupScreen(
+                                        groupId: model.groupId,
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                } else {
+                                  await _showTextDialog(
+                                      context, '参加できるグループの数は8個までです');
+                                  Navigator.pop(context);
+                                }
                               } catch (e) {
                                 _showTextDialog(context, e.toString());
                               }

@@ -10,6 +10,7 @@ class DrawerModel extends ChangeNotifier {
   List<String> groupsName = [];
   List<String> groupsId = [];
   bool isLoading = false;
+  final firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -25,12 +26,10 @@ class DrawerModel extends ChangeNotifier {
     startLoading();
     userId = auth.currentUser.uid;
     try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .get();
+      DocumentSnapshot userDoc =
+          await firestore.collection('users').doc(userId).get();
 
-      QuerySnapshot joiningGroup = await FirebaseFirestore.instance
+      QuerySnapshot joiningGroup = await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroup')

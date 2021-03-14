@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupAddSongScreen extends StatelessWidget {
-  GroupAddSongScreen({this.groupID});
-  final String groupID;
+  GroupAddSongScreen({this.groupId});
+  final String groupId;
   final songTitleController = TextEditingController();
   final songMemoController = TextEditingController();
   final scrollController = ScrollController();
@@ -38,7 +38,7 @@ class GroupAddSongScreen extends StatelessWidget {
                       onPressed: () async {
                         model.startLoading();
                         try {
-                          await model.addSong(groupID);
+                          await model.addSong(groupId: groupId);
                           Navigator.pop(context);
                         } catch (e) {
                           _showTextDialog(context, e.toString());

@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupEditSongModel extends ChangeNotifier {
-  String groupID = '';
-  String songID = '';
+  String groupId = '';
+  String songId = '';
   String songTitle = '';
   String songMemo = '';
   int songPlayingTime;
   bool isLoading = false;
   final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-  void init({String groupID, Song song}) {
-    this.groupID = groupID;
-    this.songID = song.id;
+  void init({String groupId, Song song}) {
+    this.groupId = groupId;
+    this.songId = song.id;
     this.songTitle = song.title;
     this.songMemo = song.memo;
     this.songPlayingTime = song.playingTime;
@@ -36,9 +36,9 @@ class GroupEditSongModel extends ChangeNotifier {
     try {
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('songs')
-          .doc(songID)
+          .doc(songId)
           .update({
         'title': songTitle,
         'memo': songMemo,

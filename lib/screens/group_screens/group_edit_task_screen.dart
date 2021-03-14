@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupEditTaskScreen extends StatelessWidget {
-  GroupEditTaskScreen({this.groupID, this.task});
-  final String groupID;
+  GroupEditTaskScreen({this.groupId, this.task});
+  final String groupId;
   final Task task;
   final taskTitleController = TextEditingController();
   final taskMemoController = TextEditingController();
@@ -19,7 +19,7 @@ class GroupEditTaskScreen extends StatelessWidget {
     taskTitleController.text = task.title;
     taskMemoController.text = task.memo;
     return ChangeNotifierProvider<GroupEditTaskModel>(
-      create: (_) => GroupEditTaskModel()..init(groupID: groupID, task: task),
+      create: (_) => GroupEditTaskModel()..init(groupId: groupId, task: task),
       child: Consumer<GroupEditTaskModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -108,7 +108,7 @@ class GroupEditTaskScreen extends StatelessWidget {
                                       itemCount: model.userNames.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        String userID = model.userIDs[index];
+                                        String userId = model.usersId[index];
                                         String userName =
                                             model.userNames[index];
                                         String userImageURL =
@@ -116,10 +116,10 @@ class GroupEditTaskScreen extends StatelessWidget {
                                         return AssignTaskListTile(
                                           userName: userName,
                                           userImageURL: userImageURL,
-                                          isChecked: model.assignedMembersID
-                                              .contains(userID),
+                                          isChecked: model.assignedMembersId
+                                              .contains(userId),
                                           tileTappedCallback: () {
-                                            model.assignPerson(userID);
+                                            model.assignPerson(userId);
                                           },
                                         );
                                       },

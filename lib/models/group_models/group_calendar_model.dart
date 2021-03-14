@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:nholiday_jp/nholiday_jp.dart';
 
 class GroupCalendarModel extends ChangeNotifier {
-  String groupID = '';
+  String groupId = '';
   DateTime now = DateTime.now();
   DateTime first;
   DateTime last;
@@ -16,8 +16,8 @@ class GroupCalendarModel extends ChangeNotifier {
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
 
-  void init({String groupID}) {
-    this.groupID = groupID;
+  void init({String groupId}) {
+    this.groupId = groupId;
     this.selectedDay = DateTime(now.year, now.month, now.day, 12);
   }
 
@@ -32,7 +32,7 @@ class GroupCalendarModel extends ChangeNotifier {
     try {
       QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('events')
           .where('monthList', arrayContains: monthForm)
           .get();

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class GroupEventDetailsModel extends ChangeNotifier {
   Event event;
-  String eventID;
+  String eventId;
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
@@ -26,7 +26,7 @@ class GroupEventDetailsModel extends ChangeNotifier {
 
   void init(Event event) {
     this.event = event;
-    eventID = event.id;
+    eventId = event.id;
     eventTitle = event.title;
     eventPlace = event.place;
     eventMemo = event.memo;
@@ -35,16 +35,16 @@ class GroupEventDetailsModel extends ChangeNotifier {
     endingDateTime = event.endingDateTime;
   }
 
-  Future getEvent({String groupID}) async {
+  Future getEvent({String groupId}) async {
     try {
       DocumentSnapshot eventDoc = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('events')
-          .doc(eventID)
+          .doc(eventId)
           .get();
       event = Event.doc(eventDoc);
-      eventID = event.id;
+      eventId = event.id;
       eventTitle = event.title;
       eventPlace = event.place;
       eventMemo = event.memo;
@@ -58,13 +58,13 @@ class GroupEventDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future deleteEvent({String groupID}) async {
+  Future deleteEvent({String groupId}) async {
     try {
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('events')
-          .doc(eventID)
+          .doc(eventId)
           .delete();
     } catch (e) {
       print(e);

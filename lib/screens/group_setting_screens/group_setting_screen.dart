@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSettingScreen extends StatelessWidget {
-  GroupSettingScreen({this.groupID});
-  final String groupID;
+  GroupSettingScreen({this.groupId});
+  final String groupId;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class GroupSettingScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          GroupProfileScreen(groupID: groupID),
+                          GroupProfileScreen(groupId: groupId),
                     ),
                   );
                 },
@@ -65,7 +65,7 @@ class GroupSettingScreen extends StatelessWidget {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GroupMemberScreen(groupID: groupID),
+                      builder: (context) => GroupMemberScreen(groupId: groupId),
                     ),
                   );
                 },

@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupProfileScreen extends StatelessWidget {
-  GroupProfileScreen({this.groupID});
-  final String groupID;
+  GroupProfileScreen({this.groupId});
+  final String groupId;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupProfileModel>(
-      create: (_) => GroupProfileModel()..init(groupID: groupID),
+      create: (_) => GroupProfileModel()..init(groupId: groupId),
       child: Consumer<GroupProfileModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -134,12 +134,12 @@ class GroupProfileScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => GroupEditNameScreen(
-                            groupID: groupID,
+                            groupId: groupId,
                             groupName: model.groupName,
                           ),
                         ),
                       );
-                      model.init(groupID: groupID);
+                      model.init(groupId: groupId);
                     },
                   ),
                   Expanded(

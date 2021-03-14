@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupAddTaskScreen extends StatelessWidget {
-  GroupAddTaskScreen({this.groupID});
-  final String groupID;
+  GroupAddTaskScreen({this.groupId});
+  final String groupId;
   final taskTitleController = TextEditingController();
   final taskMemoController = TextEditingController();
   final scrollController = ScrollController();
@@ -15,7 +15,7 @@ class GroupAddTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupAddTaskModel>(
-      create: (_) => GroupAddTaskModel()..init(groupID: groupID),
+      create: (_) => GroupAddTaskModel()..init(groupId: groupId),
       child: Consumer<GroupAddTaskModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -104,7 +104,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                                       itemCount: model.userNames.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        String userID = model.userIDs[index];
+                                        String userId = model.usersId[index];
                                         String userName =
                                             model.userNames[index];
                                         String userImageURL =
@@ -112,10 +112,10 @@ class GroupAddTaskScreen extends StatelessWidget {
                                         return AssignTaskListTile(
                                           userName: userName,
                                           userImageURL: userImageURL,
-                                          isChecked: model.assignedMembersID
-                                              .contains(userID),
+                                          isChecked: model.assignedMembersId
+                                              .contains(userId),
                                           tileTappedCallback: () {
-                                            model.assignPerson(userID);
+                                            model.assignPerson(userId);
                                           },
                                         );
                                       },

@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserAddEventScreen extends StatelessWidget {
-  UserAddEventScreen({this.userID, this.dateTime});
-  final userID;
+  UserAddEventScreen({this.userId, this.dateTime});
+  final userId;
   final dateTime;
   final dateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_jp');
   final eventTitleController = TextEditingController();
@@ -49,7 +49,7 @@ class UserAddEventScreen extends StatelessWidget {
                         onPressed: () async {
                           model.startLoading();
                           try {
-                            await model.addEvent(userID: userID);
+                            await model.addEvent(userId: userId);
                             Navigator.pop(context);
                           } catch (e) {
                             _showTextDialog(context, e.toString());

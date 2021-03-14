@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 
 class GroupMemberModel extends ChangeNotifier {
-  String groupID = '';
+  String groupId = '';
   String groupName = '';
-  String myID = '';
-  List<String> userIDs = [];
+  String myId = '';
+  List<String> usersId = [];
   List<String> userNames = [];
   List<String> userImageURLs = [];
   bool isLoading = false;
@@ -21,23 +21,23 @@ class GroupMemberModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({groupID}) async {
+  Future init({String groupId}) async {
     startLoading();
-    this.groupID = groupID;
-    myID = Auth.FirebaseAuth.instance.currentUser.uid;
+    this.groupId = groupId;
+    myId = Auth.FirebaseAuth.instance.currentUser.uid;
     try {
       DocumentSnapshot groupDoc = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .get();
       groupName = groupDoc['name'];
 
       QuerySnapshot groupUsers = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('groupUsers')
           .get();
-      userIDs = (groupUsers.docs.map((doc) => doc.id).toList());
+      usersId = (groupUsers.docs.map((doc) => doc.id).toList());
       userNames =
           (groupUsers.docs.map((doc) => doc['name'].toString()).toList());
       userImageURLs =
@@ -49,14 +49,14 @@ class GroupMemberModel extends ChangeNotifier {
     }
   }
 
-  Future deleteMember({String userID}) async {
+  Future deleteMember({String userId}) async {
     final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(userID);
+        FirebaseFirestore.instance.collection('users').doc(userId);
     final groupDocRef =
-        FirebaseFirestore.instance.collection('groups').doc(groupID);
+        FirebaseFirestore.instance.collection('groups').doc(groupId);
     try {
-      await userDocRef.collection('joiningGroup').doc(groupID).delete();
-      await groupDocRef.collection('groupUsers').doc(userID).delete();
+      await userDocRef.collection('joiningGroup').doc(groupId).delete();
+      await groupDocRef.collection('groupUsers').doc(userId).delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

@@ -2,15 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserEditNameModel extends ChangeNotifier {
-  String userID;
+  String userId;
   String userName = '';
   bool isLoading = false;
-  List<String> joiningGroupsID = [];
-
-  void init({userID, userName}) {
-    this.userID = userID;
-    this.userName = userName;
-  }
+  List<String> joiningGroupsId = [];
 
   void startLoading() {
     isLoading = true;
@@ -22,6 +17,11 @@ class UserEditNameModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void init({String userId, String userName}) {
+    this.userId = userId;
+    this.userName = userName;
+  }
+
   Future updateUserName() async {
     if (userName.isEmpty) {
       throw ('名前を入力してください');
@@ -29,19 +29,19 @@ class UserEditNameModel extends ChangeNotifier {
     try {
       final joiningGroups = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userID)
+          .doc(userId)
           .collection('joiningGroup')
           .get();
-      joiningGroupsID = (joiningGroups.docs.map((doc) => doc.id).toList());
-      await FirebaseFirestore.instance.collection('users').doc(userID).update({
+      joiningGroupsId = (joiningGroups.docs.map((doc) => doc.id).toList());
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
         'name': userName,
       });
-      for (String groupID in joiningGroupsID) {
+      for (String groupId in joiningGroupsId) {
         await FirebaseFirestore.instance
             .collection('groups')
-            .doc(groupID)
+            .doc(groupId)
             .collection('groupUsers')
-            .doc(userID)
+            .doc(userId)
             .update({
           'name': userName,
         });

@@ -7,15 +7,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class UserEditTaskModel extends ChangeNotifier {
-  String ownerID = '';
-  String taskID = '';
+  String ownerId = '';
+  String taskId = '';
   String taskTitle = '';
   String taskMemo = '';
   String dueDateText = '';
   bool isDecidedDueDate;
   bool isCompleted;
-  List<String> assignedMembersID = [];
-  List<String> usersID = [];
+  List<String> assignedMembersId = [];
+  List<String> usersId = [];
   Map<String, User> groupMembers = {};
   bool isLoading = false;
   bool isShowDueDatePicker = false;
@@ -35,28 +35,28 @@ class UserEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String userID, Task task}) async {
+  void init({String userId, Task task}) async {
     startLoading();
-    this.taskID = task.id;
-    this.ownerID = task.ownerID;
+    this.taskId = task.id;
+    this.ownerId = task.ownerId;
     this.taskTitle = task.title;
     this.taskMemo = task.memo;
     this.isDecidedDueDate = task.isDecidedDueDate;
     this.isCompleted = task.isCompleted;
     this.dueDate = task.dueDate;
     this.dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
-    this.assignedMembersID =
-        task.assignedMembersID.map((id) => id.toString()).toList();
-    this.ownerDocRef = ownerID == userID
-        ? firestore.collection('users').doc(userID)
-        : firestore.collection('groups').doc(ownerID);
+    this.assignedMembersId =
+        task.assignedMembersId.map((id) => id.toString()).toList();
+    this.ownerDocRef = ownerId == userId
+        ? firestore.collection('users').doc(userId)
+        : firestore.collection('groups').doc(ownerId);
     try {
-      if (ownerID == userID) {
+      if (ownerId == userId) {
         final userDoc = await ownerDocRef.get();
-        groupMembers[userID] = User.doc(userDoc);
+        groupMembers[userId] = User.doc(userDoc);
       } else {
         final groupUsers = await ownerDocRef.collection('groupUsers').get();
-        this.usersID = groupUsers.docs.map((doc) => doc.id).toList();
+        this.usersId = groupUsers.docs.map((doc) => doc.id).toList();
         final users = groupUsers.docs.map((doc) => User.doc(doc)).toList();
         users.forEach((user) {
           groupMembers[user.id] = user;
@@ -69,11 +69,11 @@ class UserEditTaskModel extends ChangeNotifier {
     }
   }
 
-  void assignPerson(userID) {
-    if (assignedMembersID.contains(userID)) {
-      assignedMembersID.remove(userID);
+  void assignPerson({String userId}) {
+    if (assignedMembersId.contains(userId)) {
+      assignedMembersId.remove(userId);
     } else {
-      assignedMembersID.add(userID);
+      assignedMembersId.add(userId);
     }
     notifyListeners();
   }
@@ -130,12 +130,12 @@ class UserEditTaskModel extends ChangeNotifier {
       throw ('やることを入力してください');
     }
     try {
-      await ownerDocRef.collection('tasks').doc(taskID).update({
+      await ownerDocRef.collection('tasks').doc(taskId).update({
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
-        'assignedMembersID': assignedMembersID,
+        'assignedMembersId': assignedMembersId,
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {

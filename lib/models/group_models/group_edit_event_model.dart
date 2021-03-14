@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GroupEditEventModel extends ChangeNotifier {
-  String ownerID;
-  String eventID;
+  String ownerId;
+  String eventId;
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
@@ -60,8 +60,8 @@ class GroupEditEventModel extends ChangeNotifier {
         );
       }
     }
-    ownerID = event.ownerID;
-    eventID = event.id;
+    ownerId = event.ownerId;
+    eventId = event.id;
     eventTitle = event.title;
     eventPlace = event.place;
     eventMemo = event.memo;
@@ -168,7 +168,7 @@ class GroupEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateEvent({groupID}) async {
+  Future updateEvent({groupId}) async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
@@ -217,9 +217,9 @@ class GroupEditEventModel extends ChangeNotifier {
     try {
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('events')
-          .doc(eventID)
+          .doc(eventId)
           .update({
         'title': eventTitle,
         'place': eventPlace,

@@ -5,13 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class GroupAddTaskModel extends ChangeNotifier {
-  String groupID = '';
+  String groupId = '';
   String taskTitle = '';
   String taskMemo = '';
   String dueDateText = '';
   bool isDecidedDueDate = true;
-  List<String> assignedMembersID = [];
-  List<String> userIDs = [];
+  List<String> assignedMembersId = [];
+  List<String> usersId = [];
   List<String> userNames = [];
   List<String> userImageURLs = [];
   bool isLoading = false;
@@ -31,18 +31,18 @@ class GroupAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String groupID}) async {
+  void init({String groupId}) async {
     startLoading();
-    this.groupID = groupID;
+    this.groupId = groupId;
     this.dueDate = DateTime(now.year, now.month, now.day, 12);
     this.dueDateText = dateFormat.format(dueDate);
     try {
       QuerySnapshot groupUsers = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('groupUsers')
           .get();
-      userIDs = (groupUsers.docs.map((doc) => doc.id).toList());
+      usersId = (groupUsers.docs.map((doc) => doc.id).toList());
       userNames =
           (groupUsers.docs.map((doc) => doc['name'].toString()).toList());
       userImageURLs =
@@ -54,11 +54,11 @@ class GroupAddTaskModel extends ChangeNotifier {
     }
   }
 
-  void assignPerson(userID) {
-    if (assignedMembersID.contains(userID)) {
-      assignedMembersID.remove(userID);
+  void assignPerson(userId) {
+    if (assignedMembersId.contains(userId)) {
+      assignedMembersId.remove(userId);
     } else {
-      assignedMembersID.add(userID);
+      assignedMembersId.add(userId);
     }
     notifyListeners();
   }
@@ -117,15 +117,15 @@ class GroupAddTaskModel extends ChangeNotifier {
     try {
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('tasks')
           .add({
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
         'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
-        'assignedMembersID': assignedMembersID,
-        'ownerID': groupID,
+        'assignedMembersId': assignedMembersId,
+        'ownerId': groupId,
         'isCompleted': false,
         'createdAt': FieldValue.serverTimestamp(),
         'updatedAt': FieldValue.serverTimestamp(),

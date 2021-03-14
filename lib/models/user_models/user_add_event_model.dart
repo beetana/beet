@@ -134,7 +134,7 @@ class UserAddEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addEvent({userID}) async {
+  Future addEvent({String userId}) async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
@@ -183,10 +183,10 @@ class UserAddEventModel extends ChangeNotifier {
     try {
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(userID)
+          .doc(userId)
           .collection('events')
           .add({
-        'ownerID': userID,
+        'ownerId': userId,
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,

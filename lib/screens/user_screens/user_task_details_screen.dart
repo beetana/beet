@@ -9,15 +9,15 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserTaskDetailsScreen extends StatelessWidget {
-  UserTaskDetailsScreen({this.userID, this.task});
-  final String userID;
+  UserTaskDetailsScreen({this.userId, this.task});
+  final String userId;
   final Task task;
   final dueDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserTaskDetailsModel>(
-      create: (_) => UserTaskDetailsModel()..init(userID: userID, task: task),
+      create: (_) => UserTaskDetailsModel()..init(userId: userId, task: task),
       child: Consumer<UserTaskDetailsModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -38,7 +38,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => UserEditTaskScreen(
-                            userID: userID,
+                            userId: userId,
                             task: model.task,
                           ),
                           fullscreenDialog: true,
@@ -106,16 +106,16 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                       scrollDirection: Axis.horizontal,
                                       physics: ScrollPhysics(),
                                       itemExtent: 60.0,
-                                      itemCount: model.assignedMembersID.length,
+                                      itemCount: model.assignedMembersId.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         String imageURL = model
                                             .groupMembers[
-                                                model.assignedMembersID[index]]
+                                                model.assignedMembersId[index]]
                                             .imageURL;
                                         String name = model
                                             .groupMembers[
-                                                model.assignedMembersID[index]]
+                                                model.assignedMembersId[index]]
                                             .name;
                                         return Padding(
                                           padding: EdgeInsets.symmetric(

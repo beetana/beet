@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserEditNameScreen extends StatelessWidget {
-  UserEditNameScreen({this.userID, this.userName});
-  final String userID;
+  UserEditNameScreen({this.userId, this.userName});
+  final String userId;
   final String userName;
   final userNameController = TextEditingController();
 
@@ -13,7 +13,7 @@ class UserEditNameScreen extends StatelessWidget {
     userNameController.text = userName;
     return ChangeNotifierProvider<UserEditNameModel>(
       create: (_) =>
-          UserEditNameModel()..init(userID: userID, userName: userName),
+          UserEditNameModel()..init(userId: userId, userName: userName),
       child: Consumer<UserEditNameModel>(builder: (context, model, child) {
         return Stack(
           children: [

@@ -7,8 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GroupEditEventScreen extends StatelessWidget {
-  GroupEditEventScreen({this.groupID, this.event});
-  final String groupID;
+  GroupEditEventScreen({this.groupId, this.event});
+  final String groupId;
   final Event event;
   final dateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_jp');
   final eventTitleController = TextEditingController();
@@ -45,7 +45,7 @@ class GroupEditEventScreen extends StatelessWidget {
                       onPressed: () async {
                         model.startLoading();
                         try {
-                          await model.updateEvent(groupID: groupID);
+                          await model.updateEvent(groupId: groupId);
                           Navigator.pop(context);
                         } catch (e) {
                           _showTextDialog(context, e.toString());

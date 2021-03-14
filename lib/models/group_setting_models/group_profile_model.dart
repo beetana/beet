@@ -6,23 +6,12 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class GroupProfileModel extends ChangeNotifier {
-  String groupID;
+  String groupId;
   String groupName = '';
   String groupImageURL = '';
   File imageFile;
   bool isLoading = false;
-  List<String> groupUsersID = [];
-
-  Future init({groupID}) async {
-    this.groupID = groupID;
-    DocumentSnapshot groupDoc = await FirebaseFirestore.instance
-        .collection('groups')
-        .doc(groupID)
-        .get();
-    groupName = groupDoc['name'];
-    groupImageURL = groupDoc['imageURL'];
-    notifyListeners();
-  }
+  List<String> groupUsersId = [];
 
   void startLoading() {
     isLoading = true;
@@ -32,6 +21,22 @@ class GroupProfileModel extends ChangeNotifier {
   void endLoading() {
     isLoading = false;
     notifyListeners();
+  }
+
+  Future init({String groupId}) async {
+    startLoading();
+    this.groupId = groupId;
+    try {
+      DocumentSnapshot groupDoc = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .get();
+      groupName = groupDoc['name'];
+      groupImageURL = groupDoc['imageURL'];
+    } catch (e) {
+      print(e);
+    }
+    endLoading();
   }
 
   Future pickImageFile() async {
@@ -75,26 +80,26 @@ class GroupProfileModel extends ChangeNotifier {
     try {
       final storage = FirebaseStorage.instance;
       TaskSnapshot snapshot =
-          await storage.ref().child("groupImage/$groupID").putFile(imageFile);
+          await storage.ref().child("groupImage/$groupId").putFile(imageFile);
       final String imageURL = await snapshot.ref.getDownloadURL();
       final groupUsers = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('groupUsers')
           .get();
-      groupUsersID = (groupUsers.docs.map((doc) => doc.id).toList());
+      groupUsersId = (groupUsers.docs.map((doc) => doc.id).toList());
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .update({
         'imageURL': imageURL,
       });
-      for (String userID in groupUsersID) {
+      for (String userId in groupUsersId) {
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(userID)
+            .doc(userId)
             .collection('joiningGroup')
-            .doc(groupID)
+            .doc(groupId)
             .update({
           'imageURL': imageURL,
         });
@@ -113,26 +118,26 @@ class GroupProfileModel extends ChangeNotifier {
     try {
       await FirebaseStorage.instance
           .ref()
-          .child("groupImage/$groupID")
+          .child("groupImage/$groupId")
           .delete();
       final groupUsers = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('groupUsers')
           .get();
-      groupUsersID = (groupUsers.docs.map((doc) => doc.id).toList());
+      groupUsersId = (groupUsers.docs.map((doc) => doc.id).toList());
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .update({
         'imageURL': '',
       });
-      for (String userID in groupUsersID) {
+      for (String userId in groupUsersId) {
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(userID)
+            .doc(userId)
             .collection('joiningGroup')
-            .doc(groupID)
+            .doc(groupId)
             .update({
           'imageURL': '',
         });

@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:firebase_core/firebase_core.dart';
 
 class MyAppModel {
-  String userID;
+  String userId;
 
   // ignore: close_sinks
   final _userStateStreamController = StreamController<UserState>();
@@ -60,7 +60,7 @@ class MyAppModel {
       return null;
     }
     User user = User.doc(doc);
-    userID = user.id;
+    userId = user.id;
     return user;
   }
 }

@@ -10,18 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserScreen extends StatelessWidget {
-  UserScreen({this.userID});
-  final String userID;
+  UserScreen({this.userId});
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
     final List<Widget> switchBody = [
-      UserMainScreen(userID: userID),
-      UserCalendarScreen(userID: userID),
-      UserTaskListScreen(userID: userID),
+      UserMainScreen(userId: userId),
+      UserCalendarScreen(userId: userId),
+      UserTaskListScreen(userId: userId),
     ];
     return ChangeNotifierProvider<UserModel>(
-      create: (_) => UserModel()..init(userID: userID, context: context),
+      create: (_) => UserModel()..init(userId: userId, context: context),
       child: Consumer<UserModel>(builder: (context, model, child) {
         if (model.userName.isNotEmpty) {
           return WillPopScope(
@@ -44,12 +44,12 @@ class UserScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => UserSettingScreen(
-                            userID: userID,
+                            userId: userId,
                           ),
                           fullscreenDialog: true,
                         ),
                       );
-                      model.init(userID: userID);
+                      model.init(userId: userId);
                     },
                   ),
                 ],

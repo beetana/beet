@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupEditNameModel extends ChangeNotifier {
-  String groupID;
+  String groupId;
   String groupName = '';
   bool isLoading = false;
-  List<String> groupUsersID = [];
+  List<String> groupUsersId = [];
 
-  void init({groupID, groupName}) {
-    this.groupID = groupID;
+  void init({groupId, groupName}) {
+    this.groupId = groupId;
     this.groupName = groupName;
   }
 
@@ -29,22 +29,22 @@ class GroupEditNameModel extends ChangeNotifier {
     try {
       final groupUsers = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('groupUsers')
           .get();
-      groupUsersID = (groupUsers.docs.map((doc) => doc.id).toList());
+      groupUsersId = (groupUsers.docs.map((doc) => doc.id).toList());
       await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .update({
         'name': groupName,
       });
-      for (String userID in groupUsersID) {
+      for (String userId in groupUsersId) {
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(userID)
+            .doc(userId)
             .collection('joiningGroup')
-            .doc(groupID)
+            .doc(groupId)
             .update({
           'name': groupName,
         });

@@ -6,15 +6,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserTaskDetailsModel extends ChangeNotifier {
-  String userID = '';
+  String userId = '';
   Task task;
-  String ownerID = '';
-  String taskID = '';
+  String ownerId = '';
+  String taskId = '';
   String taskTitle = '';
   String taskMemo = '';
   bool isDecidedDueDate;
   DateTime dueDate;
-  List<dynamic> assignedMembersID = [];
+  List<dynamic> assignedMembersId = [];
   Map<String, User> groupMembers = {};
   bool isCompleted;
   bool isLoading = false;
@@ -32,26 +32,26 @@ class UserTaskDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userID, Task task}) async {
+  Future init({String userId, Task task}) async {
     startLoading();
-    this.userID = userID;
+    this.userId = userId;
     this.task = task;
-    this.ownerID = task.ownerID;
-    this.taskID = task.id;
+    this.ownerId = task.ownerId;
+    this.taskId = task.id;
     this.taskTitle = task.title;
     this.taskMemo = task.memo;
     this.isDecidedDueDate = task.isDecidedDueDate;
     this.dueDate = task.dueDate;
-    this.assignedMembersID = task.assignedMembersID;
+    this.assignedMembersId = task.assignedMembersId;
     this.isCompleted = task.isCompleted;
-    this.ownerDocRef = ownerID == userID
-        ? firestore.collection('users').doc(userID)
-        : firestore.collection('groups').doc(ownerID);
+    this.ownerDocRef = ownerId == userId
+        ? firestore.collection('users').doc(userId)
+        : firestore.collection('groups').doc(ownerId);
     try {
       final ownerDoc = await ownerDocRef.get();
       this.owner = ContentOwner.doc(ownerDoc);
-      if (ownerID == userID) {
-        groupMembers[ownerID] = User.doc(ownerDoc);
+      if (ownerId == userId) {
+        groupMembers[ownerId] = User.doc(ownerDoc);
       } else {
         QuerySnapshot groupUsers =
             await ownerDocRef.collection('groupUsers').get();
@@ -69,14 +69,14 @@ class UserTaskDetailsModel extends ChangeNotifier {
   Future getTask() async {
     try {
       DocumentSnapshot taskDoc =
-          await ownerDocRef.collection('tasks').doc(taskID).get();
+          await ownerDocRef.collection('tasks').doc(taskId).get();
       this.task = Task.doc(taskDoc);
-      this.ownerID = task.ownerID;
+      this.ownerId = task.ownerId;
       this.taskTitle = task.title;
       this.taskMemo = task.memo;
       this.isDecidedDueDate = task.isDecidedDueDate;
       this.dueDate = task.dueDate;
-      this.assignedMembersID = task.assignedMembersID;
+      this.assignedMembersId = task.assignedMembersId;
       this.isCompleted = task.isCompleted;
     } catch (e) {
       print(e);
@@ -87,7 +87,7 @@ class UserTaskDetailsModel extends ChangeNotifier {
 
   Future deleteTask() async {
     try {
-      await ownerDocRef.collection('tasks').doc(taskID).delete();
+      await ownerDocRef.collection('tasks').doc(taskId).delete();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

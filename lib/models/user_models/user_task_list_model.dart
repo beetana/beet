@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UserTaskListModel extends ChangeNotifier {
-  String userID = '';
+  String userId = '';
   Map<String, User> joiningGroupUsers = {};
   List<Task> tasks = [];
   List<Task> completedTasks = [];
@@ -23,21 +23,21 @@ class UserTaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userID}) async {
+  Future init({String userId}) async {
     startLoading();
-    final userDocRef = firestore.collection('users').doc(userID);
-    this.userID = userID;
+    final userDocRef = firestore.collection('users').doc(userId);
+    this.userId = userId;
     try {
       DocumentSnapshot userDoc = await userDocRef.get();
-      joiningGroupUsers[userID] = User.doc(userDoc);
+      joiningGroupUsers[userId] = User.doc(userDoc);
       QuerySnapshot joiningGroupQuery =
           await userDocRef.collection('joiningGroup').get();
       final joiningGroups =
           joiningGroupQuery.docs.map((doc) => doc.id).toList();
-      joiningGroups.forEach((groupID) async {
+      joiningGroups.forEach((groupId) async {
         QuerySnapshot groupUsers = await firestore
             .collection('groups')
-            .doc(groupID)
+            .doc(groupId)
             .collection('groupUsers')
             .get();
         final users = groupUsers.docs.map((doc) => User.doc(doc)).toList();
@@ -45,21 +45,21 @@ class UserTaskListModel extends ChangeNotifier {
           joiningGroupUsers[user.id] = user;
         });
       });
-      await getTaskList(userID: userID);
+      await getTaskList(userId: userId);
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future getTaskList({String userID}) async {
+  Future getTaskList({String userId}) async {
     completedTasks = [];
     notCompletedTasks = [];
     changeStateTasks = [];
     try {
       QuerySnapshot taskQuery = await firestore
           .collectionGroup('tasks')
-          .where('assignedMembersID', arrayContains: userID)
+          .where('assignedMembersId', arrayContains: userId)
           .get();
       tasks = taskQuery.docs.map((doc) => Task.doc(doc)).toList();
       tasks.forEach((task) {
@@ -79,15 +79,15 @@ class UserTaskListModel extends ChangeNotifier {
     try {
       final batch = firestore.batch();
       changeStateTasks.forEach((task) {
-        final taskDocRef = task.ownerID == userID
+        final taskDocRef = task.ownerId == userId
             ? firestore
                 .collection('users')
-                .doc(userID)
+                .doc(userId)
                 .collection('tasks')
                 .doc(task.id)
             : firestore
                 .collection('groups')
-                .doc(task.ownerID)
+                .doc(task.ownerId)
                 .collection('tasks')
                 .doc(task.id);
         batch.update(taskDocRef, {
@@ -110,15 +110,15 @@ class UserTaskListModel extends ChangeNotifier {
   }
 
   Future deleteTask({Task task}) async {
-    final taskDocRef = task.ownerID == userID
+    final taskDocRef = task.ownerId == userId
         ? firestore
             .collection('users')
-            .doc(userID)
+            .doc(userId)
             .collection('tasks')
             .doc(task.id)
         : firestore
             .collection('groups')
-            .doc(task.ownerID)
+            .doc(task.ownerId)
             .collection('tasks')
             .doc(task.id);
     try {

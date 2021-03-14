@@ -20,13 +20,13 @@ class GroupMainModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String groupID}) async {
+  Future init({String groupId}) async {
     taskCount = 0;
     startLoading();
     try {
       final taskQuery = await firestore
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('tasks')
           .get();
       final tasks = taskQuery.docs.map((doc) => Task.doc(doc)).toList();
@@ -35,19 +35,19 @@ class GroupMainModel extends ChangeNotifier {
           taskCount += 1;
         }
       });
-      await getEventList(groupID: groupID);
+      await getEventList(groupId: groupId);
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future getEventList({String groupID}) async {
+  Future getEventList({String groupId}) async {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
     try {
       QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collection('groups')
-          .doc(groupID)
+          .doc(groupId)
           .collection('events')
           .where('end', isGreaterThan: currentTimestamp)
           .get();

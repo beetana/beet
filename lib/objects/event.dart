@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
   final String id;
-  final String ownerID;
+  final String ownerId;
   final String title;
   final String place;
   final String memo;
@@ -13,7 +13,7 @@ class Event {
 
   Event._(
     this.id,
-    this.ownerID,
+    this.ownerId,
     this.title,
     this.place,
     this.memo,
@@ -27,7 +27,7 @@ class Event {
     final data = doc.data();
     return Event._(
       doc.id,
-      data['ownerID'],
+      data['ownerId'],
       data['title'],
       data['place'],
       data['memo'],

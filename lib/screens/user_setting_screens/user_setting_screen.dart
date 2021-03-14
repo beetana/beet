@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserSettingScreen extends StatelessWidget {
-  UserSettingScreen({this.userID});
-  final String userID;
+  UserSettingScreen({this.userId});
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class UserSettingScreen extends StatelessWidget {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => UserProfileScreen(userID: userID),
+                      builder: (context) => UserProfileScreen(userId: userId),
                     ),
                   );
                 },
@@ -64,7 +64,7 @@ class UserSettingScreen extends StatelessWidget {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => UserSecurityScreen(userID: userID),
+                      builder: (context) => UserSecurityScreen(userId: userId),
                     ),
                   );
                 },

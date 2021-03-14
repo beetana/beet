@@ -52,21 +52,21 @@ class TaskListTile extends StatelessWidget {
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: task.assignedMembersID.length,
+                        itemCount: task.assignedMembersId.length,
                         itemBuilder: (context, index) {
                           return Container(
                             width: 24.0,
                             height: 24.0,
                             child: CircleAvatar(
                               backgroundImage: users[
-                                          task.assignedMembersID[index]] ==
+                                          task.assignedMembersId[index]] ==
                                       null
                                   ? AssetImage('images/test_user_image.png')
-                                  : users[task.assignedMembersID[index]]
+                                  : users[task.assignedMembersId[index]]
                                           .imageURL
                                           .isNotEmpty
                                       ? NetworkImage(
-                                          users[task.assignedMembersID[index]]
+                                          users[task.assignedMembersId[index]]
                                               .imageURL,
                                         )
                                       : AssetImage(

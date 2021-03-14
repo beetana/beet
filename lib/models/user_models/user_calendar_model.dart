@@ -6,7 +6,7 @@ import 'package:nholiday_jp/nholiday_jp.dart';
 import 'package:beet/objects/content_owner.dart';
 
 class UserCalendarModel extends ChangeNotifier {
-  String userID = '';
+  String userId = '';
   DateTime now = DateTime.now();
   DateTime first;
   DateTime last;
@@ -18,14 +18,14 @@ class UserCalendarModel extends ChangeNotifier {
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
 
-  void init({String userID}) {
-    this.userID = userID;
+  void init({String userId}) {
+    this.userId = userId;
     this.selectedDay = DateTime(now.year, now.month, now.day, 12);
   }
 
   Future getEvents() async {
     events = {};
-    List<String> ownerIDList = [userID];
+    List<String> ownerIdList = [userId];
     List<Event> eventList;
     List<Event> eventsOfDay;
     DateTime firstDate = DateTime(first.year, first.month, first.day, 12);
@@ -35,16 +35,16 @@ class UserCalendarModel extends ChangeNotifier {
     try {
       QuerySnapshot joiningGroupDoc = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userID)
+          .doc(userId)
           .collection('joiningGroup')
           .get();
-      ownerIDList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
+      ownerIdList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
 
-      await fetchContentOwnerInfo(ownerIDList: ownerIDList);
+      await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 
       QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collectionGroup('events')
-          .where('ownerID', whereIn: ownerIDList)
+          .where('ownerId', whereIn: ownerIdList)
           .where('monthList', arrayContains: monthForm)
           .get();
 
@@ -62,8 +62,8 @@ class UserCalendarModel extends ChangeNotifier {
     }
   }
 
-  Future fetchContentOwnerInfo({ownerIDList}) async {
-    for (String id in ownerIDList) {
+  Future fetchContentOwnerInfo({ownerIdList}) async {
+    for (String id in ownerIdList) {
       if (id.length == 28) {
         DocumentSnapshot userDoc =
             await FirebaseFirestore.instance.collection('users').doc(id).get();

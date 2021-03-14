@@ -2,22 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Task {
   final String id;
-  final String ownerID;
+  final String ownerId;
   final String title;
   final String memo;
   final bool isDecidedDueDate;
   final DateTime dueDate;
-  final List<dynamic> assignedMembersID;
+  final List<dynamic> assignedMembersId;
   bool isCompleted;
 
   Task._(
     this.id,
-    this.ownerID,
+    this.ownerId,
     this.title,
     this.memo,
     this.isDecidedDueDate,
     this.dueDate,
-    this.assignedMembersID,
+    this.assignedMembersId,
     this.isCompleted,
   );
 
@@ -25,12 +25,12 @@ class Task {
     final data = doc.data();
     return Task._(
       doc.id,
-      data['ownerID'],
+      data['ownerId'],
       data['title'],
       data['memo'],
       data['isDecidedDueDate'],
       doc['isDecidedDueDate'] ? doc['dueDate'].toDate() : DateTime.now(),
-      doc['assignedMembersID'],
+      doc['assignedMembersId'],
       doc['isCompleted'],
     );
   }

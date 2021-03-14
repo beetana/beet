@@ -9,13 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupTaskListScreen extends StatelessWidget {
-  GroupTaskListScreen({this.groupID});
-  final String groupID;
+  GroupTaskListScreen({this.groupId});
+  final String groupId;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupTaskListModel>(
-      create: (_) => GroupTaskListModel()..init(groupID: groupID),
+      create: (_) => GroupTaskListModel()..init(groupId: groupId),
       child: Consumer<GroupTaskListModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -94,7 +94,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   GroupTaskDetailsScreen(
-                                                groupID: groupID,
+                                                groupId: groupId,
                                                 task: task,
                                               ),
                                             ),
@@ -157,7 +157,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   GroupTaskDetailsScreen(
-                                                groupID: groupID,
+                                                groupId: groupId,
                                                 task: task,
                                               ),
                                             ),
@@ -224,7 +224,7 @@ class GroupTaskListScreen extends StatelessWidget {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => GroupAddTaskScreen(groupID: groupID),
+                    builder: (context) => GroupAddTaskScreen(groupId: groupId),
                     fullscreenDialog: true,
                   ),
                 );

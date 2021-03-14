@@ -1,7 +1,7 @@
 import 'package:beet/models/user_models/user_calendar_model.dart';
 import 'package:beet/screens/user_screens/user_add_event_screen.dart';
 import 'package:beet/screens/user_screens/user_event_details_screen.dart';
-import 'package:beet/widgets/calendar.dart';
+import 'package:beet/widgets/calendar_widget.dart';
 import 'package:beet/widgets/event_list_tile.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
@@ -9,19 +9,19 @@ import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:provider/provider.dart';
 
 class UserCalendarScreen extends StatelessWidget {
-  UserCalendarScreen({this.userID});
-  final String userID;
+  UserCalendarScreen({this.userId});
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserCalendarModel>(
-      create: (_) => UserCalendarModel()..init(userID: userID),
+      create: (_) => UserCalendarModel()..init(userId: userId),
       child: Consumer<UserCalendarModel>(builder: (context, model, child) {
         return Stack(
           children: <Widget>[
             Column(
               children: <Widget>[
-                Calendar(model: model),
+                CalendarWidget(model: model),
                 ThinDivider(),
                 Expanded(
                   child: Scrollbar(
@@ -35,14 +35,14 @@ class UserCalendarScreen extends StatelessWidget {
                           return EventListTile(
                             event: event,
                             imageURL:
-                                model.eventPlanner[event.ownerID].imageURL,
-                            name: model.eventPlanner[event.ownerID].name,
+                                model.eventPlanner[event.ownerId].imageURL,
+                            name: model.eventPlanner[event.ownerId].name,
                             onTap: () async {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => UserEventDetailsScreen(
-                                    userID: userID,
+                                    userId: userId,
                                     event: event,
                                   ),
                                 ),
@@ -66,7 +66,7 @@ class UserCalendarScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => UserAddEventScreen(
-                      userID: userID,
+                      userId: userId,
                       dateTime: model.selectedDay,
                     ),
                     fullscreenDialog: true,

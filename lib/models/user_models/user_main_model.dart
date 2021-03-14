@@ -22,13 +22,13 @@ class UserMainModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userID}) async {
+  Future init({String userId}) async {
     taskCount = 0;
     startLoading();
     try {
       final taskQuery = await firestore
           .collectionGroup('tasks')
-          .where('assignedMembersID', arrayContains: userID)
+          .where('assignedMembersId', arrayContains: userId)
           .get();
       final tasks = taskQuery.docs.map((doc) => Task.doc(doc)).toList();
       tasks.forEach((task) {
@@ -36,29 +36,29 @@ class UserMainModel extends ChangeNotifier {
           taskCount += 1;
         }
       });
-      await getEventList(userID: userID);
+      await getEventList(userId: userId);
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future getEventList({String userID}) async {
+  Future getEventList({String userId}) async {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
-    List<String> ownerIDList = [userID];
+    List<String> ownerIdList = [userId];
     try {
       QuerySnapshot joiningGroupDoc = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userID)
+          .doc(userId)
           .collection('joiningGroup')
           .get();
-      ownerIDList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
+      ownerIdList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
 
-      await fetchContentOwnerInfo(ownerIDList: ownerIDList);
+      await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 
       QuerySnapshot eventDoc = await FirebaseFirestore.instance
           .collectionGroup('events')
-          .where('ownerID', whereIn: ownerIDList)
+          .where('ownerId', whereIn: ownerIdList)
           .where('end', isGreaterThan: currentTimestamp)
           .get();
       eventList = eventDoc.docs.map((doc) => Event.doc(doc)).toList();
@@ -71,8 +71,8 @@ class UserMainModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future fetchContentOwnerInfo({ownerIDList}) async {
-    for (String id in ownerIDList) {
+  Future fetchContentOwnerInfo({List<String> ownerIdList}) async {
+    for (String id in ownerIdList) {
       if (id.length == 28) {
         DocumentSnapshot userDoc =
             await FirebaseFirestore.instance.collection('users').doc(id).get();

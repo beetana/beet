@@ -9,13 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserTaskListScreen extends StatelessWidget {
-  UserTaskListScreen({this.userID});
-  final String userID;
+  UserTaskListScreen({this.userId});
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserTaskListModel>(
-      create: (_) => UserTaskListModel()..init(userID: userID),
+      create: (_) => UserTaskListModel()..init(userId: userId),
       child: Consumer<UserTaskListModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -94,7 +94,7 @@ class UserTaskListScreen extends StatelessWidget {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   UserTaskDetailsScreen(
-                                                userID: userID,
+                                                userId: userId,
                                                 task: task,
                                               ),
                                             ),
@@ -102,7 +102,7 @@ class UserTaskListScreen extends StatelessWidget {
                                           model.startLoading();
                                           try {
                                             await model.getTaskList(
-                                                userID: userID);
+                                                userId: userId);
                                           } catch (e) {
                                             _showTextDialog(
                                                 context, e.toString());
@@ -158,7 +158,7 @@ class UserTaskListScreen extends StatelessWidget {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   UserTaskDetailsScreen(
-                                                userID: userID,
+                                                userId: userId,
                                                 task: task,
                                               ),
                                             ),
@@ -166,7 +166,7 @@ class UserTaskListScreen extends StatelessWidget {
                                           model.startLoading();
                                           try {
                                             await model.getTaskList(
-                                                userID: userID);
+                                                userId: userId);
                                           } catch (e) {
                                             _showTextDialog(
                                                 context, e.toString());
@@ -205,7 +205,7 @@ class UserTaskListScreen extends StatelessWidget {
                             model.startLoading();
                             try {
                               await model.updateCheckState();
-                              await model.getTaskList(userID: userID);
+                              await model.getTaskList(userId: userId);
                             } catch (e) {
                               _showTextDialog(context, e.toString());
                             }
@@ -231,12 +231,12 @@ class UserTaskListScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => UserAddTaskScreen(
-                      userID: userID,
+                      userId: userId,
                     ),
                     fullscreenDialog: true,
                   ),
                 );
-                model.getTaskList(userID: userID);
+                model.getTaskList(userId: userId);
               },
             ),
             model.isLoading

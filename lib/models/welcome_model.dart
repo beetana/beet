@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class WelcomeModel extends ChangeNotifier {
-  String userID;
+  String userId;
   String name = '';
   String email = '';
   String password = '';
@@ -37,8 +37,8 @@ class WelcomeModel extends ChangeNotifier {
         password: password,
       ))
           .user;
-      userID = user.uid;
-      await FirebaseFirestore.instance.collection('users').doc(userID).set({
+      userId = user.uid;
+      await FirebaseFirestore.instance.collection('users').doc(userId).set({
         'name': name,
         'imageURL': '',
         'createdAt': FieldValue.serverTimestamp(),
@@ -62,7 +62,7 @@ class WelcomeModel extends ChangeNotifier {
         password: password,
       );
       Auth.User user = _auth.currentUser;
-      userID = user.uid;
+      userId = user.uid;
     } catch (e) {
       throw (_convertErrorMessage(e.code));
     }

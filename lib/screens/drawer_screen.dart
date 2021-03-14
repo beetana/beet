@@ -39,7 +39,7 @@ class DrawerScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              UserScreen(userID: model.userID),
+                              UserScreen(userId: model.userId),
                         ),
                       );
                     },
@@ -48,11 +48,11 @@ class DrawerScreen extends StatelessWidget {
                     child: Scrollbar(
                       child: ListView.builder(
                         physics: ScrollPhysics(),
-                        itemCount: model.groupName.length,
+                        itemCount: model.groupsName.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             title: Text(
-                              model.groupName[index],
+                              model.groupsName[index],
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
@@ -63,7 +63,7 @@ class DrawerScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => GroupScreen(
-                                    groupID: model.groupID[index],
+                                    groupId: model.groupsId[index],
                                   ),
                                 ),
                               );
@@ -90,10 +90,7 @@ class DrawerScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddGroupScreen(
-                              userName: model.userName,
-                              userImageURL: model.userImageURL,
-                            ),
+                            builder: (context) => AddGroupScreen(),
                             fullscreenDialog: true,
                           ),
                         );

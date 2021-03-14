@@ -1,4 +1,5 @@
 import 'package:beet/screens/group_screens/group_screen.dart';
+import 'package:beet/utilities/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
@@ -9,10 +10,10 @@ class DynamicLinksServices {
   BuildContext context;
   Auth.User user = Auth.FirebaseAuth.instance.currentUser;
 
-  Future<Uri> createDynamicLink({String groupID, String groupName}) async {
+  Future<Uri> createDynamicLink({String groupId, String groupName}) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://beetana.page.link',
-      link: Uri.parse('https://beetana.page.link/?id=$groupID&name=$groupName'),
+      link: Uri.parse('https://beetana.page.link/?id=$groupId&name=$groupName'),
       androidParameters: AndroidParameters(
         packageName: 'com.beetana.beet',
         minimumVersion: 1,
@@ -53,15 +54,15 @@ class DynamicLinksServices {
   }
 
   void handleLinkData(PendingDynamicLinkData data) {
-    String invitedGroupID = '';
+    String invitedGroupId = '';
     String invitedGroupName = '';
 
     final Uri deepLink = data?.link;
     if (deepLink != null) {
       final queryParams = deepLink.queryParameters;
-      invitedGroupID = queryParams['id'];
+      invitedGroupId = queryParams['id'];
       invitedGroupName = queryParams['name'];
-      invitedDialog(context, invitedGroupID, invitedGroupName);
+      invitedDialog(context, invitedGroupId, invitedGroupName);
 
       print(queryParams);
       print('招待されたグループのIDは${queryParams['id']}');
@@ -69,7 +70,7 @@ class DynamicLinksServices {
     }
   }
 
-  Future invitedDialog(context, groupID, groupName) async {
+  Future invitedDialog(context, groupId, groupName) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -77,31 +78,42 @@ class DynamicLinksServices {
           title: Text('$groupNameに招待されました。\n参加しますか？'),
           actions: [
             FlatButton(
+              child: Text(
+                'キャンセル',
+                style: kCancelButtonTextStyle,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
               child: Text('参加'),
               onPressed: () async {
                 showIndicator(context);
-                final isAlreadyJoin = await joinGroup(groupID);
-                if (isAlreadyJoin == true) {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  await alertMessageDialog(context, 'すでにグループに参加しています');
-                } else {
+                final joiningState = await joinGroup(groupId: groupId);
+                if (joiningState == JoiningState.notYet) {
                   Navigator.pop(context);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => GroupScreen(
-                        groupID: groupID,
+                        groupId: groupId,
                       ),
                     ),
                   );
+                } else if (joiningState == JoiningState.already) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  await alertMessageDialog(context, 'すでにグループに参加しています');
+                } else if (joiningState == JoiningState.noMore) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  await alertMessageDialog(context, '参加できるグループの数は8個までです');
+                } else {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  await alertMessageDialog(context, '不明なエラーです');
                 }
-              },
-            ),
-            FlatButton(
-              child: Text('キャンセル'),
-              onPressed: () {
-                Navigator.pop(context);
               },
             ),
           ],
@@ -148,29 +160,34 @@ class DynamicLinksServices {
     );
   }
 
-  Future<bool> joinGroup(groupID) async {
-    String userID = user.uid;
+  Future<JoiningState> joinGroup({String groupId}) async {
+    String userId = user.uid;
     String userName = '';
     String userImageURL = '';
     String groupName = '';
     String groupImageURL = '';
-    bool isAlreadyJoin = false;
+    JoiningState joiningState;
     final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(userID);
+        FirebaseFirestore.instance.collection('users').doc(userId);
     final groupDocRef =
-        FirebaseFirestore.instance.collection('groups').doc(groupID);
+        FirebaseFirestore.instance.collection('groups').doc(groupId);
 
     try {
+      final joiningGroupQuery =
+          await userDocRef.collection('joiningGroup').get();
       final joiningGroupDoc =
-          await userDocRef.collection('joiningGroup').doc(groupID).get();
-      print(!joiningGroupDoc.exists);
+          await userDocRef.collection('joiningGroup').doc(groupId).get();
 
-      if (!joiningGroupDoc.exists) {
+      if (joiningGroupQuery.size >= 8) {
+        joiningState = JoiningState.noMore;
+      } else if (joiningGroupDoc.exists) {
+        joiningState = JoiningState.already;
+      } else {
         final userDoc = await userDocRef.get();
         userName = userDoc['name'];
         userImageURL = userDoc['imageURL'];
 
-        await groupDocRef.collection('groupUsers').doc(userID).set({
+        await groupDocRef.collection('groupUsers').doc(userId).set({
           'name': userName,
           'imageURL': userImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
@@ -180,19 +197,18 @@ class DynamicLinksServices {
         groupName = groupDoc['name'];
         groupImageURL = groupDoc['imageURL'];
 
-        await userDocRef.collection('joiningGroup').doc(groupID).set({
+        await userDocRef.collection('joiningGroup').doc(groupId).set({
           'name': groupName,
           'imageURL': groupImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
         });
-      } else {
-        isAlreadyJoin = true;
+        joiningState = JoiningState.notYet;
       }
     } catch (e) {
       print(e);
     }
-    print(isAlreadyJoin);
-    return isAlreadyJoin;
+    print(joiningState);
+    return joiningState;
   }
 
   void showIndicator(context) {
@@ -208,4 +224,15 @@ class DynamicLinksServices {
       },
     );
   }
+}
+
+enum JoiningState {
+  // まだ参加してない
+  notYet,
+
+  // すでに参加している
+  already,
+
+  // これ以上は参加できない
+  noMore,
 }

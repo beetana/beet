@@ -2,26 +2,26 @@ import 'package:beet/screens/group_screens/group_add_event_screen.dart';
 import 'package:beet/screens/group_screens/group_event_details_screen.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/event_list_tile.dart';
-import 'package:beet/widgets/calendar.dart';
+import 'package:beet/widgets/calendar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/models/group_models/group_calendar_model.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:provider/provider.dart';
 
 class GroupCalendarScreen extends StatelessWidget {
-  GroupCalendarScreen({this.groupID});
-  final String groupID;
+  GroupCalendarScreen({this.groupId});
+  final String groupId;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupCalendarModel>(
-      create: (_) => GroupCalendarModel()..init(groupID: groupID),
+      create: (_) => GroupCalendarModel()..init(groupId: groupId),
       child: Consumer<GroupCalendarModel>(builder: (context, model, child) {
         return Stack(
           children: <Widget>[
             Column(
               children: <Widget>[
-                Calendar(model: model),
+                CalendarWidget(model: model),
                 BasicDivider(),
                 Expanded(
                   child: Scrollbar(
@@ -39,7 +39,7 @@ class GroupCalendarScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => GroupEventDetailsScreen(
-                                    groupID: groupID,
+                                    groupId: groupId,
                                     event: event,
                                   ),
                                 ),
@@ -63,7 +63,7 @@ class GroupCalendarScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => GroupAddEventScreen(
-                      groupID: groupID,
+                      groupId: groupId,
                       dateTime: model.selectedDay,
                     ),
                     fullscreenDialog: true,

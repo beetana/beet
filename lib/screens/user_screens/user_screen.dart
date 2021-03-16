@@ -1,4 +1,4 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/models/user_models/user_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
 import 'package:beet/screens/user_screens/user_task_list_screen.dart';

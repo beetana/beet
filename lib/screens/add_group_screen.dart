@@ -1,5 +1,6 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beet/models/add_group_model.dart';
@@ -89,7 +90,7 @@ class AddGroupScreen extends StatelessWidget {
                               try {
                                 await model.addGroup();
                                 if (model.groupId.isNotEmpty) {
-                                  await _showTextDialog(
+                                  await showMessageDialog(
                                       context, '新規グループを作成しました');
                                   Navigator.pushReplacement(
                                     context,
@@ -101,12 +102,12 @@ class AddGroupScreen extends StatelessWidget {
                                     ),
                                   );
                                 } else {
-                                  await _showTextDialog(
+                                  await showMessageDialog(
                                       context, '参加できるグループの数は8個までです');
                                   Navigator.pop(context);
                                 }
                               } catch (e) {
-                                _showTextDialog(context, e.toString());
+                                showMessageDialog(context, e.toString());
                               }
                               model.endLoading();
                             },
@@ -131,23 +132,4 @@ class AddGroupScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

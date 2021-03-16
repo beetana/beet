@@ -1,7 +1,8 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_task_details_model.dart';
 import 'package:beet/objects/task.dart';
 import 'package:beet/screens/group_screens/group_edit_task_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                       try {
                         await model.getTask();
                       } catch (e) {
-                        _showTextDialog(context, e.toString());
+                        showMessageDialog(context, e.toString());
                       }
                       model.endLoading();
                     },
@@ -175,7 +176,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                     await model.deleteTask();
                                     Navigator.pop(context);
                                   } catch (e) {
-                                    _showTextDialog(context, e.toString());
+                                    showMessageDialog(context, e.toString());
                                   }
                                   model.endLoading();
                                 }
@@ -200,25 +201,6 @@ class GroupTaskDetailsScreen extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }
 
 Future _confirmDeleteDialog(context, message) async {

@@ -1,4 +1,5 @@
 import 'package:beet/models/user_setting_models/user_edit_name_model.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +40,7 @@ class UserEditNameScreen extends StatelessWidget {
                           await model.updateUserName();
                           Navigator.pop(context);
                         } catch (e) {
-                          await _showTextDialog(context, e.toString());
+                          await showMessageDialog(context, e.toString());
                         }
                         model.endLoading();
                       },
@@ -83,23 +84,4 @@ class UserEditNameScreen extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

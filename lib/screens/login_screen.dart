@@ -1,5 +1,6 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -107,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                 );
                               } catch (e) {
-                                _showTextDialog(context, e);
+                                showMessageDialog(context, e.toString());
                               }
                               model.endLoading();
                             },
@@ -135,23 +136,4 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

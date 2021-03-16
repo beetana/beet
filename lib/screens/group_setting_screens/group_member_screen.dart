@@ -1,7 +1,8 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/services/dynamic_links_services.dart';
 import 'package:beet/models/group_setting_models/group_member_model.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +67,7 @@ class GroupMemberScreen extends StatelessWidget {
                                         )
                                       : model.init(groupId: groupId);
                                 } catch (e) {
-                                  _showTextDialog(context, e.toString());
+                                  showMessageDialog(context, e.toString());
                                 }
                                 model.endLoading();
                               }
@@ -213,25 +214,6 @@ Future<bool> _showConfirmDialog(context, isMe, userName) async {
   return isDelete;
 }
 
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
 Future _inviteMemberDialog(context, dynamicLink) async {
   final String inviteMessage =
       'beetのグループへの招待が届きました。\n招待リンクをタップしてグループに参加しましょう。\n▶︎まずはbeetをダウンロード\niOS\niOSリンク\nAndroid\nAndroidリンク\n▶︎ダウンロード後、以下の招待リンクをタップ\n$dynamicLink';
@@ -272,7 +254,7 @@ Future _inviteMemberDialog(context, dynamicLink) async {
             onPressed: () async {
               final ClipboardData data = ClipboardData(text: inviteMessage);
               await Clipboard.setData(data);
-              await _showTextDialog(context, 'コピーしました!');
+              await showMessageDialog(context, 'コピーしました!');
               Navigator.pop(context);
             },
           )

@@ -38,6 +38,15 @@ class MyApp extends StatelessWidget {
             ),
         primaryIconTheme:
             Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
+        appBarTheme: AppBarTheme(
+          //Brightness.lightにするとテキストが黒くなり、Brightness.darkにするとテキストが白くなる
+          brightness: Brightness.dark,
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            primary: Colors.black12,
+          ),
+        ),
         dialogTheme: DialogTheme(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(

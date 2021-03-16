@@ -1,6 +1,7 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_main_model.dart';
 import 'package:beet/screens/group_screens/group_event_details_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/event_list_tile.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +111,7 @@ class GroupMainScreen extends StatelessWidget {
                               try {
                                 await model.getEventList(groupId: groupId);
                               } catch (e) {
-                                _showTextDialog(context, e.toString());
+                                showMessageDialog(context, e.toString());
                               }
                               model.endLoading();
                             },
@@ -136,23 +137,4 @@ class GroupMainScreen extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

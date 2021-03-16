@@ -1,7 +1,8 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/models/user_setting_models/user_profile_model.dart';
 import 'package:beet/screens/user_setting_screens/user_edit_name_screen.dart';
 import 'package:beet/screens/welcome_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +67,7 @@ class UserProfileScreen extends StatelessWidget {
                                               try {
                                                 await model.deleteUserImage();
                                               } catch (e) {
-                                                await _showTextDialog(
+                                                await showMessageDialog(
                                                     context, e.toString());
                                               }
                                               model.endLoading();
@@ -78,7 +79,7 @@ class UserProfileScreen extends StatelessWidget {
                                                 try {
                                                   await model.updateUserImage();
                                                 } catch (e) {
-                                                  await _showTextDialog(
+                                                  await showMessageDialog(
                                                       context, e.toString());
                                                 }
                                                 model.endLoading();
@@ -105,7 +106,7 @@ class UserProfileScreen extends StatelessWidget {
                                                 try {
                                                   await model.deleteUserImage();
                                                 } catch (e) {
-                                                  await _showTextDialog(
+                                                  await showMessageDialog(
                                                       context, e.toString());
                                                 }
                                                 model.endLoading();
@@ -118,7 +119,7 @@ class UserProfileScreen extends StatelessWidget {
                                                     await model
                                                         .updateUserImage();
                                                   } catch (e) {
-                                                    await _showTextDialog(
+                                                    await showMessageDialog(
                                                         context, e.toString());
                                                   }
                                                   model.endLoading();
@@ -176,7 +177,7 @@ class UserProfileScreen extends StatelessWidget {
                                   try {
                                     await model.deleteAccount(
                                         password: password);
-                                    await _showTextDialog(
+                                    await showMessageDialog(
                                         context, 'アカウントを削除しました');
                                     Navigator.pushReplacement(
                                       context,
@@ -186,7 +187,8 @@ class UserProfileScreen extends StatelessWidget {
                                       ),
                                     );
                                   } catch (e) {
-                                    await _showTextDialog(context, e);
+                                    await showMessageDialog(
+                                        context, e.toString());
                                   }
                                   model.endLoading();
                                 }
@@ -430,23 +432,4 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
     },
   );
   return password;
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

@@ -1,5 +1,6 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -113,7 +114,7 @@ class RegisterScreen extends StatelessWidget {
                               model.startLoading();
                               try {
                                 await model.register();
-                                await _showTextDialog(context, '登録しました');
+                                await showMessageDialog(context, '登録しました');
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -122,7 +123,7 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                                 );
                               } catch (e) {
-                                _showTextDialog(context, e);
+                                showMessageDialog(context, e.toString());
                               }
                               model.endLoading();
                             },
@@ -150,23 +151,4 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

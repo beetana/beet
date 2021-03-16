@@ -1,6 +1,7 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_set_list_model_3.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/set_list_tile.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/cupertino.dart';
@@ -141,7 +142,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                           ),
                           onPressed: () async {
                             await model.saveSetListImage();
-                            await _showTextDialog(context, '画像を保存しました');
+                            await showMessageDialog(context, '画像を保存しました');
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -162,23 +163,4 @@ class GroupSetListScreen3 extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

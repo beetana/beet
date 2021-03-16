@@ -1,4 +1,5 @@
 import 'package:beet/models/user_setting_models/user_update_password_model.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,10 +36,10 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                         model.startLoading();
                         try {
                           await model.updatePassword();
-                          await _showTextDialog(context, '変更しました');
+                          await showMessageDialog(context, '変更しました');
                           Navigator.pop(context);
                         } catch (e) {
-                          await _showTextDialog(context, e.toString());
+                          await showMessageDialog(context, e.toString());
                         }
                         model.endLoading();
                       },
@@ -130,23 +131,4 @@ class UserUpdatePasswordScreen extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

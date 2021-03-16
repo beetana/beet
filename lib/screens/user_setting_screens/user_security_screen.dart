@@ -1,8 +1,9 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/models/user_setting_models/user_security_model.dart';
 import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_update_email_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_update_password_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -94,7 +95,7 @@ class UserSecurityScreen extends StatelessWidget {
                               ),
                             );
                           } catch (e) {
-                            await _showTextDialog(context, e);
+                            await showMessageDialog(context, e.toString());
                           }
                           model.endLoading();
                         }
@@ -117,25 +118,6 @@ class UserSecurityScreen extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }
 
 Future _confirmLogoutDialog(context, message) async {

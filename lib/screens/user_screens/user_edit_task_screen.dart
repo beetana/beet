@@ -1,5 +1,6 @@
 import 'package:beet/models/user_models/user_edit_task_model.dart';
 import 'package:beet/objects/task.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/assign_task_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,7 +46,7 @@ class UserEditTaskScreen extends StatelessWidget {
                           await model.updateTask();
                           Navigator.pop(context);
                         } catch (e) {
-                          _showTextDialog(context, e.toString());
+                          showMessageDialog(context, e.toString());
                         }
                         model.endLoading();
                       },
@@ -194,23 +195,4 @@ class UserEditTaskScreen extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

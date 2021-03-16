@@ -1,7 +1,8 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/objects/event.dart';
 import 'package:beet/models/user_models/user_event_details_model.dart';
 import 'package:beet/screens/user_screens/user_edit_event_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/event_date_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,7 +49,7 @@ class UserEventDetailsScreen extends StatelessWidget {
                       try {
                         await model.getEvent();
                       } catch (e) {
-                        _showTextDialog(context, e.toString());
+                        showMessageDialog(context, e.toString());
                       }
                       model.endLoading();
                     },
@@ -150,7 +151,7 @@ class UserEventDetailsScreen extends StatelessWidget {
                                     await model.deleteEvent();
                                     Navigator.pop(context);
                                   } catch (e) {
-                                    _showTextDialog(context, e.toString());
+                                    showMessageDialog(context, e.toString());
                                   }
                                   model.endLoading();
                                 }
@@ -175,25 +176,6 @@ class UserEventDetailsScreen extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }
 
 Future _confirmDeleteDialog(context, message) async {

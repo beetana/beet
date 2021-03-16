@@ -1,6 +1,7 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_setting_models/group_profile_model.dart';
 import 'package:beet/screens/group_setting_screens/group_edit_name_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +55,7 @@ class GroupProfileScreen extends StatelessWidget {
                                     try {
                                       await model.deleteGroupImage();
                                     } catch (e) {
-                                      await _showTextDialog(
+                                      await showMessageDialog(
                                           context, e.toString());
                                     }
                                     model.endLoading();
@@ -66,7 +67,7 @@ class GroupProfileScreen extends StatelessWidget {
                                       try {
                                         await model.updateGroupImage();
                                       } catch (e) {
-                                        await _showTextDialog(
+                                        await showMessageDialog(
                                             context, e.toString());
                                       }
                                       model.endLoading();
@@ -91,7 +92,7 @@ class GroupProfileScreen extends StatelessWidget {
                                       try {
                                         await model.deleteGroupImage();
                                       } catch (e) {
-                                        await _showTextDialog(
+                                        await showMessageDialog(
                                             context, e.toString());
                                       }
                                       model.endLoading();
@@ -103,7 +104,7 @@ class GroupProfileScreen extends StatelessWidget {
                                         try {
                                           await model.updateGroupImage();
                                         } catch (e) {
-                                          await _showTextDialog(
+                                          await showMessageDialog(
                                               context, e.toString());
                                         }
                                         model.endLoading();
@@ -278,23 +279,4 @@ Future<bool> _showConfirmDialog(context) async {
     },
   );
   return isDelete;
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

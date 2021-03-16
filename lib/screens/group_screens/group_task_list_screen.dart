@@ -1,7 +1,8 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_task_list_model.dart';
 import 'package:beet/screens/group_screens/group_add_task_screen.dart';
 import 'package:beet/screens/group_screens/group_task_details_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:beet/widgets/task_list_tile.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
@@ -82,7 +83,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                               await model.deleteTask(
                                                   task: task);
                                             } catch (e) {
-                                              _showTextDialog(
+                                              showMessageDialog(
                                                   context, e.toString());
                                             }
                                             model.endLoading();
@@ -103,7 +104,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                           try {
                                             await model.getTaskList();
                                           } catch (e) {
-                                            _showTextDialog(
+                                            showMessageDialog(
                                                 context, e.toString());
                                           }
                                           model.endLoading();
@@ -145,7 +146,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                               await model.deleteTask(
                                                   task: task);
                                             } catch (e) {
-                                              _showTextDialog(
+                                              showMessageDialog(
                                                   context, e.toString());
                                             }
                                             model.endLoading();
@@ -166,7 +167,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                           try {
                                             await model.getTaskList();
                                           } catch (e) {
-                                            _showTextDialog(
+                                            showMessageDialog(
                                                 context, e.toString());
                                           }
                                           model.endLoading();
@@ -243,25 +244,6 @@ class GroupTaskListScreen extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }
 
 Future _confirmDeleteDialog(context, message) async {

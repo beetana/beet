@@ -1,5 +1,5 @@
 import 'package:beet/screens/group_screens/group_screen.dart';
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';

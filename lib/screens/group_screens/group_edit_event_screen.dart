@@ -1,5 +1,6 @@
 import 'package:beet/objects/event.dart';
 import 'package:beet/models/group_models/group_edit_event_model.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class GroupEditEventScreen extends StatelessWidget {
                           await model.updateEvent(groupId: groupId);
                           Navigator.pop(context);
                         } catch (e) {
-                          _showTextDialog(context, e.toString());
+                          showMessageDialog(context, e.toString());
                         }
                         model.endLoading();
                       },
@@ -182,23 +183,4 @@ class GroupEditEventScreen extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

@@ -1,6 +1,7 @@
-import 'package:beet/utilities/constants.dart';
+import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_edit_song_model.dart';
 import 'package:beet/objects/song.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class GroupEditSongScreen extends StatelessWidget {
                           await model.editSong();
                           Navigator.pop(context);
                         } catch (e) {
-                          _showTextDialog(context, e.toString());
+                          showMessageDialog(context, e.toString());
                         }
                         model.endLoading();
                       },
@@ -182,23 +183,4 @@ class GroupEditSongScreen extends StatelessWidget {
       }),
     );
   }
-}
-
-Future _showTextDialog(context, message) async {
-  await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

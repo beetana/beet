@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>プロフィール画像を設定するために使用します</string>
+	<string>プロフィール画像を設定するために、端末内の画像を使用します</string>
 	<key>FirebaseDynamicLinksCustomDomains</key>
-    	<array>
-    		<string>https://beetana.page.link</string>
-    	</array>
+	<array>
+		<string>https://beetana.page.link</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

@@ -20,7 +20,6 @@ class GroupProfileScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('グループ情報'),
-                centerTitle: true,
               ),
               body: Column(
                 children: [

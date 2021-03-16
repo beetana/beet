@@ -21,7 +21,6 @@ class UserSecurityScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('ログインとセキュリティ'),
-                centerTitle: true,
               ),
               body: SafeArea(
                 child: Column(

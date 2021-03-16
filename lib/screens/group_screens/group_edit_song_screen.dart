@@ -33,7 +33,6 @@ class GroupEditSongScreen extends StatelessWidget {
               Scaffold(
                 appBar: AppBar(
                   title: Text('曲を編集'),
-                  centerTitle: true,
                   actions: [
                     TextButton(
                       child: Text(

@@ -21,7 +21,6 @@ class LoginScreen extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text('ログイン'),
-            centerTitle: true,
           ),
           body: Consumer<WelcomeModel>(builder: (context, model, child) {
             return Stack(

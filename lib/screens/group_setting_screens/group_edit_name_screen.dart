@@ -25,7 +25,6 @@ class GroupEditNameScreen extends StatelessWidget {
               child: Scaffold(
                 appBar: AppBar(
                   title: Text('グループ名を変更'),
-                  centerTitle: true,
                   actions: [
                     TextButton(
                       child: Text(

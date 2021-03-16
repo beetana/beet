@@ -31,7 +31,6 @@ class UserEditTaskScreen extends StatelessWidget {
               child: Scaffold(
                 appBar: AppBar(
                   title: Text('タスク編集'),
-                  centerTitle: true,
                   actions: [
                     TextButton(
                       child: Text(

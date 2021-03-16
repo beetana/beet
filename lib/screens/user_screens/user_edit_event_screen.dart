@@ -34,7 +34,6 @@ class UserEditEventScreen extends StatelessWidget {
               Scaffold(
                 appBar: AppBar(
                   title: Text('イベントを編集'),
-                  centerTitle: true,
                   actions: [
                     TextButton(
                       child: Text(

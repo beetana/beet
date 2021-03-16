@@ -24,7 +24,6 @@ class AddGroupScreen extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               title: Text('グループを作成'),
-              centerTitle: true,
             ),
             body: Consumer<AddGroupModel>(builder: (context, model, child) {
               return Stack(

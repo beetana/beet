@@ -25,7 +25,6 @@ class UserEditNameScreen extends StatelessWidget {
               child: Scaffold(
                 appBar: AppBar(
                   title: Text('アカウント名を変更'),
-                  centerTitle: true,
                   actions: [
                     TextButton(
                       child: Text(

@@ -253,7 +253,7 @@ Future _inviteMemberDialog(context, dynamicLink) async {
             onPressed: () async {
               final ClipboardData data = ClipboardData(text: inviteMessage);
               await Clipboard.setData(data);
-              await showMessageDialog(context, 'コピーしました!');
+              await showMessageDialog(context, 'コピーしました');
               Navigator.pop(context);
             },
           )

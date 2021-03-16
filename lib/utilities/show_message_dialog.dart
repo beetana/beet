@@ -1,3 +1,4 @@
+import 'package:beet/constants.dart';
 import 'package:flutter/material.dart';
 
 Future showMessageDialog(context, message) async {
@@ -8,7 +9,10 @@ Future showMessageDialog(context, message) async {
         title: Text(message),
         actions: [
           TextButton(
-            child: Text('OK'),
+            child: Text(
+              'OK',
+              style: TextStyle(color: kEnterButtonColor),
+            ),
             onPressed: () {
               Navigator.pop(context);
             },

@@ -33,7 +33,6 @@ class UserScreen extends StatelessWidget {
                   model.userName,
                   textAlign: TextAlign.center,
                 ),
-                centerTitle: true,
                 actions: [
                   IconButton(
                     icon: Icon(

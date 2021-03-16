@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         primaryIconTheme:
             Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
         appBarTheme: AppBarTheme(
+          centerTitle: true,
           //Brightness.lightにするとテキストが黒くなり、Brightness.darkにするとテキストが白くなる
           brightness: Brightness.dark,
         ),

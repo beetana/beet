@@ -27,7 +27,6 @@ class GroupAddSongScreen extends StatelessWidget {
               Scaffold(
                 appBar: AppBar(
                   title: Text('曲を追加'),
-                  centerTitle: true,
                   actions: [
                     TextButton(
                       child: Text(

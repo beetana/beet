@@ -23,7 +23,6 @@ class UserUpdatePasswordScreen extends StatelessWidget {
               child: Scaffold(
                 appBar: AppBar(
                   title: Text('パスワードを変更'),
-                  centerTitle: true,
                   actions: [
                     TextButton(
                       child: Text(

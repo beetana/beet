@@ -19,7 +19,6 @@ class UserSettingScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('設定'),
-          centerTitle: true,
         ),
         body: Consumer<UserSettingModel>(builder: (context, model, child) {
           return Column(

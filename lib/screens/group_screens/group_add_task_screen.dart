@@ -27,7 +27,6 @@ class GroupAddTaskScreen extends StatelessWidget {
               child: Scaffold(
                 appBar: AppBar(
                   title: Text('タスクを追加'),
-                  centerTitle: true,
                   actions: [
                     TextButton(
                       child: Text(

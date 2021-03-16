@@ -22,7 +22,6 @@ class RegisterScreen extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text('アカウントを作成'),
-            centerTitle: true,
           ),
           body: Consumer<WelcomeModel>(builder: (context, model, child) {
             return Stack(

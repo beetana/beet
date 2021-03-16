@@ -25,7 +25,6 @@ class UserEventDetailsScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('イベント詳細'),
-                centerTitle: true,
                 actions: [
                   TextButton(
                     child: Text(

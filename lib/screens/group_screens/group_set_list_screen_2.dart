@@ -36,7 +36,6 @@ class GroupSetListScreen2 extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               title: Text('詳細'),
-              centerTitle: true,
             ),
             body: SafeArea(
               child: Column(

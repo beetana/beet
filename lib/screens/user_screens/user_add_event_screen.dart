@@ -38,7 +38,6 @@ class UserAddEventScreen extends StatelessWidget {
                 Scaffold(
                   appBar: AppBar(
                     title: Text('イベントを追加'),
-                    centerTitle: true,
                     actions: [
                       TextButton(
                         child: Text(

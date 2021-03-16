@@ -21,7 +21,6 @@ class UserProfileScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('アカウント情報'),
-                centerTitle: true,
               ),
               body: LayoutBuilder(builder: (context, constraint) {
                 return SingleChildScrollView(

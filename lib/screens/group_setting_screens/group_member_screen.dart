@@ -22,7 +22,6 @@ class GroupMemberScreen extends StatelessWidget {
             Scaffold(
               appBar: AppBar(
                 title: Text('メンバー'),
-                centerTitle: true,
               ),
               body: SafeArea(
                 child: Column(

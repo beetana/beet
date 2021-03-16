@@ -197,7 +197,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         'ライブラリから選択',
                         style: TextStyle(
@@ -206,14 +206,16 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
                       onPressed: () async {
                         changeImage = ChangeImage.select;
                         Navigator.pop(context);
                       },
                     ),
                     BasicDivider(),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         '写真を削除',
                         style: TextStyle(
@@ -222,7 +224,9 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
                       onPressed: () async {
                         bool isDelete = await _showConfirmDialog(context);
                         isDelete
@@ -251,7 +255,7 @@ Future<bool> _showConfirmDialog(context) async {
       return AlertDialog(
         title: Text('プロフィール画像を削除しますか?'),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
@@ -260,7 +264,7 @@ Future<bool> _showConfirmDialog(context) async {
               Navigator.pop(context, false);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
               '削除',
               style: kDeleteButtonTextStyle,
@@ -283,7 +287,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);

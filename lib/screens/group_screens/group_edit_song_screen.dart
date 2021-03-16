@@ -34,7 +34,7 @@ class GroupEditSongScreen extends StatelessWidget {
                   title: Text('曲を編集'),
                   centerTitle: true,
                   actions: [
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         '保存',
                         style: TextStyle(
@@ -191,7 +191,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);

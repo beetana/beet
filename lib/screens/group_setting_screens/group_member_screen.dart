@@ -75,7 +75,7 @@ class GroupMemberScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    FlatButton.icon(
+                    TextButton.icon(
                       icon: Icon(
                         Icons.group_add,
                         color: kSlightlyTransparentPrimaryColor,
@@ -150,14 +150,16 @@ Future<bool> _showMemberBottomSheet(
                       ),
                     ),
                     SizedBox(height: 8.0),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         buttonText,
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
-                      color: Colors.redAccent,
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                      ),
                       onPressed: () async {
                         isDelete =
                             await _showConfirmDialog(context, isMe, userName);
@@ -186,7 +188,7 @@ Future<bool> _showConfirmDialog(context, isMe, userName) async {
       return AlertDialog(
         title: Text(titleText),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
@@ -195,7 +197,7 @@ Future<bool> _showConfirmDialog(context, isMe, userName) async {
               Navigator.pop(context, false);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
               buttonText,
               style: kDeleteButtonTextStyle,
@@ -218,7 +220,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);

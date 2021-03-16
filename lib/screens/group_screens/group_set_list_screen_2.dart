@@ -122,7 +122,7 @@ class GroupSetListScreen2 extends StatelessWidget {
                       ),
                       Expanded(
                         child: Center(
-                          child: FlatButton(
+                          child: TextButton(
                             child: Text(
                               '決定',
                               style: TextStyle(

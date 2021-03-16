@@ -39,7 +39,7 @@ class GroupAddEventScreen extends StatelessWidget {
                     title: Text('イベントを追加'),
                     centerTitle: true,
                     actions: [
-                      FlatButton(
+                      TextButton(
                         child: Text(
                           '追加',
                           style: TextStyle(
@@ -196,7 +196,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);

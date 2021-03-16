@@ -80,12 +80,14 @@ class LoginScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              backgroundColor: kPrimaryColor,
+                              primary: Colors.white38,
                             ),
-                            color: kPrimaryColor,
-                            highlightColor: Colors.white38,
                             child: Text(
                               'ログイン',
                               style: TextStyle(
@@ -142,7 +144,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);

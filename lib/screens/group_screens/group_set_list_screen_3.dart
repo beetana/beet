@@ -114,7 +114,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: Center(
-                        child: FlatButton(
+                        child: TextButton(
                           child: Text(
                             '戻る',
                             style: TextStyle(
@@ -131,7 +131,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: Center(
-                        child: FlatButton(
+                        child: TextButton(
                           child: Text(
                             '保存',
                             style: TextStyle(
@@ -171,7 +171,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);

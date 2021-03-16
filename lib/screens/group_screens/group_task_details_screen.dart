@@ -157,7 +157,6 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                             indent: 16.0,
                             endIndent: 16.0,
                           ),
-                          SizedBox(height: 8.0),
                           Center(
                             child: TextButton(
                               child: Text(

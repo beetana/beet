@@ -92,6 +92,7 @@ class UserTaskListModel extends ChangeNotifier {
                 .doc(task.id);
         batch.update(taskDocRef, {
           'isCompleted': task.isCompleted,
+          'updatedAt': FieldValue.serverTimestamp(),
         });
       });
       await batch.commit();

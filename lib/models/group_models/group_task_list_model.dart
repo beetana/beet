@@ -67,6 +67,7 @@ class GroupTaskListModel extends ChangeNotifier {
         final taskDocRef = groupDocRef.collection('tasks').doc(task.id);
         batch.update(taskDocRef, {
           'isCompleted': task.isCompleted,
+          'updatedAt': FieldValue.serverTimestamp(),
         });
       });
       await batch.commit();

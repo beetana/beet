@@ -75,7 +75,7 @@ class DrawerScreen extends StatelessWidget {
                   ),
                   SafeArea(
                     top: false,
-                    child: FlatButton.icon(
+                    child: TextButton.icon(
                       icon: Icon(
                         Icons.add,
                         color: kSlightlyTransparentPrimaryColor,

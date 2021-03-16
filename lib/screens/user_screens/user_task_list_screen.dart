@@ -198,27 +198,29 @@ class UserTaskListScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  FlatButton(
-                    onPressed: model.changeStateTasks.isEmpty
-                        ? null
-                        : () async {
-                            model.startLoading();
-                            try {
-                              await model.updateCheckState();
-                              await model.getTaskList(userId: userId);
-                            } catch (e) {
-                              _showTextDialog(context, e.toString());
-                            }
-                            model.endLoading();
-                          },
-                    disabledTextColor: kTransparentPrimaryColor,
-                    child: Text(
-                      '更新',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: model.changeStateTasks.isEmpty
-                            ? kInvalidEnterButtonColor
-                            : kEnterButtonColor,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: TextButton(
+                      onPressed: model.changeStateTasks.isEmpty
+                          ? null
+                          : () async {
+                              model.startLoading();
+                              try {
+                                await model.updateCheckState();
+                                await model.getTaskList(userId: userId);
+                              } catch (e) {
+                                _showTextDialog(context, e.toString());
+                              }
+                              model.endLoading();
+                            },
+                      child: Text(
+                        '更新',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: model.changeStateTasks.isEmpty
+                              ? kInvalidEnterButtonColor
+                              : kEnterButtonColor,
+                        ),
                       ),
                     ),
                   ),
@@ -258,7 +260,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);
@@ -278,7 +280,7 @@ Future _confirmDeleteDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
@@ -287,7 +289,7 @@ Future _confirmDeleteDialog(context, message) async {
               Navigator.pop(context, false);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
               '削除',
               style: kDeleteButtonTextStyle,

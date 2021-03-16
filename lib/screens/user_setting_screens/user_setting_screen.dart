@@ -181,13 +181,13 @@ Future _showAppInfoDialog(context) async {
           ],
         ),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('ライセンスを表示'),
             onPressed: () {
               showLicensePage(context: context);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text('閉じる'),
             onPressed: () {
               Navigator.pop(context);

@@ -32,7 +32,7 @@ class UserEditTaskScreen extends StatelessWidget {
                   title: Text('タスク編集'),
                   centerTitle: true,
                   actions: [
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         '更新',
                         style: TextStyle(
@@ -203,7 +203,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);

@@ -162,7 +162,7 @@ class UserProfileScreen extends StatelessWidget {
                                 color: kDullWhiteColor,
                               ),
                             ),
-                            FlatButton(
+                            TextButton(
                               child: Text(
                                 'アカウントを削除',
                                 style: kDeleteButtonTextStyle,
@@ -247,7 +247,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         'ライブラリから選択',
                         style: TextStyle(
@@ -256,14 +256,16 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
                       onPressed: () async {
                         changeImage = ChangeImage.select;
                         Navigator.pop(context);
                       },
                     ),
                     ThinDivider(),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         '写真を削除',
                         style: TextStyle(
@@ -272,7 +274,9 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
                       onPressed: () async {
                         bool isDelete =
                             await _showConfirmDialog(context, 'プロフィール画像');
@@ -304,7 +308,7 @@ Future<bool> _showConfirmDialog(context, message) async {
       return AlertDialog(
         title: Text('$messageを削除しますか?'),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
@@ -313,7 +317,7 @@ Future<bool> _showConfirmDialog(context, message) async {
               Navigator.pop(context, false);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
               '削除',
               style: kDeleteButtonTextStyle,
@@ -376,7 +380,7 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                         },
                       ),
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         'アカウントを削除',
                         style: TextStyle(
@@ -385,7 +389,9 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
                       onPressed: () async {
                         FocusScope.of(context).unfocus();
                         bool isDelete =
@@ -397,7 +403,7 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                       },
                     ),
                     ThinDivider(),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         'キャンセル',
                         style: TextStyle(
@@ -406,7 +412,9 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
                       onPressed: () {
                         password = '';
                         Navigator.pop(context);
@@ -431,7 +439,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);

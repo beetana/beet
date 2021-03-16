@@ -26,7 +26,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
                 title: Text('タスク'),
                 centerTitle: true,
                 actions: [
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       '編集',
                       style: TextStyle(
@@ -181,7 +181,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 8.0),
                           Center(
-                            child: FlatButton(
+                            child: TextButton(
                               child: Text(
                                 '削除',
                                 style: TextStyle(
@@ -231,7 +231,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);
@@ -251,7 +251,7 @@ Future _confirmDeleteDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
@@ -260,7 +260,7 @@ Future _confirmDeleteDialog(context, message) async {
               Navigator.pop(context, false);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
               '削除',
               style: kDeleteButtonTextStyle,

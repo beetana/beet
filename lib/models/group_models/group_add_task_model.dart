@@ -83,7 +83,7 @@ class GroupAddTaskModel extends ChangeNotifier {
               },
             ),
           ),
-          FlatButton.icon(
+          TextButton.icon(
             icon: Icon(
               Icons.clear,
               color: Colors.black54,

@@ -68,7 +68,7 @@ class UserSecurityScreen extends StatelessWidget {
                         color: kDullWhiteColor,
                       ),
                     ),
-                    FlatButton.icon(
+                    TextButton.icon(
                       icon: Icon(
                         Icons.exit_to_app,
                         color: kSlightlyTransparentPrimaryColor,
@@ -126,7 +126,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);
@@ -146,7 +146,7 @@ Future _confirmLogoutDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
@@ -155,7 +155,7 @@ Future _confirmLogoutDialog(context, message) async {
               Navigator.pop(context, false);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
               'ログアウト',
               style: kDeleteButtonTextStyle,

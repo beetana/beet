@@ -26,7 +26,7 @@ class GroupEditNameScreen extends StatelessWidget {
                   title: Text('グループ名を変更'),
                   centerTitle: true,
                   actions: [
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         '保存',
                         style: TextStyle(
@@ -92,7 +92,7 @@ Future _showTextDialog(context, message) async {
       return AlertDialog(
         title: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.pop(context);

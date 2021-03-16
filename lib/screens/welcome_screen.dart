@@ -46,12 +46,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    backgroundColor: kPrimaryColor,
+                    primary: Colors.white38,
                   ),
-                  color: kPrimaryColor,
-                  highlightColor: Colors.white38,
                   child: Text(
                     'ログイン',
                     style: TextStyle(
@@ -81,9 +83,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                   child: Text(
                     'アカウントを作成',

@@ -36,7 +36,7 @@ class GroupSetListModel2 extends ChangeNotifier {
               },
             ),
           ),
-          FlatButton.icon(
+          TextButton.icon(
             icon: Icon(
               Icons.clear,
               color: Colors.black54,

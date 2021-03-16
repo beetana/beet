@@ -77,7 +77,7 @@ class DynamicLinksServices {
         return AlertDialog(
           title: Text('$groupNameに招待されました。\n参加しますか？'),
           actions: [
-            FlatButton(
+            TextButton(
               child: Text(
                 'キャンセル',
                 style: kCancelButtonTextStyle,
@@ -86,7 +86,7 @@ class DynamicLinksServices {
                 Navigator.pop(context);
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text('参加'),
               onPressed: () async {
                 showIndicator(context);
@@ -148,7 +148,7 @@ class DynamicLinksServices {
         return AlertDialog(
           title: Text(message),
           actions: [
-            FlatButton(
+            TextButton(
               child: Text('OK'),
               onPressed: () {
                 Navigator.pop(context);

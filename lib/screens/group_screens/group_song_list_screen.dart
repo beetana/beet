@@ -29,7 +29,7 @@ class GroupSongListScreen extends StatelessWidget {
                       mainAxisAlignment: model.buttonAlignment,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        FlatButton.icon(
+                        TextButton.icon(
                           icon: model.buttonIcon,
                           label: model.buttonText,
                           onPressed: () {
@@ -99,7 +99,7 @@ class GroupSongListScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Center(
-                            child: FlatButton(
+                            child: TextButton(
                               onPressed: model.selectedSongs.isEmpty
                                   ? null
                                   : () async {

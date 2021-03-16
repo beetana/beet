@@ -1,5 +1,6 @@
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/constants.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
@@ -87,7 +88,10 @@ class DynamicLinksServices {
               },
             ),
             TextButton(
-              child: Text('参加'),
+              child: Text(
+                '参加',
+                style: kEnterButtonTextStyle,
+              ),
               onPressed: () async {
                 showIndicator(context);
                 final joiningState = await joinGroup(groupId: groupId);
@@ -104,15 +108,15 @@ class DynamicLinksServices {
                 } else if (joiningState == JoiningState.already) {
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  await alertMessageDialog(context, 'すでにグループに参加しています');
+                  await showMessageDialog(context, 'すでにグループに参加しています');
                 } else if (joiningState == JoiningState.noMore) {
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  await alertMessageDialog(context, '参加できるグループの数は8個までです');
+                  await showMessageDialog(context, '参加できるグループの数は8個までです');
                 } else {
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  await alertMessageDialog(context, '不明なエラーです');
+                  await showMessageDialog(context, '不明なエラーです');
                 }
               },
             ),
@@ -128,36 +132,17 @@ class DynamicLinksServices {
     PendingDynamicLinkData link =
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (link != null) {
-      alertMessageDialog(context, 'ログインしてからお試しください。');
+      showMessageDialog(context, 'ログインしてからお試しください。');
     }
     print('complete getInitialLink');
 
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
       if (dynamicLink != null) {
-        alertMessageDialog(context, 'ログインしてからお試しください。');
+        showMessageDialog(context, 'ログインしてからお試しください。');
       }
       print('complete onLink');
     });
-  }
-
-  Future alertMessageDialog(context, message) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(message),
-          actions: [
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   Future<JoiningState> joinGroup({String groupId}) async {

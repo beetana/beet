@@ -93,7 +93,8 @@ class GroupMemberScreen extends StatelessWidget {
                           groupName: model.groupName,
                         );
                         model.endLoading();
-                        await _inviteMemberDialog(context, link);
+                        await _inviteMemberDialog(
+                            context, link, model.groupName);
                       },
                     ),
                   ],
@@ -213,9 +214,9 @@ Future<bool> _showConfirmDialog(context, isMe, userName) async {
   return isDelete;
 }
 
-Future _inviteMemberDialog(context, dynamicLink) async {
+Future _inviteMemberDialog(context, dynamicLink, groupName) async {
   final String inviteMessage =
-      'beetのグループへの招待が届きました。\n招待リンクをタップしてグループに参加しましょう。\n▶︎まずはbeetをダウンロード\niOS\niOSリンク\nAndroid\nAndroidリンク\n▶︎ダウンロード後、以下の招待リンクをタップ\n$dynamicLink';
+      'beetのグループ「$groupName」への招待が届きました。\n招待リンクをタップしてグループに参加しましょう。\n▶︎まずはbeetをダウンロード\niOS\niOSリンク\nAndroid\nAndroidリンク\n▶︎アプリにログイン後、以下の招待リンクをタップ\n$dynamicLink';
   await showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -247,7 +248,7 @@ Future _inviteMemberDialog(context, dynamicLink) async {
               child: Center(
                   child: Text(
                 'メッセージをコピー',
-                style: TextStyle(color: Colors.blue),
+                style: TextStyle(color: kEnterButtonColor),
               )),
             ),
             onPressed: () async {

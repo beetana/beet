@@ -48,7 +48,7 @@ Future showAppInfoDialog(context) async {
           TextButton(
             child: Text(
               '閉じる',
-              style: TextStyle(color: kEnterButtonColor),
+              style: kEnterButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -57,7 +57,7 @@ Future showAppInfoDialog(context) async {
           TextButton(
             child: Text(
               'ライセンスを表示',
-              style: TextStyle(color: kEnterButtonColor),
+              style: kEnterButtonTextStyle,
             ),
             onPressed: () {
               showLicensePage(context: context);

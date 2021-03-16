@@ -16,5 +16,6 @@ const kDullWhiteColor = Color(0xFFF5F5F5);
 const kTransparentDullWhiteColor = Color(0x55E5E5E5);
 const kEnterButtonColor = Color(0xFF448AFF);
 const kInvalidEnterButtonColor = Color(0x55448AFF);
+const kEnterButtonTextStyle = TextStyle(color: Colors.blueAccent);
 const kDeleteButtonTextStyle = TextStyle(color: Colors.redAccent);
 const kCancelButtonTextStyle = TextStyle(color: Colors.black54);

@@ -11,7 +11,7 @@ Future showMessageDialog(context, message) async {
           TextButton(
             child: Text(
               'OK',
-              style: TextStyle(color: kEnterButtonColor),
+              style: kEnterButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context);

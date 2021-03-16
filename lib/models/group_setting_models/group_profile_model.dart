@@ -12,6 +12,7 @@ class GroupProfileModel extends ChangeNotifier {
   File imageFile;
   bool isLoading = false;
   List<String> groupUsersId = [];
+  final _picker = ImagePicker();
 
   void startLoading() {
     isLoading = true;
@@ -41,36 +42,34 @@ class GroupProfileModel extends ChangeNotifier {
 
   Future pickImageFile() async {
     imageFile = null;
-    final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
-    if (pickedFile == null) {
-      return;
+    try {
+      final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+      imageFile = await ImageCropper.cropImage(
+        sourcePath: pickedFile.path,
+        maxWidth: 160,
+        maxHeight: 160,
+        aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+        ],
+        cropStyle: CropStyle.circle,
+        compressFormat: ImageCompressFormat.png,
+        compressQuality: 100,
+        androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'プロフィール画像',
+          toolbarColor: Colors.blue,
+          toolbarWidgetColor: Colors.white,
+          lockAspectRatio: true,
+        ),
+        iosUiSettings: IOSUiSettings(
+          title: 'プロフィール画像',
+          doneButtonTitle: '完了',
+          cancelButtonTitle: 'キャンセル',
+        ),
+      );
+    } catch (e) {
+      print(e);
     }
-
-    imageFile = await ImageCropper.cropImage(
-      sourcePath: pickedFile.path,
-      maxWidth: 160,
-      maxHeight: 160,
-      aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-      ],
-      cropStyle: CropStyle.circle,
-      compressFormat: ImageCompressFormat.png,
-      compressQuality: 100,
-      androidUiSettings: AndroidUiSettings(
-        toolbarTitle: 'プロフィール画像',
-        toolbarColor: Colors.blue,
-        toolbarWidgetColor: Colors.white,
-        lockAspectRatio: true,
-      ),
-      iosUiSettings: IOSUiSettings(
-        title: 'プロフィール画像',
-        doneButtonTitle: '完了',
-        cancelButtonTitle: 'キャンセル',
-      ),
-    );
-    notifyListeners();
   }
 
   Future updateGroupImage() async {

@@ -28,7 +28,7 @@ class GroupMemberScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: ScrollPhysics(),
                         itemCount: model.userNames.length,
                         itemBuilder: (BuildContext context, int index) {
                           String userId = model.usersId[index];

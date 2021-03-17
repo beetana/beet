@@ -25,6 +25,12 @@ class DynamicLinksServices {
         fallbackUrl:
             Uri.parse('https://apps.apple.com/jp/app/memow/id1518582060'),
       ),
+      socialMetaTagParameters: SocialMetaTagParameters(
+        title: 'beet',
+        description: 'beet（ビート）はバンドマン・ミュージシャンのためのシンプルな情報共有アプリです。',
+        imageUrl: Uri.parse(
+            'https://firebasestorage.googleapis.com/v0/b/beet-491c3.appspot.com/o/beet.png?alt=media&token=f7441793-1148-49de-8842-7b7c15a0d92c'),
+      ),
     );
 
     Uri link = await parameters.buildUrl();

@@ -181,62 +181,58 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
     builder: (context) {
       return SingleChildScrollView(
         child: Container(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          color: Color(0xFF757575),
           child: Container(
-            color: Color(0xff757575),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
               ),
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    TextButton(
-                      child: Text(
-                        'ライブラリから選択',
-                        style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.normal,
-                        ),
+            ),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  TextButton(
+                    child: Text(
+                      'ライブラリから選択',
+                      style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.normal,
                       ),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                      ),
-                      onPressed: () async {
-                        changeImage = ChangeImage.select;
-                        Navigator.pop(context);
-                      },
                     ),
-                    BasicDivider(),
-                    TextButton(
-                      child: Text(
-                        '写真を削除',
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                      ),
-                      onPressed: () async {
-                        bool isDelete = await _showConfirmDialog(context);
-                        isDelete
-                            ? changeImage = ChangeImage.delete
-                            : changeImage = ChangeImage.cancel;
-                        Navigator.pop(context);
-                      },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
                     ),
-                  ],
-                ),
+                    onPressed: () async {
+                      changeImage = ChangeImage.select;
+                      Navigator.pop(context);
+                    },
+                  ),
+                  BasicDivider(),
+                  TextButton(
+                    child: Text(
+                      '写真を削除',
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                    ),
+                    onPressed: () async {
+                      bool isDelete = await _showConfirmDialog(context);
+                      isDelete
+                          ? changeImage = ChangeImage.delete
+                          : changeImage = ChangeImage.cancel;
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               ),
             ),
           ),

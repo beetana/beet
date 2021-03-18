@@ -232,65 +232,61 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
     builder: (context) {
       return SingleChildScrollView(
         child: Container(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          color: Color(0xFF757575),
           child: Container(
-            color: Color(0xff757575),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
               ),
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    TextButton(
-                      child: Text(
-                        'ライブラリから選択',
-                        style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.normal,
-                        ),
+            ),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  TextButton(
+                    child: Text(
+                      'ライブラリから選択',
+                      style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.normal,
                       ),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                      ),
-                      onPressed: () async {
-                        changeImage = ChangeImage.select;
-                        Navigator.pop(context);
-                      },
                     ),
-                    ThinDivider(),
-                    TextButton(
-                      child: Text(
-                        '写真を削除',
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                      ),
-                      onPressed: () async {
-                        bool isDelete =
-                            await _showConfirmDialog(context, 'プロフィール画像');
-                        if (isDelete == true) {
-                          changeImage = ChangeImage.delete;
-                        } else {
-                          changeImage = ChangeImage.cancel;
-                        }
-                        Navigator.pop(context);
-                      },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
                     ),
-                  ],
-                ),
+                    onPressed: () async {
+                      changeImage = ChangeImage.select;
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ThinDivider(),
+                  TextButton(
+                    child: Text(
+                      '写真を削除',
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                    ),
+                    onPressed: () async {
+                      bool isDelete =
+                          await _showConfirmDialog(context, 'プロフィール画像');
+                      if (isDelete == true) {
+                        changeImage = ChangeImage.delete;
+                      } else {
+                        changeImage = ChangeImage.cancel;
+                      }
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               ),
             ),
           ),
@@ -343,86 +339,82 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
     builder: (context) {
       return SingleChildScrollView(
         child: Container(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          color: Color(0xFF757575),
           child: Container(
-            color: Color(0xFF757575),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
               ),
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0),
-                      child: Text(
-                        'パスワードを入力してアカウントを削除',
-                        style: TextStyle(
-                          color: kPrimaryColor,
-                        ),
+            ),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      'パスワードを入力してアカウントを削除',
+                      style: TextStyle(
+                        color: kPrimaryColor,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: TextField(
-                        autofocus: true,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'パスワード',
-                        ),
-                        onChanged: (text) {
-                          password = text;
-                        },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: TextField(
+                      autofocus: true,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: 'パスワード',
                       ),
-                    ),
-                    TextButton(
-                      child: Text(
-                        'アカウントを削除',
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                      ),
-                      onPressed: () async {
-                        FocusScope.of(context).unfocus();
-                        bool isDelete =
-                            await _showConfirmDialog(context, 'このアカウント');
-                        if (isDelete != true) {
-                          password = '';
-                        }
-                        Navigator.pop(context);
+                      onChanged: (text) {
+                        password = text;
                       },
                     ),
-                    ThinDivider(),
-                    TextButton(
-                      child: Text(
-                        'キャンセル',
-                        style: TextStyle(
-                          color: kSlightlyTransparentPrimaryColor,
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.normal,
-                        ),
+                  ),
+                  TextButton(
+                    child: Text(
+                      'アカウントを削除',
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.normal,
                       ),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                      ),
-                      onPressed: () {
+                    ),
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                    ),
+                    onPressed: () async {
+                      FocusScope.of(context).unfocus();
+                      bool isDelete =
+                          await _showConfirmDialog(context, 'このアカウント');
+                      if (isDelete != true) {
                         password = '';
-                        Navigator.pop(context);
-                      },
+                      }
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ThinDivider(),
+                  TextButton(
+                    child: Text(
+                      'キャンセル',
+                      style: TextStyle(
+                        color: kSlightlyTransparentPrimaryColor,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
-                  ],
-                ),
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                    ),
+                    onPressed: () {
+                      password = '';
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               ),
             ),
           ),

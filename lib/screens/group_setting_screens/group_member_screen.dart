@@ -126,49 +126,45 @@ Future<bool> _showMemberBottomSheet(
     builder: (context) {
       return SingleChildScrollView(
         child: Container(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          color: Color(0xFF757575),
           child: Container(
-            color: Color(0xff757575),
-            child: Container(
-              padding: EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
               ),
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text(
-                      userName,
-                      textAlign: TextAlign.center,
+            ),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text(
+                    userName,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24.0,
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  TextButton(
+                    child: Text(
+                      buttonText,
                       style: TextStyle(
-                        fontSize: 24.0,
+                        color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 8.0),
-                    TextButton(
-                      child: Text(
-                        buttonText,
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
-                      ),
-                      onPressed: () async {
-                        isDelete =
-                            await _showConfirmDialog(context, isMe, userName);
-                        Navigator.pop(context);
-                      },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.redAccent,
                     ),
-                  ],
-                ),
+                    onPressed: () async {
+                      isDelete =
+                          await _showConfirmDialog(context, isMe, userName);
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               ),
             ),
           ),

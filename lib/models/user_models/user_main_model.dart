@@ -47,7 +47,7 @@ class UserMainModel extends ChangeNotifier {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
     List<String> ownerIdList = [userId];
     try {
-      QuerySnapshot joiningGroupDoc = await FirebaseFirestore.instance
+      QuerySnapshot joiningGroupDoc = await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroup')
@@ -56,7 +56,7 @@ class UserMainModel extends ChangeNotifier {
 
       await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 
-      QuerySnapshot eventDoc = await FirebaseFirestore.instance
+      QuerySnapshot eventDoc = await firestore
           .collectionGroup('events')
           .where('ownerId', whereIn: ownerIdList)
           .where('end', isGreaterThan: currentTimestamp)
@@ -75,12 +75,12 @@ class UserMainModel extends ChangeNotifier {
     for (String id in ownerIdList) {
       if (id.length == 28) {
         DocumentSnapshot userDoc =
-            await FirebaseFirestore.instance.collection('users').doc(id).get();
+            await firestore.collection('users').doc(id).get();
         ContentOwner info = ContentOwner.doc(userDoc);
         eventPlanner[id] = info;
       } else {
         DocumentSnapshot groupDoc =
-            await FirebaseFirestore.instance.collection('groups').doc(id).get();
+            await firestore.collection('groups').doc(id).get();
         ContentOwner info = ContentOwner.doc(groupDoc);
         eventPlanner[id] = info;
       }

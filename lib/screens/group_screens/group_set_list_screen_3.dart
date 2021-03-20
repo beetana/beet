@@ -34,6 +34,12 @@ class GroupSetListScreen3 extends StatelessWidget {
       child: Consumer<GroupSetListModel3>(builder: (context, model, child) {
         return Scaffold(
           backgroundColor: kDullWhiteColor,
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(0.0),
+            child: AppBar(
+              automaticallyImplyLeading: false,
+            ),
+          ),
           body: SafeArea(
             child: Column(
               children: <Widget>[

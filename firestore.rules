@@ -191,7 +191,6 @@ service cloud.firestore {
         && request.resource.data.name.size() >= 1
         && request.resource.data.createdAt == resource.data.createdAt;
 
-      // 現状グループを削除する機能はまだ無い
       allow delete: if isGroupMember(request.auth.uid, groupId);
 
       // /groups/{groupId}/events

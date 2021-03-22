@@ -91,18 +91,22 @@ class GroupMemberModel extends ChangeNotifier {
 
   Future deleteGroup({String userId}) async {
     try {
+      // Firebase Storage内のグループのプロフィール画像を削除
       if (groupImageURL.isNotEmpty) {
         await FirebaseStorage.instance
             .ref()
             .child("groupImage/$groupId")
             .delete();
       }
+      // ユーザーのjoiningGroupからこのグループを削除
       await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroup')
           .doc(groupId)
           .delete();
+      // グループのドキュメントを削除するとCloud FunctionsのdeleteGroupがトリガーされ、
+      // そのグループのサブコレクションも削除される
       await firestore.collection('groups').doc(groupId).delete();
     } catch (e) {
       print(e);

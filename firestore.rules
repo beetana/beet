@@ -264,7 +264,7 @@ service cloud.firestore {
 
       // /groups/{groupId}/groupUsers
       match /groupUsers/{userId} {
-        allow list: if isGroupMember(request.auth.uid, groupId);
+        allow read: if isGroupMember(request.auth.uid, groupId);
 
         allow create: if isDocumentAuthor(userId)
           && isValidGroupUserData(request.resource.data)

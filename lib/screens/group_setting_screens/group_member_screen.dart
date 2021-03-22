@@ -29,11 +29,11 @@ class GroupMemberScreen extends StatelessWidget {
                     Expanded(
                       child: ListView.builder(
                         physics: ScrollPhysics(),
-                        itemCount: model.userNames.length,
+                        itemCount: model.usersName.length,
                         itemBuilder: (BuildContext context, int index) {
                           String userId = model.usersId[index];
-                          String userName = model.userNames[index];
-                          String userImageURL = model.userImageURLs[index];
+                          String userName = model.usersName[index];
+                          String userImageURL = model.usersImageURL[index];
                           return ListTile(
                             leading: CircleAvatar(
                               backgroundImage: userImageURL.isNotEmpty
@@ -55,16 +55,25 @@ class GroupMemberScreen extends StatelessWidget {
                               if (isDelete == true) {
                                 model.startLoading();
                                 try {
-                                  await model.deleteMember(userId: userId);
-                                  isMe
-                                      ? Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                UserScreen(userId: userId),
-                                          ),
-                                        )
-                                      : model.init(groupId: groupId);
+                                  if (isMe == true) {
+                                    final memberCount =
+                                        await model.checkMemberCount();
+                                    memberCount == 1
+                                        ? await model.deleteGroup(
+                                            userId: userId)
+                                        : await model.deleteMember(
+                                            userId: userId);
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            UserScreen(userId: userId),
+                                      ),
+                                    );
+                                  } else {
+                                    await model.deleteMember(userId: userId);
+                                    await model.fetchGroupUsers();
+                                  }
                                 } catch (e) {
                                   showMessageDialog(context, e.toString());
                                 }

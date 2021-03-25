@@ -5,7 +5,10 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: SizedBox(
+          width: 80,
+          child: Image.asset('images/app_icon.png'),
+        ),
       ),
     );
   }

@@ -30,7 +30,7 @@ class UserUpdatePasswordModel extends ChangeNotifier {
       throw ('新しいパスワード(確認用)を入力してください');
     }
     if (newPassword != confirmNewPassword) {
-      throw ('新しいパスワードと新しいパスワード(確認用)が一致しません');
+      throw ('新しいパスワード(確認用)が一致しません');
     }
     if (currentPassword == newPassword) {
       throw ('現在のパスワードとは異なるパスワードを作成してください');

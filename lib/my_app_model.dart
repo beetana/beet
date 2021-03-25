@@ -39,9 +39,11 @@ class MyAppModel {
       }
       _state = state;
 
-      // notLoggedInの場合すぐにSplashPageが閉じてしまうので少し待つ
+      // すぐにSplashScreenが閉じてしまうので少し待つ
       if (_state == UserState.notLoggedIn) {
         await Future.delayed(Duration(seconds: 3));
+      } else if (_state == UserState.loggedIn) {
+        await Future.delayed(Duration(seconds: 1));
       }
 
       _userStateStreamController.sink.add(_state);

@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
         return UserScreen(userId: model.userId);
 
       default: // 不明
-        return LoginScreen();
+        return WelcomeScreen();
     }
   }
 }

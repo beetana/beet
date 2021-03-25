@@ -47,21 +47,21 @@ class UserMainModel extends ChangeNotifier {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
     List<String> ownerIdList = [userId];
     try {
-      QuerySnapshot joiningGroupDoc = await firestore
+      QuerySnapshot joiningGroupQuery = await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroup')
           .get();
-      ownerIdList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
+      ownerIdList.addAll(joiningGroupQuery.docs.map((doc) => doc.id).toList());
 
       await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 
-      QuerySnapshot eventDoc = await firestore
+      QuerySnapshot eventQuery = await firestore
           .collectionGroup('events')
           .where('ownerId', whereIn: ownerIdList)
           .where('end', isGreaterThan: currentTimestamp)
           .get();
-      eventList = eventDoc.docs.map((doc) => Event.doc(doc)).toList();
+      eventList = eventQuery.docs.map((doc) => Event.doc(doc)).toList();
 
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));

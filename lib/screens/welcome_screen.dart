@@ -32,6 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               TypewriterAnimatedTextKit(
                 text: ['beet'],
                 textStyle: TextStyle(
+                  fontFamily: 'MPLUS1p',
                   fontSize: 72.0,
                   fontWeight: FontWeight.w900,
                   color: kPrimaryColor,

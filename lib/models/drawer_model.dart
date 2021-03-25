@@ -1,3 +1,4 @@
+import 'package:beet/objects/joining_group.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,8 +8,7 @@ class DrawerModel extends ChangeNotifier {
   String userId;
   String userImageURL = '';
   String userName = '';
-  List<String> groupsName = [];
-  List<String> groupsId = [];
+  List<JoiningGroup> joiningGroups = [];
   bool isLoading = false;
   final firestore = FirebaseFirestore.instance;
 
@@ -29,7 +29,7 @@ class DrawerModel extends ChangeNotifier {
       DocumentSnapshot userDoc =
           await firestore.collection('users').doc(userId).get();
 
-      QuerySnapshot joiningGroup = await firestore
+      QuerySnapshot joiningGroupQuery = await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroup')
@@ -37,9 +37,9 @@ class DrawerModel extends ChangeNotifier {
 
       userImageURL = userDoc['imageURL'];
       userName = userDoc['name'];
-      groupsId = (joiningGroup.docs.map((doc) => doc.id).toList());
-      groupsName =
-          (joiningGroup.docs.map((doc) => doc['name'].toString()).toList());
+      joiningGroups =
+          joiningGroupQuery.docs.map((doc) => JoiningGroup.doc(doc)).toList();
+      joiningGroups.sort((a, b) => a.joinedAt.compareTo(b.joinedAt));
     } catch (e) {
       print(e);
     } finally {

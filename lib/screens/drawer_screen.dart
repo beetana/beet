@@ -48,11 +48,11 @@ class DrawerScreen extends StatelessWidget {
                     child: Scrollbar(
                       child: ListView.builder(
                         physics: ScrollPhysics(),
-                        itemCount: model.groupsName.length,
+                        itemCount: model.joiningGroups.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             title: Text(
-                              model.groupsName[index],
+                              model.joiningGroups[index].name,
                               style: TextStyle(
                                 color: kPrimaryColor,
                               ),
@@ -63,7 +63,7 @@ class DrawerScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => GroupScreen(
-                                    groupId: model.groupsId[index],
+                                    groupId: model.joiningGroups[index].id,
                                   ),
                                 ),
                               );

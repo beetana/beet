@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:beet/japanese_cupertino_localizations.dart';
-import 'package:beet/screens/login_screen.dart';
 
 class MyApp extends StatelessWidget {
   final model = MyAppModel();

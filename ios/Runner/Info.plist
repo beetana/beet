@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>プロフィール画像を設定するために、端末内の画像を使用します</string>
+	<string>プロフィール画像を設定したり、作成した画像を保存できるようになります。</string>
 	<key>FirebaseDynamicLinksCustomDomains</key>
 	<array>
 		<string>https://beetana.page.link</string>

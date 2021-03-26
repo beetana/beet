@@ -30,7 +30,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                height: 360,
+                height: 300,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -45,7 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             fontWeight: FontWeight.w900,
                             color: kPrimaryColor,
                           ),
-                          transitionHeight: 360.0,
+                          transitionHeight: 300.0,
                           duration: Duration(milliseconds: 2400),
                           rotateOut: false,
                         )
@@ -122,7 +122,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   },
                 ),
               ),
-              SizedBox(height: 96.0),
+              SizedBox(height: 32.0),
             ],
           ),
         ),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserEditNameModel extends ChangeNotifier {
   String userId;
   String userName = '';
   bool isLoading = false;
   List<String> joiningGroupsId = [];
+  final _auth = Auth.FirebaseAuth.instance;
 
   void startLoading() {
     isLoading = true;
@@ -46,6 +48,7 @@ class UserEditNameModel extends ChangeNotifier {
           'name': userName,
         });
       }
+      await _auth.currentUser.updateProfile(displayName: userName);
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

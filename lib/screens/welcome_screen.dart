@@ -29,18 +29,32 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              TypewriterAnimatedTextKit(
-                text: ['beet'],
-                textStyle: TextStyle(
-                  fontFamily: 'MPLUS1p',
-                  fontSize: 72.0,
-                  fontWeight: FontWeight.w900,
-                  color: kPrimaryColor,
+              SizedBox(
+                height: 360,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    AnimatedTextKit(
+                      isRepeatingAnimation: false,
+                      animatedTexts: [
+                        RotateAnimatedText(
+                          'beet',
+                          textStyle: TextStyle(
+                            fontFamily: 'MPLUS1p',
+                            fontSize: 96.0,
+                            fontWeight: FontWeight.w900,
+                            color: kPrimaryColor,
+                          ),
+                          transitionHeight: 360.0,
+                          duration: Duration(milliseconds: 2400),
+                          rotateOut: false,
+                        )
+                      ],
+                    ),
+                  ],
                 ),
-                speed: Duration(milliseconds: 480),
-                isRepeatingAnimation: false,
               ),
-              SizedBox(height: 120),
+              SizedBox(height: 96.0),
               Container(
                 height: 56.0,
                 width: double.infinity,
@@ -108,6 +122,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   },
                 ),
               ),
+              SizedBox(height: 96.0),
             ],
           ),
         ),

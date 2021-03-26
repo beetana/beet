@@ -1,10 +1,10 @@
 import 'package:beet/constants.dart';
+import 'package:beet/models/login_model.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:beet/models/welcome_model.dart';
 
 class LoginScreen extends StatelessWidget {
   final emailController = TextEditingController();
@@ -12,8 +12,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<WelcomeModel>(
-      create: (_) => WelcomeModel(),
+    return ChangeNotifierProvider<LoginModel>(
+      create: (_) => LoginModel(),
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text('ログイン'),
           ),
-          body: Consumer<WelcomeModel>(builder: (context, model, child) {
+          body: Consumer<LoginModel>(builder: (context, model, child) {
             return Stack(
               children: [
                 Padding(

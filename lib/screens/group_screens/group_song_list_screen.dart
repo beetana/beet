@@ -32,6 +32,9 @@ class GroupSongListScreen extends StatelessWidget {
                         TextButton.icon(
                           icon: model.buttonIcon,
                           label: model.buttonText,
+                          style: TextButton.styleFrom(
+                            primary: Colors.white,
+                          ),
                           onPressed: () {
                             model.changeMode();
                           },

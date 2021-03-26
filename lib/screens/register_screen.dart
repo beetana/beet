@@ -1,20 +1,23 @@
 import 'package:beet/constants.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
+import 'package:beet/screens/user_setting_screens/user_terms_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/thin_divider.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:beet/models/welcome_model.dart';
+import 'package:beet/models/register_model.dart';
 
 class RegisterScreen extends StatelessWidget {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<WelcomeModel>(
-      create: (_) => WelcomeModel(),
+    return ChangeNotifierProvider<RegisterModel>(
+      create: (_) => RegisterModel(),
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -23,7 +26,7 @@ class RegisterScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text('アカウントを作成'),
           ),
-          body: Consumer<WelcomeModel>(builder: (context, model, child) {
+          body: Consumer<RegisterModel>(builder: (context, model, child) {
             return Stack(
               children: [
                 Padding(
@@ -74,7 +77,7 @@ class RegisterScreen extends StatelessWidget {
                                   controller: passwordController,
                                   obscureText: true,
                                   decoration: InputDecoration(
-                                    hintText: 'パスワード',
+                                    hintText: 'パスワード（6文字以上）',
                                     border: InputBorder.none,
                                     contentPadding:
                                         EdgeInsets.symmetric(vertical: 18.0),
@@ -83,9 +86,72 @@ class RegisterScreen extends StatelessWidget {
                                     model.password = text;
                                   },
                                 ),
+                                ThinDivider(),
+                                TextField(
+                                  controller: confirmPasswordController,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    hintText: 'パスワード（確認用）',
+                                    border: InputBorder.none,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 18.0),
+                                  ),
+                                  onChanged: (text) {
+                                    model.confirmPassword = text;
+                                  },
+                                ),
                               ],
                             ),
                           ),
+                        ),
+                        SizedBox(height: 4.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                              activeColor: kPrimaryColor,
+                              value: model.isAgree,
+                              onChanged: (value) {
+                                model.toggleCheckState();
+                              },
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontFamily: 'MPLUS1p',
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: '利用規約',
+                                    style: TextStyle(
+                                      color: kEnterButtonColor,
+                                      fontWeight: FontWeight.w500,
+                                      decoration: TextDecoration.underline,
+                                      decorationThickness: 2.0,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                UserTermsScreen(),
+                                            fullscreenDialog: true,
+                                          ),
+                                        );
+                                      },
+                                  ),
+                                  TextSpan(
+                                    text: ' を読んで同意しました',
+                                    style: TextStyle(
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 32.0),
                         Container(
@@ -99,7 +165,9 @@ class RegisterScreen extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              backgroundColor: kPrimaryColor,
+                              backgroundColor: model.isAgree
+                                  ? kPrimaryColor
+                                  : kTransparentPrimaryColor,
                               primary: Colors.white38,
                             ),
                             child: Text(
@@ -109,28 +177,29 @@ class RegisterScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            onPressed: () async {
-                              model.startLoading();
-                              try {
-                                await model.register();
-                                await showMessageDialog(context, '登録しました');
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        UserScreen(userId: model.userId),
-                                  ),
-                                );
-                              } catch (e) {
-                                showMessageDialog(context, e.toString());
-                              }
-                              model.endLoading();
-                            },
+                            onPressed: model.isAgree
+                                ? () async {
+                                    model.startLoading();
+                                    try {
+                                      await model.register();
+                                      await showMessageDialog(
+                                          context, '登録しました');
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              UserScreen(userId: model.userId),
+                                        ),
+                                      );
+                                    } catch (e) {
+                                      showMessageDialog(context, e.toString());
+                                    }
+                                    model.endLoading();
+                                  }
+                                : null,
                           ),
                         ),
-                        SizedBox(
-                          height: 16.0,
-                        ),
+                        SizedBox(height: 16.0),
                       ],
                     ),
                   ),

@@ -36,48 +36,51 @@ class TaskListTile extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      task.title,
-                      style: TextStyle(
-                        fontSize: 16.0,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        task.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        ),
                       ),
-                    ),
-                    Container(
-                      height: 24,
-                      width: 216,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: task.assignedMembersId.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            width: 24.0,
-                            height: 24.0,
-                            child: CircleAvatar(
-                              backgroundImage: users[
-                                          task.assignedMembersId[index]] ==
-                                      null
-                                  ? AssetImage('images/test_user_image.png')
-                                  : users[task.assignedMembersId[index]]
-                                          .imageURL
-                                          .isNotEmpty
-                                      ? NetworkImage(
-                                          users[task.assignedMembersId[index]]
-                                              .imageURL,
-                                        )
-                                      : AssetImage(
-                                          'images/test_user_image.png'),
-                              backgroundColor: Colors.transparent,
-                            ),
-                          );
-                        },
+                      Container(
+                        height: 24,
+                        width: 216,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: task.assignedMembersId.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              width: 24.0,
+                              height: 24.0,
+                              child: CircleAvatar(
+                                backgroundImage: users[
+                                            task.assignedMembersId[index]] ==
+                                        null
+                                    ? AssetImage('images/test_user_image.png')
+                                    : users[task.assignedMembersId[index]]
+                                            .imageURL
+                                            .isNotEmpty
+                                        ? NetworkImage(
+                                            users[task.assignedMembersId[index]]
+                                                .imageURL,
+                                          )
+                                        : AssetImage(
+                                            'images/test_user_image.png'),
+                                backgroundColor: Colors.transparent,
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Checkbox(
                   activeColor: kPrimaryColor,

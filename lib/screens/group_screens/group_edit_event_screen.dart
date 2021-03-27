@@ -1,6 +1,7 @@
 import 'package:beet/objects/event.dart';
 import 'package:beet/models/group_models/group_edit_event_model.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
+import 'package:beet/widgets/allday_switch_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -100,9 +101,8 @@ class GroupEditEventScreen extends StatelessWidget {
                             },
                           ),
                           BasicDivider(),
-                          SwitchListTile(
+                          AlldaySwitchListTile(
                             value: model.isAllDay,
-                            title: Text('終日'),
                             onChanged: (value) {
                               model.switchIsAllDay(value);
                             },

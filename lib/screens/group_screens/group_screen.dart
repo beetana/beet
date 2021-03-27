@@ -16,13 +16,6 @@ class GroupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> switchBody = [
-      GroupMainScreen(groupId: groupId),
-      GroupCalendarScreen(groupId: groupId),
-      GroupTaskListScreen(groupId: groupId),
-      GroupSongListScreen(groupId: groupId),
-    ];
-
     return ChangeNotifierProvider<GroupModel>(
       create: (_) => GroupModel()..init(groupId: groupId),
       child: Consumer<GroupModel>(builder: (context, model, child) {
@@ -53,7 +46,7 @@ class GroupScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              body: switchBody[model.currentIndex],
+              body: _groupScreenBody(context),
               bottomNavigationBar: BottomNavigationBar(
                 type: BottomNavigationBarType.fixed,
                 backgroundColor: kBackGroundColor,
@@ -89,6 +82,27 @@ class GroupScreen extends StatelessWidget {
           );
         }
       }),
+    );
+  }
+
+  Widget _groupScreenBody(BuildContext context) {
+    final model = Provider.of<GroupModel>(context);
+    final currentIndex = model.currentIndex;
+    return Stack(
+      children: <Widget>[
+        _tabScreen(currentIndex, 0, GroupMainScreen(groupId: groupId)),
+        _tabScreen(currentIndex, 1, GroupCalendarScreen(groupId: groupId)),
+        _tabScreen(currentIndex, 2, GroupTaskListScreen(groupId: groupId)),
+        _tabScreen(currentIndex, 3, GroupSongListScreen(groupId: groupId)),
+      ],
+    );
+  }
+
+  Widget _tabScreen(int currentIndex, int tabIndex, StatelessWidget screen) {
+    return Visibility(
+      visible: currentIndex == tabIndex,
+      maintainState: true,
+      child: screen,
     );
   }
 }

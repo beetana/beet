@@ -15,11 +15,6 @@ class UserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> switchBody = [
-      UserMainScreen(userId: userId),
-      UserCalendarScreen(userId: userId),
-      UserTaskListScreen(userId: userId),
-    ];
     return ChangeNotifierProvider<UserModel>(
       create: (_) => UserModel()..init(userId: userId, context: context),
       child: Consumer<UserModel>(builder: (context, model, child) {
@@ -53,7 +48,7 @@ class UserScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              body: switchBody[model.currentIndex],
+              body: _userScreenBody(context),
               bottomNavigationBar: BottomNavigationBar(
                 backgroundColor: kBackGroundColor,
                 selectedItemColor: Colors.black,
@@ -84,6 +79,26 @@ class UserScreen extends StatelessWidget {
           );
         }
       }),
+    );
+  }
+
+  Widget _userScreenBody(BuildContext context) {
+    final model = Provider.of<UserModel>(context);
+    final currentIndex = model.currentIndex;
+    return Stack(
+      children: <Widget>[
+        _tabScreen(currentIndex, 0, UserMainScreen(userId: userId)),
+        _tabScreen(currentIndex, 1, UserCalendarScreen(userId: userId)),
+        _tabScreen(currentIndex, 2, UserTaskListScreen(userId: userId)),
+      ],
+    );
+  }
+
+  Widget _tabScreen(int currentIndex, int tabIndex, StatelessWidget screen) {
+    return Visibility(
+      visible: currentIndex == tabIndex,
+      maintainState: true,
+      child: screen,
     );
   }
 }

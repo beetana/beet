@@ -1,6 +1,7 @@
 import 'package:beet/models/user_models/user_add_task_model.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/loading_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -121,14 +122,7 @@ class UserAddTaskScreen extends StatelessWidget {
                 ),
               ),
             ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : SizedBox(),
+            LoadingIndicator(isLoading: model.isLoading),
           ],
         );
       }),

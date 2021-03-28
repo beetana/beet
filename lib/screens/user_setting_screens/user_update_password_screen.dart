@@ -1,5 +1,6 @@
 import 'package:beet/models/user_setting_models/user_update_password_model.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
+import 'package:beet/widgets/dark_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -117,14 +118,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                 ),
               ),
             ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : SizedBox(),
+            DarkLoadingIndicator(isLoading: model.isLoading),
           ],
         );
       }),

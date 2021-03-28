@@ -3,6 +3,7 @@ import 'package:beet/models/drawer_model.dart';
 import 'package:beet/screens/add_group_screen.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
+import 'package:beet/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -100,14 +101,7 @@ class DrawerScreen extends StatelessWidget {
                 ],
               ),
             ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : SizedBox(),
+            LoadingIndicator(isLoading: model.isLoading),
           ],
         );
       }),

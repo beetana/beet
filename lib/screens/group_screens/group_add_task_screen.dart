@@ -2,6 +2,7 @@ import 'package:beet/models/group_models/group_add_task_model.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/assign_task_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/loading_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -162,14 +163,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                 ),
               ),
             ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : SizedBox(),
+            LoadingIndicator(isLoading: model.isLoading),
           ],
         );
       }),

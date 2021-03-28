@@ -1,6 +1,7 @@
 import 'package:beet/constants.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
+import 'package:beet/widgets/dark_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beet/models/add_group_model.dart';
@@ -115,14 +116,7 @@ class AddGroupScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  model.isLoading
-                      ? Container(
-                          color: Colors.black.withOpacity(0.3),
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
-                      : SizedBox(),
+                  DarkLoadingIndicator(isLoading: model.isLoading),
                 ],
               );
             }),

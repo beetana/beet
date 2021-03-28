@@ -2,6 +2,7 @@ import 'package:beet/constants.dart';
 import 'package:beet/models/login_model.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
+import 'package:beet/widgets/dark_loading_indicator.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -120,14 +121,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                model.isLoading
-                    ? Container(
-                        color: Colors.black.withOpacity(0.3),
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    : SizedBox(),
+                DarkLoadingIndicator(isLoading: model.isLoading),
               ],
             );
           }),

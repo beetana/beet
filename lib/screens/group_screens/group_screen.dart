@@ -19,68 +19,60 @@ class GroupScreen extends StatelessWidget {
     return ChangeNotifierProvider<GroupModel>(
       create: (_) => GroupModel()..init(groupId: groupId),
       child: Consumer<GroupModel>(builder: (context, model, child) {
-        if (model.groupName.isNotEmpty) {
-          return WillPopScope(
-            onWillPop: willPopCallback,
-            child: Scaffold(
-              drawer: DrawerScreen(),
-              appBar: AppBar(
-                title: Text(
-                  model.groupName,
-                  textAlign: TextAlign.center,
+        return WillPopScope(
+          onWillPop: willPopCallback,
+          child: Scaffold(
+            drawer: DrawerScreen(),
+            appBar: AppBar(
+              title: Text(
+                model.groupName,
+                textAlign: TextAlign.center,
+              ),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            GroupSettingScreen(groupId: groupId),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                    model.init(groupId: groupId);
+                  },
                 ),
-                actions: [
-                  IconButton(
-                    icon: Icon(Icons.settings),
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              GroupSettingScreen(groupId: groupId),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                      model.init(groupId: groupId);
-                    },
-                  ),
-                ],
-              ),
-              body: _groupScreenBody(context),
-              bottomNavigationBar: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                backgroundColor: kBackGroundColor,
-                selectedItemColor: Colors.black,
-                onTap: model.onTabTapped,
-                currentIndex: model.currentIndex,
-                items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    label: 'ホーム',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.calendar_today),
-                    label: 'カレンダー',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.format_list_bulleted),
-                    label: 'やること',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.library_music),
-                    label: '持ち曲',
-                  ),
-                ],
-              ),
+              ],
             ),
-          );
-        } else {
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
+            body: _groupScreenBody(context),
+            bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: kBackGroundColor,
+              selectedItemColor: Colors.black,
+              onTap: model.onTabTapped,
+              currentIndex: model.currentIndex,
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'ホーム',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.calendar_today),
+                  label: 'カレンダー',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.format_list_bulleted),
+                  label: 'やること',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.library_music),
+                  label: '持ち曲',
+                ),
+              ],
             ),
-          );
-        }
+          ),
+        );
       }),
     );
   }

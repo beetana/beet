@@ -18,66 +18,58 @@ class UserScreen extends StatelessWidget {
     return ChangeNotifierProvider<UserModel>(
       create: (_) => UserModel()..init(userId: userId, context: context),
       child: Consumer<UserModel>(builder: (context, model, child) {
-        if (model.userName.isNotEmpty) {
-          return WillPopScope(
-            onWillPop: willPopCallback,
-            child: Scaffold(
-              drawer: DrawerScreen(),
-              appBar: AppBar(
-                title: Text(
-                  model.userName,
-                  textAlign: TextAlign.center,
-                ),
-                actions: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.settings,
-                    ),
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserSettingScreen(
-                            userId: userId,
-                          ),
-                          fullscreenDialog: true,
+        return WillPopScope(
+          onWillPop: willPopCallback,
+          child: Scaffold(
+            drawer: DrawerScreen(),
+            appBar: AppBar(
+              title: Text(
+                model.userName,
+                textAlign: TextAlign.center,
+              ),
+              actions: [
+                IconButton(
+                  icon: Icon(
+                    Icons.settings,
+                  ),
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserSettingScreen(
+                          userId: userId,
                         ),
-                      );
-                      model.init(userId: userId);
-                    },
-                  ),
-                ],
-              ),
-              body: _userScreenBody(context),
-              bottomNavigationBar: BottomNavigationBar(
-                backgroundColor: kBackGroundColor,
-                selectedItemColor: Colors.black,
-                onTap: model.onTabTapped,
-                currentIndex: model.currentIndex,
-                items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    label: 'ホーム',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.calendar_today),
-                    label: 'カレンダー',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.format_list_bulleted),
-                    label: 'やること',
-                  ),
-                ],
-              ),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                    model.init(userId: userId);
+                  },
+                ),
+              ],
             ),
-          );
-        } else {
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
+            body: _userScreenBody(context),
+            bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: kBackGroundColor,
+              selectedItemColor: Colors.black,
+              onTap: model.onTabTapped,
+              currentIndex: model.currentIndex,
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'ホーム',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.calendar_today),
+                  label: 'カレンダー',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.format_list_bulleted),
+                  label: 'やること',
+                ),
+              ],
             ),
-          );
-        }
+          ),
+        );
       }),
     );
   }

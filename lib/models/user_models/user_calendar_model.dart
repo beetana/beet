@@ -17,6 +17,7 @@ class UserCalendarModel extends ChangeNotifier {
   Map<String, ContentOwner> eventPlanner = {};
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
+  final firestore = FirebaseFirestore.instance;
 
   void init({String userId}) {
     this.userId = userId;
@@ -33,16 +34,16 @@ class UserCalendarModel extends ChangeNotifier {
     int durationDays = last.difference(first).inDays;
 
     try {
-      QuerySnapshot joiningGroupDoc = await FirebaseFirestore.instance
+      final joiningGroupQuery = await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroup')
           .get();
-      ownerIdList.addAll(joiningGroupDoc.docs.map((doc) => doc.id).toList());
+      ownerIdList.addAll(joiningGroupQuery.docs.map((doc) => doc.id).toList());
 
       await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 
-      QuerySnapshot eventDoc = await FirebaseFirestore.instance
+      QuerySnapshot eventDoc = await firestore
           .collectionGroup('events')
           .where('ownerId', whereIn: ownerIdList)
           .where('monthList', arrayContains: monthForm)
@@ -66,12 +67,12 @@ class UserCalendarModel extends ChangeNotifier {
     for (String id in ownerIdList) {
       if (id.length == 28) {
         DocumentSnapshot userDoc =
-            await FirebaseFirestore.instance.collection('users').doc(id).get();
+            await firestore.collection('users').doc(id).get();
         ContentOwner info = ContentOwner.doc(userDoc);
         eventPlanner[id] = info;
       } else {
         DocumentSnapshot groupDoc =
-            await FirebaseFirestore.instance.collection('groups').doc(id).get();
+            await firestore.collection('groups').doc(id).get();
         ContentOwner info = ContentOwner.doc(groupDoc);
         eventPlanner[id] = info;
       }

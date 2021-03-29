@@ -1,4 +1,5 @@
 import 'package:beet/constants.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -96,17 +97,25 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           (DateTime first, DateTime last, CalendarFormat format) async {
         widget.model.first = first;
         widget.model.last = last;
-        await widget.model.getEvents();
-        widget.model.fetchHolidays();
-        widget.model.getSelectedEvents();
+        try {
+          await widget.model.getEvents();
+          widget.model.fetchHolidays();
+          widget.model.getSelectedEvents();
+        } catch (e) {
+          showMessageDialog(context, e.toString());
+        }
       },
       onCalendarCreated:
           (DateTime first, DateTime last, CalendarFormat format) async {
         widget.model.first = first;
         widget.model.last = last;
-        await widget.model.getEvents();
-        widget.model.fetchHolidays();
-        widget.model.getSelectedEvents();
+        try {
+          await widget.model.getEvents();
+          widget.model.fetchHolidays();
+          widget.model.getSelectedEvents();
+        } catch (e) {
+          showMessageDialog(context, e.toString());
+        }
       },
     );
   }

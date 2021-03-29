@@ -31,7 +31,7 @@ class GroupMainScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
+                        children: [
                           Text(
                             dateFormat.format(model.currentDateTime),
                             style: TextStyle(
@@ -89,34 +89,42 @@ class GroupMainScreen extends StatelessWidget {
                   BasicDivider(),
                   Expanded(
                     child: Scrollbar(
-                      child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemExtent: 64.0,
-                        itemCount: model.eventList.length,
-                        itemBuilder: (context, index) {
-                          final event = model.eventList[index];
-                          return EventListTile(
-                            event: event,
-                            onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GroupEventDetailsScreen(
-                                    groupId: groupId,
-                                    event: event,
-                                  ),
-                                ),
-                              );
-                              model.startLoading();
-                              try {
-                                await model.getEventList(groupId: groupId);
-                              } catch (e) {
-                                showMessageDialog(context, e.toString());
-                              }
-                              model.endLoading();
-                            },
-                          );
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          try {
+                            await model.getEventList(groupId: groupId);
+                          } catch (e) {
+                            showMessageDialog(context, e.toString());
+                          }
                         },
+                        child: ListView.builder(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          itemExtent: 64.0,
+                          itemCount: model.eventList.length,
+                          itemBuilder: (context, index) {
+                            final event = model.eventList[index];
+                            return EventListTile(
+                              event: event,
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        GroupEventDetailsScreen(
+                                      groupId: groupId,
+                                      event: event,
+                                    ),
+                                  ),
+                                );
+                                try {
+                                  await model.getEventList(groupId: groupId);
+                                } catch (e) {
+                                  showMessageDialog(context, e.toString());
+                                }
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -124,8 +132,11 @@ class GroupMainScreen extends StatelessWidget {
               ),
             ),
             model.isLoading
-                ? Center(
-                    child: CircularProgressIndicator(),
+                ? Container(
+                    color: Colors.transparent,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   )
                 : model.eventList.isEmpty
                     ? Center(

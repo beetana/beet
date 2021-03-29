@@ -57,8 +57,17 @@ class GroupTaskListScreen extends StatelessWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        model.notCompletedTasks.isNotEmpty
-                            ? Scrollbar(
+                        Stack(
+                          children: [
+                            Scrollbar(
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  try {
+                                    await model.getTaskList();
+                                  } catch (e) {
+                                    showMessageDialog(context, e.toString());
+                                  }
+                                },
                                 child: ListView.builder(
                                   physics: AlwaysScrollableScrollPhysics(),
                                   itemExtent: 80.0,
@@ -101,14 +110,12 @@ class GroupTaskListScreen extends StatelessWidget {
                                               ),
                                             ),
                                           );
-                                          model.startLoading();
                                           try {
                                             await model.getTaskList();
                                           } catch (e) {
                                             showMessageDialog(
                                                 context, e.toString());
                                           }
-                                          model.endLoading();
                                         },
                                       );
                                     } else {
@@ -116,14 +123,33 @@ class GroupTaskListScreen extends StatelessWidget {
                                     }
                                   },
                                 ),
-                              )
-                            : model.isLoading
-                                ? SizedBox()
-                                : Center(
-                                    child: Text('未完了のタスクはありません'),
-                                  ),
-                        model.completedTasks.isNotEmpty
-                            ? Scrollbar(
+                              ),
+                            ),
+                            model.isLoading
+                                ? Container(
+                                    color: Colors.transparent,
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                : model.notCompletedTasks.isEmpty
+                                    ? Center(
+                                        child: Text('未完了のタスクはありません'),
+                                      )
+                                    : SizedBox(),
+                          ],
+                        ),
+                        Stack(
+                          children: [
+                            Scrollbar(
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  try {
+                                    await model.getTaskList();
+                                  } catch (e) {
+                                    showMessageDialog(context, e.toString());
+                                  }
+                                },
                                 child: ListView.builder(
                                   physics: AlwaysScrollableScrollPhysics(),
                                   itemExtent: 80.0,
@@ -164,14 +190,12 @@ class GroupTaskListScreen extends StatelessWidget {
                                               ),
                                             ),
                                           );
-                                          model.startLoading();
                                           try {
                                             await model.getTaskList();
                                           } catch (e) {
                                             showMessageDialog(
                                                 context, e.toString());
                                           }
-                                          model.endLoading();
                                         },
                                       );
                                     } else {
@@ -179,12 +203,22 @@ class GroupTaskListScreen extends StatelessWidget {
                                     }
                                   },
                                 ),
-                              )
-                            : model.isLoading
-                                ? SizedBox()
-                                : Center(
-                                    child: Text('完了済みのタスクはありません'),
-                                  ),
+                              ),
+                            ),
+                            model.isLoading
+                                ? Container(
+                                    color: Colors.transparent,
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                : model.completedTasks.isEmpty
+                                    ? Center(
+                                        child: Text('完了済みのタスクはありません'),
+                                      )
+                                    : SizedBox(),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -199,14 +233,18 @@ class GroupTaskListScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: TextButton(
                       onPressed: model.changeStateTasks.isEmpty
                           ? null
                           : () async {
                               model.startLoading();
-                              await model.updateCheckState();
-                              await model.getTaskList();
+                              try {
+                                await model.updateCheckState();
+                                await model.getTaskList();
+                              } catch (e) {
+                                showMessageDialog(context, e.toString());
+                              }
                               model.endLoading();
                             },
                       child: Text(
@@ -224,18 +262,24 @@ class GroupTaskListScreen extends StatelessWidget {
               ),
             ),
             AddFloatingActionButton(
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GroupAddTaskScreen(groupId: groupId),
-                    fullscreenDialog: true,
-                  ),
-                );
-                model.getTaskList();
-              },
+              onPressed: model.isLoading
+                  ? null
+                  : () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              GroupAddTaskScreen(groupId: groupId),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                      try {
+                        await model.getTaskList();
+                      } catch (e) {
+                        showMessageDialog(context, e.toString());
+                      }
+                    },
             ),
-            LoadingIndicator(isLoading: model.isLoading),
           ],
         );
       }),

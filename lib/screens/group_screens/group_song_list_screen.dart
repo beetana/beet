@@ -3,7 +3,9 @@ import 'package:beet/models/group_models/group_song_list_model.dart';
 import 'package:beet/screens/group_screens/group_add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen.dart';
 import 'package:beet/screens/group_screens/group_song_details_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/song_list_tile.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
@@ -16,35 +18,42 @@ class GroupSongListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupSongListModel>(
-      create: (_) => GroupSongListModel()..getSongList(groupId: groupId),
+      create: (_) => GroupSongListModel()..init(groupId: groupId),
       child: Consumer<GroupSongListModel>(builder: (context, model, child) {
-        if (model.songList.isNotEmpty) {
-          return Stack(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Container(
-                    height: 40.0,
-                    child: Row(
-                      mainAxisAlignment: model.buttonAlignment,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        TextButton.icon(
-                          icon: model.buttonIcon,
-                          label: model.buttonText,
-                          style: TextButton.styleFrom(
-                            primary: Colors.white,
-                          ),
-                          onPressed: () {
-                            model.changeMode();
-                          },
+        return Stack(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Container(
+                  height: 40.0,
+                  child: Row(
+                    mainAxisAlignment: model.buttonAlignment,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      TextButton.icon(
+                        icon: model.buttonIcon,
+                        label: model.buttonText,
+                        style: TextButton.styleFrom(
+                          primary: Colors.white,
                         ),
-                      ],
-                    ),
+                        onPressed: () {
+                          model.changeMode();
+                        },
+                      ),
+                    ],
                   ),
-                  ThinDivider(),
-                  Expanded(
-                    child: Scrollbar(
+                ),
+                BasicDivider(),
+                Expanded(
+                  child: Scrollbar(
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        try {
+                          await model.getSongList();
+                        } catch (e) {
+                          showMessageDialog(context, e.toString());
+                        }
+                      },
                       child: ListView.builder(
                         physics: AlwaysScrollableScrollPhysics(),
                         itemExtent: 60.0,
@@ -72,7 +81,11 @@ class GroupSongListScreen extends StatelessWidget {
                                       ),
                                     ),
                                   );
-                                  model.getSongList(groupId: groupId);
+                                  try {
+                                    await model.getSongList();
+                                  } catch (e) {
+                                    showMessageDialog(context, e.toString());
+                                  }
                                 }
                               },
                             );
@@ -83,90 +96,64 @@ class GroupSongListScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Visibility(
-                    visible: model.isSetListMode,
-                    child: ThinDivider(),
-                  ),
-                  Visibility(
-                    visible: model.isSetListMode,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text('${model.songNum} 曲'),
-                              Text('${model.totalPlayTime} 分'),
-                            ],
-                          ),
+                ),
+                Visibility(
+                  visible: model.isSetListMode,
+                  child: ThinDivider(),
+                ),
+                Visibility(
+                  visible: model.isSetListMode,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text('${model.songNum} 曲'),
+                            Text('${model.totalPlayTime} 分'),
+                          ],
                         ),
-                        Expanded(
-                          child: Center(
-                            child: TextButton(
-                              onPressed: model.selectedSongs.isEmpty
-                                  ? null
-                                  : () async {
-                                      List<String> setList =
-                                          await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              GroupSetListScreen(
-                                            selectedSongs: model.selectedSongs,
-                                            songNum: model.songNum,
-                                            totalPlayTime: model.totalPlayTime,
-                                            groupId: groupId,
-                                          ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: TextButton(
+                            onPressed: model.selectedSongs.isEmpty
+                                ? null
+                                : () async {
+                                    List<String> setList = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            GroupSetListScreen(
+                                          selectedSongs: model.selectedSongs,
+                                          songNum: model.songNum,
+                                          totalPlayTime: model.totalPlayTime,
+                                          groupId: groupId,
                                         ),
-                                      );
-                                      model.selectedSongs = setList;
-                                    },
-                              child: Text(
-                                '決定',
-                                style: TextStyle(
-                                  color: model.selectedSongs.isEmpty
-                                      ? kInvalidEnterButtonColor
-                                      : kEnterButtonColor,
-                                  fontSize: 16.0,
-                                ),
+                                      ),
+                                    );
+                                    model.selectedSongs = setList;
+                                  },
+                            child: Text(
+                              '決定',
+                              style: TextStyle(
+                                color: model.selectedSongs.isEmpty
+                                    ? kInvalidEnterButtonColor
+                                    : kEnterButtonColor,
+                                fontSize: 16.0,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Visibility(
-                visible: !model.isSetListMode,
-                child: AddFloatingActionButton(
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            GroupAddSongScreen(groupId: groupId),
-                        fullscreenDialog: true,
                       ),
-                    );
-                    model.getSongList(groupId: groupId);
-                  },
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          );
-        } else if (model.isLoading == true) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          return Stack(
-            children: <Widget>[
-              Center(
-                child: Text('曲が登録されていません'),
-              ),
-              AddFloatingActionButton(
+              ],
+            ),
+            Visibility(
+              visible: !model.isSetListMode,
+              child: AddFloatingActionButton(
                 onPressed: () async {
                   await Navigator.push(
                     context,
@@ -176,12 +163,28 @@ class GroupSongListScreen extends StatelessWidget {
                       fullscreenDialog: true,
                     ),
                   );
-                  model.getSongList(groupId: groupId);
+                  try {
+                    await model.getSongList();
+                  } catch (e) {
+                    showMessageDialog(context, e.toString());
+                  }
                 },
               ),
-            ],
-          );
-        }
+            ),
+            model.isLoading
+                ? Container(
+                    color: Colors.transparent,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : model.songList.isEmpty
+                    ? Center(
+                        child: Text('曲が登録されていません'),
+                      )
+                    : SizedBox(),
+          ],
+        );
       }),
     );
   }

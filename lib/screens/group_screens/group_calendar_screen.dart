@@ -1,5 +1,6 @@
 import 'package:beet/screens/group_screens/group_add_event_screen.dart';
 import 'package:beet/screens/group_screens/group_event_details_screen.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/event_list_tile.dart';
 import 'package:beet/widgets/calendar_widget.dart';
@@ -25,33 +26,48 @@ class GroupCalendarScreen extends StatelessWidget {
                 BasicDivider(),
                 Expanded(
                   child: Scrollbar(
-                    child: ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      itemExtent: 64.0,
-                      itemCount: model.selectedEvents.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index < model.selectedEvents.length) {
-                          final event = model.selectedEvents[index];
-                          return EventListTile(
-                            event: event,
-                            onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GroupEventDetailsScreen(
-                                    groupId: groupId,
-                                    event: event,
-                                  ),
-                                ),
-                              );
-                              await model.getEvents();
-                              model.getSelectedEvents();
-                            },
-                          );
-                        } else {
-                          return SizedBox();
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        try {
+                          await model.getEvents();
+                          model.getSelectedEvents();
+                        } catch (e) {
+                          showMessageDialog(context, e.toString());
                         }
                       },
+                      child: ListView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemExtent: 64.0,
+                        itemCount: model.selectedEvents.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index < model.selectedEvents.length) {
+                            final event = model.selectedEvents[index];
+                            return EventListTile(
+                              event: event,
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        GroupEventDetailsScreen(
+                                      groupId: groupId,
+                                      event: event,
+                                    ),
+                                  ),
+                                );
+                                try {
+                                  await model.getEvents();
+                                  model.getSelectedEvents();
+                                } catch (e) {
+                                  showMessageDialog(context, e.toString());
+                                }
+                              },
+                            );
+                          } else {
+                            return SizedBox();
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -69,8 +85,12 @@ class GroupCalendarScreen extends StatelessWidget {
                     fullscreenDialog: true,
                   ),
                 );
-                await model.getEvents();
-                model.getSelectedEvents();
+                try {
+                  await model.getEvents();
+                  model.getSelectedEvents();
+                } catch (e) {
+                  showMessageDialog(context, e.toString());
+                }
               },
             ),
           ],

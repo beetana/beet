@@ -30,13 +30,13 @@ class GroupCalendarModel extends ChangeNotifier {
     int durationDays = last.difference(first).inDays;
 
     try {
-      QuerySnapshot eventDoc = await FirebaseFirestore.instance
+      final eventQuery = await FirebaseFirestore.instance
           .collection('groups')
           .doc(groupId)
           .collection('events')
           .where('monthList', arrayContains: monthForm)
           .get();
-      eventList = eventDoc.docs.map((doc) => Event.doc(doc)).toList();
+      eventList = eventQuery.docs.map((doc) => Event.doc(doc)).toList();
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
       for (int i = 0; i <= durationDays; i++) {

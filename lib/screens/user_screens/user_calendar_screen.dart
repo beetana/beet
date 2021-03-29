@@ -2,9 +2,9 @@ import 'package:beet/models/user_models/user_calendar_model.dart';
 import 'package:beet/screens/user_screens/user_add_event_screen.dart';
 import 'package:beet/screens/user_screens/user_event_details_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
+import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/calendar_widget.dart';
 import 'package:beet/widgets/event_list_tile.dart';
-import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,7 @@ class UserCalendarScreen extends StatelessWidget {
             Column(
               children: <Widget>[
                 CalendarWidget(model: model),
-                ThinDivider(),
+                BasicDivider(),
                 Expanded(
                   child: Scrollbar(
                     child: RefreshIndicator(

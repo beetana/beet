@@ -4,7 +4,6 @@ import 'package:beet/screens/user_screens/user_add_task_screen.dart';
 import 'package:beet/screens/user_screens/user_task_details_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
-import 'package:beet/widgets/loading_indicator.dart';
 import 'package:beet/widgets/task_list_tile.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +56,17 @@ class UserTaskListScreen extends StatelessWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        model.notCompletedTasks.isNotEmpty
-                            ? Scrollbar(
+                        Stack(
+                          children: [
+                            Scrollbar(
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  try {
+                                    await model.getTaskList(userId: userId);
+                                  } catch (e) {
+                                    showMessageDialog(context, e.toString());
+                                  }
+                                },
                                 child: ListView.builder(
                                   physics: AlwaysScrollableScrollPhysics(),
                                   itemExtent: 80.0,
@@ -101,7 +109,6 @@ class UserTaskListScreen extends StatelessWidget {
                                               ),
                                             ),
                                           );
-                                          model.startLoading();
                                           try {
                                             await model.getTaskList(
                                                 userId: userId);
@@ -109,7 +116,6 @@ class UserTaskListScreen extends StatelessWidget {
                                             showMessageDialog(
                                                 context, e.toString());
                                           }
-                                          model.endLoading();
                                         },
                                       );
                                     } else {
@@ -117,14 +123,33 @@ class UserTaskListScreen extends StatelessWidget {
                                     }
                                   },
                                 ),
-                              )
-                            : model.isLoading
-                                ? SizedBox()
-                                : Center(
-                                    child: Text('未完了のタスクはありません'),
-                                  ),
-                        model.completedTasks.isNotEmpty
-                            ? Scrollbar(
+                              ),
+                            ),
+                            model.isLoading
+                                ? Container(
+                                    color: Colors.transparent,
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                : model.notCompletedTasks.isEmpty
+                                    ? Center(
+                                        child: Text('未完了のタスクはありません'),
+                                      )
+                                    : SizedBox(),
+                          ],
+                        ),
+                        Stack(
+                          children: [
+                            Scrollbar(
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  try {
+                                    await model.getTaskList(userId: userId);
+                                  } catch (e) {
+                                    showMessageDialog(context, e.toString());
+                                  }
+                                },
                                 child: ListView.builder(
                                   physics: AlwaysScrollableScrollPhysics(),
                                   itemExtent: 80.0,
@@ -165,7 +190,6 @@ class UserTaskListScreen extends StatelessWidget {
                                               ),
                                             ),
                                           );
-                                          model.startLoading();
                                           try {
                                             await model.getTaskList(
                                                 userId: userId);
@@ -173,7 +197,6 @@ class UserTaskListScreen extends StatelessWidget {
                                             showMessageDialog(
                                                 context, e.toString());
                                           }
-                                          model.endLoading();
                                         },
                                       );
                                     } else {
@@ -181,12 +204,22 @@ class UserTaskListScreen extends StatelessWidget {
                                     }
                                   },
                                 ),
-                              )
-                            : model.isLoading
-                                ? SizedBox()
-                                : Center(
-                                    child: Text('完了済みのタスクはありません'),
-                                  ),
+                              ),
+                            ),
+                            model.isLoading
+                                ? Container(
+                                    color: Colors.transparent,
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                : model.completedTasks.isEmpty
+                                    ? Center(
+                                        child: Text('完了済みのタスクはありません'),
+                                      )
+                                    : SizedBox(),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -230,20 +263,21 @@ class UserTaskListScreen extends StatelessWidget {
               ),
             ),
             AddFloatingActionButton(
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UserAddTaskScreen(
-                      userId: userId,
-                    ),
-                    fullscreenDialog: true,
-                  ),
-                );
-                model.getTaskList(userId: userId);
-              },
+              onPressed: model.isLoading
+                  ? null
+                  : () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserAddTaskScreen(
+                            userId: userId,
+                          ),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                      model.getTaskList(userId: userId);
+                    },
             ),
-            LoadingIndicator(isLoading: model.isLoading),
           ],
         );
       }),

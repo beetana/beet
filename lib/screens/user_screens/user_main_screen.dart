@@ -89,37 +89,45 @@ class UserMainScreen extends StatelessWidget {
                   ThinDivider(),
                   Expanded(
                     child: Scrollbar(
-                      child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemExtent: 96.0,
-                        itemCount: model.eventList.length,
-                        itemBuilder: (context, index) {
-                          final event = model.eventList[index];
-                          return EventListTile(
-                            event: event,
-                            imageURL:
-                                model.eventPlanner[event.ownerId].imageURL,
-                            name: model.eventPlanner[event.ownerId].name,
-                            onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => UserEventDetailsScreen(
-                                    userId: userId,
-                                    event: event,
-                                  ),
-                                ),
-                              );
-                              model.startLoading();
-                              try {
-                                await model.getEventList(userId: userId);
-                              } catch (e) {
-                                showMessageDialog(context, e.toString());
-                              }
-                              model.endLoading();
-                            },
-                          );
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          try {
+                            await model.getEventList(userId: userId);
+                          } catch (e) {
+                            showMessageDialog(context, e.toString());
+                          }
                         },
+                        child: ListView.builder(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          itemExtent: 96.0,
+                          itemCount: model.eventList.length,
+                          itemBuilder: (context, index) {
+                            final event = model.eventList[index];
+                            return EventListTile(
+                              event: event,
+                              imageURL:
+                                  model.eventPlanner[event.ownerId].imageURL,
+                              name: model.eventPlanner[event.ownerId].name,
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        UserEventDetailsScreen(
+                                      userId: userId,
+                                      event: event,
+                                    ),
+                                  ),
+                                );
+                                try {
+                                  await model.getEventList(userId: userId);
+                                } catch (e) {
+                                  showMessageDialog(context, e.toString());
+                                }
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -127,8 +135,11 @@ class UserMainScreen extends StatelessWidget {
               ),
             ),
             model.isLoading
-                ? Center(
-                    child: CircularProgressIndicator(),
+                ? Container(
+                    color: Colors.transparent,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   )
                 : model.eventList.isEmpty
                     ? Center(

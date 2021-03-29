@@ -45,14 +45,14 @@ class UserTaskListModel extends ChangeNotifier {
           joiningGroupUsers[user.id] = user;
         });
       });
-      await getTaskList(userId: userId);
+      await getTaskList();
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future getTaskList({String userId}) async {
+  Future getTaskList() async {
     completedTasks = [];
     notCompletedTasks = [];
     changeStateTasks = [];
@@ -102,7 +102,7 @@ class UserTaskListModel extends ChangeNotifier {
     }
   }
 
-  void toggleCheckState(Task task) {
+  void toggleCheckState({Task task}) {
     task.toggleCheckState();
     changeStateTasks.contains(task)
         ? changeStateTasks.remove(task)

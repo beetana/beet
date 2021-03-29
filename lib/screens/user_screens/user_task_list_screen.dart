@@ -62,7 +62,7 @@ class UserTaskListScreen extends StatelessWidget {
                               child: RefreshIndicator(
                                 onRefresh: () async {
                                   try {
-                                    await model.getTaskList(userId: userId);
+                                    await model.getTaskList();
                                   } catch (e) {
                                     showMessageDialog(context, e.toString());
                                   }
@@ -80,7 +80,7 @@ class UserTaskListScreen extends StatelessWidget {
                                         task: task,
                                         users: model.joiningGroupUsers,
                                         checkboxCallback: (value) {
-                                          model.toggleCheckState(task);
+                                          model.toggleCheckState(task: task);
                                         },
                                         longPressedCallBack: () async {
                                           bool isDelete =
@@ -110,8 +110,7 @@ class UserTaskListScreen extends StatelessWidget {
                                             ),
                                           );
                                           try {
-                                            await model.getTaskList(
-                                                userId: userId);
+                                            await model.getTaskList();
                                           } catch (e) {
                                             showMessageDialog(
                                                 context, e.toString());
@@ -145,7 +144,7 @@ class UserTaskListScreen extends StatelessWidget {
                               child: RefreshIndicator(
                                 onRefresh: () async {
                                   try {
-                                    await model.getTaskList(userId: userId);
+                                    await model.getTaskList();
                                   } catch (e) {
                                     showMessageDialog(context, e.toString());
                                   }
@@ -161,7 +160,7 @@ class UserTaskListScreen extends StatelessWidget {
                                         task: task,
                                         users: model.joiningGroupUsers,
                                         checkboxCallback: (value) {
-                                          model.toggleCheckState(task);
+                                          model.toggleCheckState(task: task);
                                         },
                                         longPressedCallBack: () async {
                                           bool isDelete =
@@ -191,8 +190,7 @@ class UserTaskListScreen extends StatelessWidget {
                                             ),
                                           );
                                           try {
-                                            await model.getTaskList(
-                                                userId: userId);
+                                            await model.getTaskList();
                                           } catch (e) {
                                             showMessageDialog(
                                                 context, e.toString());
@@ -242,7 +240,7 @@ class UserTaskListScreen extends StatelessWidget {
                               model.startLoading();
                               try {
                                 await model.updateCheckState();
-                                await model.getTaskList(userId: userId);
+                                await model.getTaskList();
                               } catch (e) {
                                 showMessageDialog(context, e.toString());
                               }
@@ -269,13 +267,16 @@ class UserTaskListScreen extends StatelessWidget {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => UserAddTaskScreen(
-                            userId: userId,
-                          ),
+                          builder: (context) =>
+                              UserAddTaskScreen(userId: userId),
                           fullscreenDialog: true,
                         ),
                       );
-                      model.getTaskList(userId: userId);
+                      try {
+                        await model.getTaskList();
+                      } catch (e) {
+                        showMessageDialog(context, e.toString());
+                      }
                     },
             ),
           ],

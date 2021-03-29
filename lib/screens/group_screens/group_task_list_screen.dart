@@ -4,7 +4,6 @@ import 'package:beet/screens/group_screens/group_add_task_screen.dart';
 import 'package:beet/screens/group_screens/group_task_details_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/add_floating_action_button.dart';
-import 'package:beet/widgets/loading_indicator.dart';
 import 'package:beet/widgets/task_list_tile.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/material.dart';

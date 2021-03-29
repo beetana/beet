@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupSongListModel extends ChangeNotifier {
+  String groupId = '';
   List<Song> songList = [];
   List<String> selectedSongs = [];
   int songNum;
@@ -22,19 +23,39 @@ class GroupSongListModel extends ChangeNotifier {
   );
   MainAxisAlignment buttonAlignment = MainAxisAlignment.center;
 
-  Future getSongList({String groupId}) async {
+  void startLoading() {
     isLoading = true;
-    var songDoc = await FirebaseFirestore.instance
-        .collection('groups')
-        .doc(groupId)
-        .collection('songs')
-        .orderBy('createdAt', descending: false)
-        .get();
-    songList = songDoc.docs.map((doc) => Song.doc(doc)).toList();
-    selectedSongs = [];
-    songNum = 0;
-    totalPlayTime = 0;
+    notifyListeners();
+  }
+
+  void endLoading() {
     isLoading = false;
+    notifyListeners();
+  }
+
+  Future init({String groupId}) async {
+    startLoading();
+    this.groupId = groupId;
+    await getSongList();
+    endLoading();
+  }
+
+  Future getSongList() async {
+    try {
+      final songQuery = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupId)
+          .collection('songs')
+          .orderBy('createdAt', descending: false)
+          .get();
+      songList = songQuery.docs.map((doc) => Song.doc(doc)).toList();
+      selectedSongs = [];
+      songNum = 0;
+      totalPlayTime = 0;
+    } catch (e) {
+      print(e);
+      throw ('エラーが発生しました');
+    }
     notifyListeners();
   }
 

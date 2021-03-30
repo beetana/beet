@@ -16,6 +16,7 @@ class GroupSetListModel2 extends ChangeNotifier {
   void init() {
     eventDate = DateTime.now();
     eventDateText = eventDateFormat.format(eventDate);
+    notifyListeners();
   }
 
   void showEventDatePicker() {

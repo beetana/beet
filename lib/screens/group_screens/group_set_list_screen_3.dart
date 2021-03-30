@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSetListScreen3 extends StatelessWidget {
-  final List<String> setList;
+  final List<dynamic> setList;
   final String eventTitle;
   final String eventPlace;
   final String eventDateText;
-  final int songNum;
+  final int songCount;
   final int totalPlayTime;
   final String groupId;
 
@@ -22,7 +22,7 @@ class GroupSetListScreen3 extends StatelessWidget {
     this.eventTitle,
     this.eventPlace,
     this.eventDateText,
-    this.songNum,
+    this.songCount,
     this.totalPlayTime,
     this.groupId,
   });
@@ -30,7 +30,7 @@ class GroupSetListScreen3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupSetListModel3>(
-      create: (_) => GroupSetListModel3(),
+      create: (_) => GroupSetListModel3()..init(setList: setList),
       child: Consumer<GroupSetListModel3>(builder: (context, model, child) {
         return Scaffold(
           backgroundColor: kDullWhiteColor,
@@ -91,8 +91,8 @@ class GroupSetListScreen3 extends StatelessWidget {
                               itemExtent: 30.5,
                               itemBuilder: (context, index) {
                                 return SetListTile(
-                                  setList: setList,
-                                  index: index,
+                                  item: model.setList[index],
+                                  songNum: model.songsNumText[index],
                                 );
                               },
                             ),
@@ -113,7 +113,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('$songNum 曲'),
+                          Text('$songCount 曲'),
                           Text('$totalPlayTime 分'),
                         ],
                       ),

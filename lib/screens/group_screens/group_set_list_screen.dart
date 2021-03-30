@@ -5,23 +5,18 @@ import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:provider/provider.dart';
+import 'package:beet/objects/song.dart';
 
 class GroupSetListScreen extends StatelessWidget {
-  GroupSetListScreen({
-    this.selectedSongs,
-    this.songNum,
-    this.totalPlayTime,
-    this.groupId,
-  });
-  final List<String> selectedSongs;
-  final int songNum;
-  final int totalPlayTime;
+  final List<dynamic> setList;
   final String groupId;
+
+  GroupSetListScreen({this.setList, this.groupId});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupSetListModel>(
-      create: (_) => GroupSetListModel()..init(selectedSongs),
+      create: (_) => GroupSetListModel()..init(setList: setList),
       child: Consumer<GroupSetListModel>(builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
@@ -63,18 +58,18 @@ class GroupSetListScreen extends StatelessWidget {
                     child: ImplicitlyAnimatedReorderableList(
                       items: model.setList,
                       areItemsTheSame: (oldItem, newItem) => oldItem == newItem,
-                      onReorderFinished: (song, from, to, songs) {
-                        model.setList = songs;
+                      onReorderFinished: (item, from, to, setList) {
+                        model.setList = setList;
                       },
-                      itemBuilder: (context, animation, song, index) {
+                      itemBuilder: (context, animation, item, index) {
                         return Reorderable(
-                          key: ValueKey(song),
+                          key: ValueKey(item),
                           builder: (context, animation, bool) {
                             return Material(
                               type: MaterialType.transparency,
                               child: ListTile(
                                 title: Text(
-                                  '$song',
+                                  item is Song ? item.title : item,
                                   maxLines: 1,
                                 ),
                                 trailing: Handle(
@@ -84,6 +79,12 @@ class GroupSetListScreen extends StatelessWidget {
                                     color: Colors.black54,
                                   ),
                                 ),
+                                onLongPress: () {
+                                  model.removeItem(item: item);
+                                  if (model.setList.isEmpty) {
+                                    Navigator.pop(context, model.setList);
+                                  }
+                                },
                               ),
                             );
                           },
@@ -99,8 +100,8 @@ class GroupSetListScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('$songNum 曲'),
-                          Text('$totalPlayTime 分'),
+                          Text('${model.songCount} 曲'),
+                          Text('${model.totalPlayTime} 分'),
                         ],
                       ),
                     ),
@@ -120,8 +121,8 @@ class GroupSetListScreen extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => GroupSetListScreen2(
                                   setList: model.setList,
-                                  songNum: songNum,
-                                  totalPlayTime: totalPlayTime,
+                                  songCount: model.songCount,
+                                  totalPlayTime: model.totalPlayTime,
                                   groupId: groupId,
                                 ),
                               ),

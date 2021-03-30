@@ -6,9 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class GroupSongListModel extends ChangeNotifier {
   String groupId = '';
   List<Song> songList = [];
-  List<String> selectedSongs = [];
-  int songNum;
-  int totalPlayTime;
+  List<dynamic> setList = [];
+  int songCount = 0;
+  int totalPlayTime = 0;
   bool isLoading = false;
   bool isSetListMode = false;
   Text buttonText = Text(
@@ -49,8 +49,8 @@ class GroupSongListModel extends ChangeNotifier {
           .orderBy('createdAt', descending: false)
           .get();
       songList = songQuery.docs.map((doc) => Song.doc(doc)).toList();
-      selectedSongs = [];
-      songNum = 0;
+      setList = [];
+      songCount = 0;
       totalPlayTime = 0;
     } catch (e) {
       print(e);
@@ -92,25 +92,28 @@ class GroupSongListModel extends ChangeNotifier {
   void selectSong({Song song}) {
     song.toggleCheckBoxState();
     if (song.checkboxState == true) {
-      selectedSongs.add(song.title);
-      totalPlayTime = totalPlayTime + song.playingTime;
+      setList.add(song);
+      songCount += 1;
+      totalPlayTime += song.playingTime;
     } else {
-      selectedSongs.remove(song.title);
-      totalPlayTime = totalPlayTime - song.playingTime;
+      setList.remove(song);
+      songCount -= 1;
+      totalPlayTime -= song.playingTime;
     }
-    songNum = selectedSongs
-        .where((value) =>
-            value != '-MC1-' &&
-            value != '-MC2-' &&
-            value != '-MC3-' &&
-            value != '-MC4-' &&
-            value != '-MC5-' &&
-            value != '-MC6-' &&
-            value != '-MC7-' &&
-            value != '-MC8-' &&
-            value != '-MC9-' &&
-            value != '-MC10-')
-        .length;
+    notifyListeners();
+  }
+
+  void reselectSongs({List<dynamic> setList}) {
+    this.setList = setList;
+    totalPlayTime = 0;
+    songList.forEach((song) {
+      if (setList.contains(song)) {
+        totalPlayTime += song.playingTime;
+      } else {
+        song.checkboxState = false;
+      }
+    });
+    songCount = setList.where((value) => value is Song).length;
     notifyListeners();
   }
 }

@@ -109,7 +109,7 @@ class GroupSongListScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text('${model.songNum} 曲'),
+                            Text('${model.songCount} 曲'),
                             Text('${model.totalPlayTime} 分'),
                           ],
                         ),
@@ -117,32 +117,32 @@ class GroupSongListScreen extends StatelessWidget {
                       Expanded(
                         child: Center(
                           child: TextButton(
-                            onPressed: model.selectedSongs.isEmpty
-                                ? null
-                                : () async {
-                                    List<String> setList = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            GroupSetListScreen(
-                                          selectedSongs: model.selectedSongs,
-                                          songNum: model.songNum,
-                                          totalPlayTime: model.totalPlayTime,
-                                          groupId: groupId,
-                                        ),
-                                      ),
-                                    );
-                                    model.selectedSongs = setList;
-                                  },
                             child: Text(
                               '決定',
                               style: TextStyle(
-                                color: model.selectedSongs.isEmpty
+                                color: model.setList.isEmpty
                                     ? kInvalidEnterButtonColor
                                     : kEnterButtonColor,
                                 fontSize: 16.0,
                               ),
                             ),
+                            onPressed: model.setList.isEmpty
+                                ? null
+                                : () async {
+                                    List<dynamic> returnedSetList =
+                                        await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            GroupSetListScreen(
+                                          setList: model.setList,
+                                          groupId: groupId,
+                                        ),
+                                      ),
+                                    );
+                                    model.reselectSongs(
+                                        setList: returnedSetList);
+                                  },
                           ),
                         ),
                       ),

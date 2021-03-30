@@ -8,18 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSetListScreen2 extends StatelessWidget {
-  GroupSetListScreen2({
-    this.setList,
-    this.songNum,
-    this.totalPlayTime,
-    this.groupId,
-  });
-  final List<String> setList;
-  final int songNum;
+  final List<dynamic> setList;
+  final int songCount;
   final int totalPlayTime;
   final String groupId;
   final eventTitleController = TextEditingController();
   final eventPlaceController = TextEditingController();
+
+  GroupSetListScreen2({
+    this.setList,
+    this.songCount,
+    this.totalPlayTime,
+    this.groupId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +115,7 @@ class GroupSetListScreen2 extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text('$songNum 曲'),
+                            Text('$songCount 曲'),
                             Text('$totalPlayTime 分'),
                           ],
                         ),
@@ -139,7 +140,7 @@ class GroupSetListScreen2 extends StatelessWidget {
                                     eventTitle: model.eventTitle,
                                     eventPlace: model.eventPlace,
                                     eventDateText: model.eventDateText,
-                                    songNum: songNum,
+                                    songCount: songCount,
                                     totalPlayTime: totalPlayTime,
                                     groupId: groupId,
                                   ),

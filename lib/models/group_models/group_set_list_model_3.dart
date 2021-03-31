@@ -15,7 +15,7 @@ class GroupSetListModel3 extends ChangeNotifier {
     setList.forEach((item) {
       if (item is Song) {
         this.setList.add(item.title);
-        this.songsNumText.add(num < 10 ? ' $num.' : '$num.');
+        this.songsNumText.add(num < 10 ? '  $num.' : '$num.');
         num += 1;
       } else {
         this.setList.add(item);

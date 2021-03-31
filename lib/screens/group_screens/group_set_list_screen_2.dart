@@ -124,7 +124,7 @@ class GroupSetListScreen2 extends StatelessWidget {
                         child: Center(
                           child: TextButton(
                             child: Text(
-                              '決定',
+                              '次へ',
                               style: TextStyle(
                                 color: kEnterButtonColor,
                                 fontSize: 16.0,

@@ -134,7 +134,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ],
                 ),
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: SizedBox(),
                 ),
                 TextButton(

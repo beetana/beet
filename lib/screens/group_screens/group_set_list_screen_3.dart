@@ -29,7 +29,8 @@ class GroupSetListScreen3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// iPhoneSE 2nd換算
+    // どんな端末を使用しても均一なセトリ画像を作るため、画面サイズを元に各サイズを指定する
+    // 以下のコメントの数字はiPhoneSE 2nd換算
     final double deviceWidth = MediaQuery.of(context).size.width; // 375
     final double itemExtent = deviceWidth * 0.082; // 30.75
     final double itemTextSize = deviceWidth * 0.054; // 20.25

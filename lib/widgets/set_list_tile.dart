@@ -12,7 +12,7 @@ class SetListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Text(
         '$songNum $item',
         style: TextStyle(fontSize: 20.0),

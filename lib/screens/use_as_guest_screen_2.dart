@@ -1,32 +1,24 @@
 import 'package:beet/constants.dart';
-import 'package:beet/models/group_models/group_set_list_model_2.dart';
-import 'package:beet/screens/group_screens/group_set_list_screen_3.dart';
+import 'package:beet/models/use_as_guest_model_2.dart';
+import 'package:beet/screens/use_as_guest_screen_3.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class GroupSetListScreen2 extends StatelessWidget {
-  final List<dynamic> setList;
-  final int songCount;
-  final int totalPlayTime;
-  final String groupId;
+class UseAsGuestScreen2 extends StatelessWidget {
+  final List<String> setList;
   final eventTitleController = TextEditingController();
   final eventPlaceController = TextEditingController();
 
-  GroupSetListScreen2({
-    this.setList,
-    this.songCount,
-    this.totalPlayTime,
-    this.groupId,
-  });
+  UseAsGuestScreen2({this.setList});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<GroupSetListModel2>(
-      create: (_) => GroupSetListModel2()..init(),
-      child: Consumer<GroupSetListModel2>(builder: (context, model, child) {
+    return ChangeNotifierProvider<UseAsGuestModel2>(
+      create: (_) => UseAsGuestModel2()..init(),
+      child: Consumer<UseAsGuestModel2>(builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
             if (model.isShowEventDatePicker == true) {
@@ -109,48 +101,28 @@ class GroupSetListScreen2 extends StatelessWidget {
                     child: SizedBox(),
                   ),
                   ThinDivider(),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text('$songCount 曲'),
-                            Text('$totalPlayTime 分'),
-                          ],
-                        ),
+                  TextButton(
+                    child: Text(
+                      '次へ',
+                      style: TextStyle(
+                        color: kEnterButtonColor,
+                        fontSize: 16.0,
                       ),
-                      Expanded(
-                        child: Center(
-                          child: TextButton(
-                            child: Text(
-                              '次へ',
-                              style: TextStyle(
-                                color: kEnterButtonColor,
-                                fontSize: 16.0,
-                              ),
-                            ),
-                            onPressed: () {
-                              FocusScope.of(context).unfocus();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GroupSetListScreen3(
-                                    setList: setList,
-                                    eventTitle: model.eventTitle,
-                                    eventPlace: model.eventPlace,
-                                    eventDateText: model.eventDateText,
-                                    songCount: songCount,
-                                    totalPlayTime: totalPlayTime,
-                                    groupId: groupId,
-                                  ),
-                                ),
-                              );
-                            },
+                    ),
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UseAsGuestScreen3(
+                            setList: setList,
+                            eventTitle: model.eventTitle,
+                            eventPlace: model.eventPlace,
+                            eventDateText: model.eventDateText,
                           ),
                         ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ],
               ),

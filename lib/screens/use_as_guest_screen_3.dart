@@ -1,6 +1,6 @@
 import 'package:beet/constants.dart';
-import 'package:beet/models/group_models/group_set_list_model_3.dart';
-import 'package:beet/screens/group_screens/group_screen.dart';
+import 'package:beet/models/use_as_guest_model_3.dart';
+import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/set_list_tile.dart';
 import 'package:beet/widgets/thin_divider.dart';
@@ -8,30 +8,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class GroupSetListScreen3 extends StatelessWidget {
-  final List<dynamic> setList;
+class UseAsGuestScreen3 extends StatelessWidget {
+  final List<String> setList;
   final String eventTitle;
   final String eventPlace;
   final String eventDateText;
-  final int songCount;
-  final int totalPlayTime;
-  final String groupId;
 
-  GroupSetListScreen3({
+  UseAsGuestScreen3({
     this.setList,
     this.eventTitle,
     this.eventPlace,
     this.eventDateText,
-    this.songCount,
-    this.totalPlayTime,
-    this.groupId,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<GroupSetListModel3>(
-      create: (_) => GroupSetListModel3()..init(setList: setList),
-      child: Consumer<GroupSetListModel3>(builder: (context, model, child) {
+    return ChangeNotifierProvider<UseAsGuestModel3>(
+      create: (_) => UseAsGuestModel3()..init(setList: setList),
+      child: Consumer<UseAsGuestModel3>(builder: (context, model, child) {
         return Scaffold(
           backgroundColor: kDullWhiteColor,
           appBar: PreferredSize(
@@ -109,16 +103,6 @@ class GroupSetListScreen3 extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      flex: 3,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Text('$songCount 曲'),
-                          Text('$totalPlayTime 分'),
-                        ],
-                      ),
-                    ),
-                    Expanded(
                       flex: 2,
                       child: Center(
                         child: TextButton(
@@ -147,15 +131,18 @@ class GroupSetListScreen3 extends StatelessWidget {
                             ),
                           ),
                           onPressed: () async {
-                            await model.saveSetListImage();
-                            await showMessageDialog(context, '保存しました');
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    GroupScreen(groupId: groupId),
-                              ),
-                            );
+                            bool isSave = await _showConfirmDialog(context);
+                            if (isSave) {
+                              await model.saveSetListImage();
+                              await showMessageDialog(context, '保存しました');
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      WelcomeScreen(),
+                                ),
+                              );
+                            }
                           },
                         ),
                       ),
@@ -169,4 +156,38 @@ class GroupSetListScreen3 extends StatelessWidget {
       }),
     );
   }
+}
+
+Future<bool> _showConfirmDialog(context) async {
+  bool isSave;
+  isSave = await showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('セットリストの画像を端末に保存して、最初の画面に戻ります。\nよろしいですか？'),
+        actions: [
+          TextButton(
+            child: Text(
+              'やり直す',
+              style: kCancelButtonTextStyle,
+            ),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+          TextButton(
+            child: Text(
+              '保存',
+              style: kEnterButtonTextStyle,
+            ),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+        ],
+      );
+    },
+  );
+  return isSave;
 }

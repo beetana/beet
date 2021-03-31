@@ -23,6 +23,16 @@ class UseAsGuestScreen3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // どんな端末を使用しても均一なセトリ画像を作るため、画面サイズを元に各サイズを指定する
+    // 以下のコメントの数字はiPhoneSE 2nd換算
+    final double deviceWidth = MediaQuery.of(context).size.width; // 375
+    final double itemExtent = deviceWidth * 0.082; // 30.75
+    final double itemTextSize = deviceWidth * 0.054; // 20.25
+    final double eventTitleTextSize = deviceWidth * 0.045; // 16.875
+    final double eventDetailsTextSize = deviceWidth * 0.034; // 12.75
+    final double littleGap = deviceWidth * 0.021; // 7.875
+    final double wideGap = deviceWidth * 0.042; // 15.75
+
     return ChangeNotifierProvider<UseAsGuestModel3>(
       create: (_) => UseAsGuestModel3()..init(setList: setList),
       child: Consumer<UseAsGuestModel3>(builder: (context, model, child) {
@@ -46,8 +56,8 @@ class UseAsGuestScreen3 extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(
-                                top: 16.0, left: 16.0, right: 16.0),
+                            padding: EdgeInsets.only(
+                                top: wideGap, left: wideGap, right: wideGap),
                             child: Column(
                               children: <Widget>[
                                 Row(
@@ -55,7 +65,8 @@ class UseAsGuestScreen3 extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       eventTitle,
-                                      style: TextStyle(fontSize: 17.0),
+                                      style: TextStyle(
+                                          fontSize: eventTitleTextSize),
                                     ),
                                   ],
                                 ),
@@ -64,12 +75,14 @@ class UseAsGuestScreen3 extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       eventDateText,
-                                      style: TextStyle(fontSize: 13.0),
+                                      style: TextStyle(
+                                          fontSize: eventDetailsTextSize),
                                     ),
                                     eventPlace.isNotEmpty
                                         ? Text(
                                             ' @$eventPlace',
-                                            style: TextStyle(fontSize: 13.0),
+                                            style: TextStyle(
+                                                fontSize: eventDetailsTextSize),
                                           )
                                         : Text(''),
                                   ],
@@ -77,16 +90,18 @@ class UseAsGuestScreen3 extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(height: 8.0),
+                          SizedBox(height: littleGap),
                           Expanded(
                             child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: setList.length,
-                              itemExtent: 30.5,
+                              itemExtent: itemExtent,
                               itemBuilder: (context, index) {
                                 return SetListTile(
                                   item: model.setList[index],
                                   songNum: model.songsNumText[index],
+                                  fontSize: itemTextSize,
+                                  padding: littleGap,
                                 );
                               },
                             ),
@@ -103,7 +118,6 @@ class UseAsGuestScreen3 extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      flex: 2,
                       child: Center(
                         child: TextButton(
                           child: Text(
@@ -120,7 +134,6 @@ class UseAsGuestScreen3 extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
                       child: Center(
                         child: TextButton(
                           child: Text(
@@ -165,7 +178,7 @@ Future<bool> _showConfirmDialog(context) async {
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('セットリストの画像を端末に保存して、最初の画面に戻ります。\nよろしいですか？'),
+        title: Text('セットリストの画像を保存して、最初の画面に戻りますか？'),
         actions: [
           TextButton(
             child: Text(

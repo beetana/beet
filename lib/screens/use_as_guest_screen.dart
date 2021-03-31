@@ -209,7 +209,7 @@ Future<bool> _showConfirmDialog(context) async {
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('入力した内容を破棄して、最初の画面に戻ります。\nよろしいですか？'),
+        title: Text('入力した内容を破棄して、最初の画面に戻りますか？'),
         actions: [
           TextButton(
             child: Text(

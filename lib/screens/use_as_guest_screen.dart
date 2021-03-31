@@ -222,8 +222,8 @@ Future<bool> _showConfirmDialog(context) async {
           ),
           TextButton(
             child: Text(
-              '戻る',
-              style: kEnterButtonTextStyle,
+              '破棄',
+              style: kDeleteButtonTextStyle,
             ),
             onPressed: () {
               Navigator.pop(context, true);

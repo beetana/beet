@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class GroupSetListModel2 extends ChangeNotifier {
+class UseAsGuestModel2 extends ChangeNotifier {
   DateTime eventDate;
   String eventTitle = '';
   String eventPlace = '';

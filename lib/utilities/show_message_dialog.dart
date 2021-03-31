@@ -1,7 +1,7 @@
 import 'package:beet/constants.dart';
 import 'package:flutter/material.dart';
 
-Future showMessageDialog(context, message) async {
+Future showMessageDialog(BuildContext context, String message) async {
   await showDialog(
     context: context,
     builder: (BuildContext context) {

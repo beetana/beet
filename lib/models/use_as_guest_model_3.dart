@@ -1,25 +1,23 @@
 import 'dart:ui' as ui;
 import 'dart:typed_data';
-import 'package:beet/objects/song.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
-class GroupSetListModel3 extends ChangeNotifier {
+class UseAsGuestModel3 extends ChangeNotifier {
   List<String> setList = [];
   List<String> songsNumText = [];
   final GlobalKey globalKey = GlobalKey();
 
-  void init({List<dynamic> setList}) {
+  void init({List<String> setList}) {
+    this.setList = setList;
     int num = 1;
     setList.forEach((item) {
-      if (item is Song) {
-        this.setList.add(item.title);
+      if (item.startsWith('-MC')) {
+        this.songsNumText.add('    ');
+      } else {
         this.songsNumText.add(num < 10 ? '  $num.' : '$num.');
         num += 1;
-      } else {
-        this.setList.add(item);
-        this.songsNumText.add('    ');
       }
     });
     notifyListeners();

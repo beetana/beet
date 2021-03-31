@@ -29,6 +29,15 @@ class GroupSetListScreen3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// iPhoneSE 2nd換算
+    final double deviceWidth = MediaQuery.of(context).size.width; // 375
+    final double itemExtent = deviceWidth * 0.082; // 30.75
+    final double itemTextSize = deviceWidth * 0.054; // 20.25
+    final double eventTitleTextSize = deviceWidth * 0.045; // 16.875
+    final double eventDetailsTextSize = deviceWidth * 0.034; // 12.75
+    final double littleGap = deviceWidth * 0.021; // 7.875
+    final double wideGap = deviceWidth * 0.042; // 15.75
+
     return ChangeNotifierProvider<GroupSetListModel3>(
       create: (_) => GroupSetListModel3()..init(setList: setList),
       child: Consumer<GroupSetListModel3>(builder: (context, model, child) {
@@ -52,8 +61,8 @@ class GroupSetListScreen3 extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(
-                                top: 16.0, left: 16.0, right: 16.0),
+                            padding: EdgeInsets.only(
+                                top: wideGap, left: wideGap, right: wideGap),
                             child: Column(
                               children: <Widget>[
                                 Row(
@@ -61,7 +70,8 @@ class GroupSetListScreen3 extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       eventTitle,
-                                      style: TextStyle(fontSize: 17.0),
+                                      style: TextStyle(
+                                          fontSize: eventTitleTextSize),
                                     ),
                                   ],
                                 ),
@@ -70,12 +80,14 @@ class GroupSetListScreen3 extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       eventDateText,
-                                      style: TextStyle(fontSize: 13.0),
+                                      style: TextStyle(
+                                          fontSize: eventDetailsTextSize),
                                     ),
                                     eventPlace.isNotEmpty
                                         ? Text(
                                             ' @$eventPlace',
-                                            style: TextStyle(fontSize: 13.0),
+                                            style: TextStyle(
+                                                fontSize: eventDetailsTextSize),
                                           )
                                         : Text(''),
                                   ],
@@ -83,16 +95,18 @@ class GroupSetListScreen3 extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(height: 8.0),
+                          SizedBox(height: littleGap),
                           Expanded(
                             child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: setList.length,
-                              itemExtent: 30.5,
+                              itemExtent: itemExtent,
                               itemBuilder: (context, index) {
                                 return SetListTile(
                                   item: model.setList[index],
                                   songNum: model.songsNumText[index],
+                                  fontSize: itemTextSize,
+                                  padding: littleGap,
                                 );
                               },
                             ),

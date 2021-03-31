@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 class SetListTile extends StatelessWidget {
   final String item;
   final String songNum;
+  final double fontSize;
+  final double padding;
 
   SetListTile({
     this.item,
     this.songNum,
+    this.fontSize,
+    this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: EdgeInsets.symmetric(horizontal: padding),
       child: Text(
         '$songNum $item',
-        style: TextStyle(fontSize: 20.0),
+        style: TextStyle(fontSize: fontSize),
         overflow: TextOverflow.ellipsis,
       ),
     );

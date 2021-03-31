@@ -20,7 +20,7 @@ class GroupSetListScreen extends StatelessWidget {
       child: Consumer<GroupSetListModel>(builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('セットリスト作成'),
+            title: Text('セットリストを作成'),
             actions: [
               TextButton(
                 child: Row(
@@ -109,7 +109,7 @@ class GroupSetListScreen extends StatelessWidget {
                       child: Center(
                         child: TextButton(
                           child: Text(
-                            '決定',
+                            '次へ',
                             style: TextStyle(
                               color: kEnterButtonColor,
                               fontSize: 16.0,

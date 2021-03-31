@@ -8,7 +8,6 @@ class GroupSetListModel2 extends ChangeNotifier {
   String eventTitle = '';
   String eventPlace = '';
   String eventDateText = '';
-  bool isLoading = false;
   bool isShowEventDatePicker = false;
   Widget eventDatePickerBox = SizedBox();
   final eventDateFormat = DateFormat('y/M/d(E)', 'ja_JP');

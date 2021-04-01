@@ -25,10 +25,10 @@ class GroupEditNameScreen extends StatelessWidget {
               },
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text('グループ名を変更'),
+                  title: const Text('グループ名を変更'),
                   actions: [
                     TextButton(
-                      child: Text(
+                      child: const Text(
                         '保存',
                         style: TextStyle(
                           color: Colors.white,
@@ -48,13 +48,13 @@ class GroupEditNameScreen extends StatelessWidget {
                   ],
                 ),
                 body: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: TextField(
                     controller: groupNameController,
                     decoration: InputDecoration(
                       hintText: 'グループ名',
                       suffix: IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.clear,
                           color: Colors.black54,
                         ),

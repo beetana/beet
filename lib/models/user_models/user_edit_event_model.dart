@@ -16,8 +16,8 @@ class UserEditEventModel extends ChangeNotifier {
   bool isAllDay = false;
   bool isShowStartingPicker = false;
   bool isShowEndingPicker = false;
-  Widget startingDateTimePickerBox = SizedBox();
-  Widget endingDateTimePickerBox = SizedBox();
+  Widget startingDateTimePickerBox = const SizedBox();
+  Widget endingDateTimePickerBox = const SizedBox();
   CupertinoDatePickerMode cupertinoDatePickerMode =
       CupertinoDatePickerMode.dateAndTime;
   DocumentReference ownerDocRef;
@@ -82,15 +82,15 @@ class UserEditEventModel extends ChangeNotifier {
     if (isAllDay == true) {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
-      startingDateTimePickerBox = SizedBox();
-      endingDateTimePickerBox = SizedBox();
+      startingDateTimePickerBox = const SizedBox();
+      endingDateTimePickerBox = const SizedBox();
       isShowStartingPicker = false;
       isShowEndingPicker = false;
     } else {
       tileDateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.dateAndTime;
-      startingDateTimePickerBox = SizedBox();
-      endingDateTimePickerBox = SizedBox();
+      startingDateTimePickerBox = const SizedBox();
+      endingDateTimePickerBox = const SizedBox();
       isShowStartingPicker = false;
       isShowEndingPicker = false;
     }
@@ -101,7 +101,7 @@ class UserEditEventModel extends ChangeNotifier {
     if (isShowStartingPicker == false) {
       if (isShowEndingPicker == true) {
         isShowEndingPicker = false;
-        endingDateTimePickerBox = SizedBox();
+        endingDateTimePickerBox = const SizedBox();
       }
       startingDateTimePickerBox = Container(
         height: 100.0,
@@ -124,13 +124,13 @@ class UserEditEventModel extends ChangeNotifier {
             startingDateTime = newDateTime;
             if (startingDateTime.isAfter(endingDateTime) ||
                 startingDateTime.isAtSameMomentAs(endingDateTime)) {
-              endingDateTime = startingDateTime.add(Duration(hours: 1));
+              endingDateTime = startingDateTime.add(const Duration(hours: 1));
             }
           },
         ),
       );
     } else {
-      startingDateTimePickerBox = SizedBox();
+      startingDateTimePickerBox = const SizedBox();
     }
     isShowStartingPicker = !isShowStartingPicker;
     notifyListeners();
@@ -140,7 +140,7 @@ class UserEditEventModel extends ChangeNotifier {
     if (isShowEndingPicker == false) {
       if (isShowStartingPicker == true) {
         isShowStartingPicker = false;
-        startingDateTimePickerBox = SizedBox();
+        startingDateTimePickerBox = const SizedBox();
       }
       endingDateTimePickerBox = Container(
         height: 100.0,
@@ -149,8 +149,8 @@ class UserEditEventModel extends ChangeNotifier {
           use24hFormat: true,
           minuteInterval: 5,
           initialDateTime: endingDateTime,
-          minimumDate: startingDateTime.add(Duration(minutes: 5)),
-          maximumDate: startingDateTime.add(Duration(days: 1000)),
+          minimumDate: startingDateTime.add(const Duration(minutes: 5)),
+          maximumDate: startingDateTime.add(const Duration(days: 1000)),
           onDateTimeChanged: (DateTime newDateTime) {
             if (isAllDay == true) {
               newDateTime = DateTime(
@@ -163,13 +163,13 @@ class UserEditEventModel extends ChangeNotifier {
             endingDateTime = newDateTime;
             if (startingDateTime.isAfter(endingDateTime) ||
                 startingDateTime.isAtSameMomentAs(endingDateTime)) {
-              endingDateTime = startingDateTime.add(Duration(hours: 1));
+              endingDateTime = startingDateTime.add(const Duration(hours: 1));
             }
           },
         ),
       );
     } else {
-      endingDateTimePickerBox = SizedBox();
+      endingDateTimePickerBox = const SizedBox();
     }
     isShowEndingPicker = !isShowEndingPicker;
     notifyListeners();

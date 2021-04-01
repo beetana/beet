@@ -30,7 +30,7 @@ class GroupScreen extends StatelessWidget {
               ),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: const Icon(Icons.settings),
                   onPressed: () async {
                     await Navigator.push(
                       context,
@@ -53,19 +53,19 @@ class GroupScreen extends StatelessWidget {
               onTap: model.onTabTapped,
               currentIndex: model.currentIndex,
               items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'ホーム',
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.calendar_today),
                   label: 'カレンダー',
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.format_list_bulleted),
                   label: 'やること',
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.library_music),
                   label: '持ち曲',
                 ),

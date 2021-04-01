@@ -10,10 +10,10 @@ class DarkLoadingIndicator extends StatelessWidget {
     return isLoading
         ? Container(
             color: Colors.black.withOpacity(0.3),
-            child: Center(
+            child: const Center(
               child: CircularProgressIndicator(),
             ),
           )
-        : SizedBox();
+        : const SizedBox();
   }
 }

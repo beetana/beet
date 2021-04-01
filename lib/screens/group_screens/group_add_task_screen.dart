@@ -27,10 +27,10 @@ class GroupAddTaskScreen extends StatelessWidget {
               },
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text('タスクを追加'),
+                  title: const Text('タスクを追加'),
                   actions: [
                     TextButton(
-                      child: Text(
+                      child: const Text(
                         '追加',
                         style: TextStyle(
                           color: Colors.white,
@@ -52,7 +52,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                 body: SafeArea(
                   child: Scrollbar(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: SingleChildScrollView(
                         controller: scrollController,
                         child: Column(
@@ -60,7 +60,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                           children: <Widget>[
                             TextField(
                               controller: taskTitleController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'やること',
                                 border: InputBorder.none,
                               ),
@@ -75,10 +75,10 @@ class GroupAddTaskScreen extends StatelessWidget {
                             ),
                             BasicDivider(),
                             ListTile(
-                              title: Text('いつまでに'),
+                              title: const Text('いつまでに'),
                               trailing: Text(model.dueDateText),
                               contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 0.0),
+                                  const EdgeInsets.symmetric(horizontal: 0.0),
                               onTap: () {
                                 FocusScope.of(context).unfocus();
                                 model.showDueDatePicker();
@@ -86,13 +86,14 @@ class GroupAddTaskScreen extends StatelessWidget {
                             ),
                             model.dueDatePickerBox,
                             BasicDivider(),
-                            SizedBox(height: 8.0),
-                            Text(
+                            const SizedBox(height: 8.0),
+                            const Text(
                               'だれが',
                               style: TextStyle(fontSize: 17.0),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 4.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
                               child: Container(
                                 height: 72,
                                 child: NotificationListener<ScrollNotification>(
@@ -100,7 +101,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                                   child: Scrollbar(
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
-                                      physics: ScrollPhysics(),
+                                      physics: const ScrollPhysics(),
                                       itemExtent: 60.0,
                                       itemCount: model.userNames.length,
                                       itemBuilder:
@@ -132,7 +133,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                                 child: TextField(
                                   controller: taskMemoController,
                                   maxLines: 8,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'メモ',
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.all(0.0),
@@ -142,7 +143,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                                       model.showDueDatePicker();
                                     }
                                     await Future.delayed(
-                                      Duration(milliseconds: 100),
+                                      const Duration(milliseconds: 100),
                                     );
                                     scrollController.jumpTo(scrollController
                                         .position.maxScrollExtent);
@@ -154,7 +155,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                               ),
                             ),
                             BasicDivider(),
-                            SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
                           ],
                         ),
                       ),

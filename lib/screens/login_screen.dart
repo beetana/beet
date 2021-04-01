@@ -21,14 +21,14 @@ class LoginScreen extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text('ログイン'),
+            title: const Text('ログイン'),
           ),
           body: Consumer<LoginModel>(builder: (context, model, child) {
             return Stack(
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 32.0, horizontal: 16.0),
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
@@ -41,12 +41,13 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               children: [
                                 TextField(
                                   controller: emailController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'メールアドレス',
                                     border: InputBorder.none,
                                     contentPadding:
@@ -60,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                                 TextField(
                                   controller: passwordController,
                                   obscureText: true,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'パスワード',
                                     border: InputBorder.none,
                                     contentPadding:
@@ -74,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 32.0),
+                        const SizedBox(height: 32.0),
                         Container(
                           height: 56.0,
                           width: double.infinity,
@@ -89,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                               backgroundColor: kPrimaryColor,
                               primary: Colors.white38,
                             ),
-                            child: Text(
+                            child: const Text(
                               'ログイン',
                               style: TextStyle(
                                 color: Color(0xFFf5f5f5),
@@ -114,9 +115,7 @@ class LoginScreen extends StatelessWidget {
                             },
                           ),
                         ),
-                        SizedBox(
-                          height: 16.0,
-                        ),
+                        const SizedBox(height: 16.0),
                       ],
                     ),
                   ),

@@ -25,10 +25,10 @@ class UserEditNameScreen extends StatelessWidget {
               },
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text('アカウント名を変更'),
+                  title: const Text('アカウント名を変更'),
                   actions: [
                     TextButton(
-                      child: Text(
+                      child: const Text(
                         '保存',
                         style: TextStyle(
                           color: Colors.white,
@@ -48,13 +48,13 @@ class UserEditNameScreen extends StatelessWidget {
                   ],
                 ),
                 body: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: TextField(
                     controller: userNameController,
                     decoration: InputDecoration(
                       hintText: 'アカウント名',
                       suffix: IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.clear,
                           color: Colors.black54,
                         ),

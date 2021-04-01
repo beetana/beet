@@ -45,7 +45,7 @@ class GroupSetListScreen3 extends StatelessWidget {
         return Scaffold(
           backgroundColor: kDullWhiteColor,
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(0.0),
+            preferredSize: const Size.fromHeight(0.0),
             child: AppBar(
               automaticallyImplyLeading: false,
             ),
@@ -90,7 +90,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                                             style: TextStyle(
                                                 fontSize: eventDetailsTextSize),
                                           )
-                                        : Text(''),
+                                        : const Text(''),
                                   ],
                                 ),
                               ],
@@ -99,7 +99,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                           SizedBox(height: littleGap),
                           Expanded(
                             child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: setList.length,
                               itemExtent: itemExtent,
                               itemBuilder: (context, index) {
@@ -117,7 +117,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: SizedBox(),
                 ),
                 ThinDivider(),
@@ -137,7 +137,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                       flex: 2,
                       child: Center(
                         child: TextButton(
-                          child: Text(
+                          child: const Text(
                             '戻る',
                             style: TextStyle(
                               color: kSlightlyTransparentPrimaryColor,
@@ -154,7 +154,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                       flex: 2,
                       child: Center(
                         child: TextButton(
-                          child: Text(
+                          child: const Text(
                             '保存',
                             style: TextStyle(
                               color: kEnterButtonColor,

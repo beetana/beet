@@ -10,10 +10,10 @@ class LoadingIndicator extends StatelessWidget {
     return isLoading
         ? Container(
             color: Colors.transparent,
-            child: Center(
+            child: const Center(
               child: CircularProgressIndicator(),
             ),
           )
-        : SizedBox();
+        : const SizedBox();
   }
 }

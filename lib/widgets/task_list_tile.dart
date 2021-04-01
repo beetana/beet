@@ -21,7 +21,7 @@ class TaskListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
       child: InkWell(
         onTap: tileTappedCallback,
         onLongPress: longPressedCallBack,
@@ -32,7 +32,7 @@ class TaskListTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -44,16 +44,14 @@ class TaskListTile extends StatelessWidget {
                       Text(
                         task.title,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 16.0,
-                        ),
+                        style: const TextStyle(fontSize: 16.0),
                       ),
                       Container(
                         height: 24,
                         width: 216,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: task.assignedMembersId.length,
                           itemBuilder: (context, index) {
                             return Container(
@@ -63,7 +61,8 @@ class TaskListTile extends StatelessWidget {
                                 backgroundImage: users[
                                             task.assignedMembersId[index]] ==
                                         null
-                                    ? AssetImage('images/test_user_image.png')
+                                    ? const AssetImage(
+                                        'images/test_user_image.png')
                                     : users[task.assignedMembersId[index]]
                                             .imageURL
                                             .isNotEmpty
@@ -71,7 +70,7 @@ class TaskListTile extends StatelessWidget {
                                             users[task.assignedMembersId[index]]
                                                 .imageURL,
                                           )
-                                        : AssetImage(
+                                        : const AssetImage(
                                             'images/test_user_image.png'),
                                 backgroundColor: Colors.transparent,
                               ),

@@ -22,14 +22,14 @@ class GroupMemberScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: Text('メンバー'),
+                title: const Text('メンバー'),
               ),
               body: SafeArea(
                 child: Column(
                   children: [
                     Expanded(
                       child: ListView.builder(
-                        physics: ScrollPhysics(),
+                        physics: const ScrollPhysics(),
                         itemCount: model.usersName.length,
                         itemBuilder: (BuildContext context, int index) {
                           String userId = model.usersId[index];
@@ -39,7 +39,8 @@ class GroupMemberScreen extends StatelessWidget {
                             leading: CircleAvatar(
                               backgroundImage: userImageURL.isNotEmpty
                                   ? NetworkImage(userImageURL)
-                                  : AssetImage('images/test_user_image.png'),
+                                  : const AssetImage(
+                                      'images/test_user_image.png'),
                               backgroundColor: Colors.transparent,
                             ),
                             title: Text(
@@ -86,11 +87,11 @@ class GroupMemberScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton.icon(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.group_add,
                         color: kSlightlyTransparentPrimaryColor,
                       ),
-                      label: Text(
+                      label: const Text(
                         'メンバーを招待',
                         style: TextStyle(
                           color: kSlightlyTransparentPrimaryColor,
@@ -129,10 +130,10 @@ Future<bool> _showMemberBottomSheet(
     builder: (context) {
       return SingleChildScrollView(
         child: Container(
-          color: Color(0xFF757575),
+          color: const Color(0xFF757575),
           child: Container(
-            padding: EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.all(16.0),
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0),
@@ -146,15 +147,15 @@ Future<bool> _showMemberBottomSheet(
                   Text(
                     userName,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24.0,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   TextButton(
                     child: Text(
                       buttonText,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -189,7 +190,7 @@ Future<bool> _showConfirmDialog(context, isMe, userName) async {
         title: Text(titleText),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
             ),
@@ -220,31 +221,32 @@ Future _inviteMemberDialog(context, dynamicLink, groupName) async {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(10.0),
           ),
         ),
-        title: Text('次のメッセージをシェアしてグループに参加してもらいましょう。'),
-        titleTextStyle: TextStyle(fontSize: 16.0, color: Colors.black),
-        titlePadding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+        title: const Text('次のメッセージをシェアしてグループに参加してもらいましょう。'),
+        titleTextStyle: const TextStyle(
+          fontSize: 16.0,
+          color: Colors.black,
+        ),
+        titlePadding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
         children: [
           SimpleDialogOption(
             child: Text(
               inviteMessage,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           SimpleDialogOption(
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(width: 2.0, color: Colors.blue),
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Center(
+              child: const Center(
                   child: Text(
                 'メッセージをコピー',
                 style: TextStyle(color: kEnterButtonColor),

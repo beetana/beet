@@ -24,14 +24,14 @@ class AddGroupScreen extends StatelessWidget {
           },
           child: Scaffold(
             appBar: AppBar(
-              title: Text('グループを作成'),
+              title: const Text('グループを作成'),
             ),
             body: Consumer<AddGroupModel>(builder: (context, model, child) {
               return Stack(
                 children: <Widget>[
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 40.0, horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 40.0, horizontal: 16.0),
                     child: Column(
                       children: <Widget>[
                         Container(
@@ -43,13 +43,14 @@ class AddGroupScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               children: [
                                 TextField(
                                   controller: groupNameController,
                                   autofocus: true,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'グループ名',
                                     border: InputBorder.none,
                                     contentPadding:
@@ -63,7 +64,7 @@ class AddGroupScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 48.0),
+                        const SizedBox(height: 48.0),
                         Container(
                           height: 56.0,
                           width: 160,
@@ -78,7 +79,7 @@ class AddGroupScreen extends StatelessWidget {
                               backgroundColor: kPrimaryColor,
                               primary: Colors.white38,
                             ),
-                            child: Text(
+                            child: const Text(
                               '決定',
                               style: TextStyle(
                                 color: Color(0xFFf5f5f5),

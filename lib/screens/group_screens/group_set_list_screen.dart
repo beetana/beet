@@ -20,16 +20,16 @@ class GroupSetListScreen extends StatelessWidget {
       child: Consumer<GroupSetListModel>(builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('セットリストを作成'),
+            title: const Text('セットリストを作成'),
             actions: [
               TextButton(
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.add,
                       color: Colors.white,
                     ),
-                    Text(
+                    const Text(
                       'MC',
                       style: TextStyle(color: Colors.white),
                     ),
@@ -41,7 +41,7 @@ class GroupSetListScreen extends StatelessWidget {
               ),
             ],
             leading: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.white,
               ),
@@ -72,7 +72,7 @@ class GroupSetListScreen extends StatelessWidget {
                                   item is Song ? item.title : item,
                                   maxLines: 1,
                                 ),
-                                trailing: Handle(
+                                trailing: const Handle(
                                   delay: Duration(milliseconds: 100),
                                   child: Icon(
                                     Icons.list,
@@ -108,7 +108,7 @@ class GroupSetListScreen extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: TextButton(
-                          child: Text(
+                          child: const Text(
                             '次へ',
                             style: TextStyle(
                               color: kEnterButtonColor,

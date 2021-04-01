@@ -36,7 +36,7 @@ class GroupCalendarScreen extends StatelessWidget {
                         }
                       },
                       child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: const AlwaysScrollableScrollPhysics(),
                         itemExtent: 64.0,
                         itemCount: model.selectedEvents.length + 1,
                         itemBuilder: (context, index) {
@@ -64,7 +64,7 @@ class GroupCalendarScreen extends StatelessWidget {
                               },
                             );
                           } else {
-                            return SizedBox();
+                            return const SizedBox();
                           }
                         },
                       ),

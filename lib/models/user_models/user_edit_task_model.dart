@@ -19,7 +19,7 @@ class UserEditTaskModel extends ChangeNotifier {
   Map<String, User> groupMembers = {};
   bool isLoading = false;
   bool isShowDueDatePicker = false;
-  Widget dueDatePickerBox = SizedBox();
+  Widget dueDatePickerBox = const SizedBox();
   DateTime dueDate;
   DocumentReference ownerDocRef;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
@@ -99,11 +99,11 @@ class UserEditTaskModel extends ChangeNotifier {
             ),
           ),
           TextButton.icon(
-            icon: Icon(
+            icon: const Icon(
               Icons.clear,
               color: Colors.black54,
             ),
-            label: Text(
+            label: const Text(
               '未定',
               style: kCancelButtonTextStyle,
             ),
@@ -111,7 +111,7 @@ class UserEditTaskModel extends ChangeNotifier {
               this.dueDate = null;
               this.dueDateText = '';
               this.isDecidedDueDate = false;
-              this.dueDatePickerBox = SizedBox();
+              this.dueDatePickerBox = const SizedBox();
               this.isShowDueDatePicker = !isShowDueDatePicker;
               notifyListeners();
             },
@@ -119,7 +119,7 @@ class UserEditTaskModel extends ChangeNotifier {
         ],
       );
     } else {
-      dueDatePickerBox = SizedBox();
+      dueDatePickerBox = const SizedBox();
     }
     isShowDueDatePicker = !isShowDueDatePicker;
     notifyListeners();

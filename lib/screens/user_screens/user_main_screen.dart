@@ -21,20 +21,20 @@ class UserMainScreen extends StatelessWidget {
         return Stack(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 8.0),
+              padding: const EdgeInsets.only(top: 8.0),
               child: Column(
                 children: [
                   Container(
                     height: 112.0,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             dateFormat.format(model.currentDateTime),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 28.0,
                               fontWeight: FontWeight.w500,
                               color: kPrimaryColor,
@@ -44,7 +44,7 @@ class UserMainScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
+                              const Text(
                                 'スケジュール',
                                 style: TextStyle(
                                   fontSize: 18.0,
@@ -55,7 +55,7 @@ class UserMainScreen extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(
+                                  const Text(
                                     '未完了のタスク',
                                     style: TextStyle(
                                       color: kDullGreenColor,
@@ -65,12 +65,12 @@ class UserMainScreen extends StatelessWidget {
                                     children: [
                                       Text(
                                         model.taskCount.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 24.0,
                                           color: kDullGreenColor,
                                         ),
                                       ),
-                                      Text(
+                                      const Text(
                                         '件',
                                         style: TextStyle(
                                           color: kDullGreenColor,
@@ -98,7 +98,7 @@ class UserMainScreen extends StatelessWidget {
                           }
                         },
                         child: ListView.builder(
-                          physics: AlwaysScrollableScrollPhysics(),
+                          physics: const AlwaysScrollableScrollPhysics(),
                           itemExtent: 96.0,
                           itemCount: model.eventList.length,
                           itemBuilder: (context, index) {
@@ -137,15 +137,15 @@ class UserMainScreen extends StatelessWidget {
             model.isLoading
                 ? Container(
                     color: Colors.transparent,
-                    child: Center(
+                    child: const Center(
                       child: CircularProgressIndicator(),
                     ),
                   )
                 : model.eventList.isEmpty
-                    ? Center(
+                    ? const Center(
                         child: Text('予定されているイベントはありません'),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
           ],
         );
       }),

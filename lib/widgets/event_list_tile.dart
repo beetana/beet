@@ -26,15 +26,15 @@ class EventListTile extends StatelessWidget {
         children: [
           this.imageURL != null
               ? Padding(
-                  padding: EdgeInsets.only(top: 8.0, left: 20.0, right: 20.0),
+                  padding:
+                      const EdgeInsets.only(top: 8.0, left: 20.0, right: 20.0),
                   child: EventPlannerImage(imageURL: imageURL, name: name),
                 )
-              : SizedBox(
-                  height: 8.0,
-                ),
+              : const SizedBox(height: 8.0),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(bottom: 8.0, left: 24.0, right: 24.0),
+              padding:
+                  const EdgeInsets.only(bottom: 8.0, left: 24.0, right: 24.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -81,15 +81,15 @@ class EventPlannerImage extends StatelessWidget {
           child: CircleAvatar(
             backgroundImage: imageURL.isNotEmpty
                 ? NetworkImage(imageURL)
-                : AssetImage('images/test_user_image.png'),
+                : const AssetImage('images/test_user_image.png'),
             backgroundColor: Colors.transparent,
           ),
         ),
-        SizedBox(width: 8.0),
+        const SizedBox(width: 8.0),
         Expanded(
           child: Text(
             name,
-            style: TextStyle(fontWeight: FontWeight.w500),
+            style: const TextStyle(fontWeight: FontWeight.w500),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -121,7 +121,7 @@ class EventOverView extends StatelessWidget {
             ),
             Text(
               '@$eventPlace',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black54,
                 fontSize: 14.0,
               ),
@@ -168,9 +168,7 @@ class EventDateTime extends StatelessWidget {
               Text('~ ${dateFormat.format(endingDateTime)}'),
             ],
           ),
-          SizedBox(
-            width: 8.0,
-          ),
+          const SizedBox(width: 8.0),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,

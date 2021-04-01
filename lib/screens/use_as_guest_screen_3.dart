@@ -39,7 +39,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
         return Scaffold(
           backgroundColor: kDullWhiteColor,
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(0.0),
+            preferredSize: const Size.fromHeight(0.0),
             child: AppBar(
               automaticallyImplyLeading: false,
             ),
@@ -84,7 +84,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                                             style: TextStyle(
                                                 fontSize: eventDetailsTextSize),
                                           )
-                                        : Text(''),
+                                        : const Text(''),
                                   ],
                                 ),
                               ],
@@ -93,7 +93,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                           SizedBox(height: littleGap),
                           Expanded(
                             child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: setList.length,
                               itemExtent: itemExtent,
                               itemBuilder: (context, index) {
@@ -111,7 +111,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: SizedBox(),
                 ),
                 ThinDivider(),
@@ -120,7 +120,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: TextButton(
-                          child: Text(
+                          child: const Text(
                             '戻る',
                             style: TextStyle(
                               color: kSlightlyTransparentPrimaryColor,
@@ -136,7 +136,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: TextButton(
-                          child: Text(
+                          child: const Text(
                             '保存',
                             style: TextStyle(
                               color: kEnterButtonColor,
@@ -178,10 +178,10 @@ Future<bool> _showConfirmDialog(context) async {
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('セットリストの画像を保存して、最初の画面に戻りますか？'),
+        title: const Text('セットリストの画像を保存して、最初の画面に戻りますか？'),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'やり直す',
               style: kCancelButtonTextStyle,
             ),
@@ -190,7 +190,7 @@ Future<bool> _showConfirmDialog(context) async {
             },
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               '保存',
               style: kEnterButtonTextStyle,
             ),

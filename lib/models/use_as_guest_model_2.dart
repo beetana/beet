@@ -9,7 +9,7 @@ class UseAsGuestModel2 extends ChangeNotifier {
   String eventPlace = '';
   String eventDateText = '';
   bool isShowEventDatePicker = false;
-  Widget eventDatePickerBox = SizedBox();
+  Widget eventDatePickerBox = const SizedBox();
   final eventDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   void init() {
@@ -37,18 +37,18 @@ class UseAsGuestModel2 extends ChangeNotifier {
             ),
           ),
           TextButton.icon(
-            icon: Icon(
+            icon: const Icon(
               Icons.clear,
               color: Colors.black54,
             ),
-            label: Text(
+            label: const Text(
               '未定',
               style: kCancelButtonTextStyle,
             ),
             onPressed: () {
               eventDate = DateTime.now();
               eventDateText = '';
-              eventDatePickerBox = SizedBox();
+              eventDatePickerBox = const SizedBox();
               isShowEventDatePicker = !isShowEventDatePicker;
               notifyListeners();
             },
@@ -56,7 +56,7 @@ class UseAsGuestModel2 extends ChangeNotifier {
         ],
       );
     } else {
-      eventDatePickerBox = SizedBox();
+      eventDatePickerBox = const SizedBox();
     }
     isShowEventDatePicker = !isShowEventDatePicker;
     notifyListeners();

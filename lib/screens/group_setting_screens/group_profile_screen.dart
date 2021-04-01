@@ -20,7 +20,7 @@ class GroupProfileScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: Text('グループ情報'),
+                title: const Text('グループ情報'),
               ),
               body: Column(
                 children: [
@@ -28,7 +28,7 @@ class GroupProfileScreen extends StatelessWidget {
                     width: double.infinity,
                     color: kDullWhiteColor,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Center(
                         child: Stack(
                           children: [
@@ -41,7 +41,7 @@ class GroupProfileScreen extends StatelessWidget {
                                       ? FileImage(model.imageFile)
                                       : model.groupImageURL.isNotEmpty
                                           ? NetworkImage(model.groupImageURL)
-                                          : AssetImage(
+                                          : const AssetImage(
                                               'images/test_user_image.png'),
                                   backgroundColor: Colors.transparent,
                                 ),
@@ -79,7 +79,7 @@ class GroupProfileScreen extends StatelessWidget {
                             Positioned(
                               child: CircleAvatar(
                                 child: IconButton(
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.add_a_photo,
                                     color: Colors.white,
                                     size: 20.0,
@@ -124,12 +124,12 @@ class GroupProfileScreen extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    title: Text('グループ名'),
+                    title: const Text('グループ名'),
                     subtitle: Text(
                       model.groupName,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    trailing: Icon(Icons.keyboard_arrow_right),
+                    trailing: const Icon(Icons.keyboard_arrow_right),
                     onTap: () async {
                       await Navigator.push(
                         context,
@@ -175,9 +175,9 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
     builder: (context) {
       return SingleChildScrollView(
         child: Container(
-          color: Color(0xFF757575),
+          color: const Color(0xFF757575),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0),
@@ -189,7 +189,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       'ライブラリから選択',
                       style: TextStyle(
                         color: kPrimaryColor,
@@ -198,7 +198,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       ),
                     ),
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     onPressed: () async {
                       changeImage = ChangeImage.select;
@@ -207,7 +207,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                   ),
                   BasicDivider(),
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       '写真を削除',
                       style: TextStyle(
                         color: Colors.redAccent,
@@ -216,7 +216,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       ),
                     ),
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     onPressed: () async {
                       bool isDelete = await _showConfirmDialog(context);
@@ -243,10 +243,10 @@ Future<bool> _showConfirmDialog(context) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('プロフィール画像を削除しますか?'),
+        title: const Text('プロフィール画像を削除しますか?'),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
             ),
@@ -255,7 +255,7 @@ Future<bool> _showConfirmDialog(context) async {
             },
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               '削除',
               style: kDeleteButtonTextStyle,
             ),

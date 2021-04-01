@@ -85,7 +85,7 @@ class DynamicLinksServices {
           title: Text('$groupNameに招待されました。\n参加しますか？'),
           actions: [
             TextButton(
-              child: Text(
+              child: const Text(
                 'キャンセル',
                 style: kCancelButtonTextStyle,
               ),
@@ -94,7 +94,7 @@ class DynamicLinksServices {
               },
             ),
             TextButton(
-              child: Text(
+              child: const Text(
                 '参加',
                 style: kEnterButtonTextStyle,
               ),
@@ -208,7 +208,7 @@ class DynamicLinksServices {
       builder: (BuildContext context) {
         return Container(
           color: Colors.black.withOpacity(0.3),
-          child: Center(
+          child: const Center(
             child: CircularProgressIndicator(),
           ),
         );

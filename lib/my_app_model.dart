@@ -41,9 +41,9 @@ class MyAppModel {
 
       // すぐにSplashScreenが閉じてしまうので少し待つ
       if (_state == UserState.notLoggedIn) {
-        await Future.delayed(Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 3));
       } else if (_state == UserState.loggedIn) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
       }
 
       _userStateStreamController.sink.add(_state);

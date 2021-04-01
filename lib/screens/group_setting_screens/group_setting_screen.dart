@@ -19,7 +19,7 @@ class GroupSettingScreen extends StatelessWidget {
       create: (_) => GroupSettingModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('設定'),
+          title: const Text('設定'),
         ),
         body: Consumer<GroupSettingModel>(builder: (context, model, child) {
           return Column(
@@ -27,7 +27,7 @@ class GroupSettingScreen extends StatelessWidget {
               Container(
                 width: double.infinity,
                 color: kDullWhiteColor,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.only(
                     top: 16.0,
                     bottom: 8.0,
@@ -43,8 +43,8 @@ class GroupSettingScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: Text('グループ情報'),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                title: const Text('グループ情報'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () async {
                   await Navigator.push(
                     context,
@@ -59,8 +59,8 @@ class GroupSettingScreen extends StatelessWidget {
                 indent: 16.0,
               ),
               ListTile(
-                title: Text('メンバー'),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                title: const Text('メンバー'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () async {
                   await Navigator.push(
                     context,
@@ -73,7 +73,7 @@ class GroupSettingScreen extends StatelessWidget {
               Container(
                 width: double.infinity,
                 color: kDullWhiteColor,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.only(
                     top: 16.0,
                     bottom: 8.0,
@@ -89,8 +89,8 @@ class GroupSettingScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: Text('利用規約'),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                title: const Text('利用規約'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -105,8 +105,8 @@ class GroupSettingScreen extends StatelessWidget {
                 indent: 16.0,
               ),
               ListTile(
-                title: Text('プライバシーポリシー'),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                title: const Text('プライバシーポリシー'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -121,8 +121,8 @@ class GroupSettingScreen extends StatelessWidget {
                 indent: 16.0,
               ),
               ListTile(
-                title: Text('アプリの詳細'),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                title: const Text('アプリの詳細'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () {
                   showAppInfoDialog(context);
                 },

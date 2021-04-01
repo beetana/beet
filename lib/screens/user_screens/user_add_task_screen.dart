@@ -26,10 +26,10 @@ class UserAddTaskScreen extends StatelessWidget {
               },
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text('タスクを追加'),
+                  title: const Text('タスクを追加'),
                   actions: [
                     TextButton(
-                      child: Text(
+                      child: const Text(
                         '追加',
                         style: TextStyle(
                           color: Colors.white,
@@ -51,7 +51,7 @@ class UserAddTaskScreen extends StatelessWidget {
                 body: SafeArea(
                   child: Scrollbar(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: SingleChildScrollView(
                         controller: scrollController,
                         child: Column(
@@ -59,7 +59,7 @@ class UserAddTaskScreen extends StatelessWidget {
                           children: <Widget>[
                             TextField(
                               controller: taskTitleController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'やること',
                                 border: InputBorder.none,
                               ),
@@ -74,10 +74,10 @@ class UserAddTaskScreen extends StatelessWidget {
                             ),
                             BasicDivider(),
                             ListTile(
-                              title: Text('いつまでに'),
+                              title: const Text('いつまでに'),
                               trailing: Text(model.dueDateText),
                               contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 0.0),
+                                  const EdgeInsets.symmetric(horizontal: 0.0),
                               onTap: () {
                                 FocusScope.of(context).unfocus();
                                 model.showDueDatePicker();
@@ -91,7 +91,7 @@ class UserAddTaskScreen extends StatelessWidget {
                                 child: TextField(
                                   controller: taskMemoController,
                                   maxLines: 8,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'メモ',
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.all(0.0),
@@ -101,7 +101,7 @@ class UserAddTaskScreen extends StatelessWidget {
                                       model.showDueDatePicker();
                                     }
                                     await Future.delayed(
-                                      Duration(milliseconds: 100),
+                                      const Duration(milliseconds: 100),
                                     );
                                     scrollController.jumpTo(scrollController
                                         .position.maxScrollExtent);
@@ -113,7 +113,7 @@ class UserAddTaskScreen extends StatelessWidget {
                               ),
                             ),
                             BasicDivider(),
-                            SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
                           ],
                         ),
                       ),

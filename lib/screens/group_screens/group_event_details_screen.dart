@@ -24,10 +24,10 @@ class GroupEventDetailsScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: Text('イベント詳細'),
+                title: const Text('イベント詳細'),
                 actions: [
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       '編集',
                       style: TextStyle(
                         color: Colors.white,
@@ -60,14 +60,14 @@ class GroupEventDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          SizedBox(height: 16.0),
+                          const SizedBox(height: 16.0),
                           Text(
                             model.eventTitle,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.w500,
                             ),
@@ -76,22 +76,22 @@ class GroupEventDetailsScreen extends StatelessWidget {
                             visible: model.eventPlace.isNotEmpty,
                             child: Text('@${model.eventPlace}'),
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           EventDateWidget(
                             isAllDay: model.isAllDay,
                             startingDateTime: model.startingDateTime,
                             endingDateTime: model.endingDateTime,
                           ),
-                          SizedBox(height: 16.0),
-                          Text('メモ'),
-                          SizedBox(height: 4.0),
+                          const SizedBox(height: 16.0),
+                          const Text('メモ'),
+                          const SizedBox(height: 4.0),
                           BasicDivider(),
                         ],
                       ),
                     ),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Scrollbar(
                           child: SingleChildScrollView(
                             child: Container(
@@ -108,7 +108,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                     ),
                     Center(
                       child: TextButton(
-                        child: Text(
+                        child: const Text(
                           '削除',
                           style: TextStyle(
                             color: Colors.redAccent,
@@ -151,7 +151,7 @@ Future _confirmDeleteDialog(context, message) async {
         title: Text(message),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
             ),
@@ -160,7 +160,7 @@ Future _confirmDeleteDialog(context, message) async {
             },
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               '削除',
               style: kDeleteButtonTextStyle,
             ),

@@ -19,7 +19,7 @@ class UserSettingScreen extends StatelessWidget {
       create: (_) => UserSettingModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('設定'),
+          title: const Text('設定'),
         ),
         body: Consumer<UserSettingModel>(builder: (context, model, child) {
           return Column(
@@ -27,7 +27,7 @@ class UserSettingScreen extends StatelessWidget {
               Container(
                 color: kDullWhiteColor,
                 width: double.infinity,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.only(
                     top: 16.0,
                     bottom: 8.0,
@@ -43,8 +43,8 @@ class UserSettingScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: Text('アカウント情報'),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                title: const Text('アカウント情報'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () async {
                   await Navigator.push(
                     context,
@@ -58,8 +58,8 @@ class UserSettingScreen extends StatelessWidget {
                 indent: 16.0,
               ),
               ListTile(
-                title: Text('ログインとセキュリティ'),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                title: const Text('ログインとセキュリティ'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () async {
                   await Navigator.push(
                     context,
@@ -72,7 +72,7 @@ class UserSettingScreen extends StatelessWidget {
               Container(
                 color: kDullWhiteColor,
                 width: double.infinity,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.only(
                     top: 16.0,
                     bottom: 8.0,
@@ -88,8 +88,8 @@ class UserSettingScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: Text('利用規約'),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                title: const Text('利用規約'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -104,8 +104,8 @@ class UserSettingScreen extends StatelessWidget {
                 indent: 16.0,
               ),
               ListTile(
-                title: Text('プライバシーポリシー'),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                title: const Text('プライバシーポリシー'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -120,8 +120,8 @@ class UserSettingScreen extends StatelessWidget {
                 indent: 16.0,
               ),
               ListTile(
-                title: Text('アプリの詳細'),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                title: const Text('アプリの詳細'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () {
                   showAppInfoDialog(context);
                 },

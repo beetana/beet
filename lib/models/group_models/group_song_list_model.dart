@@ -11,13 +11,13 @@ class GroupSongListModel extends ChangeNotifier {
   int totalPlayTime = 0;
   bool isLoading = false;
   bool isSetListMode = false;
-  Text buttonText = Text(
+  Text buttonText = const Text(
     'セットリストを作成',
     style: TextStyle(
       color: kPrimaryColor,
     ),
   );
-  Icon buttonIcon = Icon(
+  Icon buttonIcon = const Icon(
     Icons.playlist_add,
     color: kPrimaryColor,
   );
@@ -62,25 +62,25 @@ class GroupSongListModel extends ChangeNotifier {
   void changeMode() {
     isSetListMode = !isSetListMode;
     if (isSetListMode == true) {
-      buttonText = Text(
+      buttonText = const Text(
         'キャンセル',
         style: TextStyle(
           color: kPrimaryColor,
         ),
       );
-      buttonIcon = Icon(
+      buttonIcon = const Icon(
         Icons.close,
         color: kPrimaryColor,
       );
       buttonAlignment = MainAxisAlignment.end;
     } else {
-      buttonText = Text(
+      buttonText = const Text(
         'セットリストを作成',
         style: TextStyle(
           color: kPrimaryColor,
         ),
       );
-      buttonIcon = Icon(
+      buttonIcon = const Icon(
         Icons.playlist_add,
         color: kPrimaryColor,
       );

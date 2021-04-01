@@ -20,16 +20,16 @@ class DrawerScreen extends StatelessWidget {
                 children: <Widget>[
                   UserAccountsDrawerHeader(
                     accountName: Text(model.userName),
-                    accountEmail: Text(''),
+                    accountEmail: const Text(''),
                     currentAccountPicture: CircleAvatar(
                       backgroundImage: model.userImageURL.isNotEmpty
                           ? NetworkImage(model.userImageURL)
-                          : AssetImage('images/test_user_image.png'),
+                          : const AssetImage('images/test_user_image.png'),
                       backgroundColor: Colors.transparent,
                     ),
                   ),
                   ListTile(
-                    title: Text(
+                    title: const Text(
                       'マイページ',
                       style: TextStyle(
                         color: kPrimaryColor,
@@ -48,13 +48,13 @@ class DrawerScreen extends StatelessWidget {
                   Expanded(
                     child: Scrollbar(
                       child: ListView.builder(
-                        physics: ScrollPhysics(),
+                        physics: const ScrollPhysics(),
                         itemCount: model.joiningGroups.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             title: Text(
                               model.joiningGroups[index].name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: kPrimaryColor,
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -77,11 +77,11 @@ class DrawerScreen extends StatelessWidget {
                   SafeArea(
                     top: false,
                     child: TextButton.icon(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add,
                         color: kSlightlyTransparentPrimaryColor,
                       ),
-                      label: Text(
+                      label: const Text(
                         'グループを作成',
                         style: TextStyle(
                           color: kSlightlyTransparentPrimaryColor,

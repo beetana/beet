@@ -6,9 +6,9 @@ class UserTermsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('利用規約'),
+        title: const Text('利用規約'),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: WebView(
           initialUrl: 'https://beetana.github.io/beet-terms/',
         ),

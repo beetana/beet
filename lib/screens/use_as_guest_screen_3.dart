@@ -80,7 +80,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                                     ),
                                     eventPlace.isNotEmpty
                                         ? Text(
-                                            ' @$eventPlace',
+                                            ' $eventPlace',
                                             style: TextStyle(
                                                 fontSize: eventDetailsTextSize),
                                           )

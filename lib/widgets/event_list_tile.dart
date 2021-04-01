@@ -120,7 +120,7 @@ class EventOverView extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              '@$eventPlace',
+              '$eventPlace',
               style: const TextStyle(
                 color: Colors.black54,
                 fontSize: 14.0,

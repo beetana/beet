@@ -87,9 +87,9 @@ linter:
     #    - avoid_type_to_string
     #    - avoid_types_as_parameter_names
     # - avoid_types_on_closure_parameters # conflicts with always_specify_types
-#    - avoid_unnecessary_containers
-#    - avoid_unused_constructor_parameters
-#    - avoid_void_async
+    - avoid_unnecessary_containers
+    - avoid_unused_constructor_parameters
+    - avoid_void_async
     # - avoid_web_libraries_in_flutter # not yet tested
     #    - await_only_futures
     #    - camel_case_extensions
@@ -195,7 +195,7 @@ linter:
     # - unawaited_futures # too many false positives
     #    - unnecessary_await_in_return
     #    - unnecessary_brace_in_string_interps
-#    - unnecessary_const
+    - unnecessary_const
     # - unnecessary_final # conflicts with prefer_final_locals
     #    - unnecessary_getters_setters
     # - unnecessary_lambdas # has false positives: https://github.com/dart-lang/linter/issues/498

@@ -31,7 +31,7 @@ class GroupAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String groupId}) async {
+  Future init({String groupId}) async {
     startLoading();
     this.groupId = groupId;
     this.dueDate = DateTime(now.year, now.month, now.day, 12);

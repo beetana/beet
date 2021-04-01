@@ -28,7 +28,7 @@ class UserAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String userId}) async {
+  Future init({String userId}) async {
     startLoading();
     this.userId = userId;
     this.assignedUserId = [userId];

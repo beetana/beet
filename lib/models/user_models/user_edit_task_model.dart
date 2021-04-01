@@ -35,7 +35,7 @@ class UserEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String userId, Task task}) async {
+  Future init({String userId, Task task}) async {
     startLoading();
     this.taskId = task.id;
     this.ownerId = task.ownerId;

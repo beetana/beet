@@ -15,6 +15,13 @@ class GroupMainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // コメントの数字はiPhone12ProMax換算
+    final double deviceWidth = MediaQuery.of(context).size.width; // 428
+    final double containerHeight = deviceWidth * 0.26; // 111.28
+    final double dateTextSize = deviceWidth * 0.065; // 27.82
+    final double scheduleTextSize = deviceWidth * 0.042; // 17.976
+    final double taskCountTextSize = deviceWidth * 0.056; // 23.968
+
     return ChangeNotifierProvider<GroupMainModel>(
       create: (_) => GroupMainModel()..init(groupId: groupId),
       child: Consumer<GroupMainModel>(builder: (context, model, child) {
@@ -25,7 +32,7 @@ class GroupMainScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    height: 112.0,
+                    height: containerHeight,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
@@ -34,8 +41,8 @@ class GroupMainScreen extends StatelessWidget {
                         children: [
                           Text(
                             dateFormat.format(model.currentDateTime),
-                            style: const TextStyle(
-                              fontSize: 28.0,
+                            style: TextStyle(
+                              fontSize: dateTextSize,
                               fontWeight: FontWeight.w500,
                               color: kPrimaryColor,
                             ),
@@ -44,10 +51,10 @@ class GroupMainScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              const Text(
+                              Text(
                                 'スケジュール',
                                 style: TextStyle(
-                                  fontSize: 18.0,
+                                  fontSize: scheduleTextSize,
                                   fontWeight: FontWeight.w500,
                                   color: kPrimaryColor,
                                 ),
@@ -65,8 +72,8 @@ class GroupMainScreen extends StatelessWidget {
                                     children: [
                                       Text(
                                         model.taskCount.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 24.0,
+                                        style: TextStyle(
+                                          fontSize: taskCountTextSize,
                                           color: kDullGreenColor,
                                         ),
                                       ),

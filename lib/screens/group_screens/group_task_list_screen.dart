@@ -24,7 +24,7 @@ class GroupTaskListScreen extends StatelessWidget {
               length: 2,
               child: Column(
                 children: [
-                  TabBar(
+                  const TabBar(
                     isScrollable: true,
                     unselectedLabelColor: Colors.grey,
                     labelColor: Colors.white,
@@ -68,7 +68,8 @@ class GroupTaskListScreen extends StatelessWidget {
                                   }
                                 },
                                 child: ListView.builder(
-                                  physics: AlwaysScrollableScrollPhysics(),
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
                                   itemExtent: 80.0,
                                   itemCount: model.notCompletedTasks.length + 1,
                                   itemBuilder: (context, index) {
@@ -118,7 +119,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                         },
                                       );
                                     } else {
-                                      return SizedBox();
+                                      return const SizedBox();
                                     }
                                   },
                                 ),
@@ -127,15 +128,15 @@ class GroupTaskListScreen extends StatelessWidget {
                             model.isLoading
                                 ? Container(
                                     color: Colors.transparent,
-                                    child: Center(
+                                    child: const Center(
                                       child: CircularProgressIndicator(),
                                     ),
                                   )
                                 : model.notCompletedTasks.isEmpty
-                                    ? Center(
+                                    ? const Center(
                                         child: Text('未完了のタスクはありません'),
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                           ],
                         ),
                         Stack(
@@ -150,7 +151,8 @@ class GroupTaskListScreen extends StatelessWidget {
                                   }
                                 },
                                 child: ListView.builder(
-                                  physics: AlwaysScrollableScrollPhysics(),
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
                                   itemExtent: 80.0,
                                   itemCount: model.completedTasks.length + 1,
                                   itemBuilder: (context, index) {
@@ -198,7 +200,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                         },
                                       );
                                     } else {
-                                      return SizedBox();
+                                      return const SizedBox();
                                     }
                                   },
                                 ),
@@ -207,15 +209,15 @@ class GroupTaskListScreen extends StatelessWidget {
                             model.isLoading
                                 ? Container(
                                     color: Colors.transparent,
-                                    child: Center(
+                                    child: const Center(
                                       child: CircularProgressIndicator(),
                                     ),
                                   )
                                 : model.completedTasks.isEmpty
-                                    ? Center(
+                                    ? const Center(
                                         child: Text('完了済みのタスクはありません'),
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                           ],
                         ),
                       ],
@@ -295,7 +297,7 @@ Future _confirmDeleteDialog(context, message) async {
         title: Text(message),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
             ),
@@ -304,7 +306,7 @@ Future _confirmDeleteDialog(context, message) async {
             },
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               '削除',
               style: kDeleteButtonTextStyle,
             ),

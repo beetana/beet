@@ -48,7 +48,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         todayColor: kTransparentPrimaryColor,
         outsideDaysVisible: false,
       ),
-      headerStyle: HeaderStyle(
+      headerStyle: const HeaderStyle(
         centerHeaderTitle: true,
         formatButtonVisible: false,
         titleTextStyle: TextStyle(
@@ -61,7 +61,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           List<Widget> children = [];
           if (events.isNotEmpty) {
             children.add(
-              Positioned(
+              const Positioned(
                 top: 5,
                 right: 5,
                 child: Icon(
@@ -78,9 +78,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 bottom: 2.0,
                 child: Text(
                   widget.model.holidays[date][0],
-                  style: TextStyle(
-                    fontSize: 8.0,
-                  ),
+                  style: const TextStyle(fontSize: 8.0),
                 ),
               ),
             );

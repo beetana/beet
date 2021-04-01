@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         const Locale('en', 'US'),
         const Locale('ja', 'JA'),
       ],
-      locale: Locale('ja', 'JA'),
+      locale: const Locale('ja', 'JA'),
       debugShowCheckedModeBanner: false,
       title: 'beet',
       theme: ThemeData(
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             ),
         primaryIconTheme:
             Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           centerTitle: true,
           //Brightness.lightにするとテキストが黒くなり、Brightness.darkにするとテキストが白くなる
           brightness: Brightness.dark,
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
             primary: Colors.grey,
           ),
         ),
-        dialogTheme: DialogTheme(
+        dialogTheme: const DialogTheme(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10.0),

@@ -24,10 +24,10 @@ class GroupSongDetailsScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: Text('曲詳細'),
+                title: const Text('曲詳細'),
                 actions: [
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       '編集',
                       style: TextStyle(
                         color: Colors.white,
@@ -60,12 +60,12 @@ class GroupSongDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          SizedBox(height: 16.0),
-                          Text(
+                          const SizedBox(height: 16.0),
+                          const Text(
                             'タイトル',
                             style: TextStyle(
                               color: kSlightlyTransparentPrimaryColor,
@@ -73,13 +73,13 @@ class GroupSongDetailsScreen extends StatelessWidget {
                           ),
                           Text(
                             model.songTitle,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          SizedBox(height: 8.0),
-                          Text(
+                          const SizedBox(height: 8.0),
+                          const Text(
                             '演奏時間',
                             style: TextStyle(
                               color: kSlightlyTransparentPrimaryColor,
@@ -87,26 +87,26 @@ class GroupSongDetailsScreen extends StatelessWidget {
                           ),
                           Text(
                             '${model.songPlayingTime.toString()}分',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          SizedBox(height: 8.0),
-                          Text(
+                          const SizedBox(height: 8.0),
+                          const Text(
                             'メモ',
                             style: TextStyle(
                               color: kSlightlyTransparentPrimaryColor,
                             ),
                           ),
-                          SizedBox(height: 4.0),
+                          const SizedBox(height: 4.0),
                           BasicDivider(),
                         ],
                       ),
                     ),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Scrollbar(
                           child: SingleChildScrollView(
                             child: Container(
@@ -123,7 +123,7 @@ class GroupSongDetailsScreen extends StatelessWidget {
                     ),
                     Center(
                       child: TextButton(
-                        child: Text(
+                        child: const Text(
                           '削除',
                           style: TextStyle(
                             color: Colors.redAccent,
@@ -166,7 +166,7 @@ Future _confirmDeleteDialog(context, message) async {
         title: Text(message),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
             ),
@@ -175,7 +175,7 @@ Future _confirmDeleteDialog(context, message) async {
             },
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               '削除',
               style: kDeleteButtonTextStyle,
             ),

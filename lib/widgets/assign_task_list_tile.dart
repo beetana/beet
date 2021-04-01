@@ -23,7 +23,7 @@ class AssignTaskListTile extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 2.0),
+            padding: const EdgeInsets.symmetric(horizontal: 2.0),
             child: Container(
               width: double.infinity,
               child: Column(
@@ -36,15 +36,15 @@ class AssignTaskListTile extends StatelessWidget {
                     child: CircleAvatar(
                       backgroundImage: userImageURL.isNotEmpty
                           ? NetworkImage(userImageURL)
-                          : AssetImage('images/test_user_image.png'),
+                          : const AssetImage('images/test_user_image.png'),
                       backgroundColor: Colors.transparent,
                     ),
                   ),
-                  SizedBox(height: 2.0),
+                  const SizedBox(height: 2.0),
                   Text(
                     userName,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 9.0),
+                    style: const TextStyle(fontSize: 9.0),
                   ),
                 ],
               ),

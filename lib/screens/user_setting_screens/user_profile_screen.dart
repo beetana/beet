@@ -21,7 +21,7 @@ class UserProfileScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: Text('アカウント情報'),
+                title: const Text('アカウント情報'),
               ),
               body: LayoutBuilder(builder: (context, constraint) {
                 return SingleChildScrollView(
@@ -36,7 +36,8 @@ class UserProfileScreen extends StatelessWidget {
                               width: double.infinity,
                               color: kDullWhiteColor,
                               child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 16.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16.0),
                                 child: Center(
                                   child: Stack(
                                     children: [
@@ -51,7 +52,7 @@ class UserProfileScreen extends StatelessWidget {
                                                 : model.userImageURL.isNotEmpty
                                                     ? NetworkImage(
                                                         model.userImageURL)
-                                                    : AssetImage(
+                                                    : const AssetImage(
                                                         'images/test_user_image.png'),
                                             backgroundColor: Colors.transparent,
                                           ),
@@ -91,7 +92,7 @@ class UserProfileScreen extends StatelessWidget {
                                       Positioned(
                                         child: CircleAvatar(
                                           child: IconButton(
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.add_a_photo,
                                               color: Colors.white,
                                               size: 20.0,
@@ -139,12 +140,12 @@ class UserProfileScreen extends StatelessWidget {
                               ),
                             ),
                             ListTile(
-                              title: Text('アカウント名'),
+                              title: const Text('アカウント名'),
                               subtitle: Text(
                                 model.userName,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              trailing: Icon(Icons.keyboard_arrow_right),
+                              trailing: const Icon(Icons.keyboard_arrow_right),
                               onTap: () async {
                                 await Navigator.push(
                                   context,
@@ -164,7 +165,7 @@ class UserProfileScreen extends StatelessWidget {
                               ),
                             ),
                             TextButton(
-                              child: Text(
+                              child: const Text(
                                 'アカウントを削除',
                                 style: kDeleteButtonTextStyle,
                               ),
@@ -226,9 +227,9 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
     builder: (context) {
       return SingleChildScrollView(
         child: Container(
-          color: Color(0xFF757575),
+          color: const Color(0xFF757575),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0),
@@ -240,7 +241,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       'ライブラリから選択',
                       style: TextStyle(
                         color: kPrimaryColor,
@@ -249,7 +250,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       ),
                     ),
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     onPressed: () async {
                       changeImage = ChangeImage.select;
@@ -258,7 +259,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                   ),
                   ThinDivider(),
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       '写真を削除',
                       style: TextStyle(
                         color: Colors.redAccent,
@@ -267,7 +268,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       ),
                     ),
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     onPressed: () async {
                       bool isDelete =
@@ -300,7 +301,7 @@ Future<bool> _showConfirmDialog(context, message) async {
         title: Text('$messageを削除しますか?'),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
             ),
@@ -309,7 +310,7 @@ Future<bool> _showConfirmDialog(context, message) async {
             },
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               '削除',
               style: kDeleteButtonTextStyle,
             ),
@@ -333,9 +334,9 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
     builder: (context) {
       return SingleChildScrollView(
         child: Container(
-          color: Color(0xFF757575),
+          color: const Color(0xFF757575),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0),
@@ -346,7 +347,7 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
                       'パスワードを入力してアカウントを削除',
@@ -356,11 +357,11 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: TextField(
                       autofocus: true,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'パスワード',
                       ),
                       onChanged: (text) {
@@ -369,7 +370,7 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                     ),
                   ),
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       'アカウントを削除',
                       style: TextStyle(
                         color: Colors.redAccent,
@@ -378,7 +379,7 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                       ),
                     ),
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
@@ -392,7 +393,7 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                   ),
                   ThinDivider(),
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       'キャンセル',
                       style: TextStyle(
                         color: kSlightlyTransparentPrimaryColor,
@@ -401,7 +402,7 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                       ),
                     ),
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     onPressed: () {
                       password = '';

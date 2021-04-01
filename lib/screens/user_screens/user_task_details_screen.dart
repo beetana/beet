@@ -25,10 +25,10 @@ class UserTaskDetailsScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: Text('タスク'),
+                title: const Text('タスク'),
                 actions: [
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       '編集',
                       style: TextStyle(
                         color: Colors.white,
@@ -61,11 +61,12 @@ class UserTaskDetailsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                SizedBox(height: 16.0),
+                                const SizedBox(height: 16.0),
                                 Row(
                                   children: [
                                     Container(
@@ -74,24 +75,24 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                       child: CircleAvatar(
                                         backgroundImage: model.owner.imageURL ==
                                                 null
-                                            ? AssetImage(
+                                            ? const AssetImage(
                                                 'images/test_user_image.png')
                                             : model.owner.imageURL.isNotEmpty
                                                 ? NetworkImage(
                                                     model.owner.imageURL)
-                                                : AssetImage(
+                                                : const AssetImage(
                                                     'images/test_user_image.png'),
                                         backgroundColor: Colors.transparent,
                                       ),
                                     ),
-                                    SizedBox(width: 8.0),
+                                    const SizedBox(width: 8.0),
                                     Text(model.owner.name),
                                   ],
                                 ),
-                                SizedBox(height: 8.0),
+                                const SizedBox(height: 8.0),
                                 Text(
                                   model.taskTitle,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -99,13 +100,13 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                 model.isDecidedDueDate
                                     ? Text(
                                         '期限  ${dueDateFormat.format(model.dueDate)}')
-                                    : Text('期限なし'),
+                                    : const Text('期限なし'),
                                 Container(
                                   height: 72.0,
                                   child: Scrollbar(
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
-                                      physics: ScrollPhysics(),
+                                      physics: const ScrollPhysics(),
                                       itemExtent: 60.0,
                                       itemCount: model.assignedMembersId.length,
                                       itemBuilder:
@@ -119,7 +120,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                                 model.assignedMembersId[index]]
                                             .name;
                                         return Padding(
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 2.0),
                                           child: Column(
                                             mainAxisAlignment:
@@ -133,22 +134,23 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                                 child: CircleAvatar(
                                                   backgroundImage: imageURL ==
                                                           null
-                                                      ? AssetImage(
+                                                      ? const AssetImage(
                                                           'images/test_user_image.png')
                                                       : imageURL.isNotEmpty
                                                           ? NetworkImage(
                                                               imageURL)
-                                                          : AssetImage(
+                                                          : const AssetImage(
                                                               'images/test_user_image.png'),
                                                   backgroundColor:
                                                       Colors.transparent,
                                                 ),
                                               ),
-                                              SizedBox(height: 2.0),
+                                              const SizedBox(height: 2.0),
                                               Text(
                                                 name,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(fontSize: 9.0),
+                                                style: const TextStyle(
+                                                    fontSize: 9.0),
                                               ),
                                             ],
                                           ),
@@ -157,15 +159,16 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Text('メモ'),
-                                SizedBox(height: 4.0),
+                                const Text('メモ'),
+                                const SizedBox(height: 4.0),
                                 BasicDivider(),
                               ],
                             ),
                           ),
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
                               child: Scrollbar(
                                 child: SingleChildScrollView(
                                   child: Container(
@@ -182,7 +185,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
                           ),
                           Center(
                             child: TextButton(
-                              child: Text(
+                              child: const Text(
                                 '削除',
                                 style: TextStyle(
                                   color: Colors.redAccent,
@@ -207,7 +210,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
                         ],
                       ),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
             ),
             LoadingIndicator(isLoading: model.isLoading),
           ],
@@ -226,7 +229,7 @@ Future _confirmDeleteDialog(context, message) async {
         title: Text(message),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
             ),
@@ -235,7 +238,7 @@ Future _confirmDeleteDialog(context, message) async {
             },
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               '削除',
               style: kDeleteButtonTextStyle,
             ),

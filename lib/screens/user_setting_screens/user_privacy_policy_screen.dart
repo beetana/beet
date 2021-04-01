@@ -6,9 +6,9 @@ class UserPrivacyPolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('プライバシーポリシー'),
+        title: const Text('プライバシーポリシー'),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: WebView(
           initialUrl: 'https://beetana.github.io/beet-privacy-policy/',
           javascriptMode: JavascriptMode.unrestricted,

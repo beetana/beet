@@ -28,20 +28,20 @@ class UseAsGuestScreen2 extends StatelessWidget {
           },
           child: Scaffold(
             appBar: AppBar(
-              title: Text('詳細'),
+              title: const Text('詳細'),
             ),
             body: SafeArea(
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
                           TextField(
                             controller: eventTitleController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'イベントタイトル',
                               border: InputBorder.none,
                             ),
@@ -57,7 +57,7 @@ class UseAsGuestScreen2 extends StatelessWidget {
                           BasicDivider(),
                           TextField(
                             controller: eventPlaceController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: '会場',
                               border: InputBorder.none,
                             ),
@@ -73,8 +73,8 @@ class UseAsGuestScreen2 extends StatelessWidget {
                           BasicDivider(),
                           ListTile(
                             contentPadding:
-                                EdgeInsets.symmetric(horizontal: 0.0),
-                            title: Text(
+                                const EdgeInsets.symmetric(horizontal: 0.0),
+                            title: const Text(
                               '日付',
                               style: TextStyle(
                                 color: kSlightlyTransparentPrimaryColor,
@@ -86,7 +86,7 @@ class UseAsGuestScreen2 extends StatelessWidget {
                               // AndroidでDatePickerを開く際にUIが崩れることがあるので少し待つ
                               // 他にいい方法があるはず
                               await Future.delayed(
-                                Duration(milliseconds: 80),
+                                const Duration(milliseconds: 80),
                               );
                               model.showEventDatePicker();
                             },
@@ -97,12 +97,12 @@ class UseAsGuestScreen2 extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: SizedBox(),
                   ),
                   ThinDivider(),
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       '次へ',
                       style: TextStyle(
                         color: kEnterButtonColor,

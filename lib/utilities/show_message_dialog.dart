@@ -9,7 +9,7 @@ Future showMessageDialog(BuildContext context, String message) async {
         title: Text(message),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'OK',
               style: kEnterButtonTextStyle,
             ),

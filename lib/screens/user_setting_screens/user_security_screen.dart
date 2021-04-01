@@ -21,7 +21,7 @@ class UserSecurityScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: Text('ログインとセキュリティ'),
+                title: const Text('ログインとセキュリティ'),
               ),
               body: SafeArea(
                 child: Column(
@@ -29,9 +29,9 @@ class UserSecurityScreen extends StatelessWidget {
                     Container(
                       color: Colors.white,
                       child: ListTile(
-                        title: Text('メールアドレス'),
+                        title: const Text('メールアドレス'),
                         subtitle: Text(model.email),
-                        trailing: Icon(Icons.keyboard_arrow_right),
+                        trailing: const Icon(Icons.keyboard_arrow_right),
                         onTap: () async {
                           await Navigator.push(
                             context,
@@ -51,9 +51,9 @@ class UserSecurityScreen extends StatelessWidget {
                     Container(
                       color: Colors.white,
                       child: ListTile(
-                        title: Text('パスワード'),
-                        subtitle: Text('********'),
-                        trailing: Icon(Icons.keyboard_arrow_right),
+                        title: const Text('パスワード'),
+                        subtitle: const Text('********'),
+                        trailing: const Icon(Icons.keyboard_arrow_right),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -70,11 +70,11 @@ class UserSecurityScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton.icon(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.exit_to_app,
                         color: kSlightlyTransparentPrimaryColor,
                       ),
-                      label: Text(
+                      label: const Text(
                         'ログアウト',
                         style: TextStyle(
                           color: kSlightlyTransparentPrimaryColor,
@@ -122,7 +122,7 @@ Future _confirmLogoutDialog(context, message) async {
         title: Text(message),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
             ),
@@ -131,7 +131,7 @@ Future _confirmLogoutDialog(context, message) async {
             },
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               'ログアウト',
               style: kDeleteButtonTextStyle,
             ),

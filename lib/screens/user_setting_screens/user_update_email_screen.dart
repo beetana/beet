@@ -24,10 +24,10 @@ class UserUpdateEmailScreen extends StatelessWidget {
               },
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text('メールアドレスを変更'),
+                  title: const Text('メールアドレスを変更'),
                   actions: [
                     TextButton(
-                      child: Text(
+                      child: const Text(
                         '保存',
                         style: TextStyle(
                           color: Colors.white,
@@ -47,7 +47,7 @@ class UserUpdateEmailScreen extends StatelessWidget {
                   ],
                 ),
                 body: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       TextField(
@@ -55,7 +55,7 @@ class UserUpdateEmailScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           hintText: 'メールアドレス',
                           suffix: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.clear,
                               color: Colors.black54,
                             ),
@@ -77,7 +77,7 @@ class UserUpdateEmailScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: 'パスワード',
                             suffix: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.clear,
                                 color: Colors.black54,
                               ),

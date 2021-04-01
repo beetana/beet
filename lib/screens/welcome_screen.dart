@@ -26,10 +26,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: <Widget>[
-                Expanded(
+                const Expanded(
                   flex: 1,
                   child: SizedBox(),
                 ),
@@ -43,14 +43,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         animatedTexts: [
                           RotateAnimatedText(
                             'beet',
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               fontFamily: 'MPLUS1p',
                               fontSize: 96.0,
                               fontWeight: FontWeight.w900,
                               color: kPrimaryColor,
                             ),
                             transitionHeight: 360.0,
-                            duration: Duration(milliseconds: 2400),
+                            duration: const Duration(milliseconds: 2400),
                             rotateOut: false,
                           )
                         ],
@@ -58,7 +58,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ],
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: SizedBox(),
                 ),
@@ -78,7 +78,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           backgroundColor: kPrimaryColor,
                           primary: Colors.white38,
                         ),
-                        child: Text(
+                        child: const Text(
                           'ログイン',
                           style: TextStyle(
                             color: Color(0xFFf5f5f5),
@@ -96,7 +96,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 12.0),
+                    const SizedBox(height: 12.0),
                     Container(
                       height: 56.0,
                       width: double.infinity,
@@ -113,7 +113,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'アカウントを作成',
                           style: TextStyle(
                             color: kPrimaryColor,
@@ -133,12 +133,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ],
                 ),
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: SizedBox(),
                 ),
                 TextButton(
-                  child: Text(
+                  child: const Text(
                     'ログインせずにセトリを作成',
                     style: TextStyle(
                       fontSize: 14.0,

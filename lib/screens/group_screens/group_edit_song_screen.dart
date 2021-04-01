@@ -33,10 +33,10 @@ class GroupEditSongScreen extends StatelessWidget {
             children: [
               Scaffold(
                 appBar: AppBar(
-                  title: Text('曲を編集'),
+                  title: const Text('曲を編集'),
                   actions: [
                     TextButton(
-                      child: Text(
+                      child: const Text(
                         '保存',
                         style: TextStyle(
                           color: Colors.white,
@@ -57,7 +57,7 @@ class GroupEditSongScreen extends StatelessWidget {
                 ),
                 body: Scrollbar(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: SingleChildScrollView(
                       controller: scrollController,
                       child: Column(
@@ -68,7 +68,7 @@ class GroupEditSongScreen extends StatelessWidget {
                               hintText: 'タイトル',
                               border: InputBorder.none,
                               suffix: IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.clear,
                                   color: Colors.black54,
                                 ),
@@ -84,11 +84,11 @@ class GroupEditSongScreen extends StatelessWidget {
                           ),
                           BasicDivider(),
                           Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text(
+                                const Text(
                                   '演奏時間',
                                   style: TextStyle(
                                     fontSize: 17.0,
@@ -113,7 +113,7 @@ class GroupEditSongScreen extends StatelessWidget {
                                             .map(
                                               (value) => Text(
                                                 '$value',
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 20.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
@@ -122,15 +122,15 @@ class GroupEditSongScreen extends StatelessWidget {
                                             .toList(),
                                       ),
                                     ),
-                                    SizedBox(width: 8.0),
-                                    Text(
+                                    const SizedBox(width: 8.0),
+                                    const Text(
                                       '分',
                                       style: TextStyle(
                                         fontSize: 17.0,
                                         color: kSlightlyTransparentPrimaryColor,
                                       ),
                                     ),
-                                    SizedBox(width: 36.0),
+                                    const SizedBox(width: 36.0),
                                   ],
                                 ),
                               ],
@@ -143,14 +143,14 @@ class GroupEditSongScreen extends StatelessWidget {
                               child: TextField(
                                 controller: songMemoController,
                                 maxLines: 8,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: 'メモ',
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.all(0.0),
                                 ),
                                 onTap: () async {
                                   await Future.delayed(
-                                    Duration(milliseconds: 100),
+                                    const Duration(milliseconds: 100),
                                   );
                                   scrollController.jumpTo(scrollController
                                       .position.maxScrollExtent);
@@ -162,7 +162,7 @@ class GroupEditSongScreen extends StatelessWidget {
                             ),
                           ),
                           BasicDivider(),
-                          SizedBox(height: 16.0),
+                          const SizedBox(height: 16.0),
                         ],
                       ),
                     ),

@@ -22,16 +22,16 @@ class UseAsGuestScreen extends StatelessWidget {
           },
           child: Scaffold(
             appBar: AppBar(
-              title: Text('セットリストを作成'),
+              title: const Text('セットリストを作成'),
               actions: [
                 TextButton(
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.add,
                         color: Colors.white,
                       ),
-                      Text(
+                      const Text(
                         'MC',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -43,7 +43,7 @@ class UseAsGuestScreen extends StatelessWidget {
                 ),
               ],
               leading: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back_ios,
                   color: Colors.white,
                 ),
@@ -77,13 +77,14 @@ class UseAsGuestScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
                               child: TextField(
                                 controller: songTitleController,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 15,
                                 ),
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: 'タイトル',
                                   border: InputBorder.none,
                                   isDense: true,
@@ -95,7 +96,7 @@ class UseAsGuestScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: 8.0),
+                        const SizedBox(width: 8.0),
                         Container(
                           height: 40.0,
                           decoration: BoxDecoration(
@@ -103,14 +104,14 @@ class UseAsGuestScreen extends StatelessWidget {
                           ),
                           child: TextButton(
                             style: TextButton.styleFrom(
-                              padding: EdgeInsets.all(0.0),
+                              padding: const EdgeInsets.all(0.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               backgroundColor: kPrimaryColor,
                               primary: Colors.white38,
                             ),
-                            child: Text(
+                            child: const Text(
                               '追加',
                               style: TextStyle(
                                 color: kDullWhiteColor,
@@ -151,7 +152,7 @@ class UseAsGuestScreen extends StatelessWidget {
                                     item,
                                     maxLines: 1,
                                   ),
-                                  trailing: Handle(
+                                  trailing: const Handle(
                                     delay: Duration(milliseconds: 100),
                                     child: Icon(
                                       Icons.list,
@@ -209,10 +210,10 @@ Future<bool> _showConfirmDialog(context) async {
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('入力した内容を破棄して、最初の画面に戻りますか？'),
+        title: const Text('入力した内容を破棄して、最初の画面に戻りますか？'),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               'キャンセル',
               style: kCancelButtonTextStyle,
             ),
@@ -221,7 +222,7 @@ Future<bool> _showConfirmDialog(context) async {
             },
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               '破棄',
               style: kDeleteButtonTextStyle,
             ),

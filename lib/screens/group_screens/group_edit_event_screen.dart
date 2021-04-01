@@ -35,10 +35,10 @@ class GroupEditEventScreen extends StatelessWidget {
             children: [
               Scaffold(
                 appBar: AppBar(
-                  title: Text('イベントを編集'),
+                  title: const Text('イベントを編集'),
                   actions: [
                     TextButton(
-                      child: Text(
+                      child: const Text(
                         '完了',
                         style: TextStyle(
                           color: Colors.white,
@@ -59,14 +59,14 @@ class GroupEditEventScreen extends StatelessWidget {
                 ),
                 body: Scrollbar(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: SingleChildScrollView(
                       controller: scrollController,
                       child: Column(
                         children: <Widget>[
                           TextField(
                             controller: eventTitleController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'タイトル',
                               border: InputBorder.none,
                             ),
@@ -85,7 +85,7 @@ class GroupEditEventScreen extends StatelessWidget {
                           BasicDivider(),
                           TextField(
                             controller: eventPlaceController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: '場所',
                               border: InputBorder.none,
                             ),
@@ -110,7 +110,7 @@ class GroupEditEventScreen extends StatelessWidget {
                           ),
                           BasicDivider(),
                           ListTile(
-                            title: Text('開始'),
+                            title: const Text('開始'),
                             trailing: Text(model.tileDateFormat
                                 .format(model.startingDateTime)),
                             onTap: () {
@@ -121,7 +121,7 @@ class GroupEditEventScreen extends StatelessWidget {
                           model.startingDateTimePickerBox,
                           BasicDivider(),
                           ListTile(
-                            title: Text('終了'),
+                            title: const Text('終了'),
                             trailing: Text(model.tileDateFormat
                                 .format(model.endingDateTime)),
                             onTap: () {
@@ -137,7 +137,7 @@ class GroupEditEventScreen extends StatelessWidget {
                               child: TextField(
                                 controller: eventMemoController,
                                 maxLines: 8,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: 'メモ',
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.all(0.0),
@@ -150,7 +150,7 @@ class GroupEditEventScreen extends StatelessWidget {
                                     model.showEndingDateTimePicker();
                                   }
                                   await Future.delayed(
-                                    Duration(milliseconds: 100),
+                                    const Duration(milliseconds: 100),
                                   );
                                   scrollController.jumpTo(scrollController
                                       .position.maxScrollExtent);
@@ -162,7 +162,7 @@ class GroupEditEventScreen extends StatelessWidget {
                             ),
                           ),
                           BasicDivider(),
-                          SizedBox(height: 16.0),
+                          const SizedBox(height: 16.0),
                         ],
                       ),
                     ),

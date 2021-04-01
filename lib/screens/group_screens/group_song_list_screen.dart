@@ -55,7 +55,7 @@ class GroupSongListScreen extends StatelessWidget {
                         }
                       },
                       child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: const AlwaysScrollableScrollPhysics(),
                         itemExtent: 60.0,
                         itemCount: model.songList.length + 1,
                         itemBuilder: (context, index) {
@@ -90,7 +90,7 @@ class GroupSongListScreen extends StatelessWidget {
                               },
                             );
                           } else {
-                            return SizedBox();
+                            return const SizedBox();
                           }
                         },
                       ),
@@ -174,15 +174,15 @@ class GroupSongListScreen extends StatelessWidget {
             model.isLoading
                 ? Container(
                     color: Colors.transparent,
-                    child: Center(
+                    child: const Center(
                       child: CircularProgressIndicator(),
                     ),
                   )
                 : model.songList.isEmpty
-                    ? Center(
+                    ? const Center(
                         child: Text('曲が登録されていません'),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
           ],
         );
       }),

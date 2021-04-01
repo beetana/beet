@@ -27,7 +27,7 @@ class UserAddEventScreen extends StatelessWidget {
           onWillPop: () async {
             FocusScope.of(context).unfocus();
             await Future.delayed(
-              Duration(milliseconds: 80),
+              const Duration(milliseconds: 80),
             );
             return true;
           },
@@ -39,10 +39,10 @@ class UserAddEventScreen extends StatelessWidget {
               children: [
                 Scaffold(
                   appBar: AppBar(
-                    title: Text('イベントを追加'),
+                    title: const Text('イベントを追加'),
                     actions: [
                       TextButton(
-                        child: Text(
+                        child: const Text(
                           '追加',
                           style: TextStyle(
                             color: Colors.white,
@@ -63,14 +63,14 @@ class UserAddEventScreen extends StatelessWidget {
                   ),
                   body: Scrollbar(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: SingleChildScrollView(
                         controller: scrollController,
                         child: Column(
                           children: <Widget>[
                             TextField(
                               controller: eventTitleController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'タイトル',
                                 border: InputBorder.none,
                               ),
@@ -89,7 +89,7 @@ class UserAddEventScreen extends StatelessWidget {
                             BasicDivider(),
                             TextField(
                               controller: eventPlaceController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: '場所',
                                 border: InputBorder.none,
                               ),
@@ -114,7 +114,7 @@ class UserAddEventScreen extends StatelessWidget {
                             ),
                             BasicDivider(),
                             ListTile(
-                              title: Text('開始'),
+                              title: const Text('開始'),
                               trailing: Text(model.tileDateFormat
                                   .format(model.startingDateTime)),
                               onTap: () {
@@ -125,7 +125,7 @@ class UserAddEventScreen extends StatelessWidget {
                             model.startingDateTimePickerBox,
                             BasicDivider(),
                             ListTile(
-                              title: Text('終了'),
+                              title: const Text('終了'),
                               trailing: Text(model.tileDateFormat
                                   .format(model.endingDateTime)),
                               onTap: () {
@@ -141,7 +141,7 @@ class UserAddEventScreen extends StatelessWidget {
                                 child: TextField(
                                   controller: eventMemoController,
                                   maxLines: 8,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'メモ',
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.all(0.0),
@@ -154,7 +154,7 @@ class UserAddEventScreen extends StatelessWidget {
                                       model.showEndingDateTimePicker();
                                     }
                                     await Future.delayed(
-                                      Duration(milliseconds: 100),
+                                      const Duration(milliseconds: 100),
                                     );
                                     scrollController.jumpTo(scrollController
                                         .position.maxScrollExtent);
@@ -166,7 +166,7 @@ class UserAddEventScreen extends StatelessWidget {
                               ),
                             ),
                             BasicDivider(),
-                            SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
                           ],
                         ),
                       ),

@@ -10,7 +10,7 @@ class AlldaySwitchListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('終日'),
+      title: const Text('終日'),
       trailing: Switch(
         value: value,
         activeColor: kDullWhiteColor,

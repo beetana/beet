@@ -25,14 +25,14 @@ class RegisterScreen extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text('アカウントを作成'),
+            title: const Text('アカウントを作成'),
           ),
           body: Consumer<RegisterModel>(builder: (context, model, child) {
             return Stack(
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 32.0, horizontal: 16.0),
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
@@ -45,12 +45,13 @@ class RegisterScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               children: [
                                 TextField(
                                   controller: nameController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'アカウント名',
                                     border: InputBorder.none,
                                     contentPadding:
@@ -63,7 +64,7 @@ class RegisterScreen extends StatelessWidget {
                                 ThinDivider(),
                                 TextField(
                                   controller: emailController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'メールアドレス',
                                     border: InputBorder.none,
                                     contentPadding:
@@ -77,7 +78,7 @@ class RegisterScreen extends StatelessWidget {
                                 TextField(
                                   controller: passwordController,
                                   obscureText: true,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'パスワード（6文字以上）',
                                     border: InputBorder.none,
                                     contentPadding:
@@ -91,7 +92,7 @@ class RegisterScreen extends StatelessWidget {
                                 TextField(
                                   controller: confirmPasswordController,
                                   obscureText: true,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'パスワード（確認用）',
                                     border: InputBorder.none,
                                     contentPadding:
@@ -105,7 +106,7 @@ class RegisterScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 4.0),
+                        const SizedBox(height: 4.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -118,14 +119,14 @@ class RegisterScreen extends StatelessWidget {
                             ),
                             RichText(
                               text: TextSpan(
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 15.0,
                                   fontFamily: 'MPLUS1p',
                                 ),
                                 children: [
                                   TextSpan(
                                     text: '利用規約',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: kEnterButtonColor,
                                       fontWeight: FontWeight.w500,
                                       decoration: TextDecoration.underline,
@@ -143,7 +144,7 @@ class RegisterScreen extends StatelessWidget {
                                         );
                                       },
                                   ),
-                                  TextSpan(
+                                  const TextSpan(
                                     text: ' を読んで同意しました',
                                     style: TextStyle(
                                       color: kPrimaryColor,
@@ -154,7 +155,7 @@ class RegisterScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 32.0),
+                        const SizedBox(height: 32.0),
                         Container(
                           height: 56.0,
                           width: double.infinity,
@@ -171,7 +172,7 @@ class RegisterScreen extends StatelessWidget {
                                   : kTransparentPrimaryColor,
                               primary: Colors.white38,
                             ),
-                            child: Text(
+                            child: const Text(
                               '新規登録',
                               style: TextStyle(
                                 color: Color(0xFFf5f5f5),
@@ -200,7 +201,7 @@ class RegisterScreen extends StatelessWidget {
                                 : null,
                           ),
                         ),
-                        SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
                       ],
                     ),
                   ),

@@ -23,10 +23,10 @@ class UserUpdatePasswordScreen extends StatelessWidget {
               },
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text('パスワードを変更'),
+                  title: const Text('パスワードを変更'),
                   actions: [
                     TextButton(
-                      child: Text(
+                      child: const Text(
                         '保存',
                         style: TextStyle(
                           color: Colors.white,
@@ -47,7 +47,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                   ],
                 ),
                 body: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -57,7 +57,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             labelText: '現在のパスワード',
                             suffix: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.clear,
                                 color: Colors.black54,
                               ),
@@ -78,7 +78,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                             labelText: '新しいパスワード',
                             hintText: '6文字以上',
                             suffix: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.clear,
                                 color: Colors.black54,
                               ),
@@ -98,7 +98,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             labelText: '新しいパスワード(確認用)',
                             suffix: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.clear,
                                 color: Colors.black54,
                               ),

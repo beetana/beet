@@ -9,31 +9,29 @@ Future showAppInfoDialog(context) async {
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               backgroundImage: AssetImage('images/app_icon.png'),
             ),
-            SizedBox(width: 16.0),
+            const SizedBox(width: 16.0),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'beet',
                   style: TextStyle(
                     fontSize: 26.0,
                     fontWeight: FontWeight.normal,
                   ),
                 ),
-                Text(
+                const Text(
                   '1.0.0',
                   style: TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w300,
                   ),
                 ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                Text(
+                const SizedBox(height: 16.0),
+                const Text(
                   '2021  Kohei Tanabe',
                   style: TextStyle(
                     fontSize: 14.0,
@@ -46,7 +44,7 @@ Future showAppInfoDialog(context) async {
         ),
         actions: [
           TextButton(
-            child: Text(
+            child: const Text(
               '閉じる',
               style: kEnterButtonTextStyle,
             ),
@@ -55,7 +53,7 @@ Future showAppInfoDialog(context) async {
             },
           ),
           TextButton(
-            child: Text(
+            child: const Text(
               'ライセンスを表示',
               style: kEnterButtonTextStyle,
             ),

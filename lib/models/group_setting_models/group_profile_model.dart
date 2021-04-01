@@ -48,20 +48,20 @@ class GroupProfileModel extends ChangeNotifier {
         sourcePath: pickedFile.path,
         maxWidth: 160,
         maxHeight: 160,
-        aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+        aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
         aspectRatioPresets: [
           CropAspectRatioPreset.square,
         ],
         cropStyle: CropStyle.circle,
         compressFormat: ImageCompressFormat.png,
         compressQuality: 100,
-        androidUiSettings: AndroidUiSettings(
+        androidUiSettings: const AndroidUiSettings(
           toolbarTitle: 'プロフィール画像',
           toolbarColor: Colors.blue,
           toolbarWidgetColor: Colors.white,
           lockAspectRatio: true,
         ),
-        iosUiSettings: IOSUiSettings(
+        iosUiSettings: const IOSUiSettings(
           title: 'プロフィール画像',
           doneButtonTitle: '完了',
           cancelButtonTitle: 'キャンセル',

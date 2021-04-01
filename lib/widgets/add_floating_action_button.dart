@@ -16,21 +16,21 @@ class AddFloatingActionButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               right: 16.0,
               bottom: 16.0,
             ),
             child: RawMaterialButton(
               elevation: 6.0,
-              child: Icon(
+              child: const Icon(
                 Icons.add,
                 color: Colors.white,
               ),
-              constraints: BoxConstraints.tightFor(
+              constraints: const BoxConstraints.tightFor(
                 width: 56.0,
                 height: 56.0,
               ),
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               fillColor: kPrimaryColor,
               onPressed: onPressed,
             ),

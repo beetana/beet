@@ -46,7 +46,7 @@ class DynamicLinksServices {
     return dynamicLink;
   }
 
-  void fetchLinkData(context) async {
+  Future fetchLinkData(context) async {
     this.context = context;
     PendingDynamicLinkData link =
         await FirebaseDynamicLinks.instance.getInitialLink();
@@ -132,7 +132,7 @@ class DynamicLinksServices {
     );
   }
 
-  void promptLogin(context) async {
+  Future promptLogin(context) async {
     this.context = context;
 
     PendingDynamicLinkData link =

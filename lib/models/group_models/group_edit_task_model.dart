@@ -33,7 +33,7 @@ class GroupEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String groupId, Task task}) async {
+  Future init({String groupId, Task task}) async {
     startLoading();
     this.groupId = groupId;
     this.taskId = task.id;

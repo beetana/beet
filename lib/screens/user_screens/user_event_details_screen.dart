@@ -100,7 +100,7 @@ class UserEventDetailsScreen extends StatelessWidget {
                                 ),
                                 Visibility(
                                   visible: model.eventPlace.isNotEmpty,
-                                  child: Text('@${model.eventPlace}'),
+                                  child: Text(model.eventPlace),
                                 ),
                                 const SizedBox(height: 8.0),
                                 EventDateWidget(

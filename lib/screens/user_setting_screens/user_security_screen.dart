@@ -45,9 +45,7 @@ class UserSecurityScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    ThinDivider(
-                      indent: 16.0,
-                    ),
+                    ThinDivider(indent: 16.0),
                     Container(
                       color: Colors.white,
                       child: ListTile(

@@ -52,7 +52,6 @@ class UserSecurityScreen extends StatelessWidget {
                       color: Colors.white,
                       child: ListTile(
                         title: const Text('パスワード'),
-                        subtitle: const Text('********'),
                         trailing: const Icon(Icons.keyboard_arrow_right),
                         onTap: () {
                           Navigator.push(

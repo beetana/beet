@@ -20,7 +20,7 @@ class GroupSetListScreen extends StatelessWidget {
       child: Consumer<GroupSetListModel>(builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('セットリストを作成'),
+            title: const Text('セットリスト'),
             actions: [
               TextButton(
                 child: Row(

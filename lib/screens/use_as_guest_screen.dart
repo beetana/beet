@@ -22,7 +22,7 @@ class UseAsGuestScreen extends StatelessWidget {
           },
           child: Scaffold(
             appBar: AppBar(
-              title: const Text('セットリストを作成'),
+              title: const Text('セットリスト'),
               actions: [
                 TextButton(
                   child: Row(

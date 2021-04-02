@@ -1,5 +1,6 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/use_as_guest_model.dart';
+import 'package:beet/objects/mc.dart';
 import 'package:beet/screens/use_as_guest_screen_2.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
@@ -157,7 +158,7 @@ class UseAsGuestScreen extends StatelessWidget {
                                 type: MaterialType.transparency,
                                 child: ListTile(
                                   title: Text(
-                                    item,
+                                    item is MC ? item.title : item,
                                     maxLines: 1,
                                   ),
                                   trailing: const Handle(

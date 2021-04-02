@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 import 'dart:typed_data';
+import 'package:beet/objects/mc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -9,13 +10,14 @@ class UseAsGuestModel3 extends ChangeNotifier {
   List<String> songsNumText = [];
   final GlobalKey globalKey = GlobalKey();
 
-  void init({List<String> setList}) {
-    this.setList = setList;
+  void init({List<dynamic> setList}) {
     int num = 1;
     setList.forEach((item) {
-      if (item.startsWith('-MC')) {
+      if (item is MC) {
+        this.setList.add(item.title);
         this.songsNumText.add('    ');
       } else {
+        this.setList.add(item);
         this.songsNumText.add(num < 10 ? '  $num.' : '$num.');
         num += 1;
       }

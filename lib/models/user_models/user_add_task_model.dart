@@ -67,7 +67,7 @@ class UserAddTaskModel extends ChangeNotifier {
               color: Colors.black54,
             ),
             label: const Text(
-              '未定',
+              'クリア',
               style: kCancelButtonTextStyle,
             ),
             onPressed: () {

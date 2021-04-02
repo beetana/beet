@@ -8,6 +8,7 @@ class EventListTile extends StatelessWidget {
   final Function onTap;
   final String imageURL;
   final String name;
+  final double textScale;
   final DateFormat dateFormat = DateFormat('M/d');
   final DateFormat timeFormat = DateFormat('H:mm');
 
@@ -16,6 +17,7 @@ class EventListTile extends StatelessWidget {
     @required this.onTap,
     this.imageURL,
     this.name,
+    this.textScale,
   });
 
   @override
@@ -28,7 +30,11 @@ class EventListTile extends StatelessWidget {
               ? Padding(
                   padding:
                       const EdgeInsets.only(top: 8.0, left: 20.0, right: 20.0),
-                  child: EventPlannerImage(imageURL: imageURL, name: name),
+                  child: EventPlannerImage(
+                    imageURL: imageURL,
+                    name: name,
+                    textScale: textScale,
+                  ),
                 )
               : const SizedBox(height: 8.0),
           Expanded(
@@ -63,21 +69,19 @@ class EventListTile extends StatelessWidget {
 }
 
 class EventPlannerImage extends StatelessWidget {
-  EventPlannerImage({
-    this.imageURL,
-    this.name,
-  });
-
   final String imageURL;
   final String name;
+  final double textScale;
+
+  EventPlannerImage({this.imageURL, this.name, this.textScale});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
-          width: 32.0,
-          height: 32.0,
+          width: 32.0 * textScale,
+          height: 32.0 * textScale,
           child: CircleAvatar(
             backgroundImage: imageURL.isNotEmpty
                 ? NetworkImage(imageURL)

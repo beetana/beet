@@ -120,6 +120,7 @@ class UserMainScreen extends StatelessWidget {
                               imageURL:
                                   model.eventPlanner[event.ownerId].imageURL,
                               name: model.eventPlanner[event.ownerId].name,
+                              textScale: textScale,
                               onTap: () async {
                                 await Navigator.push(
                                   context,

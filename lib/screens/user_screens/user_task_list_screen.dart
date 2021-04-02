@@ -82,6 +82,7 @@ class UserTaskListScreen extends StatelessWidget {
                                       return TaskListTile(
                                         task: task,
                                         users: model.joiningGroupUsers,
+                                        textScale: textScale,
                                         checkboxCallback: (value) {
                                           model.toggleCheckState(task: task);
                                         },
@@ -163,6 +164,7 @@ class UserTaskListScreen extends StatelessWidget {
                                       return TaskListTile(
                                         task: task,
                                         users: model.joiningGroupUsers,
+                                        textScale: textScale,
                                         checkboxCallback: (value) {
                                           model.toggleCheckState(task: task);
                                         },

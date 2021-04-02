@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class TaskListTile extends StatelessWidget {
   final Task task;
   final Map<String, User> users;
+  final double textScale;
   final Function checkboxCallback;
   final Function longPressedCallBack;
   final Function tileTappedCallback;
@@ -13,6 +14,7 @@ class TaskListTile extends StatelessWidget {
   TaskListTile({
     @required this.task,
     @required this.users,
+    @required this.textScale,
     @required this.checkboxCallback,
     @required this.longPressedCallBack,
     @required this.tileTappedCallback,
@@ -47,7 +49,7 @@ class TaskListTile extends StatelessWidget {
                         style: const TextStyle(fontSize: 16.0),
                       ),
                       Container(
-                        height: 24,
+                        height: 24 * textScale,
                         width: 216,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -55,8 +57,8 @@ class TaskListTile extends StatelessWidget {
                           itemCount: task.assignedMembersId.length,
                           itemBuilder: (context, index) {
                             return Container(
-                              width: 24.0,
-                              height: 24.0,
+                              width: 24.0 * textScale,
+                              height: 24.0 * textScale,
                               child: CircleAvatar(
                                 backgroundImage: users[
                                             task.assignedMembersId[index]] ==

@@ -9,18 +9,21 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserMainScreen extends StatelessWidget {
-  UserMainScreen({this.userId});
   final String userId;
+  final double deviceWidth;
+  final double textScale;
   final dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+
+  UserMainScreen({this.userId, this.deviceWidth, this.textScale});
 
   @override
   Widget build(BuildContext context) {
     // コメントの数字はiPhone12ProMax換算
-    final double deviceWidth = MediaQuery.of(context).size.width; // 428
-    final double containerHeight = deviceWidth * 0.26; // 111.28
+    final double containerHeight = deviceWidth * textScale * 0.25; // 107.0
     final double dateTextSize = deviceWidth * 0.065; // 27.82
     final double scheduleTextSize = deviceWidth * 0.042; // 17.976
-    final double taskCountTextSize = deviceWidth * 0.056; // 23.968
+    final double taskCountTextSize = deviceWidth * 0.052; // 22.256
+    final double textSize = deviceWidth * 0.036; // 15.408
 
     return ChangeNotifierProvider<UserMainModel>(
       create: (_) => UserMainModel()..init(userId: userId),
@@ -62,10 +65,11 @@ class UserMainScreen extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  const Text(
+                                  Text(
                                     '未完了のタスク',
                                     style: TextStyle(
                                       color: kDullGreenColor,
+                                      fontSize: textSize,
                                     ),
                                   ),
                                   Row(
@@ -77,10 +81,11 @@ class UserMainScreen extends StatelessWidget {
                                           color: kDullGreenColor,
                                         ),
                                       ),
-                                      const Text(
-                                        '件',
+                                      Text(
+                                        ' 件',
                                         style: TextStyle(
                                           color: kDullGreenColor,
+                                          fontSize: textSize,
                                         ),
                                       ),
                                     ],
@@ -106,7 +111,7 @@ class UserMainScreen extends StatelessWidget {
                         },
                         child: ListView.builder(
                           physics: const AlwaysScrollableScrollPhysics(),
-                          itemExtent: 96.0,
+                          itemExtent: 96.0 * textScale,
                           itemCount: model.eventList.length,
                           itemBuilder: (context, index) {
                             final event = model.eventList[index];

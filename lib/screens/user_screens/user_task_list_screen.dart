@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserTaskListScreen extends StatelessWidget {
-  UserTaskListScreen({this.userId});
   final String userId;
+  final double textScale;
+
+  UserTaskListScreen({this.userId, this.textScale});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,7 @@ class UserTaskListScreen extends StatelessWidget {
                                 child: ListView.builder(
                                   physics:
                                       const AlwaysScrollableScrollPhysics(),
-                                  itemExtent: 80.0,
+                                  itemExtent: 80.0 * textScale,
                                   itemCount: model.notCompletedTasks.length + 1,
                                   itemBuilder: (context, index) {
                                     if (index <

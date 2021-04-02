@@ -12,7 +12,7 @@ class UseAsGuestModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItem({String item}) {
+  void removeItem({dynamic item}) {
     this.setList.remove(item);
     notifyListeners();
   }

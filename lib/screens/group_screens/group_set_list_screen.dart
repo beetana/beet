@@ -1,6 +1,7 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_set_list_model.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen_2.dart';
+import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
@@ -36,7 +37,9 @@ class GroupSetListScreen extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  model.addMC();
+                  model.setList.length >= 14
+                      ? showMessageDialog(context, '作成できるセットリストは14曲まで(MC含む)です。')
+                      : model.addMC();
                 },
               ),
             ],

@@ -71,7 +71,11 @@ class GroupSongListScreen extends StatelessWidget {
                               },
                               tileTappedCallback: () async {
                                 if (model.isSetListMode == true) {
-                                  model.selectSong(song: song);
+                                  model.setList.length >= 14 &&
+                                          !song.checkboxState
+                                      ? showMessageDialog(
+                                          context, '作成できるセットリストは14曲まで(MC含む)です。')
+                                      : model.selectSong(song: song);
                                 } else {
                                   await Navigator.push(
                                     context,

@@ -38,7 +38,10 @@ class UseAsGuestScreen extends StatelessWidget {
                     ],
                   ),
                   onPressed: () {
-                    model.addMC();
+                    model.setList.length >= 14
+                        ? showMessageDialog(
+                            context, '作成できるセットリストは14曲まで(MC含む)です。')
+                        : model.addMC();
                   },
                 ),
               ],
@@ -120,8 +123,13 @@ class UseAsGuestScreen extends StatelessWidget {
                             ),
                             onPressed: () {
                               if (model.title.isNotEmpty) {
-                                model.addSong();
-                                songTitleController.clear();
+                                if (model.setList.length >= 14) {
+                                  showMessageDialog(
+                                      context, '作成できるセットリストは14曲まで(MC含む)です。');
+                                } else {
+                                  model.addSong();
+                                  songTitleController.clear();
+                                }
                               } else {
                                 showMessageDialog(context, '曲のタイトルを入力してください');
                               }

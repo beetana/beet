@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UseAsGuestScreen2 extends StatelessWidget {
-  final List<String> setList;
+  final List<dynamic> setList;
   final eventTitleController = TextEditingController();
   final eventPlaceController = TextEditingController();
 

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UseAsGuestScreen3 extends StatelessWidget {
-  final List<String> setList;
+  final List<dynamic> setList;
   final String eventTitle;
   final String eventPlace;
   final String eventDateText;

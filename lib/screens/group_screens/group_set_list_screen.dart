@@ -6,7 +6,6 @@ import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:provider/provider.dart';
-import 'package:beet/objects/song.dart';
 
 class GroupSetListScreen extends StatelessWidget {
   final List<dynamic> setList;
@@ -72,7 +71,7 @@ class GroupSetListScreen extends StatelessWidget {
                               type: MaterialType.transparency,
                               child: ListTile(
                                 title: Text(
-                                  item is Song ? item.title : item,
+                                  item.title,
                                   maxLines: 1,
                                 ),
                                 trailing: const Handle(

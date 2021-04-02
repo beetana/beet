@@ -179,7 +179,7 @@ class UserProfileScreen extends StatelessWidget {
                                     await model.deleteAccount(
                                         password: password);
                                     await showMessageDialog(
-                                        context, 'アカウントを削除しました');
+                                        context, 'アカウントを削除しました。');
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(

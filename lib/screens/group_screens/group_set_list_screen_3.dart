@@ -164,7 +164,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                           ),
                           onPressed: () async {
                             await model.saveSetListImage();
-                            await showMessageDialog(context, '保存しました');
+                            await showMessageDialog(context, '保存しました。');
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

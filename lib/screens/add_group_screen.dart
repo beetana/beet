@@ -92,7 +92,7 @@ class AddGroupScreen extends StatelessWidget {
                                 await model.addGroup();
                                 if (model.groupId.isNotEmpty) {
                                   await showMessageDialog(
-                                      context, '新規グループを作成しました');
+                                      context, '新規グループを作成しました。');
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -104,7 +104,7 @@ class AddGroupScreen extends StatelessWidget {
                                   );
                                 } else {
                                   await showMessageDialog(
-                                      context, '参加できるグループの数は8個までです');
+                                      context, '参加できるグループの数は8個までです。');
                                   Navigator.pop(context);
                                 }
                               } catch (e) {

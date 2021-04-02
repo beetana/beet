@@ -21,6 +21,7 @@ class SetListTile extends StatelessWidget {
         '$songNum $item',
         style: TextStyle(fontSize: fontSize),
         overflow: TextOverflow.ellipsis,
+        textScaleFactor: 1.0,
       ),
     );
   }

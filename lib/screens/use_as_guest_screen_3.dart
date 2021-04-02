@@ -67,6 +67,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                                       eventTitle,
                                       style: TextStyle(
                                           fontSize: eventTitleTextSize),
+                                      textScaleFactor: 1.0,
                                     ),
                                   ],
                                 ),
@@ -77,14 +78,14 @@ class UseAsGuestScreen3 extends StatelessWidget {
                                       eventDateText,
                                       style: TextStyle(
                                           fontSize: eventDetailsTextSize),
+                                      textScaleFactor: 1.0,
                                     ),
-                                    eventPlace.isNotEmpty
-                                        ? Text(
-                                            ' $eventPlace',
-                                            style: TextStyle(
-                                                fontSize: eventDetailsTextSize),
-                                          )
-                                        : const Text(''),
+                                    Text(
+                                      ' $eventPlace',
+                                      style: TextStyle(
+                                          fontSize: eventDetailsTextSize),
+                                      textScaleFactor: 1.0,
+                                    ),
                                   ],
                                 ),
                               ],

@@ -15,6 +15,10 @@ class UserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // コメントの数字はiPhone12ProMax換算
+    final double deviceWidth = MediaQuery.of(context).size.width; // 428
+    final double textScale = MediaQuery.of(context).textScaleFactor;
+
     return ChangeNotifierProvider<UserModel>(
       create: (_) => UserModel()..init(userId: userId, context: context),
       child: Consumer<UserModel>(builder: (context, model, child) {
@@ -45,7 +49,7 @@ class UserScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: _userScreenBody(context),
+            body: _userScreenBody(context, deviceWidth, textScale),
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: kBackGroundColor,
               selectedItemColor: Colors.black,
@@ -72,14 +76,37 @@ class UserScreen extends StatelessWidget {
     );
   }
 
-  Widget _userScreenBody(BuildContext context) {
+  Widget _userScreenBody(
+      BuildContext context, double deviceWidth, double textScale) {
     final model = Provider.of<UserModel>(context);
     final currentIndex = model.currentIndex;
     return Stack(
       children: <Widget>[
-        _tabScreen(currentIndex, 0, UserMainScreen(userId: userId)),
-        _tabScreen(currentIndex, 1, UserCalendarScreen(userId: userId)),
-        _tabScreen(currentIndex, 2, UserTaskListScreen(userId: userId)),
+        _tabScreen(
+          currentIndex,
+          0,
+          UserMainScreen(
+            userId: userId,
+            deviceWidth: deviceWidth,
+            textScale: textScale,
+          ),
+        ),
+        _tabScreen(
+          currentIndex,
+          1,
+          UserCalendarScreen(
+            userId: userId,
+            textScale: textScale,
+          ),
+        ),
+        _tabScreen(
+          currentIndex,
+          2,
+          UserTaskListScreen(
+            userId: userId,
+            textScale: textScale,
+          ),
+        ),
       ],
     );
   }

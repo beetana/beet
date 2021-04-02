@@ -11,11 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupScreen extends StatelessWidget {
-  GroupScreen({this.groupId});
   final String groupId;
+
+  GroupScreen({this.groupId});
 
   @override
   Widget build(BuildContext context) {
+    // コメントの数字はiPhone12ProMax換算
+    final double deviceWidth = MediaQuery.of(context).size.width; // 428
+    final double textScale = MediaQuery.of(context).textScaleFactor;
+
     return ChangeNotifierProvider<GroupModel>(
       create: (_) => GroupModel()..init(groupId: groupId),
       child: Consumer<GroupModel>(builder: (context, model, child) {
@@ -45,7 +50,7 @@ class GroupScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: _groupScreenBody(context),
+            body: _groupScreenBody(context, deviceWidth, textScale),
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               backgroundColor: kBackGroundColor,
@@ -77,15 +82,45 @@ class GroupScreen extends StatelessWidget {
     );
   }
 
-  Widget _groupScreenBody(BuildContext context) {
+  Widget _groupScreenBody(
+      BuildContext context, double deviceWidth, double textScale) {
     final model = Provider.of<GroupModel>(context);
     final currentIndex = model.currentIndex;
     return Stack(
       children: <Widget>[
-        _tabScreen(currentIndex, 0, GroupMainScreen(groupId: groupId)),
-        _tabScreen(currentIndex, 1, GroupCalendarScreen(groupId: groupId)),
-        _tabScreen(currentIndex, 2, GroupTaskListScreen(groupId: groupId)),
-        _tabScreen(currentIndex, 3, GroupSongListScreen(groupId: groupId)),
+        _tabScreen(
+          currentIndex,
+          0,
+          GroupMainScreen(
+            groupId: groupId,
+            deviceWidth: deviceWidth,
+            textScale: textScale,
+          ),
+        ),
+        _tabScreen(
+          currentIndex,
+          1,
+          GroupCalendarScreen(
+            groupId: groupId,
+            textScale: textScale,
+          ),
+        ),
+        _tabScreen(
+          currentIndex,
+          2,
+          GroupTaskListScreen(
+            groupId: groupId,
+            textScale: textScale,
+          ),
+        ),
+        _tabScreen(
+          currentIndex,
+          3,
+          GroupSongListScreen(
+            groupId: groupId,
+            textScale: textScale,
+          ),
+        ),
       ],
     );
   }

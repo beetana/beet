@@ -12,8 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSongListScreen extends StatelessWidget {
-  GroupSongListScreen({this.groupId});
   final String groupId;
+  final double textScale;
+
+  GroupSongListScreen({this.groupId, this.textScale});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class GroupSongListScreen extends StatelessWidget {
                       },
                       child: ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
-                        itemExtent: 60.0,
+                        itemExtent: 52.0 * textScale,
                         itemCount: model.songList.length + 1,
                         itemBuilder: (context, index) {
                           if (index < model.songList.length) {

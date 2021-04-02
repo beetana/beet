@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupTaskListScreen extends StatelessWidget {
-  GroupTaskListScreen({this.groupId});
   final String groupId;
+  final double textScale;
+
+  GroupTaskListScreen({this.groupId, this.textScale});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                 child: ListView.builder(
                                   physics:
                                       const AlwaysScrollableScrollPhysics(),
-                                  itemExtent: 80.0,
+                                  itemExtent: 80.0 * textScale,
                                   itemCount: model.notCompletedTasks.length + 1,
                                   itemBuilder: (context, index) {
                                     if (index <

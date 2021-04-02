@@ -10,8 +10,10 @@ import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:provider/provider.dart';
 
 class UserCalendarScreen extends StatelessWidget {
-  UserCalendarScreen({this.userId});
   final String userId;
+  final double textScale;
+
+  UserCalendarScreen({this.userId, this.textScale});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class UserCalendarScreen extends StatelessWidget {
                       },
                       child: ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
-                        itemExtent: 96.0,
+                        itemExtent: 96.0 * textScale,
                         itemCount: model.selectedEvents.length + 1,
                         itemBuilder: (context, index) {
                           if (index < model.selectedEvents.length) {

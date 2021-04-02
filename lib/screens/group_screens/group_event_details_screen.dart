@@ -24,7 +24,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: const Text('イベント詳細'),
+                title: const Text('イベントの詳細'),
                 actions: [
                   TextButton(
                     child: const Text(

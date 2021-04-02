@@ -25,7 +25,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: const Text('タスク'),
+                title: const Text('タスクの詳細'),
                 actions: [
                   TextButton(
                     child: const Text(

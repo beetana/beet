@@ -24,7 +24,7 @@ class GroupSongDetailsScreen extends StatelessWidget {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: const Text('曲詳細'),
+                title: const Text('曲の詳細'),
                 actions: [
                   TextButton(
                     child: const Text(

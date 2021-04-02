@@ -31,7 +31,7 @@ class UserEditTaskScreen extends StatelessWidget {
               },
               child: Scaffold(
                 appBar: AppBar(
-                  title: const Text('タスク編集'),
+                  title: const Text('タスクを編集'),
                   actions: [
                     TextButton(
                       child: const Text(

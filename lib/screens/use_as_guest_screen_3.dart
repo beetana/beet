@@ -148,7 +148,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                             bool isSave = await _showConfirmDialog(context);
                             if (isSave) {
                               await model.saveSetListImage();
-                              await showMessageDialog(context, '保存しました');
+                              await showMessageDialog(context, '保存しました。');
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

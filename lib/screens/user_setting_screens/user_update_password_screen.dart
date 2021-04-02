@@ -36,7 +36,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                         model.startLoading();
                         try {
                           await model.updatePassword();
-                          await showMessageDialog(context, '変更しました');
+                          await showMessageDialog(context, '変更しました。');
                           Navigator.pop(context);
                         } catch (e) {
                           await showMessageDialog(context, e.toString());

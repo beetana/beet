@@ -132,7 +132,7 @@ class UseAsGuestScreen extends StatelessWidget {
                                   songTitleController.clear();
                                 }
                               } else {
-                                showMessageDialog(context, '曲のタイトルを入力してください');
+                                showMessageDialog(context, '曲のタイトルを入力してください。');
                               }
                             },
                           ),

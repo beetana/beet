@@ -185,7 +185,7 @@ class RegisterScreen extends StatelessWidget {
                                     try {
                                       await model.register();
                                       await showMessageDialog(
-                                          context, '登録しました');
+                                          context, '登録しました。');
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(

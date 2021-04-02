@@ -114,15 +114,15 @@ class DynamicLinksServices {
                 } else if (joiningState == JoiningState.already) {
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  await showMessageDialog(context, 'すでにグループに参加しています');
+                  await showMessageDialog(context, 'すでにグループに参加しています。');
                 } else if (joiningState == JoiningState.noMore) {
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  await showMessageDialog(context, '参加できるグループの数は8個までです');
+                  await showMessageDialog(context, '参加できるグループの数は8個までです。');
                 } else {
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  await showMessageDialog(context, '不明なエラーです');
+                  await showMessageDialog(context, '不明なエラーです。');
                 }
               },
             ),

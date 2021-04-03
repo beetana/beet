@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class LoginModel extends ChangeNotifier {
-  String userId;
   String email = '';
   String password = '';
   bool isLoading = false;
-  bool isAuthenticated;
   final _auth = Auth.FirebaseAuth.instance;
 
   void startLoading() {
@@ -32,8 +30,6 @@ class LoginModel extends ChangeNotifier {
         email: email,
         password: password,
       );
-      Auth.User user = _auth.currentUser;
-      userId = user.uid;
     } catch (e) {
       throw (_convertErrorMessage(e.code));
     }

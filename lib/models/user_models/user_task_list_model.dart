@@ -2,9 +2,9 @@ import 'package:beet/objects/task.dart';
 import 'package:beet/objects/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserTaskListModel extends ChangeNotifier {
-  String userId = '';
   Map<String, User> joiningGroupUsers = {};
   List<Task> tasks = [];
   List<Task> completedTasks = [];
@@ -12,6 +12,7 @@ class UserTaskListModel extends ChangeNotifier {
   List<Task> changeStateTasks = [];
   bool isLoading = false;
   final firestore = FirebaseFirestore.instance;
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
   void startLoading() {
     isLoading = true;
@@ -23,10 +24,9 @@ class UserTaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userId}) async {
+  Future init() async {
     startLoading();
     final userDocRef = firestore.collection('users').doc(userId);
-    this.userId = userId;
     try {
       DocumentSnapshot userDoc = await userDocRef.get();
       joiningGroupUsers[userId] = User.doc(userDoc);

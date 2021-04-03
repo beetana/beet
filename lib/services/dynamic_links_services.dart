@@ -9,7 +9,6 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 class DynamicLinksServices {
   Uri dynamicLink;
   BuildContext context;
-  Auth.User user = Auth.FirebaseAuth.instance.currentUser;
 
   Future<Uri> createDynamicLink({String groupId, String groupName}) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
@@ -152,7 +151,7 @@ class DynamicLinksServices {
   }
 
   Future<JoiningState> joinGroup({String groupId}) async {
-    String userId = user.uid;
+    final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
     String userName = '';
     String userImageURL = '';
     String groupName = '';

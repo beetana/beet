@@ -4,9 +4,9 @@ import 'package:beet/objects/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserTaskDetailsModel extends ChangeNotifier {
-  String userId = '';
   Task task;
   String ownerId = '';
   String taskId = '';
@@ -21,6 +21,7 @@ class UserTaskDetailsModel extends ChangeNotifier {
   ContentOwner owner;
   DocumentReference ownerDocRef;
   final firestore = FirebaseFirestore.instance;
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
   void startLoading() {
     isLoading = true;
@@ -32,9 +33,8 @@ class UserTaskDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userId, Task task}) async {
+  Future init({Task task}) async {
     startLoading();
-    this.userId = userId;
     this.task = task;
     this.ownerId = task.ownerId;
     this.taskId = task.id;

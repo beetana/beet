@@ -2,13 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 
 class UserSecurityModel extends ChangeNotifier {
-  String userId;
   String email;
   bool isLoading = false;
+  final _auth = Auth.FirebaseAuth.instance;
 
-  void init({String userId}) {
-    this.userId = userId;
-    final firebaseUser = Auth.FirebaseAuth.instance.currentUser;
+  void init() {
+    final firebaseUser = _auth.currentUser;
     this.email = firebaseUser.email;
     notifyListeners();
   }
@@ -25,7 +24,7 @@ class UserSecurityModel extends ChangeNotifier {
 
   Future logout() async {
     try {
-      await Auth.FirebaseAuth.instance.signOut();
+      await _auth.signOut();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

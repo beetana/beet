@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserAddTaskModel extends ChangeNotifier {
-  String userId = '';
   String taskTitle = '';
   String taskMemo = '';
   String dueDateText = '';
@@ -16,6 +16,7 @@ class UserAddTaskModel extends ChangeNotifier {
   Widget dueDatePickerBox = const SizedBox();
   DateTime now = DateTime.now();
   DateTime dueDate;
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   void startLoading() {
@@ -28,9 +29,8 @@ class UserAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userId}) async {
+  Future init() async {
     startLoading();
-    this.userId = userId;
     this.assignedUserId = [userId];
     this.dueDate = DateTime(now.year, now.month, now.day, 12);
     this.dueDateText = dateFormat.format(dueDate);

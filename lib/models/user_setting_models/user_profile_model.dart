@@ -7,13 +7,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserProfileModel extends ChangeNotifier {
-  String userId = '';
   String userName = '';
   String userImageURL = '';
   File imageFile;
   bool isLoading = false;
   List<String> joiningGroupsId = [];
-  final _auth = Auth.FirebaseAuth.instance;
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  final firestore = FirebaseFirestore.instance;
   final _picker = ImagePicker();
 
   void startLoading() {
@@ -26,14 +26,11 @@ class UserProfileModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userId}) async {
+  Future init() async {
     startLoading();
-    this.userId = userId;
     try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .get();
+      DocumentSnapshot userDoc =
+          await firestore.collection('users').doc(userId).get();
       userName = userDoc['name'];
       userImageURL = userDoc['imageURL'];
     } catch (e) {
@@ -84,17 +81,17 @@ class UserProfileModel extends ChangeNotifier {
           .child("userImage/$userId")
           .putFile(imageFile);
       userImageURL = await snapshot.ref.getDownloadURL();
-      final joiningGroups = await FirebaseFirestore.instance
+      final joiningGroups = await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroup')
           .get();
       joiningGroupsId = (joiningGroups.docs.map((doc) => doc.id).toList());
-      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      await firestore.collection('users').doc(userId).update({
         'imageURL': userImageURL,
       });
       for (String groupId in joiningGroupsId) {
-        await FirebaseFirestore.instance
+        await firestore
             .collection('groups')
             .doc(groupId)
             .collection('groupUsers')
@@ -116,17 +113,17 @@ class UserProfileModel extends ChangeNotifier {
 
     try {
       await FirebaseStorage.instance.ref().child("userImage/$userId").delete();
-      final joiningGroups = await FirebaseFirestore.instance
+      final joiningGroups = await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroup')
           .get();
       joiningGroupsId = (joiningGroups.docs.map((doc) => doc.id).toList());
-      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      await firestore.collection('users').doc(userId).update({
         'imageURL': '',
       });
       for (String groupId in joiningGroupsId) {
-        await FirebaseFirestore.instance
+        await firestore
             .collection('groups')
             .doc(groupId)
             .collection('groupUsers')
@@ -144,12 +141,13 @@ class UserProfileModel extends ChangeNotifier {
   }
 
   Future deleteAccount({String password}) async {
-    final user = _auth.currentUser;
-    final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(userId);
+    final Auth.User firebaseUser = Auth.FirebaseAuth.instance.currentUser;
+    final userDocRef = firestore.collection('users').doc(userId);
+
     try {
-      await user.reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
-        email: user.email,
+      await firebaseUser
+          .reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
+        email: firebaseUser.email,
         password: password,
       ));
       // Firebase Storageにあるプロフィール画像を削除
@@ -166,8 +164,7 @@ class UserProfileModel extends ChangeNotifier {
       print(joiningGroupsId);
       if (joiningGroupsId.isNotEmpty) {
         for (String groupId in joiningGroupsId) {
-          final groupDocRef =
-              FirebaseFirestore.instance.collection('groups').doc(groupId);
+          final groupDocRef = firestore.collection('groups').doc(groupId);
           await groupDocRef.collection('groupUsers').doc(userId).delete();
           print('削除');
         }
@@ -176,7 +173,7 @@ class UserProfileModel extends ChangeNotifier {
       // userDocRef以下のサブコレクションも削除される
       await userDocRef.delete();
       // ユーザーの認証情報を削除
-      await user.delete();
+      await firebaseUser.delete();
     } catch (e) {
       print(e.code);
       throw (_convertErrorMessage(e.code));

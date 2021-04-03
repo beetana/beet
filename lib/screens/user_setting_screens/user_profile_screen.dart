@@ -9,13 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserProfileScreen extends StatelessWidget {
-  UserProfileScreen({this.userId});
-  final String userId;
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserProfileModel>(
-      create: (_) => UserProfileModel()..init(userId: userId),
+      create: (_) => UserProfileModel()..init(),
       child: Consumer<UserProfileModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -151,12 +148,11 @@ class UserProfileScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => UserEditNameScreen(
-                                      userId: userId,
                                       userName: model.userName,
                                     ),
                                   ),
                                 );
-                                model.init(userId: userId);
+                                model.init();
                               },
                             ),
                             Expanded(

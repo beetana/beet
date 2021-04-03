@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserAddEventModel extends ChangeNotifier {
   String eventTitle = '';
@@ -20,6 +21,7 @@ class UserAddEventModel extends ChangeNotifier {
   DateFormat tileDateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_JP');
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
   void startLoading() {
     isLoading = true;
@@ -134,7 +136,7 @@ class UserAddEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addEvent({String userId}) async {
+  Future addEvent() async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }

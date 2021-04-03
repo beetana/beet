@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserEditEventModel extends ChangeNotifier {
   String ownerId = '';
@@ -25,6 +26,7 @@ class UserEditEventModel extends ChangeNotifier {
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
   final firestore = FirebaseFirestore.instance;
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
   void startLoading() {
     isLoading = true;
@@ -36,7 +38,7 @@ class UserEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String userId, Event event}) {
+  void init({Event event}) {
     if (event.isAllDay == true) {
       this.tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       this.cupertinoDatePickerMode = CupertinoDatePickerMode.date;

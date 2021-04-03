@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserEditNameModel extends ChangeNotifier {
-  String userId;
   String userName = '';
   bool isLoading = false;
   List<String> joiningGroupsId = [];
@@ -19,12 +18,14 @@ class UserEditNameModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String userId, String userName}) {
-    this.userId = userId;
+  void init({String userName}) {
     this.userName = userName;
   }
 
   Future updateUserName() async {
+    final Auth.User firebaseUser = _auth.currentUser;
+    final String userId = firebaseUser.uid;
+
     if (userName.isEmpty) {
       throw ('名前を入力してください');
     }
@@ -48,7 +49,7 @@ class UserEditNameModel extends ChangeNotifier {
           'name': userName,
         });
       }
-      await _auth.currentUser.updateProfile(displayName: userName);
+      await firebaseUser.updateProfile(displayName: userName);
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

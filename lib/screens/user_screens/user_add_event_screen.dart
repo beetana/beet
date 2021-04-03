@@ -9,14 +9,14 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserAddEventScreen extends StatelessWidget {
-  UserAddEventScreen({this.userId, this.dateTime});
-  final userId;
   final dateTime;
   final dateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_jp');
   final eventTitleController = TextEditingController();
   final eventPlaceController = TextEditingController();
   final eventMemoController = TextEditingController();
   final scrollController = ScrollController();
+
+  UserAddEventScreen({this.dateTime});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class UserAddEventScreen extends StatelessWidget {
                         onPressed: () async {
                           model.startLoading();
                           try {
-                            await model.addEvent(userId: userId);
+                            await model.addEvent();
                             Navigator.pop(context);
                           } catch (e) {
                             showMessageDialog(context, e.toString());

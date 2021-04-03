@@ -190,7 +190,7 @@ class RegisterScreen extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              UserScreen(userId: model.userId),
+                                              UserScreen(),
                                         ),
                                       );
                                     } catch (e) {

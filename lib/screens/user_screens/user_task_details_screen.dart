@@ -11,15 +11,15 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserTaskDetailsScreen extends StatelessWidget {
-  UserTaskDetailsScreen({this.userId, this.task});
-  final String userId;
   final Task task;
   final dueDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+
+  UserTaskDetailsScreen({this.task});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserTaskDetailsModel>(
-      create: (_) => UserTaskDetailsModel()..init(userId: userId, task: task),
+      create: (_) => UserTaskDetailsModel()..init(task: task),
       child: Consumer<UserTaskDetailsModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -38,10 +38,8 @@ class UserTaskDetailsScreen extends StatelessWidget {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => UserEditTaskScreen(
-                            userId: userId,
-                            task: model.task,
-                          ),
+                          builder: (context) =>
+                              UserEditTaskScreen(task: model.task),
                           fullscreenDialog: true,
                         ),
                       );

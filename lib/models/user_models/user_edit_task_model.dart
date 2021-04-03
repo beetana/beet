@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserEditTaskModel extends ChangeNotifier {
   String ownerId = '';
@@ -24,6 +25,7 @@ class UserEditTaskModel extends ChangeNotifier {
   DocumentReference ownerDocRef;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
   final firestore = FirebaseFirestore.instance;
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
   void startLoading() {
     isLoading = true;
@@ -35,7 +37,7 @@ class UserEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userId, Task task}) async {
+  Future init({Task task}) async {
     startLoading();
     this.taskId = task.id;
     this.ownerId = task.ownerId;

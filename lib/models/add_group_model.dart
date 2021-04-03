@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddGroupModel extends ChangeNotifier {
-  String userId = '';
   String userName = '';
   String userImageURL = '';
   String groupName = '';
   String groupId = '';
   bool isLoading = false;
   DocumentReference userDocRef;
-  final auth = Auth.FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
   void startLoading() {
     isLoading = true;
@@ -24,7 +23,6 @@ class AddGroupModel extends ChangeNotifier {
   }
 
   void init() {
-    this.userId = auth.currentUser.uid;
     this.userDocRef = firestore.collection('users').doc(userId);
   }
 

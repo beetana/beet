@@ -10,15 +10,14 @@ import 'package:beet/widgets/add_floating_action_button.dart';
 import 'package:provider/provider.dart';
 
 class UserCalendarScreen extends StatelessWidget {
-  final String userId;
   final double textScale;
 
-  UserCalendarScreen({this.userId, this.textScale});
+  UserCalendarScreen({this.textScale});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserCalendarModel>(
-      create: (_) => UserCalendarModel()..init(userId: userId),
+      create: (_) => UserCalendarModel()..init(),
       child: Consumer<UserCalendarModel>(builder: (context, model, child) {
         return Stack(
           children: <Widget>[
@@ -55,10 +54,7 @@ class UserCalendarScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        UserEventDetailsScreen(
-                                      userId: userId,
-                                      event: event,
-                                    ),
+                                        UserEventDetailsScreen(event: event),
                                   ),
                                 );
                                 try {
@@ -84,10 +80,8 @@ class UserCalendarScreen extends StatelessWidget {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => UserAddEventScreen(
-                      userId: userId,
-                      dateTime: model.selectedDay,
-                    ),
+                    builder: (context) =>
+                        UserAddEventScreen(dateTime: model.selectedDay),
                     fullscreenDialog: true,
                   ),
                 );

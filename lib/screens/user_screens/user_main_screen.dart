@@ -9,12 +9,11 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserMainScreen extends StatelessWidget {
-  final String userId;
   final double deviceWidth;
   final double textScale;
   final dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
-  UserMainScreen({this.userId, this.deviceWidth, this.textScale});
+  UserMainScreen({this.deviceWidth, this.textScale});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class UserMainScreen extends StatelessWidget {
     final double textSize = deviceWidth * 0.036; // 15.408
 
     return ChangeNotifierProvider<UserMainModel>(
-      create: (_) => UserMainModel()..init(userId: userId),
+      create: (_) => UserMainModel()..init(),
       child: Consumer<UserMainModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -104,7 +103,7 @@ class UserMainScreen extends StatelessWidget {
                       child: RefreshIndicator(
                         onRefresh: () async {
                           try {
-                            await model.getEventList(userId: userId);
+                            await model.getEventList();
                           } catch (e) {
                             showMessageDialog(context, e.toString());
                           }
@@ -126,14 +125,11 @@ class UserMainScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        UserEventDetailsScreen(
-                                      userId: userId,
-                                      event: event,
-                                    ),
+                                        UserEventDetailsScreen(event: event),
                                   ),
                                 );
                                 try {
-                                  await model.getEventList(userId: userId);
+                                  await model.getEventList();
                                 } catch (e) {
                                   showMessageDialog(context, e.toString());
                                 }

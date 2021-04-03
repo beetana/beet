@@ -3,6 +3,7 @@ import 'package:beet/objects/content_owner.dart';
 import 'package:beet/objects/task.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserMainModel extends ChangeNotifier {
   List<Event> eventList = [];
@@ -11,6 +12,7 @@ class UserMainModel extends ChangeNotifier {
   bool isLoading = false;
   DateTime currentDateTime = DateTime.now();
   final firestore = FirebaseFirestore.instance;
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
   void startLoading() {
     isLoading = true;
@@ -22,7 +24,7 @@ class UserMainModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userId}) async {
+  Future init() async {
     taskCount = 0;
     startLoading();
     try {
@@ -36,14 +38,14 @@ class UserMainModel extends ChangeNotifier {
           taskCount += 1;
         }
       });
-      await getEventList(userId: userId);
+      await getEventList();
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future getEventList({String userId}) async {
+  Future getEventList() async {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
     List<String> ownerIdList = [userId];
     try {

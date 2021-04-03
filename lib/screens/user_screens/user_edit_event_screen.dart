@@ -10,8 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserEditEventScreen extends StatelessWidget {
-  UserEditEventScreen({this.userId, this.event});
-  final String userId;
   final Event event;
   final dateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_jp');
   final eventTitleController = TextEditingController();
@@ -19,13 +17,15 @@ class UserEditEventScreen extends StatelessWidget {
   final eventMemoController = TextEditingController();
   final scrollController = ScrollController();
 
+  UserEditEventScreen({this.event});
+
   @override
   Widget build(BuildContext context) {
     eventTitleController.text = event.title;
     eventPlaceController.text = event.place;
     eventMemoController.text = event.memo;
     return ChangeNotifierProvider<UserEditEventModel>(
-      create: (_) => UserEditEventModel()..init(userId: userId, event: event),
+      create: (_) => UserEditEventModel()..init(event: event),
       child: Consumer<UserEditEventModel>(builder: (context, model, child) {
         return GestureDetector(
           onTap: () {

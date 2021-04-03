@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nholiday_jp/nholiday_jp.dart';
 import 'package:beet/objects/content_owner.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserCalendarModel extends ChangeNotifier {
-  String userId = '';
   DateTime now = DateTime.now();
   DateTime first;
   DateTime last;
@@ -18,9 +18,9 @@ class UserCalendarModel extends ChangeNotifier {
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
   final firestore = FirebaseFirestore.instance;
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
-  void init({String userId}) {
-    this.userId = userId;
+  void init() {
     this.selectedDay = DateTime(now.year, now.month, now.day, 12);
   }
 

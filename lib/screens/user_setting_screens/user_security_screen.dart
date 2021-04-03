@@ -10,12 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserSecurityScreen extends StatelessWidget {
-  UserSecurityScreen({this.userId});
-  final String userId;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserSecurityModel>(
-      create: (_) => UserSecurityModel()..init(userId: userId),
+      create: (_) => UserSecurityModel()..init(),
       child: Consumer<UserSecurityModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -41,7 +39,7 @@ class UserSecurityScreen extends StatelessWidget {
                               ),
                             ),
                           );
-                          model.init(userId: userId);
+                          model.init();
                         },
                       ),
                     ),

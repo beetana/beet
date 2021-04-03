@@ -9,8 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserEditTaskScreen extends StatelessWidget {
-  UserEditTaskScreen({this.userId, this.task});
-  final String userId;
+  UserEditTaskScreen({this.task});
   final Task task;
   final taskTitleController = TextEditingController();
   final taskMemoController = TextEditingController();
@@ -21,7 +20,7 @@ class UserEditTaskScreen extends StatelessWidget {
     taskTitleController.text = task.title;
     taskMemoController.text = task.memo;
     return ChangeNotifierProvider<UserEditTaskModel>(
-      create: (_) => UserEditTaskModel()..init(userId: userId, task: task),
+      create: (_) => UserEditTaskModel()..init(task: task),
       child: Consumer<UserEditTaskModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -91,7 +90,7 @@ class UserEditTaskScreen extends StatelessWidget {
                             model.dueDatePickerBox,
                             BasicDivider(),
                             Visibility(
-                              visible: model.ownerId != userId,
+                              visible: model.ownerId != model.userId,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

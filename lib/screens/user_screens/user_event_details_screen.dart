@@ -11,15 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserEventDetailsScreen extends StatelessWidget {
-  UserEventDetailsScreen({this.userId, this.event});
-  final String userId;
   final Event event;
+
+  UserEventDetailsScreen({this.event});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserEventDetailsModel>(
-      create: (_) =>
-          UserEventDetailsModel()..init(userId: userId, event: event),
+      create: (_) => UserEventDetailsModel()..init(event: event),
       child: Consumer<UserEventDetailsModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -38,10 +37,8 @@ class UserEventDetailsScreen extends StatelessWidget {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => UserEditEventScreen(
-                            userId: userId,
-                            event: model.event,
-                          ),
+                          builder: (context) =>
+                              UserEditEventScreen(event: model.event),
                           fullscreenDialog: true,
                         ),
                       );

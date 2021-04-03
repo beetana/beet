@@ -3,9 +3,9 @@ import 'package:beet/objects/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserEventDetailsModel extends ChangeNotifier {
-  String userId = '';
   Event event;
   String ownerId = '';
   String eventId = '';
@@ -18,6 +18,7 @@ class UserEventDetailsModel extends ChangeNotifier {
   bool isLoading = false;
   ContentOwner owner;
   final firestore = FirebaseFirestore.instance;
+  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
   void startLoading() {
     isLoading = true;
@@ -29,9 +30,8 @@ class UserEventDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String userId, Event event}) async {
+  Future init({Event event}) async {
     startLoading();
-    this.userId = userId;
     this.event = event;
     this.ownerId = event.ownerId;
     this.eventId = event.id;

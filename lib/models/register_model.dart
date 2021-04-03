@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterModel extends ChangeNotifier {
-  String userId;
   String name = '';
   String email = '';
   String password = '';
@@ -51,7 +50,7 @@ class RegisterModel extends ChangeNotifier {
       ))
           .user;
       await user.updateProfile(displayName: name);
-      userId = user.uid;
+      final userId = user.uid;
       await FirebaseFirestore.instance.collection('users').doc(userId).set({
         'name': name,
         'imageURL': '',

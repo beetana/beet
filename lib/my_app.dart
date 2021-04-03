@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
         return WelcomeScreen();
 
       case UserState.loggedIn: // 登録済み
-        return UserScreen(userId: model.userId);
+        return UserScreen();
 
       default: // 不明
         return WelcomeScreen();

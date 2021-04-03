@@ -10,15 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserTaskListScreen extends StatelessWidget {
-  final String userId;
   final double textScale;
 
-  UserTaskListScreen({this.userId, this.textScale});
+  UserTaskListScreen({this.textScale});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserTaskListModel>(
-      create: (_) => UserTaskListModel()..init(userId: userId),
+      create: (_) => UserTaskListModel()..init(),
       child: Consumer<UserTaskListModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -108,9 +107,7 @@ class UserTaskListScreen extends StatelessWidget {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   UserTaskDetailsScreen(
-                                                userId: userId,
-                                                task: task,
-                                              ),
+                                                      task: task),
                                             ),
                                           );
                                           try {
@@ -190,9 +187,7 @@ class UserTaskListScreen extends StatelessWidget {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   UserTaskDetailsScreen(
-                                                userId: userId,
-                                                task: task,
-                                              ),
+                                                      task: task),
                                             ),
                                           );
                                           try {
@@ -273,8 +268,7 @@ class UserTaskListScreen extends StatelessWidget {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              UserAddTaskScreen(userId: userId),
+                          builder: (context) => UserAddTaskScreen(),
                           fullscreenDialog: true,
                         ),
                       );

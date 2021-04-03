@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserAddTaskScreen extends StatelessWidget {
-  UserAddTaskScreen({this.userId});
-  final String userId;
+  UserAddTaskScreen();
   final taskTitleController = TextEditingController();
   final taskMemoController = TextEditingController();
   final scrollController = ScrollController();
@@ -16,7 +15,7 @@ class UserAddTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserAddTaskModel>(
-      create: (_) => UserAddTaskModel()..init(userId: userId),
+      create: (_) => UserAddTaskModel()..init(),
       child: Consumer<UserAddTaskModel>(builder: (context, model, child) {
         return Stack(
           children: [

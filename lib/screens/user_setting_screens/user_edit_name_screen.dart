@@ -5,17 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserEditNameScreen extends StatelessWidget {
-  UserEditNameScreen({this.userId, this.userName});
-  final String userId;
   final String userName;
   final userNameController = TextEditingController();
+
+  UserEditNameScreen({this.userName});
 
   @override
   Widget build(BuildContext context) {
     userNameController.text = userName;
     return ChangeNotifierProvider<UserEditNameModel>(
-      create: (_) =>
-          UserEditNameModel()..init(userId: userId, userName: userName),
+      create: (_) => UserEditNameModel()..init(userName: userName),
       child: Consumer<UserEditNameModel>(builder: (context, model, child) {
         return Stack(
           children: [

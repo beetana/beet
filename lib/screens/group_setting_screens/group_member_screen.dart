@@ -69,7 +69,7 @@ class GroupMemberScreen extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            UserScreen(userId: userId),
+                                            UserScreen(),
                                       ),
                                     );
                                   } else {

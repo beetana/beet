@@ -10,9 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserScreen extends StatelessWidget {
-  UserScreen({this.userId});
-  final String userId;
-
   @override
   Widget build(BuildContext context) {
     // コメントの数字はiPhone12ProMax換算
@@ -20,7 +17,7 @@ class UserScreen extends StatelessWidget {
     final double textScale = MediaQuery.of(context).textScaleFactor;
 
     return ChangeNotifierProvider<UserModel>(
-      create: (_) => UserModel()..init(userId: userId, context: context),
+      create: (_) => UserModel()..init(context: context),
       child: Consumer<UserModel>(builder: (context, model, child) {
         return WillPopScope(
           onWillPop: willPopCallback,
@@ -38,13 +35,11 @@ class UserScreen extends StatelessWidget {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserSettingScreen(
-                          userId: userId,
-                        ),
+                        builder: (context) => UserSettingScreen(),
                         fullscreenDialog: true,
                       ),
                     );
-                    model.init(userId: userId);
+                    model.init();
                   },
                 ),
               ],
@@ -85,27 +80,17 @@ class UserScreen extends StatelessWidget {
         _tabScreen(
           currentIndex,
           0,
-          UserMainScreen(
-            userId: userId,
-            deviceWidth: deviceWidth,
-            textScale: textScale,
-          ),
+          UserMainScreen(deviceWidth: deviceWidth, textScale: textScale),
         ),
         _tabScreen(
           currentIndex,
           1,
-          UserCalendarScreen(
-            userId: userId,
-            textScale: textScale,
-          ),
+          UserCalendarScreen(textScale: textScale),
         ),
         _tabScreen(
           currentIndex,
           2,
-          UserTaskListScreen(
-            userId: userId,
-            textScale: textScale,
-          ),
+          UserTaskListScreen(textScale: textScale),
         ),
       ],
     );

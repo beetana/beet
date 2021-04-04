@@ -46,7 +46,7 @@ class GroupSongDetailsScreen extends StatelessWidget {
                       );
                       model.startLoading();
                       try {
-                        await model.getSong();
+                        await model.fetchSong();
                       } catch (e) {
                         showMessageDialog(context, e.toString());
                       }

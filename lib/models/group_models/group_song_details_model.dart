@@ -32,7 +32,7 @@ class GroupSongDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getSong() async {
+  Future fetchSong() async {
     try {
       DocumentSnapshot songDoc = await FirebaseFirestore.instance
           .collection('groups')

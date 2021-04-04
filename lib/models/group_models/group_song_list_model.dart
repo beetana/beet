@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupSongListModel extends ChangeNotifier {
   String groupId = '';
-  List<Song> songList = [];
+  List<Song> songs = [];
   List<dynamic> setList = [];
   int songCount = 0;
   int totalPlayTime = 0;
@@ -36,11 +36,11 @@ class GroupSongListModel extends ChangeNotifier {
   Future init({String groupId}) async {
     startLoading();
     this.groupId = groupId;
-    await getSongList();
+    await fetchSongs();
     endLoading();
   }
 
-  Future getSongList() async {
+  Future fetchSongs() async {
     try {
       final songQuery = await FirebaseFirestore.instance
           .collection('groups')
@@ -48,7 +48,7 @@ class GroupSongListModel extends ChangeNotifier {
           .collection('songs')
           .orderBy('createdAt', descending: false)
           .get();
-      songList = songQuery.docs.map((doc) => Song.doc(doc)).toList();
+      songs = songQuery.docs.map((doc) => Song.doc(doc)).toList();
       setList = [];
       songCount = 0;
       totalPlayTime = 0;
@@ -106,7 +106,7 @@ class GroupSongListModel extends ChangeNotifier {
   void reselectSongs({List<dynamic> setList}) {
     this.setList = setList;
     totalPlayTime = 0;
-    songList.forEach((song) {
+    songs.forEach((song) {
       if (setList.contains(song)) {
         totalPlayTime += song.playingTime;
       } else {

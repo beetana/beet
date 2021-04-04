@@ -66,7 +66,7 @@ class UserTaskDetailsModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future getTask() async {
+  Future fetchTask() async {
     try {
       DocumentSnapshot taskDoc =
           await ownerDocRef.collection('tasks').doc(taskId).get();

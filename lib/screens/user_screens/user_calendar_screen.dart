@@ -30,8 +30,8 @@ class UserCalendarScreen extends StatelessWidget {
                     child: RefreshIndicator(
                       onRefresh: () async {
                         try {
-                          await model.getEvents();
-                          model.getSelectedEvents();
+                          await model.fetchEvents();
+                          model.showEventsOfDay();
                         } catch (e) {
                           showMessageDialog(context, e.toString());
                         }
@@ -58,8 +58,8 @@ class UserCalendarScreen extends StatelessWidget {
                                   ),
                                 );
                                 try {
-                                  await model.getEvents();
-                                  model.getSelectedEvents();
+                                  await model.fetchEvents();
+                                  model.showEventsOfDay();
                                 } catch (e) {
                                   showMessageDialog(context, e.toString());
                                 }
@@ -86,8 +86,8 @@ class UserCalendarScreen extends StatelessWidget {
                   ),
                 );
                 try {
-                  await model.getEvents();
-                  model.getSelectedEvents();
+                  await model.fetchEvents();
+                  model.showEventsOfDay();
                 } catch (e) {
                   showMessageDialog(context, e.toString());
                 }

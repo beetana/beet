@@ -24,7 +24,7 @@ class UserCalendarModel extends ChangeNotifier {
     this.selectedDay = DateTime(now.year, now.month, now.day, 12);
   }
 
-  Future getEvents() async {
+  Future fetchEvents() async {
     events = {};
     List<String> ownerIdList = [userId];
     List<Event> eventList;
@@ -98,7 +98,7 @@ class UserCalendarModel extends ChangeNotifier {
     }
   }
 
-  void getSelectedEvents() {
+  void showEventsOfDay() {
     selectedEvents = events[selectedDay] ?? [];
     notifyListeners();
   }

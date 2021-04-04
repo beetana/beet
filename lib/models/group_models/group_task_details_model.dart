@@ -54,7 +54,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future getTask() async {
+  Future fetchTask() async {
     final taskDocRef = groupDocRef.collection('tasks').doc(taskId);
     try {
       DocumentSnapshot taskDoc = await taskDocRef.get();

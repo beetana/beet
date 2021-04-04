@@ -35,7 +35,7 @@ class GroupEventDetailsModel extends ChangeNotifier {
     endingDateTime = event.endingDateTime;
   }
 
-  Future getEvent({String groupId}) async {
+  Future fetchEvent({String groupId}) async {
     try {
       DocumentSnapshot eventDoc = await FirebaseFirestore.instance
           .collection('groups')

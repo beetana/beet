@@ -104,7 +104,7 @@ class GroupMainScreen extends StatelessWidget {
                       child: RefreshIndicator(
                         onRefresh: () async {
                           try {
-                            await model.getEventList(groupId: groupId);
+                            await model.fetchEvents(groupId: groupId);
                           } catch (e) {
                             showMessageDialog(context, e.toString());
                           }
@@ -112,9 +112,9 @@ class GroupMainScreen extends StatelessWidget {
                         child: ListView.builder(
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemExtent: 64.0 * textScale,
-                          itemCount: model.eventList.length,
+                          itemCount: model.events.length,
                           itemBuilder: (context, index) {
-                            final event = model.eventList[index];
+                            final event = model.events[index];
                             return EventListTile(
                               event: event,
                               onTap: () async {
@@ -129,7 +129,7 @@ class GroupMainScreen extends StatelessWidget {
                                   ),
                                 );
                                 try {
-                                  await model.getEventList(groupId: groupId);
+                                  await model.fetchEvents(groupId: groupId);
                                 } catch (e) {
                                   showMessageDialog(context, e.toString());
                                 }
@@ -150,7 +150,7 @@ class GroupMainScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     ),
                   )
-                : model.eventList.isEmpty
+                : model.events.isEmpty
                     ? const Center(
                         child: Text('予定されているイベントはありません'),
                       )

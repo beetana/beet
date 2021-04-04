@@ -64,7 +64,7 @@ class GroupTaskListScreen extends StatelessWidget {
                               child: RefreshIndicator(
                                 onRefresh: () async {
                                   try {
-                                    await model.getTaskList();
+                                    await model.fetchTasks();
                                   } catch (e) {
                                     showMessageDialog(context, e.toString());
                                   }
@@ -114,7 +114,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                             ),
                                           );
                                           try {
-                                            await model.getTaskList();
+                                            await model.fetchTasks();
                                           } catch (e) {
                                             showMessageDialog(
                                                 context, e.toString());
@@ -148,7 +148,7 @@ class GroupTaskListScreen extends StatelessWidget {
                               child: RefreshIndicator(
                                 onRefresh: () async {
                                   try {
-                                    await model.getTaskList();
+                                    await model.fetchTasks();
                                   } catch (e) {
                                     showMessageDialog(context, e.toString());
                                   }
@@ -196,7 +196,7 @@ class GroupTaskListScreen extends StatelessWidget {
                                             ),
                                           );
                                           try {
-                                            await model.getTaskList();
+                                            await model.fetchTasks();
                                           } catch (e) {
                                             showMessageDialog(
                                                 context, e.toString());
@@ -246,7 +246,7 @@ class GroupTaskListScreen extends StatelessWidget {
                               model.startLoading();
                               try {
                                 await model.updateCheckState();
-                                await model.getTaskList();
+                                await model.fetchTasks();
                               } catch (e) {
                                 showMessageDialog(context, e.toString());
                               }
@@ -279,7 +279,7 @@ class GroupTaskListScreen extends StatelessWidget {
                         ),
                       );
                       try {
-                        await model.getTaskList();
+                        await model.fetchTasks();
                       } catch (e) {
                         showMessageDialog(context, e.toString());
                       }

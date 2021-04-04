@@ -31,8 +31,8 @@ class GroupCalendarScreen extends StatelessWidget {
                     child: RefreshIndicator(
                       onRefresh: () async {
                         try {
-                          await model.getEvents();
-                          model.getSelectedEvents();
+                          await model.fetchEvents();
+                          model.showEventsOfDay();
                         } catch (e) {
                           showMessageDialog(context, e.toString());
                         }
@@ -58,8 +58,8 @@ class GroupCalendarScreen extends StatelessWidget {
                                   ),
                                 );
                                 try {
-                                  await model.getEvents();
-                                  model.getSelectedEvents();
+                                  await model.fetchEvents();
+                                  model.showEventsOfDay();
                                 } catch (e) {
                                   showMessageDialog(context, e.toString());
                                 }
@@ -88,8 +88,8 @@ class GroupCalendarScreen extends StatelessWidget {
                   ),
                 );
                 try {
-                  await model.getEvents();
-                  model.getSelectedEvents();
+                  await model.fetchEvents();
+                  model.showEventsOfDay();
                 } catch (e) {
                   showMessageDialog(context, e.toString());
                 }

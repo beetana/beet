@@ -89,16 +89,16 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       onDaySelected: (DateTime date, List events, List holidays) {
         widget.model.selectedDay =
             DateTime(date.year, date.month, date.day, 12);
-        widget.model.getSelectedEvents();
+        widget.model.showEventsOfDay();
       },
       onVisibleDaysChanged:
           (DateTime first, DateTime last, CalendarFormat format) async {
         widget.model.first = first;
         widget.model.last = last;
         try {
-          await widget.model.getEvents();
+          await widget.model.fetchEvents();
           widget.model.fetchHolidays();
-          widget.model.getSelectedEvents();
+          widget.model.showEventsOfDay();
         } catch (e) {
           showMessageDialog(context, e.toString());
         }
@@ -108,9 +108,9 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         widget.model.first = first;
         widget.model.last = last;
         try {
-          await widget.model.getEvents();
+          await widget.model.fetchEvents();
           widget.model.fetchHolidays();
-          widget.model.getSelectedEvents();
+          widget.model.showEventsOfDay();
         } catch (e) {
           showMessageDialog(context, e.toString());
         }

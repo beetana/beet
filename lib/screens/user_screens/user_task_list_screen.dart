@@ -63,7 +63,7 @@ class UserTaskListScreen extends StatelessWidget {
                               child: RefreshIndicator(
                                 onRefresh: () async {
                                   try {
-                                    await model.getTaskList();
+                                    await model.fetchTasks();
                                   } catch (e) {
                                     showMessageDialog(context, e.toString());
                                   }
@@ -111,7 +111,7 @@ class UserTaskListScreen extends StatelessWidget {
                                             ),
                                           );
                                           try {
-                                            await model.getTaskList();
+                                            await model.fetchTasks();
                                           } catch (e) {
                                             showMessageDialog(
                                                 context, e.toString());
@@ -145,7 +145,7 @@ class UserTaskListScreen extends StatelessWidget {
                               child: RefreshIndicator(
                                 onRefresh: () async {
                                   try {
-                                    await model.getTaskList();
+                                    await model.fetchTasks();
                                   } catch (e) {
                                     showMessageDialog(context, e.toString());
                                   }
@@ -191,7 +191,7 @@ class UserTaskListScreen extends StatelessWidget {
                                             ),
                                           );
                                           try {
-                                            await model.getTaskList();
+                                            await model.fetchTasks();
                                           } catch (e) {
                                             showMessageDialog(
                                                 context, e.toString());
@@ -241,7 +241,7 @@ class UserTaskListScreen extends StatelessWidget {
                               model.startLoading();
                               try {
                                 await model.updateCheckState();
-                                await model.getTaskList();
+                                await model.fetchTasks();
                               } catch (e) {
                                 showMessageDialog(context, e.toString());
                               }
@@ -273,7 +273,7 @@ class UserTaskListScreen extends StatelessWidget {
                         ),
                       );
                       try {
-                        await model.getTaskList();
+                        await model.fetchTasks();
                       } catch (e) {
                         showMessageDialog(context, e.toString());
                       }

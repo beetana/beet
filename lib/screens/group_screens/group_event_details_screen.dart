@@ -46,7 +46,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                       );
                       model.startLoading();
                       try {
-                        await model.getEvent(groupId: groupId);
+                        await model.fetchEvent(groupId: groupId);
                       } catch (e) {
                         showMessageDialog(context, e.toString());
                       }

@@ -45,14 +45,14 @@ class UserTaskListModel extends ChangeNotifier {
           joiningGroupUsers[user.id] = user;
         });
       });
-      await getTaskList();
+      await fetchTasks();
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future getTaskList() async {
+  Future fetchTasks() async {
     completedTasks = [];
     notCompletedTasks = [];
     changeStateTasks = [];

@@ -21,7 +21,7 @@ class GroupCalendarModel extends ChangeNotifier {
     this.selectedDay = DateTime(now.year, now.month, now.day, 12);
   }
 
-  Future getEvents() async {
+  Future fetchEvents() async {
     events = {};
     List<Event> eventList;
     List<Event> eventsOfDay;
@@ -69,7 +69,7 @@ class GroupCalendarModel extends ChangeNotifier {
     }
   }
 
-  void getSelectedEvents() {
+  void showEventsOfDay() {
     selectedEvents = events[selectedDay] ?? [];
     notifyListeners();
   }

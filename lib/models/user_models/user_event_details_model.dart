@@ -53,7 +53,7 @@ class UserEventDetailsModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future getEvent() async {
+  Future fetchEvent() async {
     final eventDocRef = this.ownerId == this.userId
         ? firestore
             .collection('users')

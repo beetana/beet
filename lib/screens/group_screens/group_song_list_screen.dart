@@ -51,7 +51,7 @@ class GroupSongListScreen extends StatelessWidget {
                     child: RefreshIndicator(
                       onRefresh: () async {
                         try {
-                          await model.getSongList();
+                          await model.fetchSongs();
                         } catch (e) {
                           showMessageDialog(context, e.toString());
                         }
@@ -59,10 +59,10 @@ class GroupSongListScreen extends StatelessWidget {
                       child: ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
                         itemExtent: 52.0 * textScale,
-                        itemCount: model.songList.length + 1,
+                        itemCount: model.songs.length + 1,
                         itemBuilder: (context, index) {
-                          if (index < model.songList.length) {
-                            final song = model.songList[index];
+                          if (index < model.songs.length) {
+                            final song = model.songs[index];
                             return SongListTile(
                               song: song,
                               isVisible: model.isSetListMode,
@@ -88,7 +88,7 @@ class GroupSongListScreen extends StatelessWidget {
                                     ),
                                   );
                                   try {
-                                    await model.getSongList();
+                                    await model.fetchSongs();
                                   } catch (e) {
                                     showMessageDialog(context, e.toString());
                                   }
@@ -170,7 +170,7 @@ class GroupSongListScreen extends StatelessWidget {
                     ),
                   );
                   try {
-                    await model.getSongList();
+                    await model.fetchSongs();
                   } catch (e) {
                     showMessageDialog(context, e.toString());
                   }
@@ -184,7 +184,7 @@ class GroupSongListScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     ),
                   )
-                : model.songList.isEmpty
+                : model.songs.isEmpty
                     ? const Center(
                         child: Text('曲が登録されていません'),
                       )

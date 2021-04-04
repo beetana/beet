@@ -44,7 +44,7 @@ class UserEventDetailsScreen extends StatelessWidget {
                       );
                       model.startLoading();
                       try {
-                        await model.getEvent();
+                        await model.fetchEvent();
                       } catch (e) {
                         showMessageDialog(context, e.toString());
                       }

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class GroupMainModel extends ChangeNotifier {
-  List<Event> eventList = [];
+  List<Event> events = [];
   int taskCount = 0;
   bool isLoading = false;
   DateTime currentDateTime = DateTime.now();
@@ -35,14 +35,14 @@ class GroupMainModel extends ChangeNotifier {
           taskCount += 1;
         }
       });
-      await getEventList(groupId: groupId);
+      await fetchEvents(groupId: groupId);
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future getEventList({String groupId}) async {
+  Future fetchEvents({String groupId}) async {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
     try {
       QuerySnapshot eventDoc = await FirebaseFirestore.instance
@@ -51,9 +51,8 @@ class GroupMainModel extends ChangeNotifier {
           .collection('events')
           .where('end', isGreaterThan: currentTimestamp)
           .get();
-      eventList = eventDoc.docs.map((doc) => Event.doc(doc)).toList();
-      eventList
-          .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
+      events = eventDoc.docs.map((doc) => Event.doc(doc)).toList();
+      events.sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
     } catch (e) {
       print(e);
     }

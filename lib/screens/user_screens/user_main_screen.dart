@@ -103,7 +103,7 @@ class UserMainScreen extends StatelessWidget {
                       child: RefreshIndicator(
                         onRefresh: () async {
                           try {
-                            await model.getEventList();
+                            await model.fetchEvents();
                           } catch (e) {
                             showMessageDialog(context, e.toString());
                           }
@@ -111,9 +111,9 @@ class UserMainScreen extends StatelessWidget {
                         child: ListView.builder(
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemExtent: 96.0 * textScale,
-                          itemCount: model.eventList.length,
+                          itemCount: model.events.length,
                           itemBuilder: (context, index) {
-                            final event = model.eventList[index];
+                            final event = model.events[index];
                             return EventListTile(
                               event: event,
                               imageURL:
@@ -129,7 +129,7 @@ class UserMainScreen extends StatelessWidget {
                                   ),
                                 );
                                 try {
-                                  await model.getEventList();
+                                  await model.fetchEvents();
                                 } catch (e) {
                                   showMessageDialog(context, e.toString());
                                 }
@@ -150,7 +150,7 @@ class UserMainScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     ),
                   )
-                : model.eventList.isEmpty
+                : model.events.isEmpty
                     ? const Center(
                         child: Text('予定されているイベントはありません'),
                       )

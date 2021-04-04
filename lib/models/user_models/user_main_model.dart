@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserMainModel extends ChangeNotifier {
-  List<Event> eventList = [];
+  List<Event> events = [];
   Map<String, ContentOwner> eventPlanner = {};
   int taskCount = 0;
   bool isLoading = false;
@@ -38,14 +38,14 @@ class UserMainModel extends ChangeNotifier {
           taskCount += 1;
         }
       });
-      await getEventList();
+      await fetchEvents();
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future getEventList() async {
+  Future fetchEvents() async {
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
     List<String> ownerIdList = [userId];
     try {
@@ -63,10 +63,9 @@ class UserMainModel extends ChangeNotifier {
           .where('ownerId', whereIn: ownerIdList)
           .where('end', isGreaterThan: currentTimestamp)
           .get();
-      eventList = eventQuery.docs.map((doc) => Event.doc(doc)).toList();
+      events = eventQuery.docs.map((doc) => Event.doc(doc)).toList();
 
-      eventList
-          .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
+      events.sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
     } catch (e) {
       print(e);
     }

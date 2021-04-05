@@ -40,8 +40,8 @@ class UserEditEventModel extends ChangeNotifier {
 
   void init({Event event}) {
     if (event.isAllDay == true) {
-      this.tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
-      this.cupertinoDatePickerMode = CupertinoDatePickerMode.date;
+      tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+      cupertinoDatePickerMode = CupertinoDatePickerMode.date;
       DateTime start = event.startingDateTime;
       DateTime end = event.endingDateTime;
       event.startingDateTime = DateTime(
@@ -65,15 +65,15 @@ class UserEditEventModel extends ChangeNotifier {
         );
       }
     }
-    this.ownerId = event.ownerId;
-    this.eventId = event.id;
-    this.eventTitle = event.title;
-    this.eventPlace = event.place;
-    this.eventMemo = event.memo;
-    this.isAllDay = event.isAllDay;
-    this.startingDateTime = event.startingDateTime;
-    this.endingDateTime = event.endingDateTime;
-    this.ownerDocRef = ownerId == userId
+    ownerId = event.ownerId;
+    eventId = event.id;
+    eventTitle = event.title;
+    eventPlace = event.place;
+    eventMemo = event.memo;
+    isAllDay = event.isAllDay;
+    startingDateTime = event.startingDateTime;
+    endingDateTime = event.endingDateTime;
+    ownerDocRef = ownerId == userId
         ? firestore.collection('users').doc(userId)
         : firestore.collection('groups').doc(ownerId);
     notifyListeners();
@@ -224,15 +224,15 @@ class UserEditEventModel extends ChangeNotifier {
     }
 
     try {
-      await this.ownerDocRef.collection('events').doc(this.eventId).update({
-        'title': this.eventTitle,
-        'place': this.eventPlace,
-        'memo': this.eventMemo,
-        'isAllDay': this.isAllDay,
+      await ownerDocRef.collection('events').doc(eventId).update({
+        'title': eventTitle,
+        'place': eventPlace,
+        'memo': eventMemo,
+        'isAllDay': isAllDay,
         'monthList': monthList,
         'dateList': dateList,
-        'start': Timestamp.fromDate(this.startingDateTime),
-        'end': Timestamp.fromDate(this.endingDateTime),
+        'start': Timestamp.fromDate(startingDateTime),
+        'end': Timestamp.fromDate(endingDateTime),
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {

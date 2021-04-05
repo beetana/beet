@@ -6,6 +6,7 @@ class GroupEditNameModel extends ChangeNotifier {
   String groupName = '';
   bool isLoading = false;
   List<String> groupUsersId = [];
+  final firestore = FirebaseFirestore.instance;
 
   void init({groupId, groupName}) {
     this.groupId = groupId;
@@ -26,29 +27,25 @@ class GroupEditNameModel extends ChangeNotifier {
     if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
+    final batch = firestore.batch();
+    final groupDocRef = firestore.collection('groups').doc(groupId);
+    batch.update(groupDocRef, {
+      'name': groupName,
+    });
     try {
-      final groupUsers = await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupId)
-          .collection('groupUsers')
-          .get();
-      groupUsersId = (groupUsers.docs.map((doc) => doc.id).toList());
-      await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupId)
-          .update({
-        'name': groupName,
-      });
+      final groupUsersQuery = await groupDocRef.collection('groupUsers').get();
+      groupUsersId = (groupUsersQuery.docs.map((doc) => doc.id).toList());
       for (String userId in groupUsersId) {
-        await FirebaseFirestore.instance
+        final joiningGroupDocRef = firestore
             .collection('users')
             .doc(userId)
             .collection('joiningGroup')
-            .doc(groupId)
-            .update({
+            .doc(groupId);
+        batch.update(joiningGroupDocRef, {
           'name': groupName,
         });
       }
+      await batch.commit();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

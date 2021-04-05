@@ -6,7 +6,8 @@ class UserEditNameModel extends ChangeNotifier {
   String userName = '';
   bool isLoading = false;
   List<String> joiningGroupsId = [];
-  final _auth = Auth.FirebaseAuth.instance;
+  final auth = Auth.FirebaseAuth.instance;
+  final firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -23,32 +24,34 @@ class UserEditNameModel extends ChangeNotifier {
   }
 
   Future updateUserName() async {
-    final Auth.User firebaseUser = _auth.currentUser;
-    final String userId = firebaseUser.uid;
-
     if (userName.isEmpty) {
       throw ('名前を入力してください');
     }
+    final Auth.User firebaseUser = auth.currentUser;
+    final String userId = firebaseUser.uid;
+    final batch = firestore.batch();
+    final userDocRef = firestore.collection('users').doc(userId);
+    batch.update(userDocRef, {
+      'name': userName,
+    });
     try {
-      final joiningGroups = await FirebaseFirestore.instance
+      final joiningGroupsQuery = await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroup')
           .get();
-      joiningGroupsId = (joiningGroups.docs.map((doc) => doc.id).toList());
-      await FirebaseFirestore.instance.collection('users').doc(userId).update({
-        'name': userName,
-      });
+      joiningGroupsId = (joiningGroupsQuery.docs.map((doc) => doc.id).toList());
       for (String groupId in joiningGroupsId) {
-        await FirebaseFirestore.instance
+        final groupUserDocRef = firestore
             .collection('groups')
             .doc(groupId)
             .collection('groupUsers')
-            .doc(userId)
-            .update({
+            .doc(userId);
+        batch.update(groupUserDocRef, {
           'name': userName,
         });
       }
+      await batch.commit();
       await firebaseUser.updateProfile(displayName: userName);
     } catch (e) {
       print(e);

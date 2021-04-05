@@ -52,11 +52,6 @@ class GroupMemberModel extends ChangeNotifier {
           (groupUsers.docs.map((doc) => doc['name'].toString()).toList());
       this.usersImageURL =
           (groupUsers.docs.map((doc) => doc['imageURL'].toString()).toList());
-      print(groupName);
-      print(groupUsers.size);
-      print(usersId);
-      print(usersName);
-      print(myId);
     } catch (e) {
       print(e);
     }
@@ -78,11 +73,21 @@ class GroupMemberModel extends ChangeNotifier {
   }
 
   Future deleteMember({String userId}) async {
-    final userDocRef = firestore.collection('users').doc(userId);
-    final groupDocRef = firestore.collection('groups').doc(groupId);
+    final batch = firestore.batch();
+    final joiningGroupDocRef = firestore
+        .collection('users')
+        .doc(userId)
+        .collection('joiningGroup')
+        .doc(groupId);
+    final groupUserDocRef = firestore
+        .collection('groups')
+        .doc(groupId)
+        .collection('groupUsers')
+        .doc(userId);
+    batch.delete(joiningGroupDocRef);
+    batch.delete(groupUserDocRef);
     try {
-      await userDocRef.collection('joiningGroup').doc(groupId).delete();
-      await groupDocRef.collection('groupUsers').doc(userId).delete();
+      await batch.commit();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');
@@ -90,6 +95,13 @@ class GroupMemberModel extends ChangeNotifier {
   }
 
   Future deleteGroup({String userId}) async {
+    final groupDocRef = firestore.collection('groups').doc(groupId);
+    final joiningGroupDocRef = firestore
+        .collection('users')
+        .doc(userId)
+        .collection('joiningGroup')
+        .doc(groupId);
+    final batch = firestore.batch();
     try {
       // Firebase Storage内のグループのプロフィール画像を削除
       if (groupImageURL.isNotEmpty) {
@@ -99,15 +111,11 @@ class GroupMemberModel extends ChangeNotifier {
             .delete();
       }
       // ユーザーのjoiningGroupからこのグループを削除
-      await firestore
-          .collection('users')
-          .doc(userId)
-          .collection('joiningGroup')
-          .doc(groupId)
-          .delete();
+      batch.delete(joiningGroupDocRef);
       // グループのドキュメントを削除するとCloud FunctionsのdeleteGroupがトリガーされ、
       // そのグループのサブコレクションも削除される
-      await firestore.collection('groups').doc(groupId).delete();
+      batch.delete(groupDocRef);
+      await batch.commit();
     } catch (e) {
       print(e);
     }

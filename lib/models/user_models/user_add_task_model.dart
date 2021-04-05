@@ -29,16 +29,11 @@ class UserAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init() async {
-    startLoading();
+  void init() {
     this.assignedUserId = [userId];
     this.dueDate = DateTime(now.year, now.month, now.day, 12);
     this.dueDateText = dateFormat.format(dueDate);
-    try {} catch (e) {
-      print(e);
-    } finally {
-      endLoading();
-    }
+    notifyListeners();
   }
 
   void showDueDatePicker() {

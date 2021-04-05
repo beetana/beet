@@ -8,7 +8,6 @@ class AddGroupModel extends ChangeNotifier {
   String groupName = '';
   String groupId = '';
   bool isLoading = false;
-  DocumentReference userDocRef;
   final firestore = FirebaseFirestore.instance;
   final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
@@ -22,42 +21,44 @@ class AddGroupModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init() {
-    this.userDocRef = firestore.collection('users').doc(userId);
-  }
-
   Future addGroup() async {
     if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
+    final userDocRef = firestore.collection('users').doc(userId);
+    final batch = firestore.batch();
     try {
-      final joiningGroup = await userDocRef.collection('joiningGroup').get();
+      final joiningGroupQuery =
+          await userDocRef.collection('joiningGroup').get();
 
-      if (joiningGroup.size < 8) {
+      if (joiningGroupQuery.size < 8) {
         final userDoc = await userDocRef.get();
-        this.userName = userDoc['name'];
-        this.userImageURL = userDoc['imageURL'];
+        userName = userDoc['name'];
+        userImageURL = userDoc['imageURL'];
         final newGroup = await firestore.collection('groups').add({
           'name': groupName,
           'imageURL': '',
           'createdAt': FieldValue.serverTimestamp(),
         });
-        this.groupId = newGroup.id;
-        await firestore
+        groupId = newGroup.id;
+        final groupUserDocRef = firestore
             .collection('groups')
             .doc(groupId)
             .collection('groupUsers')
-            .doc(userId)
-            .set({
+            .doc(userId);
+        batch.set(groupUserDocRef, {
           'name': userName,
           'imageURL': userImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
         });
-        await userDocRef.collection('joiningGroup').doc(groupId).set({
+        final joiningGroupDocRef =
+            userDocRef.collection('joiningGroup').doc(groupId);
+        batch.set(joiningGroupDocRef, {
           'name': groupName,
           'imageURL': '',
           'joinedAt': FieldValue.serverTimestamp(),
         });
+        await batch.commit();
       }
     } catch (e) {
       throw ('エラーが発生しました');

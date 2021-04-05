@@ -12,7 +12,7 @@ class AddGroupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AddGroupModel>(
-      create: (_) => AddGroupModel()..init(),
+      create: (_) => AddGroupModel(),
       child: WillPopScope(
         onWillPop: () async {
           FocusScope.of(context).unfocus();

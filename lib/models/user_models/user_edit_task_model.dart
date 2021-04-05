@@ -39,17 +39,17 @@ class UserEditTaskModel extends ChangeNotifier {
 
   Future init({Task task}) async {
     startLoading();
-    this.taskId = task.id;
-    this.ownerId = task.ownerId;
-    this.taskTitle = task.title;
-    this.taskMemo = task.memo;
-    this.isDecidedDueDate = task.isDecidedDueDate;
-    this.isCompleted = task.isCompleted;
-    this.dueDate = task.dueDate;
-    this.dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
-    this.assignedMembersId =
+    taskId = task.id;
+    ownerId = task.ownerId;
+    taskTitle = task.title;
+    taskMemo = task.memo;
+    isDecidedDueDate = task.isDecidedDueDate;
+    isCompleted = task.isCompleted;
+    dueDate = task.dueDate;
+    dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
+    assignedMembersId =
         task.assignedMembersId.map((id) => id.toString()).toList();
-    this.ownerDocRef = ownerId == userId
+    ownerDocRef = ownerId == userId
         ? firestore.collection('users').doc(userId)
         : firestore.collection('groups').doc(ownerId);
     try {
@@ -57,9 +57,10 @@ class UserEditTaskModel extends ChangeNotifier {
         final userDoc = await ownerDocRef.get();
         groupMembers[userId] = User.doc(userDoc);
       } else {
-        final groupUsers = await ownerDocRef.collection('groupUsers').get();
-        this.usersId = groupUsers.docs.map((doc) => doc.id).toList();
-        final users = groupUsers.docs.map((doc) => User.doc(doc)).toList();
+        final groupUsersQuery =
+            await ownerDocRef.collection('groupUsers').get();
+        usersId = groupUsersQuery.docs.map((doc) => doc.id).toList();
+        final users = groupUsersQuery.docs.map((doc) => User.doc(doc)).toList();
         users.forEach((user) {
           groupMembers[user.id] = user;
         });
@@ -93,10 +94,10 @@ class UserEditTaskModel extends ChangeNotifier {
               minimumDate: DateTime(1980, 1, 1),
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
-                this.dueDate =
+                dueDate =
                     DateTime(newDate.year, newDate.month, newDate.day, 12);
-                this.dueDateText = dateFormat.format(dueDate);
-                this.isDecidedDueDate = true;
+                dueDateText = dateFormat.format(dueDate);
+                isDecidedDueDate = true;
               },
             ),
           ),
@@ -110,11 +111,11 @@ class UserEditTaskModel extends ChangeNotifier {
               style: kCancelButtonTextStyle,
             ),
             onPressed: () {
-              this.dueDate = null;
-              this.dueDateText = '';
-              this.isDecidedDueDate = false;
-              this.dueDatePickerBox = const SizedBox();
-              this.isShowDueDatePicker = !isShowDueDatePicker;
+              dueDate = null;
+              dueDateText = '';
+              isDecidedDueDate = false;
+              dueDatePickerBox = const SizedBox();
+              isShowDueDatePicker = !isShowDueDatePicker;
               notifyListeners();
             },
           ),

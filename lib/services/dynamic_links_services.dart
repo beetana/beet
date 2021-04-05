@@ -157,10 +157,10 @@ class DynamicLinksServices {
     String groupName = '';
     String groupImageURL = '';
     JoiningState joiningState;
-    final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(userId);
-    final groupDocRef =
-        FirebaseFirestore.instance.collection('groups').doc(groupId);
+    final firestore = FirebaseFirestore.instance;
+    final userDocRef = firestore.collection('users').doc(userId);
+    final groupDocRef = firestore.collection('groups').doc(groupId);
+    final batch = firestore.batch();
 
     try {
       final joiningGroupQuery =
@@ -176,22 +176,20 @@ class DynamicLinksServices {
         final userDoc = await userDocRef.get();
         userName = userDoc['name'];
         userImageURL = userDoc['imageURL'];
-
-        await groupDocRef.collection('groupUsers').doc(userId).set({
+        batch.set(groupDocRef.collection('groupUsers').doc(userId), {
           'name': userName,
           'imageURL': userImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
         });
-
         final groupDoc = await groupDocRef.get();
         groupName = groupDoc['name'];
         groupImageURL = groupDoc['imageURL'];
-
-        await userDocRef.collection('joiningGroup').doc(groupId).set({
+        batch.set(userDocRef.collection('joiningGroup').doc(groupId), {
           'name': groupName,
           'imageURL': groupImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
         });
+        await batch.commit();
         joiningState = JoiningState.notYet;
       }
     } catch (e) {

@@ -36,20 +36,20 @@ class UserTaskDetailsModel extends ChangeNotifier {
   Future init({Task task}) async {
     startLoading();
     this.task = task;
-    this.ownerId = task.ownerId;
-    this.taskId = task.id;
-    this.taskTitle = task.title;
-    this.taskMemo = task.memo;
-    this.isDecidedDueDate = task.isDecidedDueDate;
-    this.dueDate = task.dueDate;
-    this.assignedMembersId = task.assignedMembersId;
-    this.isCompleted = task.isCompleted;
-    this.ownerDocRef = ownerId == userId
+    ownerId = task.ownerId;
+    taskId = task.id;
+    taskTitle = task.title;
+    taskMemo = task.memo;
+    isDecidedDueDate = task.isDecidedDueDate;
+    dueDate = task.dueDate;
+    assignedMembersId = task.assignedMembersId;
+    isCompleted = task.isCompleted;
+    ownerDocRef = ownerId == userId
         ? firestore.collection('users').doc(userId)
         : firestore.collection('groups').doc(ownerId);
     try {
       final ownerDoc = await ownerDocRef.get();
-      this.owner = ContentOwner.doc(ownerDoc);
+      owner = ContentOwner.doc(ownerDoc);
       if (ownerId == userId) {
         groupMembers[ownerId] = User.doc(ownerDoc);
       } else {
@@ -68,16 +68,15 @@ class UserTaskDetailsModel extends ChangeNotifier {
 
   Future fetchTask() async {
     try {
-      DocumentSnapshot taskDoc =
-          await ownerDocRef.collection('tasks').doc(taskId).get();
-      this.task = Task.doc(taskDoc);
-      this.ownerId = task.ownerId;
-      this.taskTitle = task.title;
-      this.taskMemo = task.memo;
-      this.isDecidedDueDate = task.isDecidedDueDate;
-      this.dueDate = task.dueDate;
-      this.assignedMembersId = task.assignedMembersId;
-      this.isCompleted = task.isCompleted;
+      final taskDoc = await ownerDocRef.collection('tasks').doc(taskId).get();
+      task = Task.doc(taskDoc);
+      ownerId = task.ownerId;
+      taskTitle = task.title;
+      taskMemo = task.memo;
+      isDecidedDueDate = task.isDecidedDueDate;
+      dueDate = task.dueDate;
+      assignedMembersId = task.assignedMembersId;
+      isCompleted = task.isCompleted;
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

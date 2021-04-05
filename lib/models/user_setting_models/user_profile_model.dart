@@ -14,6 +14,7 @@ class UserProfileModel extends ChangeNotifier {
   List<String> joiningGroupsId = [];
   final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
   final firestore = FirebaseFirestore.instance;
+  final storage = FirebaseStorage.instance;
   final _picker = ImagePicker();
 
   void startLoading() {
@@ -75,31 +76,29 @@ class UserProfileModel extends ChangeNotifier {
     if (imageFile == null) {
       throw ('ファイルが選択されていません');
     }
+    final batch = firestore.batch();
+    final userDocRef = firestore.collection('users').doc(userId);
     try {
-      TaskSnapshot snapshot = await FirebaseStorage.instance
-          .ref()
-          .child("userImage/$userId")
-          .putFile(imageFile);
+      TaskSnapshot snapshot =
+          await storage.ref().child("userImage/$userId").putFile(imageFile);
       userImageURL = await snapshot.ref.getDownloadURL();
-      final joiningGroups = await firestore
-          .collection('users')
-          .doc(userId)
-          .collection('joiningGroup')
-          .get();
-      joiningGroupsId = (joiningGroups.docs.map((doc) => doc.id).toList());
-      await firestore.collection('users').doc(userId).update({
+      batch.update(userDocRef, {
         'imageURL': userImageURL,
       });
+      final joiningGroupQuery =
+          await userDocRef.collection('joiningGroup').get();
+      joiningGroupsId = (joiningGroupQuery.docs.map((doc) => doc.id).toList());
       for (String groupId in joiningGroupsId) {
-        await firestore
+        final groupUserDocRef = firestore
             .collection('groups')
             .doc(groupId)
             .collection('groupUsers')
-            .doc(userId)
-            .update({
+            .doc(userId);
+        batch.update(groupUserDocRef, {
           'imageURL': userImageURL,
         });
       }
+      await batch.commit();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');
@@ -110,28 +109,30 @@ class UserProfileModel extends ChangeNotifier {
     if (userImageURL.isEmpty) {
       throw ('プロフィール画像が設定されていません');
     }
-
+    final batch = firestore.batch();
+    final userDocRef = firestore.collection('users').doc(userId);
     try {
-      await FirebaseStorage.instance.ref().child("userImage/$userId").delete();
-      final joiningGroups = await firestore
+      await storage.ref().child("userImage/$userId").delete();
+      batch.update(userDocRef, {
+        'imageURL': '',
+      });
+      final joiningGroupQuery = await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroup')
           .get();
-      joiningGroupsId = (joiningGroups.docs.map((doc) => doc.id).toList());
-      await firestore.collection('users').doc(userId).update({
-        'imageURL': '',
-      });
+      joiningGroupsId = (joiningGroupQuery.docs.map((doc) => doc.id).toList());
       for (String groupId in joiningGroupsId) {
-        await firestore
+        final groupUserDocRef = firestore
             .collection('groups')
             .doc(groupId)
             .collection('groupUsers')
-            .doc(userId)
-            .update({
+            .doc(userId);
+        batch.update(groupUserDocRef, {
           'imageURL': '',
         });
       }
+      await batch.commit();
       userImageURL = '';
       imageFile = null;
     } catch (e) {
@@ -143,7 +144,7 @@ class UserProfileModel extends ChangeNotifier {
   Future deleteAccount({String password}) async {
     final Auth.User firebaseUser = Auth.FirebaseAuth.instance.currentUser;
     final userDocRef = firestore.collection('users').doc(userId);
-
+    final batch = firestore.batch();
     try {
       await firebaseUser
           .reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
@@ -152,26 +153,26 @@ class UserProfileModel extends ChangeNotifier {
       ));
       // Firebase Storageにあるプロフィール画像を削除
       if (userImageURL.isNotEmpty) {
-        await FirebaseStorage.instance
-            .ref()
-            .child("userImage/$userId")
-            .delete();
+        await storage.ref().child("userImage/$userId").delete();
       }
       // 参加しているグループから自分のドキュメントを削除
-      final joiningGroups = await userDocRef.collection('joiningGroup').get();
-      print(joiningGroups);
-      joiningGroupsId = (joiningGroups.docs.map((doc) => doc.id).toList());
-      print(joiningGroupsId);
+      final joiningGroupQuery =
+          await userDocRef.collection('joiningGroup').get();
+      joiningGroupsId = (joiningGroupQuery.docs.map((doc) => doc.id).toList());
       if (joiningGroupsId.isNotEmpty) {
         for (String groupId in joiningGroupsId) {
-          final groupDocRef = firestore.collection('groups').doc(groupId);
-          await groupDocRef.collection('groupUsers').doc(userId).delete();
-          print('削除');
+          final groupUserDocRef = firestore
+              .collection('groups')
+              .doc(groupId)
+              .collection('groupUsers')
+              .doc(userId);
+          batch.delete(groupUserDocRef);
         }
       }
       // ユーザーのドキュメントを削除するとCloud FunctionsのdeleteUserがトリガーされ、
       // userDocRef以下のサブコレクションも削除される
-      await userDocRef.delete();
+      batch.delete(userDocRef);
+      await batch.commit();
       // ユーザーの認証情報を削除
       await firebaseUser.delete();
     } catch (e) {
@@ -192,6 +193,6 @@ String _convertErrorMessage(e) {
     case 'too-many-requests':
       return 'しばらく待ってからお試し下さい';
     default:
-      return '不明なエラーです';
+      return 'エラーが発生しました';
   }
 }

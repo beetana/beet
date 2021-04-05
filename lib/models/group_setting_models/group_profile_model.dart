@@ -12,7 +12,9 @@ class GroupProfileModel extends ChangeNotifier {
   File imageFile;
   bool isLoading = false;
   List<String> groupUsersId = [];
-  final _picker = ImagePicker();
+  final picker = ImagePicker();
+  final firestore = FirebaseFirestore.instance;
+  final storage = FirebaseStorage.instance;
 
   void startLoading() {
     isLoading = true;
@@ -28,10 +30,8 @@ class GroupProfileModel extends ChangeNotifier {
     startLoading();
     this.groupId = groupId;
     try {
-      DocumentSnapshot groupDoc = await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupId)
-          .get();
+      DocumentSnapshot groupDoc =
+          await firestore.collection('groups').doc(groupId).get();
       groupName = groupDoc['name'];
       groupImageURL = groupDoc['imageURL'];
     } catch (e) {
@@ -43,7 +43,7 @@ class GroupProfileModel extends ChangeNotifier {
   Future pickImageFile() async {
     imageFile = null;
     try {
-      final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
       imageFile = await ImageCropper.cropImage(
         sourcePath: pickedFile.path,
         maxWidth: 160,
@@ -76,33 +76,28 @@ class GroupProfileModel extends ChangeNotifier {
     if (imageFile == null) {
       throw ('ファイルが選択されていません');
     }
+    final batch = firestore.batch();
+    final groupDocRef = firestore.collection('groups').doc(groupId);
     try {
-      final storage = FirebaseStorage.instance;
       TaskSnapshot snapshot =
           await storage.ref().child("groupImage/$groupId").putFile(imageFile);
-      final String imageURL = await snapshot.ref.getDownloadURL();
-      final groupUsers = await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupId)
-          .collection('groupUsers')
-          .get();
-      groupUsersId = (groupUsers.docs.map((doc) => doc.id).toList());
-      await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupId)
-          .update({
-        'imageURL': imageURL,
+      groupImageURL = await snapshot.ref.getDownloadURL();
+      batch.update(groupDocRef, {
+        'imageURL': groupImageURL,
       });
+      final groupUsersQuery = await groupDocRef.collection('groupUsers').get();
+      groupUsersId = (groupUsersQuery.docs.map((doc) => doc.id).toList());
       for (String userId in groupUsersId) {
-        await FirebaseFirestore.instance
+        final joiningGroupDocRef = firestore
             .collection('users')
             .doc(userId)
             .collection('joiningGroup')
-            .doc(groupId)
-            .update({
-          'imageURL': imageURL,
+            .doc(groupId);
+        batch.update(joiningGroupDocRef, {
+          'imageURL': groupImageURL,
         });
       }
+      await batch.commit();
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');
@@ -113,34 +108,26 @@ class GroupProfileModel extends ChangeNotifier {
     if (groupImageURL.isEmpty) {
       throw ('プロフィール画像が設定されていません');
     }
-
+    final batch = firestore.batch();
+    final groupDocRef = firestore.collection('groups').doc(groupId);
     try {
-      await FirebaseStorage.instance
-          .ref()
-          .child("groupImage/$groupId")
-          .delete();
-      final groupUsers = await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupId)
-          .collection('groupUsers')
-          .get();
-      groupUsersId = (groupUsers.docs.map((doc) => doc.id).toList());
-      await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupId)
-          .update({
+      await storage.ref().child("groupImage/$groupId").delete();
+      batch.update(groupDocRef, {
         'imageURL': '',
       });
+      final groupUsersQuery = await groupDocRef.collection('groupUsers').get();
+      groupUsersId = (groupUsersQuery.docs.map((doc) => doc.id).toList());
       for (String userId in groupUsersId) {
-        await FirebaseFirestore.instance
+        final joiningGroupDocRef = firestore
             .collection('users')
             .doc(userId)
             .collection('joiningGroup')
-            .doc(groupId)
-            .update({
+            .doc(groupId);
+        batch.update(joiningGroupDocRef, {
           'imageURL': '',
         });
       }
+      await batch.commit();
       groupImageURL = '';
       imageFile = null;
     } catch (e) {

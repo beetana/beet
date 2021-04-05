@@ -1,6 +1,6 @@
 import 'package:beet/constants.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
-import 'package:beet/screens/user_setting_screens/user_terms_screen.dart';
+import 'package:beet/screens/terms_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/dark_loading_indicator.dart';
 import 'package:beet/widgets/thin_divider.dart';
@@ -137,8 +137,7 @@ class RegisterScreen extends StatelessWidget {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) =>
-                                                UserTermsScreen(),
+                                            builder: (context) => TermsScreen(),
                                             fullscreenDialog: true,
                                           ),
                                         );

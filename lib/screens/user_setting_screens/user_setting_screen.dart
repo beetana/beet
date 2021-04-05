@@ -1,9 +1,9 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/user_setting_models/user_setting_model.dart';
-import 'package:beet/screens/user_setting_screens/user_privacy_policy_screen.dart';
+import 'package:beet/screens/privacy_policy_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_security_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_profile_screen.dart';
-import 'package:beet/screens/user_setting_screens/user_terms_screen.dart';
+import 'package:beet/screens/terms_screen.dart';
 import 'package:beet/utilities/show_app_info_dialog.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +91,7 @@ class UserSettingScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => UserTermsScreen(),
+                      builder: (context) => TermsScreen(),
                       fullscreenDialog: true,
                     ),
                   );
@@ -107,7 +107,7 @@ class UserSettingScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => UserPrivacyPolicyScreen(),
+                      builder: (context) => PrivacyPolicyScreen(),
                       fullscreenDialog: true,
                     ),
                   );

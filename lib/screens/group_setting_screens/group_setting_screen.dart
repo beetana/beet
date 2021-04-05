@@ -2,8 +2,8 @@ import 'package:beet/constants.dart';
 import 'package:beet/models/group_setting_models/group_setting_model.dart';
 import 'package:beet/screens/group_setting_screens/group_member_screen.dart';
 import 'package:beet/screens/group_setting_screens/group_profile_screen.dart';
-import 'package:beet/screens/user_setting_screens/user_privacy_policy_screen.dart';
-import 'package:beet/screens/user_setting_screens/user_terms_screen.dart';
+import 'package:beet/screens/privacy_policy_screen.dart';
+import 'package:beet/screens/terms_screen.dart';
 import 'package:beet/utilities/show_app_info_dialog.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +95,7 @@ class GroupSettingScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => UserTermsScreen(),
+                      builder: (context) => TermsScreen(),
                       fullscreenDialog: true,
                     ),
                   );
@@ -111,7 +111,7 @@ class GroupSettingScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => UserPrivacyPolicyScreen(),
+                      builder: (context) => PrivacyPolicyScreen(),
                       fullscreenDialog: true,
                     ),
                   );

@@ -161,12 +161,20 @@ class UserProfileModel extends ChangeNotifier {
       joiningGroupsId = (joiningGroupQuery.docs.map((doc) => doc.id).toList());
       if (joiningGroupsId.isNotEmpty) {
         for (String groupId in joiningGroupsId) {
+          final groupDocRef = firestore.collection('groups').doc(groupId);
           final groupUserDocRef = firestore
               .collection('groups')
               .doc(groupId)
               .collection('groupUsers')
               .doc(userId);
-          batch.delete(groupUserDocRef);
+          final groupUsersQuery =
+              await groupDocRef.collection('groupUsers').get();
+          groupUsersQuery.size == 1
+              // もしグループに自分1人しかいなければグループのドキュメントごと削除する
+              // グループのドキュメントを削除するとCloud FunctionsのdeleteGroupがトリガーされ、
+              // そのグループのサブコレクションも削除される
+              ? batch.delete(groupDocRef)
+              : batch.delete(groupUserDocRef);
         }
       }
       // ユーザーのドキュメントを削除するとCloud FunctionsのdeleteUserがトリガーされ、

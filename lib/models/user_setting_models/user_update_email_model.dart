@@ -49,16 +49,16 @@ class UserUpdateEmailModel extends ChangeNotifier {
 String _convertErrorMessage(e) {
   switch (e) {
     case 'requires-recent-login':
-      return 'パスワードの入力が必要です';
+      return 'パスワードの入力が必要です。';
     case 'wrong-password':
-      return 'パスワードが正しくありません';
+      return 'パスワードが正しくありません。';
     case 'email-already-in-use':
-      return 'そのメールアドレスはすでに使用されています';
+      return 'そのメールアドレスはすでに使用されています。';
     case 'invalid-email':
-      return 'メールアドレスを正しい形式で入力してください';
+      return 'メールアドレスを正しい形式で入力してください。';
     case 'too-many-requests':
-      return 'しばらく待ってからお試し下さい';
+      return 'しばらく待ってからお試し下さい。';
     default:
-      return '不明なエラーです';
+      return 'エラーが発生しました。';
   }
 }

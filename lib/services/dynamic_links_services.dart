@@ -121,7 +121,7 @@ class DynamicLinksServices {
                 } else {
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  await showMessageDialog(context, '不明なエラーです。');
+                  await showMessageDialog(context, 'エラーが発生しました。');
                 }
               },
             ),

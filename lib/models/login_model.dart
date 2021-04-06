@@ -31,6 +31,7 @@ class LoginModel extends ChangeNotifier {
         password: password,
       );
     } catch (e) {
+      print(e.code);
       throw (_convertErrorMessage(e.code));
     }
   }
@@ -39,16 +40,16 @@ class LoginModel extends ChangeNotifier {
 String _convertErrorMessage(e) {
   switch (e) {
     case 'invalid-email':
-      return 'メールアドレスを正しい形式で入力してください';
+      return 'メールアドレスを正しい形式で入力してください。';
     case 'wrong-password':
-      return 'パスワードが間違っています';
+      return 'パスワードが間違っています。';
     case 'user-not-found':
-      return 'ユーザーが見つかりません';
+      return 'ユーザーが見つかりません。';
     case 'user-disabled':
-      return 'ユーザーが無効です';
+      return 'ユーザーが無効です。';
     case 'too-many-requests':
-      return 'しばらく待ってからお試し下さい';
+      return 'しばらく待ってからお試し下さい。';
     default:
-      return '不明なエラーです';
+      return 'エラーが発生しました。';
   }
 }

@@ -47,6 +47,7 @@ class GroupCalendarModel extends ChangeNotifier {
       }
     } catch (e) {
       print(e);
+      throw ('エラーが発生しました');
     }
   }
 

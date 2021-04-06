@@ -51,16 +51,16 @@ class UserUpdatePasswordModel extends ChangeNotifier {
 String _convertErrorMessage(e) {
   switch (e) {
     case 'wrong-password':
-      return '現在のパスワードが正しくありません';
+      return '現在のパスワードが正しくありません。';
     case 'user-not-found':
-      return 'ユーザーが見つかりません';
+      return 'ユーザーが見つかりません。';
     case 'user-disabled':
-      return 'ユーザーが無効です';
+      return 'ユーザーが無効です。';
     case 'weak-password':
-      return 'パスワードは6文字以上で作成してください';
+      return 'パスワードは6文字以上で作成してください。';
     case 'too-many-requests':
-      return 'しばらく待ってからお試し下さい';
+      return 'しばらく待ってからお試し下さい。';
     default:
-      return '不明なエラーです';
+      return 'エラーが発生しました。';
   }
 }

@@ -37,17 +37,16 @@ class GroupAddTaskModel extends ChangeNotifier {
     this.dueDate = DateTime(now.year, now.month, now.day, 12);
     this.dueDateText = dateFormat.format(dueDate);
     try {
-      final groupUsersQuery = await FirebaseFirestore.instance
+      final membersQuery = await FirebaseFirestore.instance
           .collection('groups')
           .doc(groupId)
-          .collection('groupUsers')
+          .collection('members')
           .get();
-      usersId = (groupUsersQuery.docs.map((doc) => doc.id).toList());
+      usersId = (membersQuery.docs.map((doc) => doc.id).toList());
       userNames =
-          (groupUsersQuery.docs.map((doc) => doc['name'].toString()).toList());
-      userImageURLs = (groupUsersQuery.docs
-          .map((doc) => doc['imageURL'].toString())
-          .toList());
+          (membersQuery.docs.map((doc) => doc['name'].toString()).toList());
+      userImageURLs =
+          (membersQuery.docs.map((doc) => doc['imageURL'].toString()).toList());
     } catch (e) {
       print(e);
     } finally {

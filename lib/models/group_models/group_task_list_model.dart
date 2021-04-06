@@ -27,9 +27,8 @@ class GroupTaskListModel extends ChangeNotifier {
     startLoading();
     groupDocRef = firestore.collection('groups').doc(groupId);
     try {
-      QuerySnapshot groupUsers =
-          await groupDocRef.collection('groupUsers').get();
-      final users = groupUsers.docs.map((doc) => User.doc(doc)).toList();
+      final membersQuery = await groupDocRef.collection('members').get();
+      final users = membersQuery.docs.map((doc) => User.doc(doc)).toList();
       users.forEach((user) {
         members[user.id] = user;
       });

@@ -74,7 +74,7 @@ class GroupMemberScreen extends StatelessWidget {
                                     );
                                   } else {
                                     await model.deleteMember(userId: userId);
-                                    await model.fetchGroupUsers();
+                                    await model.fetchMembers();
                                   }
                                 } catch (e) {
                                   showMessageDialog(context, e.toString());

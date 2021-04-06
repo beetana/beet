@@ -33,25 +33,25 @@ class GroupMemberModel extends ChangeNotifier {
           await firestore.collection('groups').doc(groupId).get();
       this.groupName = groupDoc['name'];
       this.groupImageURL = groupDoc['imageURL'];
-      await fetchGroupUsers();
+      await fetchMembers();
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future fetchGroupUsers() async {
+  Future fetchMembers() async {
     try {
-      QuerySnapshot groupUsers = await firestore
+      final membersQuery = await firestore
           .collection('groups')
           .doc(groupId)
-          .collection('groupUsers')
+          .collection('members')
           .get();
-      this.usersId = (groupUsers.docs.map((doc) => doc.id).toList());
+      this.usersId = (membersQuery.docs.map((doc) => doc.id).toList());
       this.usersName =
-          (groupUsers.docs.map((doc) => doc['name'].toString()).toList());
+          (membersQuery.docs.map((doc) => doc['name'].toString()).toList());
       this.usersImageURL =
-          (groupUsers.docs.map((doc) => doc['imageURL'].toString()).toList());
+          (membersQuery.docs.map((doc) => doc['imageURL'].toString()).toList());
     } catch (e) {
       print(e);
     }
@@ -60,12 +60,12 @@ class GroupMemberModel extends ChangeNotifier {
   Future<int> checkMemberCount() async {
     int memberCount;
     try {
-      final groupUsersQuery = await firestore
+      final membersQuery = await firestore
           .collection('groups')
           .doc(groupId)
-          .collection('groupUsers')
+          .collection('members')
           .get();
-      memberCount = groupUsersQuery.size;
+      memberCount = membersQuery.size;
     } catch (e) {
       print(e);
     }
@@ -77,15 +77,15 @@ class GroupMemberModel extends ChangeNotifier {
     final joiningGroupDocRef = firestore
         .collection('users')
         .doc(userId)
-        .collection('joiningGroup')
+        .collection('joiningGroups')
         .doc(groupId);
-    final groupUserDocRef = firestore
+    final memberDocRef = firestore
         .collection('groups')
         .doc(groupId)
-        .collection('groupUsers')
+        .collection('members')
         .doc(userId);
     batch.delete(joiningGroupDocRef);
-    batch.delete(groupUserDocRef);
+    batch.delete(memberDocRef);
     try {
       await batch.commit();
     } catch (e) {
@@ -99,7 +99,7 @@ class GroupMemberModel extends ChangeNotifier {
     final joiningGroupDocRef = firestore
         .collection('users')
         .doc(userId)
-        .collection('joiningGroup')
+        .collection('joiningGroups')
         .doc(groupId);
     final batch = firestore.batch();
     try {

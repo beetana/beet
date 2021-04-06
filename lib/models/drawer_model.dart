@@ -24,19 +24,18 @@ class DrawerModel extends ChangeNotifier {
   Future init() async {
     startLoading();
     try {
-      DocumentSnapshot userDoc =
-          await firestore.collection('users').doc(userId).get();
+      final userDoc = await firestore.collection('users').doc(userId).get();
 
-      QuerySnapshot joiningGroupQuery = await firestore
+      final joiningGroupsQuery = await firestore
           .collection('users')
           .doc(userId)
-          .collection('joiningGroup')
+          .collection('joiningGroups')
           .get();
 
       userImageURL = userDoc['imageURL'];
       userName = userDoc['name'];
       joiningGroups =
-          joiningGroupQuery.docs.map((doc) => JoiningGroup.doc(doc)).toList();
+          joiningGroupsQuery.docs.map((doc) => JoiningGroup.doc(doc)).toList();
       joiningGroups.sort((a, b) => a.joinedAt.compareTo(b.joinedAt));
     } catch (e) {
       print(e);

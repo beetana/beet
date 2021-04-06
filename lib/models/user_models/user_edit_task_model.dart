@@ -57,10 +57,9 @@ class UserEditTaskModel extends ChangeNotifier {
         final userDoc = await ownerDocRef.get();
         groupMembers[userId] = User.doc(userDoc);
       } else {
-        final groupUsersQuery =
-            await ownerDocRef.collection('groupUsers').get();
-        usersId = groupUsersQuery.docs.map((doc) => doc.id).toList();
-        final users = groupUsersQuery.docs.map((doc) => User.doc(doc)).toList();
+        final membersQuery = await ownerDocRef.collection('members').get();
+        usersId = membersQuery.docs.map((doc) => doc.id).toList();
+        final users = membersQuery.docs.map((doc) => User.doc(doc)).toList();
         users.forEach((user) {
           groupMembers[user.id] = user;
         });

@@ -85,16 +85,16 @@ class UserProfileModel extends ChangeNotifier {
       batch.update(userDocRef, {
         'imageURL': userImageURL,
       });
-      final joiningGroupQuery =
-          await userDocRef.collection('joiningGroup').get();
-      joiningGroupsId = (joiningGroupQuery.docs.map((doc) => doc.id).toList());
+      final joiningGroupsQuery =
+          await userDocRef.collection('joiningGroups').get();
+      joiningGroupsId = (joiningGroupsQuery.docs.map((doc) => doc.id).toList());
       for (String groupId in joiningGroupsId) {
-        final groupUserDocRef = firestore
+        final memberDocRef = firestore
             .collection('groups')
             .doc(groupId)
-            .collection('groupUsers')
+            .collection('members')
             .doc(userId);
-        batch.update(groupUserDocRef, {
+        batch.update(memberDocRef, {
           'imageURL': userImageURL,
         });
       }
@@ -116,19 +116,19 @@ class UserProfileModel extends ChangeNotifier {
       batch.update(userDocRef, {
         'imageURL': '',
       });
-      final joiningGroupQuery = await firestore
+      final joiningGroupsQuery = await firestore
           .collection('users')
           .doc(userId)
-          .collection('joiningGroup')
+          .collection('joiningGroups')
           .get();
-      joiningGroupsId = (joiningGroupQuery.docs.map((doc) => doc.id).toList());
+      joiningGroupsId = (joiningGroupsQuery.docs.map((doc) => doc.id).toList());
       for (String groupId in joiningGroupsId) {
-        final groupUserDocRef = firestore
+        final memberDocRef = firestore
             .collection('groups')
             .doc(groupId)
-            .collection('groupUsers')
+            .collection('members')
             .doc(userId);
-        batch.update(groupUserDocRef, {
+        batch.update(memberDocRef, {
           'imageURL': '',
         });
       }
@@ -156,25 +156,24 @@ class UserProfileModel extends ChangeNotifier {
         await storage.ref().child("userImage/$userId").delete();
       }
       // 参加しているグループから自分のドキュメントを削除
-      final joiningGroupQuery =
-          await userDocRef.collection('joiningGroup').get();
-      joiningGroupsId = (joiningGroupQuery.docs.map((doc) => doc.id).toList());
+      final joiningGroupsQuery =
+          await userDocRef.collection('joiningGroups').get();
+      joiningGroupsId = (joiningGroupsQuery.docs.map((doc) => doc.id).toList());
       if (joiningGroupsId.isNotEmpty) {
         for (String groupId in joiningGroupsId) {
           final groupDocRef = firestore.collection('groups').doc(groupId);
-          final groupUserDocRef = firestore
+          final memberDocRef = firestore
               .collection('groups')
               .doc(groupId)
-              .collection('groupUsers')
+              .collection('members')
               .doc(userId);
-          final groupUsersQuery =
-              await groupDocRef.collection('groupUsers').get();
-          groupUsersQuery.size == 1
+          final membersQuery = await groupDocRef.collection('members').get();
+          membersQuery.size == 1
               // もしグループに自分1人しかいなければグループのドキュメントごと削除する
               // グループのドキュメントを削除するとCloud FunctionsのdeleteGroupがトリガーされ、
               // そのグループのサブコレクションも削除される
               ? batch.delete(groupDocRef)
-              : batch.delete(groupUserDocRef);
+              : batch.delete(memberDocRef);
         }
       }
       // ユーザーのドキュメントを削除するとCloud FunctionsのdeleteUserがトリガーされ、

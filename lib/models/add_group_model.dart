@@ -28,10 +28,10 @@ class AddGroupModel extends ChangeNotifier {
     final userDocRef = firestore.collection('users').doc(userId);
     final batch = firestore.batch();
     try {
-      final joiningGroupQuery =
-          await userDocRef.collection('joiningGroup').get();
+      final joiningGroupsQuery =
+          await userDocRef.collection('joiningGroups').get();
 
-      if (joiningGroupQuery.size < 8) {
+      if (joiningGroupsQuery.size < 8) {
         final userDoc = await userDocRef.get();
         userName = userDoc['name'];
         userImageURL = userDoc['imageURL'];
@@ -41,18 +41,18 @@ class AddGroupModel extends ChangeNotifier {
           'createdAt': FieldValue.serverTimestamp(),
         });
         groupId = newGroup.id;
-        final groupUserDocRef = firestore
+        final memberDocRef = firestore
             .collection('groups')
             .doc(groupId)
-            .collection('groupUsers')
+            .collection('members')
             .doc(userId);
-        batch.set(groupUserDocRef, {
+        batch.set(memberDocRef, {
           'name': userName,
           'imageURL': userImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
         });
         final joiningGroupDocRef =
-            userDocRef.collection('joiningGroup').doc(groupId);
+            userDocRef.collection('joiningGroups').doc(groupId);
         batch.set(joiningGroupDocRef, {
           'name': groupName,
           'imageURL': '',

@@ -11,7 +11,7 @@ class GroupProfileModel extends ChangeNotifier {
   String groupImageURL = '';
   File imageFile;
   bool isLoading = false;
-  List<String> groupUsersId = [];
+  List<String> membersId = [];
   final picker = ImagePicker();
   final firestore = FirebaseFirestore.instance;
   final storage = FirebaseStorage.instance;
@@ -85,13 +85,13 @@ class GroupProfileModel extends ChangeNotifier {
       batch.update(groupDocRef, {
         'imageURL': groupImageURL,
       });
-      final groupUsersQuery = await groupDocRef.collection('groupUsers').get();
-      groupUsersId = (groupUsersQuery.docs.map((doc) => doc.id).toList());
-      for (String userId in groupUsersId) {
+      final membersQuery = await groupDocRef.collection('members').get();
+      membersId = (membersQuery.docs.map((doc) => doc.id).toList());
+      for (String userId in membersId) {
         final joiningGroupDocRef = firestore
             .collection('users')
             .doc(userId)
-            .collection('joiningGroup')
+            .collection('joiningGroups')
             .doc(groupId);
         batch.update(joiningGroupDocRef, {
           'imageURL': groupImageURL,
@@ -115,13 +115,13 @@ class GroupProfileModel extends ChangeNotifier {
       batch.update(groupDocRef, {
         'imageURL': '',
       });
-      final groupUsersQuery = await groupDocRef.collection('groupUsers').get();
-      groupUsersId = (groupUsersQuery.docs.map((doc) => doc.id).toList());
-      for (String userId in groupUsersId) {
+      final membersQuery = await groupDocRef.collection('members').get();
+      membersId = (membersQuery.docs.map((doc) => doc.id).toList());
+      for (String userId in membersId) {
         final joiningGroupDocRef = firestore
             .collection('users')
             .doc(userId)
-            .collection('joiningGroup')
+            .collection('joiningGroups')
             .doc(groupId);
         batch.update(joiningGroupDocRef, {
           'imageURL': '',

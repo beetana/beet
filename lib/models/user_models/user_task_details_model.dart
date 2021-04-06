@@ -53,9 +53,8 @@ class UserTaskDetailsModel extends ChangeNotifier {
       if (ownerId == userId) {
         groupMembers[ownerId] = User.doc(ownerDoc);
       } else {
-        QuerySnapshot groupUsers =
-            await ownerDocRef.collection('groupUsers').get();
-        final users = groupUsers.docs.map((doc) => User.doc(doc)).toList();
+        final membersQuery = await ownerDocRef.collection('members').get();
+        final users = membersQuery.docs.map((doc) => User.doc(doc)).toList();
         users.forEach((user) {
           groupMembers[user.id] = user;
         });

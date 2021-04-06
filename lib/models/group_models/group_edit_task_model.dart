@@ -46,16 +46,16 @@ class GroupEditTaskModel extends ChangeNotifier {
     this.assignedMembersId =
         task.assignedMembersId.map((id) => id.toString()).toList();
     try {
-      QuerySnapshot groupUsers = await FirebaseFirestore.instance
+      final membersQuery = await FirebaseFirestore.instance
           .collection('groups')
           .doc(groupId)
-          .collection('groupUsers')
+          .collection('members')
           .get();
-      usersId = (groupUsers.docs.map((doc) => doc.id).toList());
+      usersId = (membersQuery.docs.map((doc) => doc.id).toList());
       userNames =
-          (groupUsers.docs.map((doc) => doc['name'].toString()).toList());
+          (membersQuery.docs.map((doc) => doc['name'].toString()).toList());
       userImageURLs =
-          (groupUsers.docs.map((doc) => doc['imageURL'].toString()).toList());
+          (membersQuery.docs.map((doc) => doc['imageURL'].toString()).toList());
     } catch (e) {
       print(e);
     } finally {

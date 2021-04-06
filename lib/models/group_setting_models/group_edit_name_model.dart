@@ -5,7 +5,7 @@ class GroupEditNameModel extends ChangeNotifier {
   String groupId;
   String groupName = '';
   bool isLoading = false;
-  List<String> groupUsersId = [];
+  List<String> membersId = [];
   final firestore = FirebaseFirestore.instance;
 
   void init({groupId, groupName}) {
@@ -33,13 +33,13 @@ class GroupEditNameModel extends ChangeNotifier {
       'name': groupName,
     });
     try {
-      final groupUsersQuery = await groupDocRef.collection('groupUsers').get();
-      groupUsersId = (groupUsersQuery.docs.map((doc) => doc.id).toList());
-      for (String userId in groupUsersId) {
+      final membersQuery = await groupDocRef.collection('members').get();
+      membersId = (membersQuery.docs.map((doc) => doc.id).toList());
+      for (String userId in membersId) {
         final joiningGroupDocRef = firestore
             .collection('users')
             .doc(userId)
-            .collection('joiningGroup')
+            .collection('joiningGroups')
             .doc(groupId);
         batch.update(joiningGroupDocRef, {
           'name': groupName,

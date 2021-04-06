@@ -162,12 +162,12 @@ class DynamicLinksServices {
     final groupDocRef = firestore.collection('groups').doc(groupId);
 
     try {
-      final joiningGroupQuery =
-          await userDocRef.collection('joiningGroup').get();
+      final joiningGroupsQuery =
+          await userDocRef.collection('joiningGroups').get();
       final joiningGroupDoc =
-          await userDocRef.collection('joiningGroup').doc(groupId).get();
+          await userDocRef.collection('joiningGroups').doc(groupId).get();
 
-      if (joiningGroupQuery.size >= 8) {
+      if (joiningGroupsQuery.size >= 8) {
         joiningState = JoiningState.noMore;
       } else if (joiningGroupDoc.exists) {
         joiningState = JoiningState.already;
@@ -176,7 +176,7 @@ class DynamicLinksServices {
         userName = userDoc['name'];
         userImageURL = userDoc['imageURL'];
 
-        await groupDocRef.collection('groupUsers').doc(userId).set({
+        await groupDocRef.collection('members').doc(userId).set({
           'name': userName,
           'imageURL': userImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
@@ -186,7 +186,7 @@ class DynamicLinksServices {
         groupName = groupDoc['name'];
         groupImageURL = groupDoc['imageURL'];
 
-        await userDocRef.collection('joiningGroup').doc(groupId).set({
+        await userDocRef.collection('joiningGroups').doc(groupId).set({
           'name': groupName,
           'imageURL': groupImageURL,
           'joinedAt': FieldValue.serverTimestamp(),

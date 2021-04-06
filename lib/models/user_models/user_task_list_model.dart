@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserTaskListModel extends ChangeNotifier {
-  Map<String, User> joiningGroupUsers = {};
+  Map<String, User> joiningGroupMembers = {};
   List<Task> tasks = [];
   List<Task> completedTasks = [];
   List<Task> notCompletedTasks = [];
@@ -29,20 +29,20 @@ class UserTaskListModel extends ChangeNotifier {
     final userDocRef = firestore.collection('users').doc(userId);
     try {
       DocumentSnapshot userDoc = await userDocRef.get();
-      joiningGroupUsers[userId] = User.doc(userDoc);
-      QuerySnapshot joiningGroupQuery =
-          await userDocRef.collection('joiningGroup').get();
-      final joiningGroups =
-          joiningGroupQuery.docs.map((doc) => doc.id).toList();
-      joiningGroups.forEach((groupId) async {
-        QuerySnapshot groupUsers = await firestore
+      joiningGroupMembers[userId] = User.doc(userDoc);
+      final joiningGroupsQuery =
+          await userDocRef.collection('joiningGroups').get();
+      final joiningGroupsId =
+          joiningGroupsQuery.docs.map((doc) => doc.id).toList();
+      joiningGroupsId.forEach((groupId) async {
+        final membersQuery = await firestore
             .collection('groups')
             .doc(groupId)
-            .collection('groupUsers')
+            .collection('members')
             .get();
-        final users = groupUsers.docs.map((doc) => User.doc(doc)).toList();
+        final users = membersQuery.docs.map((doc) => User.doc(doc)).toList();
         users.forEach((user) {
-          joiningGroupUsers[user.id] = user;
+          joiningGroupMembers[user.id] = user;
         });
       });
       await fetchTasks();

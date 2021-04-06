@@ -34,12 +34,12 @@ class UserCalendarModel extends ChangeNotifier {
     int durationDays = last.difference(first).inDays;
 
     try {
-      final joiningGroupQuery = await firestore
+      final joiningGroupsQuery = await firestore
           .collection('users')
           .doc(userId)
-          .collection('joiningGroup')
+          .collection('joiningGroups')
           .get();
-      ownerIdList.addAll(joiningGroupQuery.docs.map((doc) => doc.id).toList());
+      ownerIdList.addAll(joiningGroupsQuery.docs.map((doc) => doc.id).toList());
 
       await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 

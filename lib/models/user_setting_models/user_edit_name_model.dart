@@ -38,16 +38,16 @@ class UserEditNameModel extends ChangeNotifier {
       final joiningGroupsQuery = await firestore
           .collection('users')
           .doc(userId)
-          .collection('joiningGroup')
+          .collection('joiningGroups')
           .get();
       joiningGroupsId = (joiningGroupsQuery.docs.map((doc) => doc.id).toList());
       for (String groupId in joiningGroupsId) {
-        final groupUserDocRef = firestore
+        final memberDocRef = firestore
             .collection('groups')
             .doc(groupId)
-            .collection('groupUsers')
+            .collection('members')
             .doc(userId);
-        batch.update(groupUserDocRef, {
+        batch.update(memberDocRef, {
           'name': userName,
         });
       }

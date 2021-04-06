@@ -55,6 +55,7 @@ class GroupMainModel extends ChangeNotifier {
       events.sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
     } catch (e) {
       print(e);
+      throw ('エラーが発生しました');
     }
     notifyListeners();
   }

@@ -61,6 +61,7 @@ class AddGroupModel extends ChangeNotifier {
         await batch.commit();
       }
     } catch (e) {
+      print(e);
       throw ('エラーが発生しました');
     }
   }

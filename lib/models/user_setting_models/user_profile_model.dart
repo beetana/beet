@@ -192,14 +192,14 @@ class UserProfileModel extends ChangeNotifier {
 String _convertErrorMessage(e) {
   switch (e) {
     case 'wrong-password':
-      return 'パスワードが正しくありません';
+      return 'パスワードが正しくありません。';
     case 'user-not-found':
-      return 'ユーザーが見つかりません';
+      return 'ユーザーが見つかりません。';
     case 'user-disabled':
-      return 'ユーザーが無効です';
+      return 'ユーザーが無効です。';
     case 'too-many-requests':
-      return 'しばらく待ってからお試し下さい';
+      return 'しばらく待ってからお試し下さい。';
     default:
-      return 'エラーが発生しました';
+      return 'エラーが発生しました。';
   }
 }

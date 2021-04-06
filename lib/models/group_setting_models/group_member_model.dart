@@ -54,6 +54,7 @@ class GroupMemberModel extends ChangeNotifier {
           (membersQuery.docs.map((doc) => doc['imageURL'].toString()).toList());
     } catch (e) {
       print(e);
+      throw ('エラーが発生しました');
     }
   }
 
@@ -68,6 +69,7 @@ class GroupMemberModel extends ChangeNotifier {
       memberCount = membersQuery.size;
     } catch (e) {
       print(e);
+      throw ('エラーが発生しました');
     }
     return memberCount;
   }
@@ -118,6 +120,7 @@ class GroupMemberModel extends ChangeNotifier {
       await batch.commit();
     } catch (e) {
       print(e);
+      throw ('エラーが発生しました');
     }
   }
 }

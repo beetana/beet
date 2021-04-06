@@ -57,6 +57,7 @@ class RegisterModel extends ChangeNotifier {
         'createdAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
+      print(e.code);
       throw (_convertErrorMessage(e.code));
     }
   }
@@ -65,14 +66,14 @@ class RegisterModel extends ChangeNotifier {
 String _convertErrorMessage(e) {
   switch (e) {
     case 'invalid-email':
-      return 'メールアドレスを正しい形式で入力してください';
+      return 'メールアドレスを正しい形式で入力してください。';
     case 'email-already-in-use':
-      return 'そのメールアドレスはすでに使用されています';
+      return 'そのメールアドレスはすでに使用されています。';
     case 'weak-password':
-      return 'パスワードは6文字以上で作成してください';
+      return 'パスワードは6文字以上で作成してください。';
     case 'too-many-requests':
-      return 'しばらく待ってからお試し下さい';
+      return 'しばらく待ってからお試し下さい。';
     default:
-      return '不明なエラーです';
+      return 'エラーが発生しました。';
   }
 }

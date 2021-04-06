@@ -55,6 +55,7 @@ class GroupTaskListModel extends ChangeNotifier {
       notCompletedTasks.sort((a, b) => a.dueDate.compareTo(b.dueDate));
     } catch (e) {
       print(e);
+      throw ('エラーが発生しました');
     }
     notifyListeners();
   }

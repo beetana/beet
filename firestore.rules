@@ -16,7 +16,7 @@ service cloud.firestore {
     // リクエストしているユーザーが認証済みかつグループのメンバーであること
     function isGroupMember(userId, groupId) {
       return isAuthenticated()
-        && exists(/databases/$(database)/documents/groups/$(groupId)/groupUsers/$(userId));
+        && exists(/databases/$(database)/documents/groups/$(groupId)/members/$(userId));
     }
 
     // ユーザーデータのスキーマ検証
@@ -84,11 +84,11 @@ service cloud.firestore {
     }
 
     // グループに参加しているユーザーデータのスキーマ検証
-    function isValidGroupUserData(groupUserData) {
-      return groupUserData.size() == 3
-        && 'name' in groupUserData && groupUserData.name is string
-        && 'imageURL' in groupUserData && groupUserData.imageURL is string
-        && 'joinedAt' in groupUserData && groupUserData.joinedAt is timestamp;
+    function isValidMemberData(memberData) {
+      return memberData.size() == 3
+        && 'name' in memberData && memberData.name is string
+        && 'imageURL' in memberData && memberData.imageURL is string
+        && 'joinedAt' in memberData && memberData.joinedAt is timestamp;
     }
 
     // /users
@@ -158,8 +158,8 @@ service cloud.firestore {
         allow delete: if isDocumentAuthor(userId);
       }
 
-      // /users/{userId}/joiningGroup
-      match /joiningGroup/{groupId} {
+      // /users/{userId}/joiningGroups
+      match /joiningGroups/{groupId} {
         allow read: if isDocumentAuthor(userId);
 
         allow create: if isDocumentAuthor(userId)
@@ -261,17 +261,17 @@ service cloud.firestore {
         allow delete: if isGroupMember(request.auth.uid, groupId);
       }
 
-      // /groups/{groupId}/groupUsers
-      match /groupUsers/{userId} {
+      // /groups/{groupId}/members
+      match /members/{userId} {
         allow read: if isGroupMember(request.auth.uid, groupId);
 
         allow create: if isDocumentAuthor(userId)
-          && isValidGroupUserData(request.resource.data)
+          && isValidMemberData(request.resource.data)
           && request.resource.data.name.size() >= 1
           && request.resource.data.joinedAt == request.time;
 
         allow update: if isDocumentAuthor(userId)
-          && isValidGroupUserData(request.resource.data)
+          && isValidMemberData(request.resource.data)
           && request.resource.data.name.size() >= 1
           && request.resource.data.joinedAt == resource.data.joinedAt;
 

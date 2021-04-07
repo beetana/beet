@@ -81,7 +81,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         child: const Text(
                           'ログイン',
                           style: TextStyle(
-                            color: Color(0xFFf5f5f5),
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

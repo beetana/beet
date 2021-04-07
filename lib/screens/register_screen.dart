@@ -174,7 +174,7 @@ class RegisterScreen extends StatelessWidget {
                             child: const Text(
                               '新規登録',
                               style: TextStyle(
-                                color: Color(0xFFf5f5f5),
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

@@ -1,5 +1,6 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/login_model.dart';
+import 'package:beet/screens/reset_password_screen.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/dark_loading_indicator.dart';
@@ -114,6 +115,24 @@ class LoginScreen extends StatelessWidget {
                               model.endLoading();
                             },
                           ),
+                        ),
+                        const SizedBox(height: 32.0),
+                        TextButton(
+                          child: const Text(
+                            'パスワードを忘れた場合',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: kSlightlyTransparentPrimaryColor,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ResetPasswordScreen(),
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(height: 16.0),
                       ],

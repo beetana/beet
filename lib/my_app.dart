@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
         JapaneseCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('en', 'US'),
         const Locale('ja', 'JA'),
+        const Locale('en', 'US'),
       ],
       locale: const Locale('ja', 'JA'),
       debugShowCheckedModeBanner: false,

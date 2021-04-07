@@ -31,7 +31,7 @@ class AddGroupScreen extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 40.0, horizontal: 16.0),
+                        vertical: 32.0, horizontal: 16.0),
                     child: Column(
                       children: <Widget>[
                         Container(
@@ -64,7 +64,7 @@ class AddGroupScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 48.0),
+                        const SizedBox(height: 32.0),
                         Container(
                           height: 56.0,
                           width: 160.0,

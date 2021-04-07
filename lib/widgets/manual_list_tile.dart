@@ -13,7 +13,7 @@ class ManualListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 8),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -35,7 +35,8 @@ class ManualListTile extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   question,
                   style: const TextStyle(
@@ -48,7 +49,8 @@ class ManualListTile extends StatelessWidget {
             Container(
               width: double.infinity,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   answer,
                   style: const TextStyle(

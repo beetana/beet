@@ -1,6 +1,7 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/user_setting_models/user_setting_model.dart';
 import 'package:beet/screens/privacy_policy_screen.dart';
+import 'package:beet/screens/manual_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_security_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_profile_screen.dart';
 import 'package:beet/screens/terms_screen.dart';
@@ -51,9 +52,7 @@ class UserSettingScreen extends StatelessWidget {
                   );
                 },
               ),
-              ThinDivider(
-                indent: 16.0,
-              ),
+              ThinDivider(indent: 16.0),
               ListTile(
                 title: const Text('ログインとセキュリティ'),
                 trailing: const Icon(Icons.keyboard_arrow_right),
@@ -85,6 +84,20 @@ class UserSettingScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
+                title: const Text('アプリの使い方'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ManualScreen(),
+                      // UserProfileScreen(),
+                    ),
+                  );
+                },
+              ),
+              ThinDivider(indent: 16.0),
+              ListTile(
                 title: const Text('利用規約'),
                 trailing: const Icon(Icons.keyboard_arrow_right),
                 onTap: () {
@@ -97,9 +110,7 @@ class UserSettingScreen extends StatelessWidget {
                   );
                 },
               ),
-              ThinDivider(
-                indent: 16.0,
-              ),
+              ThinDivider(indent: 16.0),
               ListTile(
                 title: const Text('プライバシーポリシー'),
                 trailing: const Icon(Icons.keyboard_arrow_right),
@@ -113,9 +124,7 @@ class UserSettingScreen extends StatelessWidget {
                   );
                 },
               ),
-              ThinDivider(
-                indent: 16.0,
-              ),
+              ThinDivider(indent: 16.0),
               ListTile(
                 title: const Text('アプリの詳細'),
                 trailing: const Icon(Icons.keyboard_arrow_right),

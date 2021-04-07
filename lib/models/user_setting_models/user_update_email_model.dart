@@ -1,3 +1,4 @@
+import 'package:beet/utilities/convert_error_message.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
@@ -41,24 +42,7 @@ class UserUpdateEmailModel extends ChangeNotifier {
       if (e.code == 'requires-recent-login') {
         isAuthRequired = true;
       }
-      throw (_convertErrorMessage(e.code));
+      throw (convertErrorMessage(e.code));
     }
-  }
-}
-
-String _convertErrorMessage(e) {
-  switch (e) {
-    case 'requires-recent-login':
-      return 'パスワードの入力が必要です。';
-    case 'wrong-password':
-      return 'パスワードが正しくありません。';
-    case 'email-already-in-use':
-      return 'そのメールアドレスはすでに使用されています。';
-    case 'invalid-email':
-      return 'メールアドレスを正しい形式で入力してください。';
-    case 'too-many-requests':
-      return 'しばらく待ってからお試し下さい。';
-    default:
-      return 'エラーが発生しました。';
   }
 }

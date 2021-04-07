@@ -67,7 +67,7 @@ class AddGroupScreen extends StatelessWidget {
                         const SizedBox(height: 48.0),
                         Container(
                           height: 56.0,
-                          width: 160,
+                          width: 160.0,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                           ),

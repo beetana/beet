@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:beet/utilities/convert_error_message.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -184,22 +185,7 @@ class UserProfileModel extends ChangeNotifier {
       await firebaseUser.delete();
     } catch (e) {
       print(e.code);
-      throw (_convertErrorMessage(e.code));
+      throw (convertErrorMessage(e.code));
     }
-  }
-}
-
-String _convertErrorMessage(e) {
-  switch (e) {
-    case 'wrong-password':
-      return 'パスワードが正しくありません。';
-    case 'user-not-found':
-      return 'ユーザーが見つかりません。';
-    case 'user-disabled':
-      return 'ユーザーが無効です。';
-    case 'too-many-requests':
-      return 'しばらく待ってからお試し下さい。';
-    default:
-      return 'エラーが発生しました。';
   }
 }

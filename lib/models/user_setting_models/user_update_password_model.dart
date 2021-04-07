@@ -1,3 +1,4 @@
+import 'package:beet/utilities/convert_error_message.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
@@ -43,24 +44,7 @@ class UserUpdatePasswordModel extends ChangeNotifier {
       await user.updatePassword(newPassword);
     } catch (e) {
       print(e.code);
-      throw (_convertErrorMessage(e.code));
+      throw (convertErrorMessage(e.code));
     }
-  }
-}
-
-String _convertErrorMessage(e) {
-  switch (e) {
-    case 'wrong-password':
-      return '現在のパスワードが正しくありません。';
-    case 'user-not-found':
-      return 'ユーザーが見つかりません。';
-    case 'user-disabled':
-      return 'ユーザーが無効です。';
-    case 'weak-password':
-      return 'パスワードは6文字以上で作成してください。';
-    case 'too-many-requests':
-      return 'しばらく待ってからお試し下さい。';
-    default:
-      return 'エラーが発生しました。';
   }
 }

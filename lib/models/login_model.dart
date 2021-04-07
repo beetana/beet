@@ -1,3 +1,4 @@
+import 'package:beet/utilities/convert_error_message.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
@@ -32,24 +33,7 @@ class LoginModel extends ChangeNotifier {
       );
     } catch (e) {
       print(e.code);
-      throw (_convertErrorMessage(e.code));
+      throw (convertErrorMessage(e.code));
     }
-  }
-}
-
-String _convertErrorMessage(e) {
-  switch (e) {
-    case 'invalid-email':
-      return 'メールアドレスを正しい形式で入力してください。';
-    case 'wrong-password':
-      return 'パスワードが間違っています。';
-    case 'user-not-found':
-      return 'ユーザーが見つかりません。';
-    case 'user-disabled':
-      return 'ユーザーが無効です。';
-    case 'too-many-requests':
-      return 'しばらく待ってからお試し下さい。';
-    default:
-      return 'エラーが発生しました。';
   }
 }

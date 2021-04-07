@@ -30,7 +30,7 @@ class TaskListTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
         child: Container(
           decoration: BoxDecoration(
-            color: kTransparentDullWhiteColor,
+            color: kDullWhiteColor,
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Padding(

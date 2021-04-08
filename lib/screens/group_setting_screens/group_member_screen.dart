@@ -243,8 +243,11 @@ Future _inviteMemberDialog(context, dynamicLink, groupName) async {
           SimpleDialogOption(
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(width: 2.0, color: Colors.blue),
-                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(
+                  width: 2.0,
+                  color: kEnterButtonColor,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
               ),
               child: const Center(
                   child: Text(

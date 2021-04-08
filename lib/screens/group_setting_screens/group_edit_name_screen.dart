@@ -51,6 +51,7 @@ class GroupEditNameScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: TextField(
                     controller: groupNameController,
+                    autofocus: true,
                     decoration: InputDecoration(
                       hintText: 'グループ名',
                       suffix: IconButton(

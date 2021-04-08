@@ -50,6 +50,7 @@ class UserEditNameScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: TextField(
                     controller: userNameController,
+                    autofocus: true,
                     decoration: InputDecoration(
                       hintText: 'アカウント名',
                       suffix: IconButton(

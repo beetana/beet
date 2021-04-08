@@ -52,6 +52,7 @@ class UserUpdateEmailScreen extends StatelessWidget {
                     children: [
                       TextField(
                         controller: emailController,
+                        autofocus: true,
                         decoration: InputDecoration(
                           hintText: 'メールアドレス',
                           suffix: IconButton(

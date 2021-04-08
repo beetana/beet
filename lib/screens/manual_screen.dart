@@ -20,6 +20,10 @@ class ManualScreen extends StatelessWidget {
                 answer: 'セットリストの並べ替え画面で、曲やMCを長押しすることで削除できます。',
               ),
               ManualListTile(
+                question: '追加した予定が表示されない',
+                answer: 'イベント一覧やタスク一覧などの画面は、上から下にスワイプすることで更新できます。',
+              ),
+              ManualListTile(
                 question: 'グループを作りたい',
                 answer:
                     '新規グループ作成の手順は以下の通りです。\n1.画面左上のメニューバーからメニューを開き、一番下の[グループを作成]をタップ。\n2.グループ名を入力し、決定ボタンをタップ。',

@@ -50,7 +50,7 @@ class UserProfileScreen extends StatelessWidget {
                                                     ? NetworkImage(
                                                         model.userImageURL)
                                                     : const AssetImage(
-                                                        'images/test_user_image.png'),
+                                                        'images/user_profile.png'),
                                             backgroundColor: Colors.transparent,
                                           ),
                                           highlightColor: Colors.transparent,

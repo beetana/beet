@@ -1,5 +1,6 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/user_models/user_main_model.dart';
+import 'package:beet/objects/event.dart';
 import 'package:beet/screens/user_screens/user_event_details_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
@@ -113,12 +114,14 @@ class UserMainScreen extends StatelessWidget {
                           itemExtent: 96.0 * textScale,
                           itemCount: model.events.length,
                           itemBuilder: (context, index) {
-                            final event = model.events[index];
+                            final Event event = model.events[index];
+                            final isOwn = event.ownerId == model.userId;
                             return EventListTile(
                               event: event,
                               imageURL:
                                   model.eventPlanner[event.ownerId].imageURL,
                               name: model.eventPlanner[event.ownerId].name,
+                              isOwn: isOwn,
                               textScale: textScale,
                               onTap: () async {
                                 await Navigator.push(

@@ -113,12 +113,12 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                                   backgroundImage: imageURL ==
                                                           null
                                                       ? const AssetImage(
-                                                          'images/test_user_image.png')
+                                                          'images/user_profile.png')
                                                       : imageURL.isNotEmpty
                                                           ? NetworkImage(
                                                               imageURL)
                                                           : const AssetImage(
-                                                              'images/test_user_image.png'),
+                                                              'images/user_profile.png'),
                                                   backgroundColor:
                                                       Colors.transparent,
                                                 ),

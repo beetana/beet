@@ -64,7 +64,7 @@ class TaskListTile extends StatelessWidget {
                                             task.assignedMembersId[index]] ==
                                         null
                                     ? const AssetImage(
-                                        'images/test_user_image.png')
+                                        'images/user_profile.png')
                                     : users[task.assignedMembersId[index]]
                                             .imageURL
                                             .isNotEmpty
@@ -73,7 +73,7 @@ class TaskListTile extends StatelessWidget {
                                                 .imageURL,
                                           )
                                         : const AssetImage(
-                                            'images/test_user_image.png'),
+                                            'images/user_profile.png'),
                                 backgroundColor: Colors.transparent,
                               ),
                             );

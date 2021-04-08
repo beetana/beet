@@ -58,7 +58,7 @@ class UserMainModel extends ChangeNotifier {
 
       await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 
-      QuerySnapshot eventQuery = await firestore
+      final eventQuery = await firestore
           .collectionGroup('events')
           .where('ownerId', whereIn: ownerIdList)
           .where('end', isGreaterThan: currentTimestamp)
@@ -76,13 +76,11 @@ class UserMainModel extends ChangeNotifier {
   Future fetchContentOwnerInfo({List<String> ownerIdList}) async {
     for (String id in ownerIdList) {
       if (id.length == 28) {
-        DocumentSnapshot userDoc =
-            await firestore.collection('users').doc(id).get();
+        final userDoc = await firestore.collection('users').doc(id).get();
         ContentOwner info = ContentOwner.doc(userDoc);
         eventPlanner[id] = info;
       } else {
-        DocumentSnapshot groupDoc =
-            await firestore.collection('groups').doc(id).get();
+        final groupDoc = await firestore.collection('groups').doc(id).get();
         ContentOwner info = ContentOwner.doc(groupDoc);
         eventPlanner[id] = info;
       }

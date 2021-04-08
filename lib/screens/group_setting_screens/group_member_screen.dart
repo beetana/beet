@@ -39,8 +39,7 @@ class GroupMemberScreen extends StatelessWidget {
                             leading: CircleAvatar(
                               backgroundImage: userImageURL.isNotEmpty
                                   ? NetworkImage(userImageURL)
-                                  : const AssetImage(
-                                      'images/test_user_image.png'),
+                                  : const AssetImage('images/user_profile.png'),
                               backgroundColor: Colors.transparent,
                             ),
                             title: Text(

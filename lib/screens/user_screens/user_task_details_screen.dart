@@ -73,13 +73,19 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                       child: CircleAvatar(
                                         backgroundImage: model.owner.imageURL ==
                                                 null
-                                            ? const AssetImage(
-                                                'images/test_user_image.png')
+                                            ? model.isOwn
+                                                ? const AssetImage(
+                                                    'images/user_profile.png')
+                                                : const AssetImage(
+                                                    'images/group_profile.png')
                                             : model.owner.imageURL.isNotEmpty
                                                 ? NetworkImage(
                                                     model.owner.imageURL)
-                                                : const AssetImage(
-                                                    'images/test_user_image.png'),
+                                                : model.isOwn
+                                                    ? const AssetImage(
+                                                        'images/user_profile.png')
+                                                    : const AssetImage(
+                                                        'images/group_profile.png'),
                                         backgroundColor: Colors.transparent,
                                       ),
                                     ),
@@ -133,12 +139,12 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                                   backgroundImage: imageURL ==
                                                           null
                                                       ? const AssetImage(
-                                                          'images/test_user_image.png')
+                                                          'images/user_profile.png')
                                                       : imageURL.isNotEmpty
                                                           ? NetworkImage(
                                                               imageURL)
                                                           : const AssetImage(
-                                                              'images/test_user_image.png'),
+                                                              'images/user_profile.png'),
                                                   backgroundColor:
                                                       Colors.transparent,
                                                 ),

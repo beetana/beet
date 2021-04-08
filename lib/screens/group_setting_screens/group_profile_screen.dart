@@ -42,7 +42,7 @@ class GroupProfileScreen extends StatelessWidget {
                                       : model.groupImageURL.isNotEmpty
                                           ? NetworkImage(model.groupImageURL)
                                           : const AssetImage(
-                                              'images/test_user_image.png'),
+                                              'images/group_profile.png'),
                                   backgroundColor: Colors.transparent,
                                 ),
                                 highlightColor: Colors.transparent,

@@ -3,7 +3,7 @@ import 'package:beet/services/dynamic_links_services.dart';
 import 'package:beet/models/group_setting_models/group_member_model.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
-import 'package:beet/widgets/dark_loading_indicator.dart';
+import 'package:beet/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -111,7 +111,7 @@ class GroupMemberScreen extends StatelessWidget {
                 ),
               ),
             ),
-            DarkLoadingIndicator(isLoading: model.isLoading),
+            LoadingIndicator(isLoading: model.isLoading),
           ],
         );
       }),

@@ -1,4 +1,5 @@
 import 'package:beet/models/user_models/user_calendar_model.dart';
+import 'package:beet/objects/event.dart';
 import 'package:beet/screens/user_screens/user_add_event_screen.dart';
 import 'package:beet/screens/user_screens/user_event_details_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
@@ -42,12 +43,14 @@ class UserCalendarScreen extends StatelessWidget {
                         itemCount: model.selectedEvents.length + 1,
                         itemBuilder: (context, index) {
                           if (index < model.selectedEvents.length) {
-                            final event = model.selectedEvents[index];
+                            final Event event = model.selectedEvents[index];
+                            final bool isOwn = event.ownerId == model.userId;
                             return EventListTile(
                               event: event,
                               imageURL:
                                   model.eventPlanner[event.ownerId].imageURL,
                               name: model.eventPlanner[event.ownerId].name,
+                              isOwn: isOwn,
                               textScale: textScale,
                               onTap: () async {
                                 await Navigator.push(

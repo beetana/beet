@@ -17,6 +17,7 @@ class UserTaskDetailsModel extends ChangeNotifier {
   List<dynamic> assignedMembersId = [];
   Map<String, User> groupMembers = {};
   bool isCompleted;
+  bool isOwn;
   bool isLoading = false;
   ContentOwner owner;
   DocumentReference ownerDocRef;
@@ -44,13 +45,14 @@ class UserTaskDetailsModel extends ChangeNotifier {
     dueDate = task.dueDate;
     assignedMembersId = task.assignedMembersId;
     isCompleted = task.isCompleted;
-    ownerDocRef = ownerId == userId
+    isOwn = ownerId == userId;
+    ownerDocRef = isOwn
         ? firestore.collection('users').doc(userId)
         : firestore.collection('groups').doc(ownerId);
     try {
       final ownerDoc = await ownerDocRef.get();
       owner = ContentOwner.doc(ownerDoc);
-      if (ownerId == userId) {
+      if (isOwn) {
         groupMembers[ownerId] = User.doc(ownerDoc);
       } else {
         final membersQuery = await ownerDocRef.collection('members').get();
@@ -76,6 +78,7 @@ class UserTaskDetailsModel extends ChangeNotifier {
       dueDate = task.dueDate;
       assignedMembersId = task.assignedMembersId;
       isCompleted = task.isCompleted;
+      isOwn = ownerId == userId;
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

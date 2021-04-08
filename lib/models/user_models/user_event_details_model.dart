@@ -15,8 +15,10 @@ class UserEventDetailsModel extends ChangeNotifier {
   bool isAllDay = false;
   DateTime startingDateTime;
   DateTime endingDateTime;
+  bool isOwn;
   bool isLoading = false;
   ContentOwner owner;
+  DocumentReference ownerDocRef;
   final firestore = FirebaseFirestore.instance;
   final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
@@ -41,7 +43,8 @@ class UserEventDetailsModel extends ChangeNotifier {
     isAllDay = event.isAllDay;
     startingDateTime = event.startingDateTime;
     endingDateTime = event.endingDateTime;
-    final ownerDocRef = ownerId == userId
+    isOwn = ownerId == userId;
+    ownerDocRef = isOwn
         ? firestore.collection('users').doc(ownerId)
         : firestore.collection('groups').doc(ownerId);
     try {
@@ -54,19 +57,9 @@ class UserEventDetailsModel extends ChangeNotifier {
   }
 
   Future fetchEvent() async {
-    final eventDocRef = ownerId == userId
-        ? firestore
-            .collection('users')
-            .doc(userId)
-            .collection('events')
-            .doc(eventId)
-        : firestore
-            .collection('groups')
-            .doc(ownerId)
-            .collection('events')
-            .doc(eventId);
     try {
-      final eventDoc = await eventDocRef.get();
+      final eventDoc =
+          await ownerDocRef.collection('events').doc(eventId).get();
       event = Event.doc(eventDoc);
       ownerId = event.ownerId;
       eventId = event.id;
@@ -76,6 +69,7 @@ class UserEventDetailsModel extends ChangeNotifier {
       isAllDay = event.isAllDay;
       startingDateTime = event.startingDateTime;
       endingDateTime = event.endingDateTime;
+      isOwn = ownerId == userId;
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');
@@ -84,9 +78,6 @@ class UserEventDetailsModel extends ChangeNotifier {
   }
 
   Future deleteEvent() async {
-    final ownerDocRef = ownerId == userId
-        ? firestore.collection('users').doc(userId)
-        : firestore.collection('groups').doc(ownerId);
     try {
       await ownerDocRef.collection('events').doc(eventId).delete();
     } catch (e) {

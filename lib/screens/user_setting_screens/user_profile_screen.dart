@@ -3,7 +3,7 @@ import 'package:beet/models/user_setting_models/user_profile_model.dart';
 import 'package:beet/screens/user_setting_screens/user_edit_name_screen.dart';
 import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
-import 'package:beet/widgets/dark_loading_indicator.dart';
+import 'package:beet/widgets/loading_indicator.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -199,7 +199,7 @@ class UserProfileScreen extends StatelessWidget {
                 );
               }),
             ),
-            DarkLoadingIndicator(isLoading: model.isLoading),
+            LoadingIndicator(isLoading: model.isLoading),
           ],
         );
       }),

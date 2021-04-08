@@ -3,7 +3,7 @@ import 'package:beet/models/group_setting_models/group_profile_model.dart';
 import 'package:beet/screens/group_setting_screens/group_edit_name_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
-import 'package:beet/widgets/dark_loading_indicator.dart';
+import 'package:beet/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -151,7 +151,7 @@ class GroupProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
-            DarkLoadingIndicator(isLoading: model.isLoading),
+            LoadingIndicator(isLoading: model.isLoading),
           ],
         );
       }),

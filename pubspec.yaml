@@ -41,18 +41,10 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - images/test_user_image.png
     - images/app_icon.png
+    - images/user_profile.png
+    - images/group_profile.png
   fonts:
-    - family: MPLUSRounded1c
-      fonts:
-        - asset: fonts/MPLUSRounded1c-Black.ttf
-        - asset: fonts/MPLUSRounded1c-Bold.ttf
-        - asset: fonts/MPLUSRounded1c-ExtraBold.ttf
-        - asset: fonts/MPLUSRounded1c-Light.ttf
-        - asset: fonts/MPLUSRounded1c-Medium.ttf
-        - asset: fonts/MPLUSRounded1c-Regular.ttf
-        - asset: fonts/MPLUSRounded1c-Thin.ttf
     - family: MPLUS1p
       fonts:
         - asset: fonts/MPLUS1p-Black.ttf

@@ -57,11 +57,11 @@ class UserTaskListModel extends ChangeNotifier {
     notCompletedTasks = [];
     changeStateTasks = [];
     try {
-      QuerySnapshot taskQuery = await firestore
+      final tasksQuery = await firestore
           .collectionGroup('tasks')
           .where('assignedMembersId', arrayContains: userId)
           .get();
-      tasks = taskQuery.docs.map((doc) => Task.doc(doc)).toList();
+      tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
       tasks.forEach((task) {
         task.isCompleted
             ? completedTasks.add(task)

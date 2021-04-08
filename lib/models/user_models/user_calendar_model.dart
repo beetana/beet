@@ -43,13 +43,13 @@ class UserCalendarModel extends ChangeNotifier {
 
       await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 
-      QuerySnapshot eventDoc = await firestore
+      final eventsQuery = await firestore
           .collectionGroup('events')
           .where('ownerId', whereIn: ownerIdList)
           .where('monthList', arrayContains: monthForm)
           .get();
 
-      eventList = eventDoc.docs.map((doc) => Event.doc(doc)).toList();
+      eventList = eventsQuery.docs.map((doc) => Event.doc(doc)).toList();
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
       for (int i = 0; i <= durationDays; i++) {

@@ -42,13 +42,13 @@ class GroupSongListModel extends ChangeNotifier {
 
   Future fetchSongs() async {
     try {
-      final songQuery = await FirebaseFirestore.instance
+      final songsQuery = await FirebaseFirestore.instance
           .collection('groups')
           .doc(groupId)
           .collection('songs')
           .orderBy('createdAt', descending: false)
           .get();
-      songs = songQuery.docs.map((doc) => Song.doc(doc)).toList();
+      songs = songsQuery.docs.map((doc) => Song.doc(doc)).toList();
       setList = [];
       songCount = 0;
       totalPlayTime = 0;

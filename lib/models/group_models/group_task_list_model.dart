@@ -44,8 +44,8 @@ class GroupTaskListModel extends ChangeNotifier {
     notCompletedTasks = [];
     changeStateTasks = [];
     try {
-      QuerySnapshot taskQuery = await groupDocRef.collection('tasks').get();
-      tasks = taskQuery.docs.map((doc) => Task.doc(doc)).toList();
+      final tasksQuery = await groupDocRef.collection('tasks').get();
+      tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
       tasks.forEach((task) {
         task.isCompleted
             ? completedTasks.add(task)

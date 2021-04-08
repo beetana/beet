@@ -28,11 +28,11 @@ class UserMainModel extends ChangeNotifier {
     taskCount = 0;
     startLoading();
     try {
-      final taskQuery = await firestore
+      final tasksQuery = await firestore
           .collectionGroup('tasks')
           .where('assignedMembersId', arrayContains: userId)
           .get();
-      final tasks = taskQuery.docs.map((doc) => Task.doc(doc)).toList();
+      final tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
       tasks.forEach((task) {
         if (task.isCompleted == false) {
           taskCount += 1;
@@ -58,12 +58,12 @@ class UserMainModel extends ChangeNotifier {
 
       await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 
-      final eventQuery = await firestore
+      final eventsQuery = await firestore
           .collectionGroup('events')
           .where('ownerId', whereIn: ownerIdList)
           .where('end', isGreaterThan: currentTimestamp)
           .get();
-      events = eventQuery.docs.map((doc) => Event.doc(doc)).toList();
+      events = eventsQuery.docs.map((doc) => Event.doc(doc)).toList();
 
       events.sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
     } catch (e) {

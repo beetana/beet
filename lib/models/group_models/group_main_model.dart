@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class GroupMainModel extends ChangeNotifier {
   List<Event> events = [];
-  int taskCount = 0;
+  int notCompletedTasksCount = 0;
   bool isLoading = false;
   DateTime currentDateTime;
   final firestore = FirebaseFirestore.instance;
@@ -42,7 +42,7 @@ class GroupMainModel extends ChangeNotifier {
       final tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
       final notCompletedTasks =
           tasks.where((task) => task.isCompleted == false).toList();
-      taskCount = notCompletedTasks.length;
+      notCompletedTasksCount = notCompletedTasks.length;
 
       final eventsQuery = await firestore
           .collection('groups')

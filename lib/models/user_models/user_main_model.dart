@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart' as Auth;
 class UserMainModel extends ChangeNotifier {
   List<Event> events = [];
   Map<String, ContentOwner> eventOwners = {};
-  int taskCount = 0;
+  int notCompletedTasksCount = 0;
   bool isLoading = false;
   DateTime currentDateTime;
   final firestore = FirebaseFirestore.instance;
@@ -46,7 +46,7 @@ class UserMainModel extends ChangeNotifier {
       final tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
       final notCompletedTasks =
           tasks.where((task) => task.isCompleted == false).toList();
-      taskCount = notCompletedTasks.length;
+      notCompletedTasksCount = notCompletedTasks.length;
 
       final joiningGroupsQuery = await firestore
           .collection('users')

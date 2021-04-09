@@ -75,7 +75,7 @@ class GroupMainScreen extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
-                                        model.taskCount.toString(),
+                                        model.notCompletedTasksCount.toString(),
                                         style: TextStyle(
                                           fontSize: taskCountTextSize,
                                           color: kDullGreenColor,

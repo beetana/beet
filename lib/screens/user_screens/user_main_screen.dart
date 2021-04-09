@@ -104,7 +104,7 @@ class UserMainScreen extends StatelessWidget {
                       child: RefreshIndicator(
                         onRefresh: () async {
                           try {
-                            await model.fetchEvents();
+                            await model.fetchMainInfo();
                           } catch (e) {
                             showMessageDialog(context, e.toString());
                           }
@@ -119,8 +119,8 @@ class UserMainScreen extends StatelessWidget {
                             return EventListTile(
                               event: event,
                               imageURL:
-                                  model.eventPlanner[event.ownerId].imageURL,
-                              name: model.eventPlanner[event.ownerId].name,
+                                  model.eventOwners[event.ownerId].imageURL,
+                              name: model.eventOwners[event.ownerId].name,
                               isOwn: isOwn,
                               textScale: textScale,
                               onTap: () async {
@@ -132,7 +132,7 @@ class UserMainScreen extends StatelessWidget {
                                   ),
                                 );
                                 try {
-                                  await model.fetchEvents();
+                                  await model.fetchMainInfo();
                                 } catch (e) {
                                   showMessageDialog(context, e.toString());
                                 }

@@ -104,7 +104,7 @@ class GroupMainScreen extends StatelessWidget {
                       child: RefreshIndicator(
                         onRefresh: () async {
                           try {
-                            await model.fetchEvents(groupId: groupId);
+                            await model.fetchMainInfo(groupId: groupId);
                           } catch (e) {
                             showMessageDialog(context, e.toString());
                           }
@@ -129,7 +129,7 @@ class GroupMainScreen extends StatelessWidget {
                                   ),
                                 );
                                 try {
-                                  await model.fetchEvents(groupId: groupId);
+                                  await model.fetchMainInfo(groupId: groupId);
                                 } catch (e) {
                                   showMessageDialog(context, e.toString());
                                 }

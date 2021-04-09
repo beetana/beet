@@ -7,10 +7,10 @@ import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserMainModel extends ChangeNotifier {
   List<Event> events = [];
-  Map<String, ContentOwner> eventPlanner = {};
+  Map<String, ContentOwner> eventOwners = {};
   int taskCount = 0;
   bool isLoading = false;
-  DateTime currentDateTime = DateTime.now();
+  DateTime currentDateTime;
   final firestore = FirebaseFirestore.instance;
   final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
 
@@ -25,37 +25,35 @@ class UserMainModel extends ChangeNotifier {
   }
 
   Future init() async {
-    taskCount = 0;
     startLoading();
     try {
-      final tasksQuery = await firestore
-          .collectionGroup('tasks')
-          .where('assignedMembersId', arrayContains: userId)
-          .get();
-      final tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
-      tasks.forEach((task) {
-        if (task.isCompleted == false) {
-          taskCount += 1;
-        }
-      });
-      await fetchEvents();
+      await fetchMainInfo();
     } catch (e) {
       print(e);
     }
     endLoading();
   }
 
-  Future fetchEvents() async {
+  Future fetchMainInfo() async {
+    currentDateTime = DateTime.now();
     final currentTimestamp = Timestamp.fromDate(currentDateTime);
     List<String> ownerIdList = [userId];
     try {
+      final tasksQuery = await firestore
+          .collectionGroup('tasks')
+          .where('assignedMembersId', arrayContains: userId)
+          .get();
+      final tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
+      final notCompletedTasks =
+          tasks.where((task) => task.isCompleted == false).toList();
+      taskCount = notCompletedTasks.length;
+
       final joiningGroupsQuery = await firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroups')
           .get();
       ownerIdList.addAll(joiningGroupsQuery.docs.map((doc) => doc.id).toList());
-
       await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 
       final eventsQuery = await firestore
@@ -64,7 +62,6 @@ class UserMainModel extends ChangeNotifier {
           .where('end', isGreaterThan: currentTimestamp)
           .get();
       events = eventsQuery.docs.map((doc) => Event.doc(doc)).toList();
-
       events.sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
     } catch (e) {
       print(e);
@@ -77,12 +74,12 @@ class UserMainModel extends ChangeNotifier {
     for (String id in ownerIdList) {
       if (id.length == 28) {
         final userDoc = await firestore.collection('users').doc(id).get();
-        ContentOwner info = ContentOwner.doc(userDoc);
-        eventPlanner[id] = info;
+        ContentOwner owner = ContentOwner.doc(userDoc);
+        eventOwners[id] = owner;
       } else {
         final groupDoc = await firestore.collection('groups').doc(id).get();
-        ContentOwner info = ContentOwner.doc(groupDoc);
-        eventPlanner[id] = info;
+        ContentOwner owner = ContentOwner.doc(groupDoc);
+        eventOwners[id] = owner;
       }
     }
   }

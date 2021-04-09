@@ -28,7 +28,7 @@ class UserTaskListModel extends ChangeNotifier {
     startLoading();
     final userDocRef = firestore.collection('users').doc(userId);
     try {
-      DocumentSnapshot userDoc = await userDocRef.get();
+      final userDoc = await userDocRef.get();
       joiningGroupMembers[userId] = User.doc(userDoc);
       final joiningGroupsQuery =
           await userDocRef.collection('joiningGroups').get();

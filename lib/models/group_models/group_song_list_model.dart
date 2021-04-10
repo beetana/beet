@@ -113,7 +113,7 @@ class GroupSongListModel extends ChangeNotifier {
         song.checkboxState = false;
       }
     });
-    songCount = setList.where((value) => value is Song).length;
+    songCount = setList.where((item) => item is Song).length;
     notifyListeners();
   }
 }

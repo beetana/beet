@@ -7,13 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class DynamicLinksServices {
-  Uri dynamicLink;
   BuildContext context;
 
   Future<Uri> createDynamicLink({String groupId, String groupName}) async {
-    final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://beetana.page.link',
-      link: Uri.parse('https://beetana.page.link/?id=$groupId&name=$groupName'),
+    final String domain = kFirebaseEnvironment
+        ? 'https://beetana.page.link'
+        : 'https://beetdev.page.link';
+    final parameters = DynamicLinkParameters(
+      uriPrefix: domain,
+      link: Uri.parse('$domain/?id=$groupId&name=$groupName'),
       androidParameters: AndroidParameters(
         packageName: 'com.beetana.beet',
         minimumVersion: 1,
@@ -21,25 +23,25 @@ class DynamicLinksServices {
       iosParameters: IosParameters(
         bundleId: 'com.beetana.beet',
         minimumVersion: '1',
-        fallbackUrl:
-            Uri.parse('https://apps.apple.com/jp/app/memow/id1518582060'),
+        // fallbackUrl:
+        //     Uri.parse('https://apps.apple.com/jp/app/memow/id1518582060'),
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
         title: 'beet',
-        description: 'OPENボタンをタップして、グループに参加しましょう。',
+        description: 'OPENボタンからアプリを開いてグループに参加しましょう。',
         imageUrl: Uri.parse(
             'https://firebasestorage.googleapis.com/v0/b/beet-491c3.appspot.com/o/beet.png?alt=media&token=f7441793-1148-49de-8842-7b7c15a0d92c'),
       ),
     );
 
-    Uri link = await parameters.buildUrl();
+    final Uri link = await parameters.buildUrl();
     final ShortDynamicLink shortenedLink =
         await DynamicLinkParameters.shortenUrl(
       link,
       DynamicLinkParametersOptions(
           shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
     );
-    dynamicLink = shortenedLink.shortUrl;
+    final Uri dynamicLink = shortenedLink.shortUrl;
     print('$dynamicLink');
     print('$dynamicLink?d=1');
     return dynamicLink;
@@ -132,8 +134,6 @@ class DynamicLinksServices {
   }
 
   Future promptLogin(context) async {
-    this.context = context;
-
     PendingDynamicLinkData link =
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (link != null) {

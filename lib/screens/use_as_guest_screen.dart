@@ -76,7 +76,7 @@ class UseAsGuestScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               border: Border.all(
                                 width: 0.5,
-                                color: Colors.grey[800],
+                                color: kPrimaryColor,
                               ),
                               borderRadius: BorderRadius.circular(10.0),
                             ),

@@ -103,7 +103,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 1.0,
-                          color: Colors.grey[800],
+                          color: kPrimaryColor,
                         ),
                         borderRadius: BorderRadius.circular(10.0),
                       ),

@@ -102,6 +102,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         const SizedBox(height: 16.0),
                         const Text(
                           'パスワード再設定用のURLを送信します。\n再設定したいアカウントのメールアドレスを\n入力してください。',
+                          style: TextStyle(fontSize: 14.0),
                           textAlign: TextAlign.center,
                           textScaleFactor: 1.0,
                         ),

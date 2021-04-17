@@ -97,6 +97,7 @@ class InquiryScreen extends StatelessWidget {
                           const SizedBox(height: 16.0),
                           const Text(
                             '頂いたご意見への個別の回答は行っておりません。\nトラブルやお困りごとなど、返信が必要な場合は\nメールアドレスも記入してお送りください。',
+                            style: TextStyle(fontSize: 14.0),
                             textAlign: TextAlign.center,
                             textScaleFactor: 1.0,
                           ),

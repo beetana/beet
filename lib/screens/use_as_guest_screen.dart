@@ -52,6 +52,10 @@ class UseAsGuestScreen extends StatelessWidget {
                   color: Colors.white,
                 ),
                 onPressed: () async {
+                  FocusScope.of(context).unfocus();
+                  await Future.delayed(
+                    const Duration(milliseconds: 80),
+                  );
                   if (model.setList.isNotEmpty) {
                     bool isBack = await _showConfirmDialog(context);
                     if (isBack) {
@@ -193,6 +197,7 @@ class UseAsGuestScreen extends StatelessWidget {
                     onPressed: model.setList.isEmpty
                         ? null
                         : () {
+                            FocusScope.of(context).unfocus();
                             Navigator.push(
                               context,
                               MaterialPageRoute(

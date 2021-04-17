@@ -30,10 +30,10 @@ class AddGroupScreen extends StatelessWidget {
               return Stack(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 32.0, horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
                       children: <Widget>[
+                        const SizedBox(height: 32.0),
                         Container(
                           decoration: BoxDecoration(
                             border: Border.all(
@@ -49,7 +49,6 @@ class AddGroupScreen extends StatelessWidget {
                               children: [
                                 TextField(
                                   controller: groupNameController,
-                                  autofocus: true,
                                   decoration: const InputDecoration(
                                     hintText: 'グループ名',
                                     border: InputBorder.none,

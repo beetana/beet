@@ -16,133 +16,142 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LoginModel>(
       create: (_) => LoginModel(),
-      child: GestureDetector(
-        onTap: () {
+      child: WillPopScope(
+        onWillPop: () async {
           FocusScope.of(context).unfocus();
+          await Future.delayed(
+            const Duration(milliseconds: 80),
+          );
+          return true;
         },
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('ログイン'),
-          ),
-          body: Consumer<LoginModel>(builder: (context, model, child) {
-            return Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 32.0, horizontal: 16.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 0.5,
-                              color: kPrimaryColor,
-                            ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Column(
-                              children: [
-                                TextField(
-                                  controller: emailController,
-                                  decoration: const InputDecoration(
-                                    hintText: 'メールアドレス',
-                                    border: InputBorder.none,
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 18.0),
-                                  ),
-                                  onChanged: (text) {
-                                    model.email = text;
-                                  },
-                                ),
-                                ThinDivider(),
-                                TextField(
-                                  controller: passwordController,
-                                  obscureText: true,
-                                  decoration: const InputDecoration(
-                                    hintText: 'パスワード',
-                                    border: InputBorder.none,
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 18.0),
-                                  ),
-                                  onChanged: (text) {
-                                    model.password = text;
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 32.0),
-                        Container(
-                          height: 56.0,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('ログイン'),
+            ),
+            body: Consumer<LoginModel>(builder: (context, model, child) {
+              return Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(height: 32.0),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 0.5,
+                                color: kPrimaryColor,
                               ),
-                              backgroundColor: kPrimaryColor,
-                              primary: Colors.white38,
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Column(
+                                children: [
+                                  TextField(
+                                    controller: emailController,
+                                    decoration: const InputDecoration(
+                                      hintText: 'メールアドレス',
+                                      border: InputBorder.none,
+                                      contentPadding:
+                                          EdgeInsets.symmetric(vertical: 18.0),
+                                    ),
+                                    onChanged: (text) {
+                                      model.email = text;
+                                    },
+                                  ),
+                                  ThinDivider(),
+                                  TextField(
+                                    controller: passwordController,
+                                    obscureText: true,
+                                    decoration: const InputDecoration(
+                                      hintText: 'パスワード',
+                                      border: InputBorder.none,
+                                      contentPadding:
+                                          EdgeInsets.symmetric(vertical: 18.0),
+                                    ),
+                                    onChanged: (text) {
+                                      model.password = text;
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 32.0),
+                          Container(
+                            height: 56.0,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                backgroundColor: kPrimaryColor,
+                                primary: Colors.white38,
+                              ),
+                              child: const Text(
+                                'ログイン',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () async {
+                                model.startLoading();
+                                try {
+                                  await model.login();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          UserScreen(),
+                                    ),
+                                  );
+                                } catch (e) {
+                                  showMessageDialog(context, e.toString());
+                                }
+                                model.endLoading();
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 32.0),
+                          TextButton(
                             child: const Text(
-                              'ログイン',
+                              'パスワードを忘れた場合',
                               style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 14.0,
+                                color: kSlightlyTransparentPrimaryColor,
                               ),
                             ),
-                            onPressed: () async {
-                              model.startLoading();
-                              try {
-                                await model.login();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        UserScreen(),
-                                  ),
-                                );
-                              } catch (e) {
-                                showMessageDialog(context, e.toString());
-                              }
-                              model.endLoading();
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ResetPasswordScreen(),
+                                ),
+                              );
                             },
                           ),
-                        ),
-                        const SizedBox(height: 32.0),
-                        TextButton(
-                          child: const Text(
-                            'パスワードを忘れた場合',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: kSlightlyTransparentPrimaryColor,
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ResetPasswordScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 16.0),
-                      ],
+                          const SizedBox(height: 16.0),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                DarkLoadingIndicator(isLoading: model.isLoading),
-              ],
-            );
-          }),
+                  DarkLoadingIndicator(isLoading: model.isLoading),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

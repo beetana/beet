@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>965755538745-9fv2hjq93t8fqvara00gdvj7ountflb9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.965755538745-9fv2hjq93t8fqvara00gdvj7ountflb9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCdmi-MxoANFrpGCXP9wvCWL1TdcFFwbXQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>965755538745</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.beetana.beet</string>
+	<key>PROJECT_ID</key>
+	<string>beet-dev-2c95d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>beet-dev-2c95d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:965755538745:ios:ec5ede4094fdf8f02cece8</string>
+</dict>
+</plist>

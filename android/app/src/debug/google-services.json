@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "965755538745",
+    "project_id": "beet-dev-2c95d",
+    "storage_bucket": "beet-dev-2c95d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965755538745:android:13d7d7c778fccf3b2cece8",
+        "android_client_info": {
+          "package_name": "com.beetana.beet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965755538745-8slo8bljgasd3k1crchetmc0hsf9d9db.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwV3Hb1Af3AaMV6zNm9A0qHUkH4sJTdag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965755538745-8slo8bljgasd3k1crchetmc0hsf9d9db.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "965755538745-9fv2hjq93t8fqvara00gdvj7ountflb9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.beetana.beet"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

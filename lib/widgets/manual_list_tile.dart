@@ -19,8 +19,8 @@ class ManualListTile extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(11.0),
           border: Border.all(
-            width: 1.0,
-            color: Colors.grey[800],
+            width: 0.5,
+            color: kPrimaryColor,
           ),
         ),
         child: Column(

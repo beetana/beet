@@ -5,6 +5,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:beetana.page.link</string>
+		<string>applinks:beetdev.page.link</string>
 	</array>
 </dict>
 </plist>

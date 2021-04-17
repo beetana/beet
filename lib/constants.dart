@@ -19,3 +19,4 @@ const kInvalidEnterButtonColor = Color(0x55448AFF);
 const kEnterButtonTextStyle = TextStyle(color: Colors.blueAccent);
 const kDeleteButtonTextStyle = TextStyle(color: Colors.redAccent);
 const kCancelButtonTextStyle = TextStyle(color: Colors.black54);
+const kFirebaseEnvironment = bool.fromEnvironment('dart.vm.product');

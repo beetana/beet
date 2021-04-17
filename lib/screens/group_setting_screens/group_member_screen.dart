@@ -215,7 +215,7 @@ Future<bool> _showConfirmDialog(context, isMe, userName) async {
 
 Future _inviteMemberDialog(context, dynamicLink, groupName) async {
   final String inviteMessage =
-      'beetのグループ「$groupName」への招待が届きました。\n招待リンクをタップしてグループに参加しましょう。\n▶︎まずはbeetをダウンロード\niOS\niOSリンク\nAndroid\nAndroidリンク\n▶︎アプリにログイン後、以下の招待リンクをタップ\n$dynamicLink';
+      'beetのグループ「$groupName」への招待が届きました。\n招待リンクをタップしてグループに参加しましょう。\n▶︎アプリにログイン後、以下の招待リンクをタップ\n$dynamicLink';
   await showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -266,3 +266,5 @@ Future _inviteMemberDialog(context, dynamicLink, groupName) async {
     },
   );
 }
+
+// \n▶︎まずはbeetをダウンロード\niOS\niOSリンク\nAndroid\nAndroidリンク

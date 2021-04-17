@@ -1,5 +1,6 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/user_setting_models/user_setting_model.dart';
+import 'package:beet/screens/inquiry_screen.dart';
 import 'package:beet/screens/privacy_policy_screen.dart';
 import 'package:beet/screens/manual_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_security_screen.dart';
@@ -91,6 +92,20 @@ class UserSettingScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => ManualScreen(),
+                      // UserProfileScreen(),
+                    ),
+                  );
+                },
+              ),
+              ThinDivider(indent: 16.0),
+              ListTile(
+                title: const Text('ご意見・お問い合わせ'),
+                trailing: const Icon(Icons.keyboard_arrow_right),
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => InquiryScreen(),
                       // UserProfileScreen(),
                     ),
                   );

@@ -4,6 +4,7 @@ import 'package:beet/screens/group_setting_screens/group_edit_name_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,18 +36,35 @@ class GroupProfileScreen extends StatelessWidget {
                             Container(
                               width: 128.0,
                               height: 128.0,
-                              child: InkWell(
-                                child: CircleAvatar(
-                                  backgroundImage: model.imageFile != null
-                                      ? FileImage(model.imageFile)
-                                      : model.groupImageURL.isNotEmpty
-                                          ? NetworkImage(model.groupImageURL)
-                                          : const AssetImage(
-                                              'images/group_profile.png'),
-                                  backgroundColor: Colors.transparent,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: kPrimaryColor,
+                                  width: 0.2,
                                 ),
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
+                                borderRadius: BorderRadius.circular(80),
+                              ),
+                              child: InkWell(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(80),
+                                  child: model.imageFile != null
+                                      ? Image.file(model.imageFile)
+                                      : model.groupImageURL.isNotEmpty
+                                          ? CachedNetworkImage(
+                                              imageUrl:
+                                                  '${model.groupImageURL}',
+                                              placeholder: (context, url) =>
+                                                  Image.asset(
+                                                      'images/group_profile.png'),
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Image.asset(
+                                                      'images/group_profile.png'),
+                                            )
+                                          // NetworkImage(
+                                          //             model.userImageURL)
+                                          : Image.asset(
+                                              'images/group_profile.png'),
+                                ),
                                 onTap: () async {
                                   ChangeImage changeImage =
                                       await _showEditIconBottomSheet(context);

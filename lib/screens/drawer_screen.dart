@@ -4,6 +4,7 @@ import 'package:beet/screens/add_group_screen.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,11 +22,17 @@ class DrawerScreen extends StatelessWidget {
                   UserAccountsDrawerHeader(
                     accountName: Text(model.userName),
                     accountEmail: const Text(''),
-                    currentAccountPicture: CircleAvatar(
-                      backgroundImage: model.userImageURL.isNotEmpty
-                          ? NetworkImage(model.userImageURL)
-                          : const AssetImage('images/user_profile.png'),
-                      backgroundColor: Colors.transparent,
+                    currentAccountPicture: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: model.userImageURL.isNotEmpty
+                          ? CachedNetworkImage(
+                              imageUrl: '${model.userImageURL}',
+                              placeholder: (context, url) =>
+                                  Image.asset('images/user_profile.png'),
+                              errorWidget: (context, url, error) =>
+                                  Image.asset('images/user_profile.png'),
+                            )
+                          : Image.asset('images/user_profile.png'),
                     ),
                   ),
                   ListTile(

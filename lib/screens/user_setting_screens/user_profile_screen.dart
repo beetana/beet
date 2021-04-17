@@ -5,6 +5,7 @@ import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/loading_indicator.dart';
 import 'package:beet/widgets/thin_divider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,20 +42,38 @@ class UserProfileScreen extends StatelessWidget {
                                       Container(
                                         width: 128.0,
                                         height: 128.0,
-                                        child: InkWell(
-                                          child: CircleAvatar(
-                                            backgroundImage: model.imageFile !=
-                                                    null
-                                                ? FileImage(model.imageFile)
-                                                : model.userImageURL.isNotEmpty
-                                                    ? NetworkImage(
-                                                        model.userImageURL)
-                                                    : const AssetImage(
-                                                        'images/user_profile.png'),
-                                            backgroundColor: Colors.transparent,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: kPrimaryColor,
+                                            width: 0.2,
                                           ),
-                                          highlightColor: Colors.transparent,
-                                          splashColor: Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(80),
+                                        ),
+                                        child: InkWell(
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(80),
+                                            child: model.imageFile != null
+                                                ? Image.file(model.imageFile)
+                                                : model.userImageURL.isNotEmpty
+                                                    ? CachedNetworkImage(
+                                                        imageUrl:
+                                                            '${model.userImageURL}',
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            Image.asset(
+                                                                'images/user_profile.png'),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Image.asset(
+                                                                'images/user_profile.png'),
+                                                      )
+                                                    // NetworkImage(
+                                                    //             model.userImageURL)
+                                                    : Image.asset(
+                                                        'images/user_profile.png'),
+                                          ),
                                           onTap: () async {
                                             ChangeImage changeImage =
                                                 await _showEditIconBottomSheet(

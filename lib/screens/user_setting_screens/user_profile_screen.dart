@@ -62,15 +62,15 @@ class UserProfileScreen extends StatelessWidget {
                                                             '${model.userImageURL}',
                                                         placeholder: (context,
                                                                 url) =>
-                                                            Image.asset(
-                                                                'images/user_profile.png'),
+                                                            Container(
+                                                                color:
+                                                                    kDullWhiteColor),
                                                         errorWidget: (context,
                                                                 url, error) =>
-                                                            Image.asset(
-                                                                'images/user_profile.png'),
+                                                            Container(
+                                                                color:
+                                                                    kDullWhiteColor),
                                                       )
-                                                    // NetworkImage(
-                                                    //             model.userImageURL)
                                                     : Image.asset(
                                                         'images/user_profile.png'),
                                           ),

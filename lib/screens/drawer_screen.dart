@@ -28,9 +28,9 @@ class DrawerScreen extends StatelessWidget {
                           ? CachedNetworkImage(
                               imageUrl: '${model.userImageURL}',
                               placeholder: (context, url) =>
-                                  Image.asset('images/user_profile.png'),
+                                  Container(color: kPrimaryColor),
                               errorWidget: (context, url, error) =>
-                                  Image.asset('images/user_profile.png'),
+                                  Container(color: kPrimaryColor),
                             )
                           : Image.asset('images/user_profile.png'),
                     ),

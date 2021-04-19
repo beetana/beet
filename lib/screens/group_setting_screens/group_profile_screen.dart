@@ -53,15 +53,13 @@ class GroupProfileScreen extends StatelessWidget {
                                               imageUrl:
                                                   '${model.groupImageURL}',
                                               placeholder: (context, url) =>
-                                                  Image.asset(
-                                                      'images/group_profile.png'),
+                                                  Container(
+                                                      color: kDullWhiteColor),
                                               errorWidget: (context, url,
                                                       error) =>
-                                                  Image.asset(
-                                                      'images/group_profile.png'),
+                                                  Container(
+                                                      color: kDullWhiteColor),
                                             )
-                                          // NetworkImage(
-                                          //             model.userImageURL)
                                           : Image.asset(
                                               'images/group_profile.png'),
                                 ),

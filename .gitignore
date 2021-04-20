@@ -66,3 +66,5 @@ web/index.html
 web/manifest.json
 web/icons/Icon-192.png
 web/icons/Icon-512.png
+android/key.properties
+android/app/key.jks

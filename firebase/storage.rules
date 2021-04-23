@@ -1,0 +1,53 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // リクエストしているユーザーが認証済みであること
+    function isAuthenticated() {
+      return request.auth != null
+      ;
+    }
+
+    // リクエストしているユーザーが認証済みかつ画像の持ち主であること
+    function isImageOwner(userId) {
+      return isAuthenticated()
+        && userId == request.auth.uid
+      ;
+    }
+
+    match /{allPaths=**} {
+      allow read: if isAuthenticated()
+      ;
+    }
+    
+    match /userImage/{userId} {
+      allow create: if isImageOwner(userId)
+        && request.resource.size < 500 * 1024
+        && request.resource.contentType.matches('image/.*')
+        // && request.resource.contentType == 'image/jpeg'
+      ;
+      allow update: if isImageOwner(userId)
+        && request.resource.size < 500 * 1024
+        && request.resource.contentType.matches('image/.*')
+        // && request.resource.contentType == 'image/jpeg'
+      ;
+      allow delete: if isImageOwner(userId)
+      ;
+    }
+
+    match /groupImage/{groupId} {
+      allow create: if isAuthenticated()
+        && request.resource.size < 500 * 1024
+        && request.resource.contentType.matches('image/.*')
+        // && request.resource.contentType == 'image/jpeg'
+      ;
+      allow update: if isAuthenticated()
+        && request.resource.size < 500 * 1024
+        && request.resource.contentType.matches('image/.*')
+        // && request.resource.contentType == 'image/jpeg'
+      ;
+      allow delete: if isAuthenticated()
+      ;
+    }
+  }
+}

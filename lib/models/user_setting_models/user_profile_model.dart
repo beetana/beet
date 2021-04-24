@@ -16,7 +16,7 @@ class UserProfileModel extends ChangeNotifier {
   final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
   final firestore = FirebaseFirestore.instance;
   final storage = FirebaseStorage.instance;
-  final _picker = ImagePicker();
+  final picker = ImagePicker();
 
   void startLoading() {
     isLoading = true;
@@ -44,7 +44,10 @@ class UserProfileModel extends ChangeNotifier {
   Future pickImageFile() async {
     imageFile = null;
     try {
-      final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+      // ギャラリーから画像を取得
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+      // 取得した画像を1:1でトリミングし、アップロードするimageFileに代入
       imageFile = await ImageCropper.cropImage(
         sourcePath: pickedFile.path,
         maxWidth: 160,
@@ -54,8 +57,8 @@ class UserProfileModel extends ChangeNotifier {
           CropAspectRatioPreset.square,
         ],
         cropStyle: CropStyle.circle,
-        compressFormat: ImageCompressFormat.png,
-        compressQuality: 100,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 40,
         androidUiSettings: const AndroidUiSettings(
           toolbarTitle: 'プロフィール画像',
           toolbarColor: Colors.blue,
@@ -70,6 +73,7 @@ class UserProfileModel extends ChangeNotifier {
       );
     } catch (e) {
       print(e);
+      return;
     }
   }
 
@@ -80,7 +84,7 @@ class UserProfileModel extends ChangeNotifier {
     final batch = firestore.batch();
     final userDocRef = firestore.collection('users').doc(userId);
     try {
-      TaskSnapshot snapshot =
+      final snapshot =
           await storage.ref().child("userImage/$userId").putFile(imageFile);
       userImageURL = await snapshot.ref.getDownloadURL();
       batch.update(userDocRef, {

@@ -43,7 +43,10 @@ class GroupProfileModel extends ChangeNotifier {
   Future pickImageFile() async {
     imageFile = null;
     try {
+      // ギャラリーから画像を取得
       final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+      // 取得した画像を1:1でトリミングし、アップロードするimageFileに代入
       imageFile = await ImageCropper.cropImage(
         sourcePath: pickedFile.path,
         maxWidth: 160,
@@ -53,8 +56,8 @@ class GroupProfileModel extends ChangeNotifier {
           CropAspectRatioPreset.square,
         ],
         cropStyle: CropStyle.circle,
-        compressFormat: ImageCompressFormat.png,
-        compressQuality: 100,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 40,
         androidUiSettings: const AndroidUiSettings(
           toolbarTitle: 'プロフィール画像',
           toolbarColor: Colors.blue,
@@ -69,6 +72,7 @@ class GroupProfileModel extends ChangeNotifier {
       );
     } catch (e) {
       print(e);
+      return;
     }
   }
 

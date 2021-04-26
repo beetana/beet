@@ -19,12 +19,14 @@ class DynamicLinksServices {
       androidParameters: AndroidParameters(
         packageName: 'com.beetana.beet',
         minimumVersion: 1,
+        fallbackUrl: Uri.parse(
+            'https://play.google.com/store/apps/details?id=com.beetana.beet'),
       ),
       iosParameters: IosParameters(
         bundleId: 'com.beetana.beet',
         minimumVersion: '1',
-        // fallbackUrl:
-        //     Uri.parse('https://apps.apple.com/jp/app/memow/id1518582060'),
+        fallbackUrl:
+            Uri.parse('https://apps.apple.com/jp/app/beet/id1562073325'),
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
         title: 'beet',

@@ -57,7 +57,7 @@ class GroupProfileModel extends ChangeNotifier {
         ],
         cropStyle: CropStyle.circle,
         compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 40,
+        compressQuality: 90,
         androidUiSettings: const AndroidUiSettings(
           toolbarTitle: 'プロフィール画像',
           toolbarColor: Colors.blue,

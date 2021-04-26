@@ -40,20 +40,20 @@ class UserProfileScreen extends StatelessWidget {
                                   child: Stack(
                                     children: [
                                       Container(
-                                        width: 128.0,
-                                        height: 128.0,
+                                        width: 112.0,
+                                        height: 112.0,
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             color: kPrimaryColor,
                                             width: 0.2,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(80),
+                                              BorderRadius.circular(60),
                                         ),
                                         child: InkWell(
                                           child: ClipRRect(
                                             borderRadius:
-                                                BorderRadius.circular(80),
+                                                BorderRadius.circular(60),
                                             child: model.imageFile != null
                                                 ? Image.file(model.imageFile)
                                                 : model.userImageURL.isNotEmpty
@@ -111,7 +111,7 @@ class UserProfileScreen extends StatelessWidget {
                                             icon: const Icon(
                                               Icons.add_a_photo,
                                               color: Colors.white,
-                                              size: 20.0,
+                                              size: 16.0,
                                             ),
                                             onPressed: () async {
                                               ChangeImage changeImage =
@@ -145,10 +145,10 @@ class UserProfileScreen extends StatelessWidget {
                                             },
                                           ),
                                           backgroundColor: Colors.black45,
-                                          radius: 18.0,
+                                          radius: 16.0,
                                         ),
-                                        bottom: 4.0,
-                                        right: 4.0,
+                                        bottom: 0.0,
+                                        right: 0.0,
                                       ),
                                     ],
                                   ),

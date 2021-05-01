@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 class GroupModel extends ChangeNotifier {
   String groupName = '';
   int currentIndex = 0;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future init({String groupId}) async {
-    DocumentSnapshot groupDoc = await FirebaseFirestore.instance
-        .collection('groups')
-        .doc(groupId)
-        .get();
-    groupName = groupDoc['name'];
+  Future<void> init({String groupId}) async {
+    try {
+      final DocumentSnapshot groupDoc =
+          await _firestore.collection('groups').doc(groupId).get();
+      groupName = groupDoc['name'];
+    } catch (e) {
+      print(e);
+    }
     notifyListeners();
   }
 

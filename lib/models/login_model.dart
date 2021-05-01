@@ -1,12 +1,12 @@
 import 'package:beet/utilities/convert_error_message.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginModel extends ChangeNotifier {
   String email = '';
   String password = '';
   bool isLoading = false;
-  final _auth = Auth.FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void startLoading() {
     isLoading = true;

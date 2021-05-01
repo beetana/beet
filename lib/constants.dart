@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 // 0xFF135589
 // 0xFF46494E
 
-const kPrimaryColor = Color(0xFF424242);
-const kSlightlyTransparentPrimaryColor = Color(0xCC424242);
-const kTransparentPrimaryColor = Color(0x55424242);
-const kBackGroundColor = Color(0xFFFFFFFF);
-const kDullGreenColor = Color(0xFF415C59);
-const kDullWhiteColor = Color(0xFFF5F5F5);
-const kTransparentDullWhiteColor = Color(0x55E5E5E5);
-const kEnterButtonColor = Color(0xFF448AFF);
-const kInvalidEnterButtonColor = Color(0x55448AFF);
-const kEnterButtonTextStyle = TextStyle(color: Colors.blueAccent);
-const kDeleteButtonTextStyle = TextStyle(color: Colors.redAccent);
-const kCancelButtonTextStyle = TextStyle(color: Colors.black54);
-const kFirebaseEnvironment = bool.fromEnvironment('dart.vm.product');
+const Color kPrimaryColor = Color(0xFF424242);
+const Color kSlightlyTransparentPrimaryColor = Color(0xCC424242);
+const Color kTransparentPrimaryColor = Color(0x55424242);
+const Color kBackGroundColor = Color(0xFFFFFFFF);
+const Color kDullGreenColor = Color(0xFF415C59);
+const Color kDullWhiteColor = Color(0xFFF5F5F5);
+const Color kTransparentDullWhiteColor = Color(0x55E5E5E5);
+const Color kEnterButtonColor = Color(0xFF448AFF);
+const Color kInvalidEnterButtonColor = Color(0x55448AFF);
+const TextStyle kEnterButtonTextStyle = TextStyle(color: Colors.blueAccent);
+const TextStyle kDeleteButtonTextStyle = TextStyle(color: Colors.redAccent);
+const TextStyle kCancelButtonTextStyle = TextStyle(color: Colors.black54);
+const bool kFirebaseEnvironment = bool.fromEnvironment('dart.vm.product');

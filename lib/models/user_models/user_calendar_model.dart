@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nholiday_jp/nholiday_jp.dart';
 import 'package:beet/objects/content_owner.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserCalendarModel extends ChangeNotifier {
-  DateTime now = DateTime.now();
   DateTime first;
   DateTime last;
   DateTime selectedDay;
@@ -17,24 +16,23 @@ class UserCalendarModel extends ChangeNotifier {
   Map<String, ContentOwner> eventPlanner = {};
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
-  final firestore = FirebaseFirestore.instance;
-  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void init() {
-    this.selectedDay = DateTime(now.year, now.month, now.day, 12);
+    final DateTime now = DateTime.now();
+    selectedDay = DateTime(now.year, now.month, now.day, 12);
   }
 
-  Future fetchEvents() async {
+  Future<void> fetchEvents() async {
     events = {};
     List<String> ownerIdList = [userId];
-    List<Event> eventList;
-    List<Event> eventsOfDay;
-    DateTime firstDate = DateTime(first.year, first.month, first.day, 12);
-    String monthForm = monthFormat.format(first);
-    int durationDays = last.difference(first).inDays;
+    final DateTime firstDate = DateTime(first.year, first.month, first.day, 12);
+    final String monthForm = monthFormat.format(first);
+    final int durationDays = last.difference(first).inDays;
 
     try {
-      final joiningGroupsQuery = await firestore
+      final QuerySnapshot joiningGroupsQuery = await _firestore
           .collection('users')
           .doc(userId)
           .collection('joiningGroups')
@@ -43,19 +41,23 @@ class UserCalendarModel extends ChangeNotifier {
 
       await fetchContentOwnerInfo(ownerIdList: ownerIdList);
 
-      final eventsQuery = await firestore
+      final QuerySnapshot eventsQuery = await _firestore
           .collectionGroup('events')
           .where('ownerId', whereIn: ownerIdList)
           .where('monthList', arrayContains: monthForm)
           .get();
 
-      eventList = eventsQuery.docs.map((doc) => Event.doc(doc)).toList();
+      final List<Event> eventList =
+          eventsQuery.docs.map((doc) => Event.doc(doc)).toList();
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
+
       for (int i = 0; i <= durationDays; i++) {
-        DateTime date = firstDate.add(Duration(days: i));
-        eventsOfDay =
-            eventList.where((n) => n.dateList.contains(date)).toList() ?? [];
+        final DateTime date = firstDate.add(Duration(days: i));
+        final List<Event> eventsOfDay = eventList
+                .where((event) => event.dateList.contains(date))
+                .toList() ??
+            [];
         events[date] = eventsOfDay;
       }
     } catch (e) {
@@ -64,36 +66,35 @@ class UserCalendarModel extends ChangeNotifier {
     }
   }
 
-  Future fetchContentOwnerInfo({ownerIdList}) async {
+  Future<void> fetchContentOwnerInfo({List<String> ownerIdList}) async {
     for (String id in ownerIdList) {
       if (id.length == 28) {
-        DocumentSnapshot userDoc =
-            await firestore.collection('users').doc(id).get();
-        ContentOwner info = ContentOwner.doc(userDoc);
-        eventPlanner[id] = info;
+        final DocumentSnapshot userDoc =
+            await _firestore.collection('users').doc(id).get();
+        final ContentOwner user = ContentOwner.doc(userDoc);
+        eventPlanner[id] = user;
       } else {
-        DocumentSnapshot groupDoc =
-            await firestore.collection('groups').doc(id).get();
-        ContentOwner info = ContentOwner.doc(groupDoc);
-        eventPlanner[id] = info;
+        final DocumentSnapshot groupDoc =
+            await _firestore.collection('groups').doc(id).get();
+        final ContentOwner group = ContentOwner.doc(groupDoc);
+        eventPlanner[id] = group;
       }
     }
   }
 
   void fetchHolidays() {
     holidays = {};
-    List<String> holidaysList;
-    int year = first.year;
-    int month = first.month;
-    holidaysList = NHolidayJp.getByMonth(year, month)
+    final int year = first.year;
+    final int month = first.month;
+    final List<String> holidaysList = NHolidayJp.getByMonth(year, month)
         .map((holiday) => holiday.toString())
         .toList();
     if (holidaysList.isNotEmpty) {
       holidaysList.forEach((holiday) {
-        List<String> splitHoliday = holiday.split(' ');
-        String holidayDate = splitHoliday[0];
-        List<String> holidayName = [splitHoliday[1]];
-        int day = int.parse(holidayDate.split('/')[1]);
+        final List<String> splitHoliday = holiday.split(' ');
+        final String holidayDate = splitHoliday[0];
+        final List<String> holidayName = [splitHoliday[1]];
+        final int day = int.parse(holidayDate.split('/')[1]);
         holidays[DateTime(year, month, day, 12)] = holidayName;
       });
     }

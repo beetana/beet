@@ -10,7 +10,8 @@ class RegisterModel extends ChangeNotifier {
   String confirmPassword = '';
   bool isAgree = false;
   bool isLoading = false;
-  final _auth = Auth.FirebaseAuth.instance;
+  final Auth.FirebaseAuth _auth = Auth.FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -27,7 +28,7 @@ class RegisterModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future register() async {
+  Future<void> register() async {
     if (name.isEmpty) {
       throw ('アカウント名を入力してください');
     }
@@ -51,8 +52,8 @@ class RegisterModel extends ChangeNotifier {
       ))
           .user;
       await user.updateProfile(displayName: name);
-      final userId = user.uid;
-      await FirebaseFirestore.instance.collection('users').doc(userId).set({
+      final String userId = user.uid;
+      await _firestore.collection('users').doc(userId).set({
         'name': name,
         'imageURL': '',
         'createdAt': FieldValue.serverTimestamp(),

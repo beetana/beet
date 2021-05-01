@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,10 @@ class GroupMemberModel extends ChangeNotifier {
   List<String> usersName = [];
   List<String> usersImageURL = [];
   bool isLoading = false;
-  final firestore = FirebaseFirestore.instance;
+  DocumentReference groupDocRef;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   void startLoading() {
     isLoading = true;
@@ -24,15 +27,15 @@ class GroupMemberModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String groupId}) async {
+  Future<void> init({String groupId}) async {
     startLoading();
     this.groupId = groupId;
-    this.myId = Auth.FirebaseAuth.instance.currentUser.uid;
+    myId = _auth.currentUser.uid;
+    groupDocRef = _firestore.collection('groups').doc(groupId);
     try {
-      DocumentSnapshot groupDoc =
-          await firestore.collection('groups').doc(groupId).get();
-      this.groupName = groupDoc['name'];
-      this.groupImageURL = groupDoc['imageURL'];
+      final DocumentSnapshot groupDoc = await groupDocRef.get();
+      groupName = groupDoc['name'];
+      groupImageURL = groupDoc['imageURL'];
       await fetchMembers();
     } catch (e) {
       print(e);
@@ -40,17 +43,14 @@ class GroupMemberModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future fetchMembers() async {
+  Future<void> fetchMembers() async {
     try {
-      final membersQuery = await firestore
-          .collection('groups')
-          .doc(groupId)
-          .collection('members')
-          .get();
-      this.usersId = (membersQuery.docs.map((doc) => doc.id).toList());
-      this.usersName =
+      final QuerySnapshot membersQuery =
+          await groupDocRef.collection('members').get();
+      usersId = (membersQuery.docs.map((doc) => doc.id).toList());
+      usersName =
           (membersQuery.docs.map((doc) => doc['name'].toString()).toList());
-      this.usersImageURL =
+      usersImageURL =
           (membersQuery.docs.map((doc) => doc['imageURL'].toString()).toList());
     } catch (e) {
       print(e);
@@ -61,11 +61,8 @@ class GroupMemberModel extends ChangeNotifier {
   Future<int> checkMemberCount() async {
     int memberCount;
     try {
-      final membersQuery = await firestore
-          .collection('groups')
-          .doc(groupId)
-          .collection('members')
-          .get();
+      final QuerySnapshot membersQuery =
+          await groupDocRef.collection('members').get();
       memberCount = membersQuery.size;
     } catch (e) {
       print(e);
@@ -74,18 +71,15 @@ class GroupMemberModel extends ChangeNotifier {
     return memberCount;
   }
 
-  Future deleteMember({String userId}) async {
-    final batch = firestore.batch();
-    final joiningGroupDocRef = firestore
+  Future<void> deleteMember({String userId}) async {
+    final WriteBatch batch = _firestore.batch();
+    final DocumentReference joiningGroupDocRef = _firestore
         .collection('users')
         .doc(userId)
         .collection('joiningGroups')
         .doc(groupId);
-    final memberDocRef = firestore
-        .collection('groups')
-        .doc(groupId)
-        .collection('members')
-        .doc(userId);
+    final DocumentReference memberDocRef =
+        groupDocRef.collection('members').doc(userId);
     batch.delete(joiningGroupDocRef);
     batch.delete(memberDocRef);
     try {
@@ -96,21 +90,17 @@ class GroupMemberModel extends ChangeNotifier {
     }
   }
 
-  Future deleteGroup({String userId}) async {
-    final groupDocRef = firestore.collection('groups').doc(groupId);
-    final joiningGroupDocRef = firestore
+  Future<void> deleteGroup({String userId}) async {
+    final joiningGroupDocRef = _firestore
         .collection('users')
         .doc(userId)
         .collection('joiningGroups')
         .doc(groupId);
-    final batch = firestore.batch();
+    final WriteBatch batch = _firestore.batch();
     try {
       // Firebase Storage内のグループのプロフィール画像を削除
       if (groupImageURL.isNotEmpty) {
-        await FirebaseStorage.instance
-            .ref()
-            .child("groupImage/$groupId")
-            .delete();
+        await _storage.ref().child("groupImage/$groupId").delete();
       }
       // ユーザーのjoiningGroupからこのグループを削除
       batch.delete(joiningGroupDocRef);

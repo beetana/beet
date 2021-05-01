@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -8,8 +8,8 @@ class AddGroupModel extends ChangeNotifier {
   String groupName = '';
   String groupId = '';
   bool isLoading = false;
-  final firestore = FirebaseFirestore.instance;
-  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -21,27 +21,29 @@ class AddGroupModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addGroup() async {
+  Future<void> addGroup() async {
     if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
-    final userDocRef = firestore.collection('users').doc(userId);
-    final batch = firestore.batch();
+    final DocumentReference userDocRef =
+        _firestore.collection('users').doc(userId);
+    final WriteBatch batch = _firestore.batch();
     try {
-      final joiningGroupsQuery =
+      final QuerySnapshot joiningGroupsQuery =
           await userDocRef.collection('joiningGroups').get();
 
       if (joiningGroupsQuery.size < 8) {
-        final userDoc = await userDocRef.get();
+        final DocumentSnapshot userDoc = await userDocRef.get();
         userName = userDoc['name'];
         userImageURL = userDoc['imageURL'];
-        final newGroup = await firestore.collection('groups').add({
+        final DocumentReference newGroup =
+            await _firestore.collection('groups').add({
           'name': groupName,
           'imageURL': '',
           'createdAt': FieldValue.serverTimestamp(),
         });
         groupId = newGroup.id;
-        final memberDocRef = firestore
+        final DocumentReference memberDocRef = _firestore
             .collection('groups')
             .doc(groupId)
             .collection('members')
@@ -51,7 +53,7 @@ class AddGroupModel extends ChangeNotifier {
           'imageURL': userImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
         });
-        final joiningGroupDocRef =
+        final DocumentReference joiningGroupDocRef =
             userDocRef.collection('joiningGroups').doc(groupId);
         batch.set(joiningGroupDocRef, {
           'name': groupName,

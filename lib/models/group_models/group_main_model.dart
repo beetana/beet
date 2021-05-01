@@ -8,7 +8,7 @@ class GroupMainModel extends ChangeNotifier {
   int notCompletedTasksCount = 0;
   bool isLoading = false;
   DateTime currentDateTime;
-  final firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -20,7 +20,7 @@ class GroupMainModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String groupId}) async {
+  Future<void> init({String groupId}) async {
     startLoading();
     try {
       await fetchMainInfo(groupId: groupId);
@@ -30,21 +30,22 @@ class GroupMainModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future fetchMainInfo({String groupId}) async {
+  Future<void> fetchMainInfo({String groupId}) async {
     currentDateTime = DateTime.now();
-    final currentTimestamp = Timestamp.fromDate(currentDateTime);
+    final Timestamp currentTimestamp = Timestamp.fromDate(currentDateTime);
     try {
-      final tasksQuery = await firestore
+      final QuerySnapshot tasksQuery = await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('tasks')
           .get();
-      final tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
-      final notCompletedTasks =
-          tasks.where((task) => task.isCompleted == false).toList();
+      final List<Task> tasks =
+          tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
+      final List<Task> notCompletedTasks =
+          tasks.where((task) => !task.isCompleted).toList();
       notCompletedTasksCount = notCompletedTasks.length;
 
-      final eventsQuery = await firestore
+      final QuerySnapshot eventsQuery = await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('events')

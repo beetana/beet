@@ -19,7 +19,7 @@ class GroupSetListModel2 extends ChangeNotifier {
   }
 
   void showEventDatePicker() {
-    if (isShowEventDatePicker == false) {
+    if (!isShowEventDatePicker) {
       eventDatePickerBox = Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [

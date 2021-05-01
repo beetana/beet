@@ -24,8 +24,8 @@ class UserEditTaskModel extends ChangeNotifier {
   DateTime dueDate;
   DocumentReference ownerDocRef;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
-  final firestore = FirebaseFirestore.instance;
   final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -37,7 +37,7 @@ class UserEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({Task task}) async {
+  Future<void> init({Task task}) async {
     startLoading();
     taskId = task.id;
     ownerId = task.ownerId;
@@ -50,25 +50,26 @@ class UserEditTaskModel extends ChangeNotifier {
     assignedMembersId =
         task.assignedMembersId.map((id) => id.toString()).toList();
     ownerDocRef = ownerId == userId
-        ? firestore.collection('users').doc(userId)
-        : firestore.collection('groups').doc(ownerId);
+        ? _firestore.collection('users').doc(userId)
+        : _firestore.collection('groups').doc(ownerId);
     try {
       if (ownerId == userId) {
-        final userDoc = await ownerDocRef.get();
+        final DocumentSnapshot userDoc = await ownerDocRef.get();
         groupMembers[userId] = User.doc(userDoc);
       } else {
-        final membersQuery = await ownerDocRef.collection('members').get();
+        final QuerySnapshot membersQuery =
+            await ownerDocRef.collection('members').get();
         usersId = membersQuery.docs.map((doc) => doc.id).toList();
-        final users = membersQuery.docs.map((doc) => User.doc(doc)).toList();
+        final List<User> users =
+            membersQuery.docs.map((doc) => User.doc(doc)).toList();
         users.forEach((user) {
           groupMembers[user.id] = user;
         });
       }
     } catch (e) {
       print(e);
-    } finally {
-      endLoading();
     }
+    endLoading();
   }
 
   void assignPerson({String userId}) {
@@ -81,7 +82,7 @@ class UserEditTaskModel extends ChangeNotifier {
   }
 
   void showDueDatePicker() {
-    if (isShowDueDatePicker == false) {
+    if (!isShowDueDatePicker) {
       dueDatePickerBox = Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -127,7 +128,7 @@ class UserEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateTask() async {
+  Future<void> updateTask() async {
     if (taskTitle.isEmpty) {
       throw ('やることを入力してください');
     }

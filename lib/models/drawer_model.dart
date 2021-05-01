@@ -1,5 +1,5 @@
 import 'package:beet/objects/joining_group.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -8,8 +8,8 @@ class DrawerModel extends ChangeNotifier {
   String userName = '';
   List<JoiningGroup> joiningGroups = [];
   bool isLoading = false;
-  final firestore = FirebaseFirestore.instance;
-  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -21,16 +21,14 @@ class DrawerModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init() async {
+  Future<void> init() async {
     startLoading();
     try {
-      final userDoc = await firestore.collection('users').doc(userId).get();
-
-      final joiningGroupsQuery = await firestore
-          .collection('users')
-          .doc(userId)
-          .collection('joiningGroups')
-          .get();
+      final DocumentReference userDocRef =
+          _firestore.collection('users').doc(userId);
+      final DocumentSnapshot userDoc = await userDocRef.get();
+      final QuerySnapshot joiningGroupsQuery =
+          await userDocRef.collection('joiningGroups').get();
 
       userImageURL = userDoc['imageURL'];
       userName = userDoc['name'];
@@ -39,8 +37,7 @@ class DrawerModel extends ChangeNotifier {
       joiningGroups.sort((a, b) => a.joinedAt.compareTo(b.joinedAt));
     } catch (e) {
       print(e);
-    } finally {
-      endLoading();
     }
+    endLoading();
   }
 }

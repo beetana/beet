@@ -3,7 +3,7 @@ import 'package:beet/objects/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserEventDetailsModel extends ChangeNotifier {
   Event event;
@@ -19,8 +19,8 @@ class UserEventDetailsModel extends ChangeNotifier {
   bool isLoading = false;
   ContentOwner owner;
   DocumentReference ownerDocRef;
-  final firestore = FirebaseFirestore.instance;
-  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -32,7 +32,7 @@ class UserEventDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({Event event}) async {
+  Future<void> init({Event event}) async {
     startLoading();
     this.event = event;
     ownerId = event.ownerId;
@@ -45,10 +45,10 @@ class UserEventDetailsModel extends ChangeNotifier {
     endingDateTime = event.endingDateTime;
     isOwn = ownerId == userId;
     ownerDocRef = isOwn
-        ? firestore.collection('users').doc(ownerId)
-        : firestore.collection('groups').doc(ownerId);
+        ? _firestore.collection('users').doc(ownerId)
+        : _firestore.collection('groups').doc(ownerId);
     try {
-      final ownerDoc = await ownerDocRef.get();
+      final DocumentSnapshot ownerDoc = await ownerDocRef.get();
       owner = ContentOwner.doc(ownerDoc);
     } catch (e) {
       print(e);
@@ -56,9 +56,9 @@ class UserEventDetailsModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future fetchEvent() async {
+  Future<void> fetchEvent() async {
     try {
-      final eventDoc =
+      final DocumentSnapshot eventDoc =
           await ownerDocRef.collection('events').doc(eventId).get();
       event = Event.doc(eventDoc);
       ownerId = event.ownerId;
@@ -77,7 +77,7 @@ class UserEventDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future deleteEvent() async {
+  Future<void> deleteEvent() async {
     try {
       await ownerDocRef.collection('events').doc(eventId).delete();
     } catch (e) {

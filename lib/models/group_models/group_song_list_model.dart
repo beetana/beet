@@ -22,6 +22,7 @@ class GroupSongListModel extends ChangeNotifier {
     color: kPrimaryColor,
   );
   MainAxisAlignment buttonAlignment = MainAxisAlignment.center;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -33,16 +34,16 @@ class GroupSongListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String groupId}) async {
+  Future<void> init({String groupId}) async {
     startLoading();
     this.groupId = groupId;
     await fetchSongs();
     endLoading();
   }
 
-  Future fetchSongs() async {
+  Future<void> fetchSongs() async {
     try {
-      final songsQuery = await FirebaseFirestore.instance
+      final QuerySnapshot songsQuery = await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('songs')
@@ -61,7 +62,7 @@ class GroupSongListModel extends ChangeNotifier {
 
   void changeMode() {
     isSetListMode = !isSetListMode;
-    if (isSetListMode == true) {
+    if (isSetListMode) {
       buttonText = const Text(
         'キャンセル',
         style: TextStyle(

@@ -8,11 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupAddTaskScreen extends StatelessWidget {
-  GroupAddTaskScreen({this.groupId});
   final String groupId;
-  final taskTitleController = TextEditingController();
-  final taskMemoController = TextEditingController();
-  final scrollController = ScrollController();
+  final TextEditingController taskTitleController = TextEditingController();
+  final TextEditingController taskMemoController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
+
+  GroupAddTaskScreen({this.groupId});
 
   @override
   Widget build(BuildContext context) {

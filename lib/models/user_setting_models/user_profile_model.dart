@@ -13,10 +13,11 @@ class UserProfileModel extends ChangeNotifier {
   File imageFile;
   bool isLoading = false;
   List<String> joiningGroupsId = [];
+  DocumentReference userDocRef;
   final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
-  final firestore = FirebaseFirestore.instance;
-  final storage = FirebaseStorage.instance;
-  final picker = ImagePicker();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final ImagePicker _picker = ImagePicker();
 
   void startLoading() {
     isLoading = true;
@@ -28,11 +29,11 @@ class UserProfileModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init() async {
+  Future<void> init() async {
     startLoading();
+    userDocRef = _firestore.collection('users').doc(userId);
     try {
-      DocumentSnapshot userDoc =
-          await firestore.collection('users').doc(userId).get();
+      final DocumentSnapshot userDoc = await userDocRef.get();
       userName = userDoc['name'];
       userImageURL = userDoc['imageURL'];
     } catch (e) {
@@ -41,11 +42,12 @@ class UserProfileModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future pickImageFile() async {
+  Future<void> pickImageFile() async {
     imageFile = null;
     try {
       // ギャラリーから画像を取得
-      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      final PickedFile pickedFile =
+          await _picker.getImage(source: ImageSource.gallery);
 
       // 取得した画像を1:1でトリミングし、アップロードするimageFileに代入
       imageFile = await ImageCropper.cropImage(
@@ -77,24 +79,23 @@ class UserProfileModel extends ChangeNotifier {
     }
   }
 
-  Future updateUserImage() async {
+  Future<void> updateUserImage() async {
     if (imageFile == null) {
       throw ('ファイルが選択されていません');
     }
-    final batch = firestore.batch();
-    final userDocRef = firestore.collection('users').doc(userId);
+    final WriteBatch batch = _firestore.batch();
     try {
-      final snapshot =
-          await storage.ref().child("userImage/$userId").putFile(imageFile);
+      final TaskSnapshot snapshot =
+          await _storage.ref().child("userImage/$userId").putFile(imageFile);
       userImageURL = await snapshot.ref.getDownloadURL();
       batch.update(userDocRef, {
         'imageURL': userImageURL,
       });
-      final joiningGroupsQuery =
+      final QuerySnapshot joiningGroupsQuery =
           await userDocRef.collection('joiningGroups').get();
       joiningGroupsId = (joiningGroupsQuery.docs.map((doc) => doc.id).toList());
       for (String groupId in joiningGroupsId) {
-        final memberDocRef = firestore
+        final DocumentReference memberDocRef = _firestore
             .collection('groups')
             .doc(groupId)
             .collection('members')
@@ -110,25 +111,21 @@ class UserProfileModel extends ChangeNotifier {
     }
   }
 
-  Future deleteUserImage() async {
+  Future<void> deleteUserImage() async {
     if (userImageURL.isEmpty) {
       throw ('プロフィール画像が設定されていません');
     }
-    final batch = firestore.batch();
-    final userDocRef = firestore.collection('users').doc(userId);
+    final WriteBatch batch = _firestore.batch();
     try {
-      await storage.ref().child("userImage/$userId").delete();
+      await _storage.ref().child("userImage/$userId").delete();
       batch.update(userDocRef, {
         'imageURL': '',
       });
-      final joiningGroupsQuery = await firestore
-          .collection('users')
-          .doc(userId)
-          .collection('joiningGroups')
-          .get();
+      final QuerySnapshot joiningGroupsQuery =
+          await userDocRef.collection('joiningGroups').get();
       joiningGroupsId = (joiningGroupsQuery.docs.map((doc) => doc.id).toList());
       for (String groupId in joiningGroupsId) {
-        final memberDocRef = firestore
+        final DocumentReference memberDocRef = _firestore
             .collection('groups')
             .doc(groupId)
             .collection('members')
@@ -146,10 +143,9 @@ class UserProfileModel extends ChangeNotifier {
     }
   }
 
-  Future deleteAccount({String password}) async {
+  Future<void> deleteAccount({String password}) async {
     final Auth.User firebaseUser = Auth.FirebaseAuth.instance.currentUser;
-    final userDocRef = firestore.collection('users').doc(userId);
-    final batch = firestore.batch();
+    final WriteBatch batch = _firestore.batch();
     try {
       await firebaseUser
           .reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
@@ -158,21 +154,23 @@ class UserProfileModel extends ChangeNotifier {
       ));
       // Firebase Storageにあるプロフィール画像を削除
       if (userImageURL.isNotEmpty) {
-        await storage.ref().child("userImage/$userId").delete();
+        await _storage.ref().child("userImage/$userId").delete();
       }
       // 参加しているグループから自分のドキュメントを削除
-      final joiningGroupsQuery =
+      final QuerySnapshot joiningGroupsQuery =
           await userDocRef.collection('joiningGroups').get();
       joiningGroupsId = (joiningGroupsQuery.docs.map((doc) => doc.id).toList());
       if (joiningGroupsId.isNotEmpty) {
         for (String groupId in joiningGroupsId) {
-          final groupDocRef = firestore.collection('groups').doc(groupId);
-          final memberDocRef = firestore
+          final DocumentReference groupDocRef =
+              _firestore.collection('groups').doc(groupId);
+          final DocumentReference memberDocRef = _firestore
               .collection('groups')
               .doc(groupId)
               .collection('members')
               .doc(userId);
-          final membersQuery = await groupDocRef.collection('members').get();
+          final QuerySnapshot membersQuery =
+              await groupDocRef.collection('members').get();
           membersQuery.size == 1
               // もしグループに自分1人しかいなければグループのドキュメントごと削除する
               // グループのドキュメントを削除するとCloud FunctionsのdeleteGroupがトリガーされ、

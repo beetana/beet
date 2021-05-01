@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class InquiryScreen extends StatelessWidget {
-  final contentTextController = TextEditingController();
+  final TextEditingController contentTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

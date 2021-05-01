@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class UserMainScreen extends StatelessWidget {
   final double deviceWidth;
   final double textScale;
-  final dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+  final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   UserMainScreen({this.deviceWidth, this.textScale});
 

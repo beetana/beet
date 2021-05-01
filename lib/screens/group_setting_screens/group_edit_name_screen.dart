@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupEditNameScreen extends StatelessWidget {
-  GroupEditNameScreen({this.groupId, this.groupName});
   final String groupId;
   final String groupName;
-  final groupNameController = TextEditingController();
+  final TextEditingController groupNameController = TextEditingController();
+
+  GroupEditNameScreen({this.groupId, this.groupName});
 
   @override
   Widget build(BuildContext context) {

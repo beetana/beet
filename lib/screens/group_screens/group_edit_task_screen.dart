@@ -9,12 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupEditTaskScreen extends StatelessWidget {
-  GroupEditTaskScreen({this.groupId, this.task});
   final String groupId;
   final Task task;
-  final taskTitleController = TextEditingController();
-  final taskMemoController = TextEditingController();
-  final scrollController = ScrollController();
+  final TextEditingController taskTitleController = TextEditingController();
+  final TextEditingController taskMemoController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
+
+  GroupEditTaskScreen({this.groupId, this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +122,7 @@ class GroupEditTaskScreen extends StatelessWidget {
                                           isChecked: model.assignedMembersId
                                               .contains(userId),
                                           tileTappedCallback: () {
-                                            model.assignPerson(userId);
+                                            model.assignPerson(userId: userId);
                                           },
                                         );
                                       },

@@ -7,7 +7,7 @@ class UserUpdatePasswordModel extends ChangeNotifier {
   String newPassword = '';
   String confirmNewPassword = '';
   bool isLoading = false;
-  final _auth = Auth.FirebaseAuth.instance;
+  final Auth.FirebaseAuth _auth = Auth.FirebaseAuth.instance;
 
   void startLoading() {
     isLoading = true;
@@ -19,8 +19,8 @@ class UserUpdatePasswordModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updatePassword() async {
-    final user = _auth.currentUser;
+  Future<void> updatePassword() async {
+    final Auth.User firebaseUser = _auth.currentUser;
     if (currentPassword.isEmpty) {
       throw ('現在のパスワードを入力してください');
     }
@@ -37,11 +37,12 @@ class UserUpdatePasswordModel extends ChangeNotifier {
       throw ('現在のパスワードとは異なるパスワードを作成してください');
     }
     try {
-      await user.reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
-        email: user.email,
+      await firebaseUser
+          .reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
+        email: firebaseUser.email,
         password: currentPassword,
       ));
-      await user.updatePassword(newPassword);
+      await firebaseUser.updatePassword(newPassword);
     } catch (e) {
       print(e.code);
       throw (convertErrorMessage(e.code));

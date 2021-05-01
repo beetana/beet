@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class UserEditNameScreen extends StatelessWidget {
   final String userName;
-  final userNameController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
 
   UserEditNameScreen({this.userName});
 

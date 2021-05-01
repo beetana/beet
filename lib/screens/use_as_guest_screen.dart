@@ -10,7 +10,7 @@ import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorder
 import 'package:provider/provider.dart';
 
 class UseAsGuestScreen extends StatelessWidget {
-  final songTitleController = TextEditingController();
+  final TextEditingController songTitleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

@@ -10,9 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSongDetailsScreen extends StatelessWidget {
-  GroupSongDetailsScreen({this.groupId, this.song});
   final String groupId;
   final Song song;
+
+  GroupSongDetailsScreen({this.groupId, this.song});
 
   @override
   Widget build(BuildContext context) {

@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 
 class UseAsGuestScreen2 extends StatelessWidget {
   final List<dynamic> setList;
-  final eventTitleController = TextEditingController();
-  final eventPlaceController = TextEditingController();
+  final TextEditingController eventTitleController = TextEditingController();
+  final TextEditingController eventPlaceController = TextEditingController();
 
   UseAsGuestScreen2({this.setList});
 

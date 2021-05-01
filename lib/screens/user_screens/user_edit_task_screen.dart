@@ -9,11 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserEditTaskScreen extends StatelessWidget {
-  UserEditTaskScreen({this.task});
   final Task task;
-  final taskTitleController = TextEditingController();
-  final taskMemoController = TextEditingController();
-  final scrollController = ScrollController();
+  final TextEditingController taskTitleController = TextEditingController();
+  final TextEditingController taskMemoController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
+
+  UserEditTaskScreen({this.task});
 
   @override
   Widget build(BuildContext context) {

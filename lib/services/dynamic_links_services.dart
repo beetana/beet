@@ -2,7 +2,7 @@ import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/constants.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
@@ -13,7 +13,7 @@ class DynamicLinksServices {
     final String domain = kFirebaseEnvironment
         ? 'https://beetana.page.link'
         : 'https://beetdev.page.link';
-    final parameters = DynamicLinkParameters(
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: domain,
       link: Uri.parse('$domain/?id=$groupId&name=$groupName'),
       androidParameters: AndroidParameters(
@@ -49,30 +49,31 @@ class DynamicLinksServices {
     return dynamicLink;
   }
 
-  Future fetchLinkData(context) async {
+  Future<void> fetchLinkData({BuildContext context}) async {
     this.context = context;
-    PendingDynamicLinkData link =
+    final PendingDynamicLinkData link =
         await FirebaseDynamicLinks.instance.getInitialLink();
-    handleLinkData(link);
+    handleLinkData(data: link);
     print('complete getInitialLink');
 
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
-      handleLinkData(dynamicLink);
+      handleLinkData(data: dynamicLink);
       print('complete onLink');
     });
   }
 
-  void handleLinkData(PendingDynamicLinkData data) {
-    String invitedGroupId = '';
-    String invitedGroupName = '';
-
+  void handleLinkData({PendingDynamicLinkData data}) {
     final Uri deepLink = data?.link;
     if (deepLink != null) {
-      final queryParams = deepLink.queryParameters;
-      invitedGroupId = queryParams['id'];
-      invitedGroupName = queryParams['name'];
-      invitedDialog(context, invitedGroupId, invitedGroupName);
+      final Map<String, String> queryParams = deepLink.queryParameters;
+      final String invitedGroupId = queryParams['id'];
+      final String invitedGroupName = queryParams['name'];
+      invitedDialog(
+        context: context,
+        groupId: invitedGroupId,
+        groupName: invitedGroupName,
+      );
 
       print(queryParams);
       print('招待されたグループのIDは${queryParams['id']}');
@@ -80,7 +81,8 @@ class DynamicLinksServices {
     }
   }
 
-  Future invitedDialog(context, groupId, groupName) async {
+  Future<void> invitedDialog(
+      {BuildContext context, String groupId, String groupName}) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -102,8 +104,9 @@ class DynamicLinksServices {
                 style: kEnterButtonTextStyle,
               ),
               onPressed: () async {
-                showIndicator(context);
-                final joiningState = await joinGroup(groupId: groupId);
+                showIndicator(context: context);
+                final JoiningState joiningState =
+                    await joinGroup(groupId: groupId);
                 if (joiningState == JoiningState.notYet) {
                   Navigator.pop(context);
                   Navigator.pushReplacement(
@@ -135,8 +138,8 @@ class DynamicLinksServices {
     );
   }
 
-  Future promptLogin(context) async {
-    PendingDynamicLinkData link =
+  Future<void> promptLogin({BuildContext context}) async {
+    final PendingDynamicLinkData link =
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (link != null) {
       showMessageDialog(context, 'ログインしてからお試しください。');
@@ -153,20 +156,18 @@ class DynamicLinksServices {
   }
 
   Future<JoiningState> joinGroup({String groupId}) async {
-    final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
-    String userName = '';
-    String userImageURL = '';
-    String groupName = '';
-    String groupImageURL = '';
     JoiningState joiningState;
-    final firestore = FirebaseFirestore.instance;
-    final userDocRef = firestore.collection('users').doc(userId);
-    final groupDocRef = firestore.collection('groups').doc(groupId);
+    final String userId = FirebaseAuth.instance.currentUser.uid;
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final DocumentReference userDocRef =
+        firestore.collection('users').doc(userId);
+    final DocumentReference groupDocRef =
+        firestore.collection('groups').doc(groupId);
 
     try {
-      final joiningGroupsQuery =
+      final QuerySnapshot joiningGroupsQuery =
           await userDocRef.collection('joiningGroups').get();
-      final joiningGroupDoc =
+      final DocumentSnapshot joiningGroupDoc =
           await userDocRef.collection('joiningGroups').doc(groupId).get();
 
       if (joiningGroupsQuery.size >= 8) {
@@ -174,9 +175,9 @@ class DynamicLinksServices {
       } else if (joiningGroupDoc.exists) {
         joiningState = JoiningState.already;
       } else {
-        final userDoc = await userDocRef.get();
-        userName = userDoc['name'];
-        userImageURL = userDoc['imageURL'];
+        final DocumentSnapshot userDoc = await userDocRef.get();
+        final String userName = userDoc['name'];
+        final String userImageURL = userDoc['imageURL'];
 
         await groupDocRef.collection('members').doc(userId).set({
           'name': userName,
@@ -184,9 +185,9 @@ class DynamicLinksServices {
           'joinedAt': FieldValue.serverTimestamp(),
         });
 
-        final groupDoc = await groupDocRef.get();
-        groupName = groupDoc['name'];
-        groupImageURL = groupDoc['imageURL'];
+        final DocumentSnapshot groupDoc = await groupDocRef.get();
+        final String groupName = groupDoc['name'];
+        final String groupImageURL = groupDoc['imageURL'];
 
         await userDocRef.collection('joiningGroups').doc(groupId).set({
           'name': groupName,
@@ -202,7 +203,7 @@ class DynamicLinksServices {
     return joiningState;
   }
 
-  void showIndicator(context) {
+  void showIndicator({BuildContext context}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

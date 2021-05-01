@@ -7,10 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserAddTaskScreen extends StatelessWidget {
-  UserAddTaskScreen();
-  final taskTitleController = TextEditingController();
-  final taskMemoController = TextEditingController();
-  final scrollController = ScrollController();
+  final TextEditingController taskTitleController = TextEditingController();
+  final TextEditingController taskMemoController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {

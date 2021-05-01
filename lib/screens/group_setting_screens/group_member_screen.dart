@@ -9,9 +9,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class GroupMemberScreen extends StatelessWidget {
+  final String groupId;
+  final DynamicLinksServices dynamicLinks = DynamicLinksServices();
+
   GroupMemberScreen({this.groupId});
-  final groupId;
-  final dynamicLinks = DynamicLinksServices();
 
   @override
   Widget build(BuildContext context) {

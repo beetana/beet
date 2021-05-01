@@ -12,7 +12,7 @@ class GroupMainScreen extends StatelessWidget {
   final String groupId;
   final double deviceWidth;
   final double textScale;
-  final dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+  final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   GroupMainScreen({this.groupId, this.deviceWidth, this.textScale});
 

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:beet/models/add_group_model.dart';
 
 class AddGroupScreen extends StatelessWidget {
-  final groupNameController = TextEditingController();
+  final TextEditingController groupNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

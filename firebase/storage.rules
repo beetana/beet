@@ -22,14 +22,12 @@ service firebase.storage {
     
     match /userImage/{userId} {
       allow create: if isImageOwner(userId)
-        && request.resource.size < 500 * 1024
-        && request.resource.contentType.matches('image/.*')
-        // && request.resource.contentType == 'image/jpeg'
+        && request.resource.size < 200 * 1024
+        && request.resource.contentType == 'image/jpeg'
       ;
       allow update: if isImageOwner(userId)
-        && request.resource.size < 500 * 1024
-        && request.resource.contentType.matches('image/.*')
-        // && request.resource.contentType == 'image/jpeg'
+        && request.resource.size < 200 * 1024
+        && request.resource.contentType == 'image/jpeg'
       ;
       allow delete: if isImageOwner(userId)
       ;
@@ -37,14 +35,12 @@ service firebase.storage {
 
     match /groupImage/{groupId} {
       allow create: if isAuthenticated()
-        && request.resource.size < 500 * 1024
-        && request.resource.contentType.matches('image/.*')
-        // && request.resource.contentType == 'image/jpeg'
+        && request.resource.size < 200 * 1024
+        && request.resource.contentType == 'image/jpeg'
       ;
       allow update: if isAuthenticated()
-        && request.resource.size < 500 * 1024
-        && request.resource.contentType.matches('image/.*')
-        // && request.resource.contentType == 'image/jpeg'
+        && request.resource.size < 200 * 1024
+        && request.resource.contentType == 'image/jpeg'
       ;
       allow delete: if isAuthenticated()
       ;

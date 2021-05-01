@@ -9,12 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupEditSongScreen extends StatelessWidget {
-  GroupEditSongScreen({this.groupId, this.song});
   final String groupId;
   final Song song;
-  final songTitleController = TextEditingController();
-  final songMemoController = TextEditingController();
-  final scrollController = ScrollController();
+  final TextEditingController songTitleController = TextEditingController();
+  final TextEditingController songMemoController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
+
+  GroupEditSongScreen({this.groupId, this.song});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class GroupEditSongScreen extends StatelessWidget {
                       onPressed: () async {
                         model.startLoading();
                         try {
-                          await model.editSong();
+                          await model.updateSong();
                           Navigator.pop(context);
                         } catch (e) {
                           showMessageDialog(context, e.toString());

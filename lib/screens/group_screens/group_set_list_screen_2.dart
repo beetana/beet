@@ -12,8 +12,8 @@ class GroupSetListScreen2 extends StatelessWidget {
   final int songCount;
   final int totalPlayTime;
   final String groupId;
-  final eventTitleController = TextEditingController();
-  final eventPlaceController = TextEditingController();
+  final TextEditingController eventTitleController = TextEditingController();
+  final TextEditingController eventPlaceController = TextEditingController();
 
   GroupSetListScreen2({
     this.setList,

@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class UserTaskDetailsScreen extends StatelessWidget {
   final Task task;
-  final dueDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+  final DateFormat dueDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   UserTaskDetailsScreen({this.task});
 

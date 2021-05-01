@@ -10,14 +10,15 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GroupEditEventScreen extends StatelessWidget {
-  GroupEditEventScreen({this.groupId, this.event});
   final String groupId;
   final Event event;
-  final dateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_jp');
-  final eventTitleController = TextEditingController();
-  final eventPlaceController = TextEditingController();
-  final eventMemoController = TextEditingController();
-  final scrollController = ScrollController();
+  final DateFormat dateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_jp');
+  final TextEditingController eventTitleController = TextEditingController();
+  final TextEditingController eventPlaceController = TextEditingController();
+  final TextEditingController eventMemoController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
+
+  GroupEditEventScreen({this.groupId, this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,7 @@ class GroupEditEventScreen extends StatelessWidget {
                           AlldaySwitchListTile(
                             value: model.isAllDay,
                             onChanged: (value) {
-                              model.switchIsAllDay(value);
+                              model.switchIsAllDay(value: value);
                             },
                           ),
                           BasicDivider(),

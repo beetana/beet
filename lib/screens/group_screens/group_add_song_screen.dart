@@ -8,11 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupAddSongScreen extends StatelessWidget {
-  GroupAddSongScreen({this.groupId});
   final String groupId;
-  final songTitleController = TextEditingController();
-  final songMemoController = TextEditingController();
-  final scrollController = ScrollController();
+  final TextEditingController songTitleController = TextEditingController();
+  final TextEditingController songMemoController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
+
+  GroupAddSongScreen({this.groupId});
 
   @override
   Widget build(BuildContext context) {

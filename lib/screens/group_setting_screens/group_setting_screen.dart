@@ -12,8 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSettingScreen extends StatelessWidget {
-  GroupSettingScreen({this.groupId});
   final String groupId;
+
+  GroupSettingScreen({this.groupId});
 
   @override
   Widget build(BuildContext context) {

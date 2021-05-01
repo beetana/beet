@@ -11,9 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupEventDetailsScreen extends StatelessWidget {
-  GroupEventDetailsScreen({this.groupId, this.event});
   final String groupId;
   final Event event;
+
+  GroupEventDetailsScreen({this.groupId, this.event});
 
   @override
   Widget build(BuildContext context) {

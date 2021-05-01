@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 
 class UserSecurityModel extends ChangeNotifier {
-  String email;
+  String email = '';
   bool isLoading = false;
-  final _auth = Auth.FirebaseAuth.instance;
+  final Auth.FirebaseAuth _auth = Auth.FirebaseAuth.instance;
 
   void init() {
-    final firebaseUser = _auth.currentUser;
-    this.email = firebaseUser.email;
+    final Auth.User firebaseUser = _auth.currentUser;
+    email = firebaseUser.email;
     notifyListeners();
   }
 
@@ -22,7 +22,7 @@ class UserSecurityModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future logout() async {
+  Future<void> logout() async {
     try {
       await _auth.signOut();
     } catch (e) {

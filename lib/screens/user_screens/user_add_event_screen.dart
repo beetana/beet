@@ -9,12 +9,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserAddEventScreen extends StatelessWidget {
-  final dateTime;
-  final dateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_jp');
-  final eventTitleController = TextEditingController();
-  final eventPlaceController = TextEditingController();
-  final eventMemoController = TextEditingController();
-  final scrollController = ScrollController();
+  final DateTime dateTime;
+  final DateFormat dateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_jp');
+  final TextEditingController eventTitleController = TextEditingController();
+  final TextEditingController eventPlaceController = TextEditingController();
+  final TextEditingController eventMemoController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
 
   UserAddEventScreen({this.dateTime});
 
@@ -109,7 +109,7 @@ class UserAddEventScreen extends StatelessWidget {
                             AlldaySwitchListTile(
                               value: model.isAllDay,
                               onChanged: (value) {
-                                model.switchIsAllDay(value);
+                                model.switchIsAllDay(value: value);
                               },
                             ),
                             BasicDivider(),

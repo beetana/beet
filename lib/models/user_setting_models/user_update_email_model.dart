@@ -7,7 +7,7 @@ class UserUpdateEmailModel extends ChangeNotifier {
   String password = '';
   bool isLoading = false;
   bool isAuthRequired = false;
-  final _auth = Auth.FirebaseAuth.instance;
+  final Auth.FirebaseAuth _auth = Auth.FirebaseAuth.instance;
 
   void startLoading() {
     isLoading = true;
@@ -23,20 +23,20 @@ class UserUpdateEmailModel extends ChangeNotifier {
     this.email = email;
   }
 
-  Future updateEmail() async {
-    final user = _auth.currentUser;
-    if (email.isEmpty || email == user.email) {
+  Future<void> updateEmail() async {
+    final Auth.User firebaseUser = _auth.currentUser;
+    if (email.isEmpty || email == firebaseUser.email) {
       throw ('新しいメールアドレスを入力してください');
     }
     try {
       if (isAuthRequired) {
-        await user
+        await firebaseUser
             .reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
-          email: user.email,
+          email: firebaseUser.email,
           password: password,
         ));
       }
-      await user.updateEmail(email);
+      await firebaseUser.updateEmail(email);
     } catch (e) {
       print(e.code);
       if (e.code == 'requires-recent-login') {

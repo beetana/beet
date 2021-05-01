@@ -6,9 +6,9 @@ import 'package:provider/provider.dart';
 
 class UserUpdateEmailScreen extends StatelessWidget {
   UserUpdateEmailScreen({this.email});
-  final email;
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final String email;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

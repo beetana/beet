@@ -11,10 +11,11 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GroupTaskDetailsScreen extends StatelessWidget {
-  GroupTaskDetailsScreen({this.groupId, this.task});
   final String groupId;
   final Task task;
-  final dueDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+  final DateFormat dueDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+
+  GroupTaskDetailsScreen({this.groupId, this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +199,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
   }
 }
 
-Future _confirmDeleteDialog(context, message) async {
+Future<bool> _confirmDeleteDialog(context, message) async {
   bool _isDelete;
   _isDelete = await showDialog(
     context: context,

@@ -16,7 +16,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     super.initState();
-    DynamicLinksServices().promptLogin(context);
+    DynamicLinksServices().promptLogin(context: context);
   }
 
   @override

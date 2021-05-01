@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserEditEventModel extends ChangeNotifier {
   String ownerId = '';
@@ -25,8 +25,8 @@ class UserEditEventModel extends ChangeNotifier {
   DateFormat tileDateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_JP');
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
-  final firestore = FirebaseFirestore.instance;
-  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -39,11 +39,11 @@ class UserEditEventModel extends ChangeNotifier {
   }
 
   void init({Event event}) {
-    if (event.isAllDay == true) {
+    if (event.isAllDay) {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
-      DateTime start = event.startingDateTime;
-      DateTime end = event.endingDateTime;
+      final DateTime start = event.startingDateTime;
+      final DateTime end = event.endingDateTime;
       event.startingDateTime = DateTime(
         start.year,
         start.month,
@@ -74,14 +74,14 @@ class UserEditEventModel extends ChangeNotifier {
     startingDateTime = event.startingDateTime;
     endingDateTime = event.endingDateTime;
     ownerDocRef = ownerId == userId
-        ? firestore.collection('users').doc(userId)
-        : firestore.collection('groups').doc(ownerId);
+        ? _firestore.collection('users').doc(userId)
+        : _firestore.collection('groups').doc(ownerId);
     notifyListeners();
   }
 
-  void switchIsAllDay(bool value) {
+  void switchIsAllDay({bool value}) {
     isAllDay = value;
-    if (isAllDay == true) {
+    if (isAllDay) {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
       startingDateTimePickerBox = const SizedBox();
@@ -100,8 +100,8 @@ class UserEditEventModel extends ChangeNotifier {
   }
 
   void showStartingDateTimePicker() {
-    if (isShowStartingPicker == false) {
-      if (isShowEndingPicker == true) {
+    if (!isShowStartingPicker) {
+      if (isShowEndingPicker) {
         isShowEndingPicker = false;
         endingDateTimePickerBox = const SizedBox();
       }
@@ -139,8 +139,8 @@ class UserEditEventModel extends ChangeNotifier {
   }
 
   void showEndingDateTimePicker() {
-    if (isShowEndingPicker == false) {
-      if (isShowStartingPicker == true) {
+    if (!isShowEndingPicker) {
+      if (isShowStartingPicker) {
         isShowStartingPicker = false;
         startingDateTimePickerBox = const SizedBox();
       }
@@ -154,7 +154,7 @@ class UserEditEventModel extends ChangeNotifier {
           minimumDate: startingDateTime.add(const Duration(minutes: 5)),
           maximumDate: startingDateTime.add(const Duration(days: 1000)),
           onDateTimeChanged: (DateTime newDateTime) {
-            if (isAllDay == true) {
+            if (isAllDay) {
               newDateTime = DateTime(
                 newDateTime.year,
                 newDateTime.month,
@@ -177,36 +177,35 @@ class UserEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateEvent() async {
+  Future<void> updateEvent() async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
-    DateTime date;
     String month = '';
     List<DateTime> dateList = [];
     List<String> monthList = [];
-    String start = dateFormat.format(startingDateTime);
-    String end = dateFormat.format(endingDateTime);
-    int durationDays =
+    final String start = dateFormat.format(startingDateTime);
+    final String end = dateFormat.format(endingDateTime);
+    final int durationDays =
         DateTime.parse(end).difference(DateTime.parse(start)).inDays;
-    DateTime eventDate = DateTime(
+    final DateTime startingDate = DateTime(
       startingDateTime.year,
       startingDateTime.month,
       startingDateTime.day,
       12,
     ).toUtc();
     for (int i = 0; i <= durationDays; i++) {
-      date = eventDate.add(Duration(days: i));
+      final DateTime date = startingDate.add(Duration(days: i));
       dateList.add(date);
     }
-    dateList.forEach((value) {
-      String monthForm = monthFormat.format(value);
+    dateList.forEach((date) {
+      final String monthForm = monthFormat.format(date);
       if (monthForm != month) {
         month = monthForm;
         monthList.add(month);
       }
     });
-    if (isAllDay == true) {
+    if (isAllDay) {
       startingDateTime = DateTime(
         startingDateTime.year,
         startingDateTime.month,

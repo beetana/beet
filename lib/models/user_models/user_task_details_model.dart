@@ -21,8 +21,8 @@ class UserTaskDetailsModel extends ChangeNotifier {
   bool isLoading = false;
   ContentOwner owner;
   DocumentReference ownerDocRef;
-  final firestore = FirebaseFirestore.instance;
   final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -34,7 +34,7 @@ class UserTaskDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({Task task}) async {
+  Future<void> init({Task task}) async {
     startLoading();
     this.task = task;
     ownerId = task.ownerId;
@@ -47,16 +47,18 @@ class UserTaskDetailsModel extends ChangeNotifier {
     isCompleted = task.isCompleted;
     isOwn = ownerId == userId;
     ownerDocRef = isOwn
-        ? firestore.collection('users').doc(userId)
-        : firestore.collection('groups').doc(ownerId);
+        ? _firestore.collection('users').doc(userId)
+        : _firestore.collection('groups').doc(ownerId);
     try {
-      final ownerDoc = await ownerDocRef.get();
+      final DocumentSnapshot ownerDoc = await ownerDocRef.get();
       owner = ContentOwner.doc(ownerDoc);
       if (isOwn) {
         groupMembers[ownerId] = User.doc(ownerDoc);
       } else {
-        final membersQuery = await ownerDocRef.collection('members').get();
-        final users = membersQuery.docs.map((doc) => User.doc(doc)).toList();
+        final QuerySnapshot membersQuery =
+            await ownerDocRef.collection('members').get();
+        final List<User> users =
+            membersQuery.docs.map((doc) => User.doc(doc)).toList();
         users.forEach((user) {
           groupMembers[user.id] = user;
         });
@@ -67,9 +69,10 @@ class UserTaskDetailsModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future fetchTask() async {
+  Future<void> fetchTask() async {
     try {
-      final taskDoc = await ownerDocRef.collection('tasks').doc(taskId).get();
+      final DocumentSnapshot taskDoc =
+          await ownerDocRef.collection('tasks').doc(taskId).get();
       task = Task.doc(taskDoc);
       ownerId = task.ownerId;
       taskTitle = task.title;
@@ -86,7 +89,7 @@ class UserTaskDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future deleteTask() async {
+  Future<void> deleteTask() async {
     try {
       await ownerDocRef.collection('tasks').doc(taskId).delete();
     } catch (e) {

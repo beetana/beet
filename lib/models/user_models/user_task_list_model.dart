@@ -11,8 +11,9 @@ class UserTaskListModel extends ChangeNotifier {
   List<Task> notCompletedTasks = [];
   List<Task> changeStateTasks = [];
   bool isLoading = false;
-  final firestore = FirebaseFirestore.instance;
+  DocumentReference userDocRef;
   final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -24,23 +25,24 @@ class UserTaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init() async {
+  Future<void> init() async {
     startLoading();
-    final userDocRef = firestore.collection('users').doc(userId);
+    userDocRef = _firestore.collection('users').doc(userId);
     try {
-      final userDoc = await userDocRef.get();
+      final DocumentSnapshot userDoc = await userDocRef.get();
       joiningGroupMembers[userId] = User.doc(userDoc);
-      final joiningGroupsQuery =
+      final QuerySnapshot joiningGroupsQuery =
           await userDocRef.collection('joiningGroups').get();
-      final joiningGroupsId =
+      final List<String> joiningGroupsId =
           joiningGroupsQuery.docs.map((doc) => doc.id).toList();
       joiningGroupsId.forEach((groupId) async {
-        final membersQuery = await firestore
+        final QuerySnapshot membersQuery = await _firestore
             .collection('groups')
             .doc(groupId)
             .collection('members')
             .get();
-        final users = membersQuery.docs.map((doc) => User.doc(doc)).toList();
+        final List<User> users =
+            membersQuery.docs.map((doc) => User.doc(doc)).toList();
         users.forEach((user) {
           joiningGroupMembers[user.id] = user;
         });
@@ -52,12 +54,12 @@ class UserTaskListModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future fetchTasks() async {
+  Future<void> fetchTasks() async {
     completedTasks = [];
     notCompletedTasks = [];
     changeStateTasks = [];
     try {
-      final tasksQuery = await firestore
+      final QuerySnapshot tasksQuery = await _firestore
           .collectionGroup('tasks')
           .where('assignedMembersId', arrayContains: userId)
           .get();
@@ -76,17 +78,13 @@ class UserTaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateCheckState() async {
+  Future<void> updateCheckState() async {
     try {
-      final batch = firestore.batch();
+      final WriteBatch batch = _firestore.batch();
       changeStateTasks.forEach((task) {
-        final taskDocRef = task.ownerId == userId
-            ? firestore
-                .collection('users')
-                .doc(userId)
-                .collection('tasks')
-                .doc(task.id)
-            : firestore
+        final DocumentReference taskDocRef = task.ownerId == userId
+            ? userDocRef.collection('tasks').doc(task.id)
+            : _firestore
                 .collection('groups')
                 .doc(task.ownerId)
                 .collection('tasks')
@@ -111,14 +109,10 @@ class UserTaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future deleteTask({Task task}) async {
-    final taskDocRef = task.ownerId == userId
-        ? firestore
-            .collection('users')
-            .doc(userId)
-            .collection('tasks')
-            .doc(task.id)
-        : firestore
+  Future<void> deleteTask({Task task}) async {
+    final DocumentReference taskDocRef = task.ownerId == userId
+        ? userDocRef.collection('tasks').doc(task.id)
+        : _firestore
             .collection('groups')
             .doc(task.ownerId)
             .collection('tasks')

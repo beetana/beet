@@ -20,6 +20,7 @@ class GroupAddEventModel extends ChangeNotifier {
   DateFormat tileDateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_JP');
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -31,14 +32,14 @@ class GroupAddEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({dateTime}) {
+  void init({DateTime dateTime}) {
     startingDateTime = dateTime;
     endingDateTime = dateTime.add(const Duration(hours: 1));
   }
 
-  void switchIsAllDay(bool value) {
+  void switchIsAllDay({bool value}) {
     isAllDay = value;
-    if (isAllDay == true) {
+    if (isAllDay) {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
       startingDateTimePickerBox = const SizedBox();
@@ -57,8 +58,8 @@ class GroupAddEventModel extends ChangeNotifier {
   }
 
   void showStartingDateTimePicker() {
-    if (isShowStartingPicker == false) {
-      if (isShowEndingPicker == true) {
+    if (!isShowStartingPicker) {
+      if (isShowEndingPicker) {
         isShowEndingPicker = false;
         endingDateTimePickerBox = const SizedBox();
       }
@@ -96,8 +97,8 @@ class GroupAddEventModel extends ChangeNotifier {
   }
 
   void showEndingDateTimePicker() {
-    if (isShowEndingPicker == false) {
-      if (isShowStartingPicker == true) {
+    if (!isShowEndingPicker) {
+      if (isShowStartingPicker) {
         isShowStartingPicker = false;
         startingDateTimePickerBox = const SizedBox();
       }
@@ -134,36 +135,35 @@ class GroupAddEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addEvent({groupId}) async {
+  Future<void> addEvent({String groupId}) async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
-    DateTime date;
     String month = '';
     List<DateTime> dateList = [];
     List<String> monthList = [];
-    String start = dateFormat.format(startingDateTime);
-    String end = dateFormat.format(endingDateTime);
-    int durationDays =
+    final String start = dateFormat.format(startingDateTime);
+    final String end = dateFormat.format(endingDateTime);
+    final int durationDays =
         DateTime.parse(end).difference(DateTime.parse(start)).inDays;
-    DateTime eventDate = DateTime(
+    final DateTime startingDate = DateTime(
       startingDateTime.year,
       startingDateTime.month,
       startingDateTime.day,
       12,
     ).toUtc();
     for (int i = 0; i <= durationDays; i++) {
-      date = eventDate.add(Duration(days: i));
+      final DateTime date = startingDate.add(Duration(days: i));
       dateList.add(date);
     }
-    dateList.forEach((value) {
-      String monthForm = monthFormat.format(value);
+    dateList.forEach((date) {
+      final String monthForm = monthFormat.format(date);
       if (monthForm != month) {
         month = monthForm;
         monthList.add(month);
       }
     });
-    if (isAllDay == true) {
+    if (isAllDay) {
       startingDateTime = DateTime(
         startingDateTime.year,
         startingDateTime.month,
@@ -181,7 +181,7 @@ class GroupAddEventModel extends ChangeNotifier {
     }
 
     try {
-      await FirebaseFirestore.instance
+      await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('events')

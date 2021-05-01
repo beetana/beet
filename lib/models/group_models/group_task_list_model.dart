@@ -11,7 +11,7 @@ class GroupTaskListModel extends ChangeNotifier {
   List<Task> changeStateTasks = [];
   bool isLoading = false;
   DocumentReference groupDocRef;
-  final firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -23,12 +23,14 @@ class GroupTaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String groupId}) async {
+  Future<void> init({String groupId}) async {
     startLoading();
-    groupDocRef = firestore.collection('groups').doc(groupId);
+    groupDocRef = _firestore.collection('groups').doc(groupId);
     try {
-      final membersQuery = await groupDocRef.collection('members').get();
-      final users = membersQuery.docs.map((doc) => User.doc(doc)).toList();
+      final QuerySnapshot membersQuery =
+          await groupDocRef.collection('members').get();
+      final List<User> users =
+          membersQuery.docs.map((doc) => User.doc(doc)).toList();
       users.forEach((user) {
         members[user.id] = user;
       });
@@ -39,12 +41,13 @@ class GroupTaskListModel extends ChangeNotifier {
     endLoading();
   }
 
-  Future fetchTasks() async {
+  Future<void> fetchTasks() async {
     completedTasks = [];
     notCompletedTasks = [];
     changeStateTasks = [];
     try {
-      final tasksQuery = await groupDocRef.collection('tasks').get();
+      final QuerySnapshot tasksQuery =
+          await groupDocRef.collection('tasks').get();
       tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
       tasks.forEach((task) {
         task.isCompleted
@@ -60,11 +63,12 @@ class GroupTaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateCheckState() async {
+  Future<void> updateCheckState() async {
     try {
-      final batch = firestore.batch();
+      final WriteBatch batch = _firestore.batch();
       changeStateTasks.forEach((task) {
-        final taskDocRef = groupDocRef.collection('tasks').doc(task.id);
+        final DocumentReference taskDocRef =
+            groupDocRef.collection('tasks').doc(task.id);
         batch.update(taskDocRef, {
           'isCompleted': task.isCompleted,
           'updatedAt': FieldValue.serverTimestamp(),
@@ -85,7 +89,7 @@ class GroupTaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future deleteTask({Task task}) async {
+  Future<void> deleteTask({Task task}) async {
     try {
       await groupDocRef.collection('tasks').doc(task.id).delete();
       tasks.remove(task);

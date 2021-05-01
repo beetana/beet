@@ -17,9 +17,9 @@ class GroupAddTaskModel extends ChangeNotifier {
   bool isLoading = false;
   bool isShowDueDatePicker = false;
   Widget dueDatePickerBox = const SizedBox();
-  DateTime now = DateTime.now();
   DateTime dueDate;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -31,13 +31,14 @@ class GroupAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String groupId}) async {
+  Future<void> init({String groupId}) async {
     startLoading();
+    final DateTime now = DateTime.now();
     this.groupId = groupId;
-    this.dueDate = DateTime(now.year, now.month, now.day, 12);
-    this.dueDateText = dateFormat.format(dueDate);
+    dueDate = DateTime(now.year, now.month, now.day, 12);
+    dueDateText = dateFormat.format(dueDate);
     try {
-      final membersQuery = await FirebaseFirestore.instance
+      final QuerySnapshot membersQuery = await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('members')
@@ -49,9 +50,8 @@ class GroupAddTaskModel extends ChangeNotifier {
           (membersQuery.docs.map((doc) => doc['imageURL'].toString()).toList());
     } catch (e) {
       print(e);
-    } finally {
-      endLoading();
     }
+    endLoading();
   }
 
   void assignPerson(userId) {
@@ -64,7 +64,7 @@ class GroupAddTaskModel extends ChangeNotifier {
   }
 
   void showDueDatePicker() {
-    if (isShowDueDatePicker == false) {
+    if (!isShowDueDatePicker) {
       dueDatePickerBox = Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -76,10 +76,10 @@ class GroupAddTaskModel extends ChangeNotifier {
               minimumDate: DateTime(1980, 1, 1),
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
-                this.dueDate =
+                dueDate =
                     DateTime(newDate.year, newDate.month, newDate.day, 12);
-                this.dueDateText = dateFormat.format(dueDate);
-                this.isDecidedDueDate = true;
+                dueDateText = dateFormat.format(dueDate);
+                isDecidedDueDate = true;
               },
             ),
           ),
@@ -93,11 +93,11 @@ class GroupAddTaskModel extends ChangeNotifier {
               style: kCancelButtonTextStyle,
             ),
             onPressed: () {
-              this.dueDate = null;
-              this.dueDateText = '';
-              this.isDecidedDueDate = false;
-              this.dueDatePickerBox = const SizedBox();
-              this.isShowDueDatePicker = !isShowDueDatePicker;
+              dueDate = null;
+              dueDateText = '';
+              isDecidedDueDate = false;
+              dueDatePickerBox = const SizedBox();
+              isShowDueDatePicker = !isShowDueDatePicker;
               notifyListeners();
             },
           ),
@@ -115,7 +115,7 @@ class GroupAddTaskModel extends ChangeNotifier {
       throw ('やることを入力してください');
     }
     try {
-      await FirebaseFirestore.instance
+      await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('tasks')

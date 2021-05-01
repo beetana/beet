@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserAddTaskModel extends ChangeNotifier {
   String taskTitle = '';
@@ -14,10 +14,10 @@ class UserAddTaskModel extends ChangeNotifier {
   bool isLoading = false;
   bool isShowDueDatePicker = false;
   Widget dueDatePickerBox = const SizedBox();
-  DateTime now = DateTime.now();
   DateTime dueDate;
-  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -30,14 +30,15 @@ class UserAddTaskModel extends ChangeNotifier {
   }
 
   void init() {
-    this.assignedUserId = [userId];
-    this.dueDate = DateTime(now.year, now.month, now.day, 12);
-    this.dueDateText = dateFormat.format(dueDate);
+    final DateTime now = DateTime.now();
+    assignedUserId = [userId];
+    dueDate = DateTime(now.year, now.month, now.day, 12);
+    dueDateText = dateFormat.format(dueDate);
     notifyListeners();
   }
 
   void showDueDatePicker() {
-    if (isShowDueDatePicker == false) {
+    if (!isShowDueDatePicker) {
       dueDatePickerBox = Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -49,10 +50,10 @@ class UserAddTaskModel extends ChangeNotifier {
               minimumDate: DateTime(1980, 1, 1),
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
-                this.dueDate =
+                dueDate =
                     DateTime(newDate.year, newDate.month, newDate.day, 12);
-                this.dueDateText = dateFormat.format(dueDate);
-                this.isDecidedDueDate = true;
+                dueDateText = dateFormat.format(dueDate);
+                isDecidedDueDate = true;
               },
             ),
           ),
@@ -66,11 +67,11 @@ class UserAddTaskModel extends ChangeNotifier {
               style: kCancelButtonTextStyle,
             ),
             onPressed: () {
-              this.dueDate = null;
-              this.dueDateText = '';
-              this.isDecidedDueDate = false;
-              this.dueDatePickerBox = const SizedBox();
-              this.isShowDueDatePicker = !isShowDueDatePicker;
+              dueDate = null;
+              dueDateText = '';
+              isDecidedDueDate = false;
+              dueDatePickerBox = const SizedBox();
+              isShowDueDatePicker = !isShowDueDatePicker;
               notifyListeners();
             },
           ),
@@ -83,16 +84,12 @@ class UserAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addTask() async {
+  Future<void> addTask() async {
     if (taskTitle.isEmpty) {
       throw ('やることを入力してください');
     }
     try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .collection('tasks')
-          .add({
+      await _firestore.collection('users').doc(userId).collection('tasks').add({
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,

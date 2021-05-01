@@ -1,11 +1,11 @@
 import 'package:beet/utilities/convert_error_message.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ResetPasswordModel extends ChangeNotifier {
   String email = '';
   bool isLoading = false;
-  final _auth = Auth.FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void startLoading() {
     isLoading = true;
@@ -17,7 +17,7 @@ class ResetPasswordModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future sendResetEmail() async {
+  Future<void> sendResetEmail() async {
     try {
       await _auth.sendPasswordResetEmail(
         email: email,

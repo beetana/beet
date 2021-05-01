@@ -6,7 +6,6 @@ import 'package:nholiday_jp/nholiday_jp.dart';
 
 class GroupCalendarModel extends ChangeNotifier {
   String groupId = '';
-  DateTime now = DateTime.now();
   DateTime first;
   DateTime last;
   DateTime selectedDay;
@@ -15,34 +14,39 @@ class GroupCalendarModel extends ChangeNotifier {
   Map<DateTime, List> holidays = {};
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void init({String groupId}) {
+    final DateTime now = DateTime.now();
     this.groupId = groupId;
-    this.selectedDay = DateTime(now.year, now.month, now.day, 12);
+    selectedDay = DateTime(now.year, now.month, now.day, 12);
   }
 
-  Future fetchEvents() async {
+  Future<void> fetchEvents() async {
     events = {};
-    List<Event> eventList;
-    List<Event> eventsOfDay;
-    DateTime firstDate = DateTime(first.year, first.month, first.day, 12);
-    String monthForm = monthFormat.format(first);
-    int durationDays = last.difference(first).inDays;
+    final DateTime firstDate = DateTime(first.year, first.month, first.day, 12);
+    final String monthForm = monthFormat.format(first);
+    final int durationDays = last.difference(first).inDays;
 
     try {
-      final eventsQuery = await FirebaseFirestore.instance
+      final QuerySnapshot eventsQuery = await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('events')
           .where('monthList', arrayContains: monthForm)
           .get();
-      eventList = eventsQuery.docs.map((doc) => Event.doc(doc)).toList();
+
+      final List<Event> eventList =
+          eventsQuery.docs.map((doc) => Event.doc(doc)).toList();
       eventList
           .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
+
       for (int i = 0; i <= durationDays; i++) {
-        DateTime date = firstDate.add(Duration(days: i));
-        eventsOfDay =
-            eventList.where((n) => n.dateList.contains(date)).toList() ?? [];
+        final DateTime date = firstDate.add(Duration(days: i));
+        final List<Event> eventsOfDay = eventList
+                .where((event) => event.dateList.contains(date))
+                .toList() ??
+            [];
         events[date] = eventsOfDay;
       }
     } catch (e) {
@@ -53,18 +57,17 @@ class GroupCalendarModel extends ChangeNotifier {
 
   void fetchHolidays() {
     holidays = {};
-    List<String> holidaysList;
-    int year = first.year;
-    int month = first.month;
-    holidaysList = NHolidayJp.getByMonth(year, month)
+    final int year = first.year;
+    final int month = first.month;
+    final List<String> holidaysList = NHolidayJp.getByMonth(year, month)
         .map((holiday) => holiday.toString())
         .toList();
     if (holidaysList.isNotEmpty) {
       holidaysList.forEach((holiday) {
-        List<String> splitHoliday = holiday.split(' ');
-        String holidayDate = splitHoliday[0];
-        List<String> holidayName = [splitHoliday[1]];
-        int day = int.parse(holidayDate.split('/')[1]);
+        final List<String> splitHoliday = holiday.split(' ');
+        final String holidayDate = splitHoliday[0];
+        final List<String> holidayName = [splitHoliday[1]];
+        final int day = int.parse(holidayDate.split('/')[1]);
         holidays[DateTime(year, month, day, 12)] = holidayName;
       });
     }

@@ -7,6 +7,7 @@ class GroupAddSongModel extends ChangeNotifier {
   bool isLoading = false;
   int songPlayingTime = 0;
   final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -18,12 +19,12 @@ class GroupAddSongModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addSong({String groupId}) async {
+  Future<void> addSong({String groupId}) async {
     if (songTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
     try {
-      await FirebaseFirestore.instance
+      await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('songs')

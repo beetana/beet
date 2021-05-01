@@ -10,13 +10,14 @@ class GroupEditSongModel extends ChangeNotifier {
   int songPlayingTime;
   bool isLoading = false;
   final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void init({String groupId, Song song}) {
     this.groupId = groupId;
-    this.songId = song.id;
-    this.songTitle = song.title;
-    this.songMemo = song.memo;
-    this.songPlayingTime = song.playingTime;
+    songId = song.id;
+    songTitle = song.title;
+    songMemo = song.memo;
+    songPlayingTime = song.playingTime;
   }
 
   void startLoading() {
@@ -29,12 +30,12 @@ class GroupEditSongModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future editSong() async {
+  Future<void> updateSong() async {
     if (songTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
     try {
-      await FirebaseFirestore.instance
+      await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('songs')

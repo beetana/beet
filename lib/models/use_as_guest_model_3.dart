@@ -15,22 +15,23 @@ class UseAsGuestModel3 extends ChangeNotifier {
     setList.forEach((item) {
       if (item is MC) {
         this.setList.add(item.title);
-        this.songsNumText.add('    ');
+        songsNumText.add('    ');
       } else {
         this.setList.add(item);
-        this.songsNumText.add(num < 10 ? '  $num.' : '$num.');
+        songsNumText.add(num < 10 ? '  $num.' : '$num.');
         num += 1;
       }
     });
     notifyListeners();
   }
 
-  Future saveSetListImage() async {
-    RenderRepaintBoundary boundary =
+  Future<void> saveSetListImage() async {
+    final RenderRepaintBoundary boundary =
         globalKey.currentContext.findRenderObject();
-    ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List pngBytes = byteData.buffer.asUint8List();
+    final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+    final ByteData byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List pngBytes = byteData.buffer.asUint8List();
     await ImageGallerySaver.saveImage(pngBytes);
     notifyListeners();
   }

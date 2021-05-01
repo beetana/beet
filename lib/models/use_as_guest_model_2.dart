@@ -10,7 +10,7 @@ class UseAsGuestModel2 extends ChangeNotifier {
   String eventDateText = '';
   bool isShowEventDatePicker = false;
   Widget eventDatePickerBox = const SizedBox();
-  final eventDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+  final DateFormat eventDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   void init() {
     eventDate = DateTime.now();
@@ -19,7 +19,7 @@ class UseAsGuestModel2 extends ChangeNotifier {
   }
 
   void showEventDatePicker() {
-    if (isShowEventDatePicker == false) {
+    if (!isShowEventDatePicker) {
       eventDatePickerBox = Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [

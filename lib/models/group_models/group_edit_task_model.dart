@@ -22,6 +22,7 @@ class GroupEditTaskModel extends ChangeNotifier {
   Widget dueDatePickerBox = const SizedBox();
   DateTime dueDate;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
     isLoading = true;
@@ -33,20 +34,20 @@ class GroupEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future init({String groupId, Task task}) async {
+  Future<void> init({String groupId, Task task}) async {
     startLoading();
     this.groupId = groupId;
-    this.taskId = task.id;
-    this.taskTitle = task.title;
-    this.taskMemo = task.memo;
-    this.isDecidedDueDate = task.isDecidedDueDate;
-    this.isCompleted = task.isCompleted;
-    this.dueDate = task.dueDate;
-    this.dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
-    this.assignedMembersId =
+    taskId = task.id;
+    taskTitle = task.title;
+    taskMemo = task.memo;
+    isDecidedDueDate = task.isDecidedDueDate;
+    isCompleted = task.isCompleted;
+    dueDate = task.dueDate;
+    dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
+    assignedMembersId =
         task.assignedMembersId.map((id) => id.toString()).toList();
     try {
-      final membersQuery = await FirebaseFirestore.instance
+      final QuerySnapshot membersQuery = await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('members')
@@ -58,12 +59,11 @@ class GroupEditTaskModel extends ChangeNotifier {
           (membersQuery.docs.map((doc) => doc['imageURL'].toString()).toList());
     } catch (e) {
       print(e);
-    } finally {
-      endLoading();
     }
+    endLoading();
   }
 
-  void assignPerson(userId) {
+  void assignPerson({String userId}) {
     if (assignedMembersId.contains(userId)) {
       assignedMembersId.remove(userId);
     } else {
@@ -73,7 +73,7 @@ class GroupEditTaskModel extends ChangeNotifier {
   }
 
   void showDueDatePicker() {
-    if (isShowDueDatePicker == false) {
+    if (!isShowDueDatePicker) {
       dueDatePickerBox = Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -85,10 +85,10 @@ class GroupEditTaskModel extends ChangeNotifier {
               minimumDate: DateTime(1980, 1, 1),
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
-                this.dueDate =
+                dueDate =
                     DateTime(newDate.year, newDate.month, newDate.day, 12);
-                this.dueDateText = dateFormat.format(dueDate);
-                this.isDecidedDueDate = true;
+                dueDateText = dateFormat.format(dueDate);
+                isDecidedDueDate = true;
               },
             ),
           ),
@@ -102,11 +102,11 @@ class GroupEditTaskModel extends ChangeNotifier {
               style: kCancelButtonTextStyle,
             ),
             onPressed: () {
-              this.dueDate = null;
-              this.dueDateText = '';
-              this.isDecidedDueDate = false;
-              this.dueDatePickerBox = const SizedBox();
-              this.isShowDueDatePicker = !isShowDueDatePicker;
+              dueDate = null;
+              dueDateText = '';
+              isDecidedDueDate = false;
+              dueDatePickerBox = const SizedBox();
+              isShowDueDatePicker = !isShowDueDatePicker;
               notifyListeners();
             },
           ),
@@ -119,12 +119,12 @@ class GroupEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateTask() async {
+  Future<void> updateTask() async {
     if (taskTitle.isEmpty) {
       throw ('やることを入力してください');
     }
     try {
-      await FirebaseFirestore.instance
+      await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('tasks')

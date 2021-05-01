@@ -9,16 +9,17 @@ class GroupSongDetailsModel extends ChangeNotifier {
   String songId = '';
   String songTitle = '';
   String songMemo = '';
-  int songPlayingTime;
+  int songPlayingTime = 0;
   bool isLoading = false;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void init({String groupId, Song song}) {
     this.groupId = groupId;
     this.song = song;
-    this.songId = song.id;
-    this.songTitle = song.title;
-    this.songMemo = song.memo;
-    this.songPlayingTime = song.playingTime;
+    songId = song.id;
+    songTitle = song.title;
+    songMemo = song.memo;
+    songPlayingTime = song.playingTime;
     notifyListeners();
   }
 
@@ -32,9 +33,9 @@ class GroupSongDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future fetchSong() async {
+  Future<void> fetchSong() async {
     try {
-      DocumentSnapshot songDoc = await FirebaseFirestore.instance
+      final DocumentSnapshot songDoc = await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('songs')
@@ -51,9 +52,9 @@ class GroupSongDetailsModel extends ChangeNotifier {
     }
   }
 
-  Future deleteSong() async {
+  Future<void> deleteSong() async {
     try {
-      await FirebaseFirestore.instance
+      await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('songs')

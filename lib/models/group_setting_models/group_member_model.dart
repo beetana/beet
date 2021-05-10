@@ -32,6 +32,7 @@ class GroupMemberModel extends ChangeNotifier {
     this.groupId = groupId;
     myId = _auth.currentUser.uid;
     groupDocRef = _firestore.collection('groups').doc(groupId);
+
     try {
       final DocumentSnapshot groupDoc = await groupDocRef.get();
       groupName = groupDoc['name'];
@@ -48,8 +49,7 @@ class GroupMemberModel extends ChangeNotifier {
       final QuerySnapshot membersQuery =
           await groupDocRef.collection('members').get();
       usersId = (membersQuery.docs.map((doc) => doc.id).toList());
-      usersName =
-          (membersQuery.docs.map((doc) => doc['name'].toString()).toList());
+      usersName = (membersQuery.docs.map((doc) => doc['name'].toString()).toList());
       usersImageURL =
           (membersQuery.docs.map((doc) => doc['imageURL'].toString()).toList());
     } catch (e) {
@@ -60,6 +60,7 @@ class GroupMemberModel extends ChangeNotifier {
 
   Future<int> checkMemberCount() async {
     int memberCount;
+
     try {
       final QuerySnapshot membersQuery =
           await groupDocRef.collection('members').get();
@@ -82,6 +83,7 @@ class GroupMemberModel extends ChangeNotifier {
         groupDocRef.collection('members').doc(userId);
     batch.delete(joiningGroupDocRef);
     batch.delete(memberDocRef);
+
     try {
       await batch.commit();
     } catch (e) {
@@ -97,6 +99,7 @@ class GroupMemberModel extends ChangeNotifier {
         .collection('joiningGroups')
         .doc(groupId);
     final WriteBatch batch = _firestore.batch();
+
     try {
       // Firebase Storage内のグループのプロフィール画像を削除
       if (groupImageURL.isNotEmpty) {

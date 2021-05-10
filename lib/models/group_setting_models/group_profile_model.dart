@@ -44,7 +44,7 @@ class GroupProfileModel extends ChangeNotifier {
   Future<void> pickImageFile() async {
     imageFile = null;
     try {
-      // ギャラリーから画像を取得
+      // 端末のギャラリーから画像を取得
       final PickedFile pickedFile =
           await _picker.getImage(source: ImageSource.gallery);
 

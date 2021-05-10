@@ -13,8 +13,7 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +53,7 @@ class RegisterScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
                               child: Column(
                                 children: [
                                   TextField(
@@ -146,8 +144,7 @@ class RegisterScreen extends StatelessWidget {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                                  TermsScreen(),
+                                              builder: (context) => TermsScreen(),
                                               fullscreenDialog: true,
                                             ),
                                           );
@@ -193,8 +190,7 @@ class RegisterScreen extends StatelessWidget {
                                       model.startLoading();
                                       try {
                                         await model.register();
-                                        await showMessageDialog(
-                                            context, '登録しました。');
+                                        await showMessageDialog(context, '登録しました。');
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
@@ -203,8 +199,7 @@ class RegisterScreen extends StatelessWidget {
                                           ),
                                         );
                                       } catch (e) {
-                                        showMessageDialog(
-                                            context, e.toString());
+                                        showMessageDialog(context, e.toString());
                                       }
                                       model.endLoading();
                                     }

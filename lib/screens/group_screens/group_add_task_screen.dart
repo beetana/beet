@@ -93,8 +93,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                               style: TextStyle(fontSize: 17.0),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              padding: const EdgeInsets.symmetric(vertical: 4.0),
                               child: Container(
                                 height: 72,
                                 child: NotificationListener<ScrollNotification>(
@@ -104,21 +103,19 @@ class GroupAddTaskScreen extends StatelessWidget {
                                       scrollDirection: Axis.horizontal,
                                       physics: const ScrollPhysics(),
                                       itemExtent: 60.0,
-                                      itemCount: model.userNames.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        String userId = model.usersId[index];
-                                        String userName =
-                                            model.userNames[index];
+                                      itemCount: model.membersName.length,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        String userId = model.membersId[index];
+                                        String userName = model.membersName[index];
                                         String userImageURL =
-                                            model.userImageURLs[index];
+                                            model.membersImageURL[index];
                                         return AssignTaskListTile(
                                           userName: userName,
                                           userImageURL: userImageURL,
-                                          isChecked: model.assignedMembersId
-                                              .contains(userId),
+                                          isChecked:
+                                              model.assignedMembersId.contains(userId),
                                           tileTappedCallback: () {
-                                            model.assignPerson(userId);
+                                            model.assignPerson(userId: userId);
                                           },
                                         );
                                       },
@@ -146,8 +143,8 @@ class GroupAddTaskScreen extends StatelessWidget {
                                     await Future.delayed(
                                       const Duration(milliseconds: 100),
                                     );
-                                    scrollController.jumpTo(scrollController
-                                        .position.maxScrollExtent);
+                                    scrollController.jumpTo(
+                                        scrollController.position.maxScrollExtent);
                                   },
                                   onChanged: (text) {
                                     model.taskMemo = text;

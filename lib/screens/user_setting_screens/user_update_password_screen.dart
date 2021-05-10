@@ -5,16 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserUpdatePasswordScreen extends StatelessWidget {
-  final TextEditingController currentPassController = TextEditingController();
-  final TextEditingController newPassController = TextEditingController();
-  final TextEditingController confirmPassController = TextEditingController();
+  final TextEditingController currentPasswordController = TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserUpdatePasswordModel>(
       create: (_) => UserUpdatePasswordModel(),
-      child:
-          Consumer<UserUpdatePasswordModel>(builder: (context, model, child) {
+      child: Consumer<UserUpdatePasswordModel>(builder: (context, model, child) {
         return Stack(
           children: [
             GestureDetector(
@@ -52,7 +51,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         TextField(
-                          controller: currentPassController,
+                          controller: currentPasswordController,
                           obscureText: true,
                           decoration: InputDecoration(
                             labelText: '現在のパスワード',
@@ -62,7 +61,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                                 color: Colors.black54,
                               ),
                               onPressed: () {
-                                currentPassController.clear();
+                                currentPasswordController.clear();
                                 model.currentPassword = '';
                               },
                             ),
@@ -72,7 +71,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                           },
                         ),
                         TextField(
-                          controller: newPassController,
+                          controller: newPasswordController,
                           obscureText: true,
                           decoration: InputDecoration(
                             labelText: '新しいパスワード',
@@ -83,7 +82,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                                 color: Colors.black54,
                               ),
                               onPressed: () {
-                                newPassController.clear();
+                                newPasswordController.clear();
                                 model.newPassword = '';
                               },
                             ),
@@ -93,7 +92,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                           },
                         ),
                         TextField(
-                          controller: confirmPassController,
+                          controller: confirmPasswordController,
                           obscureText: true,
                           decoration: InputDecoration(
                             labelText: '新しいパスワード(確認用)',
@@ -103,7 +102,7 @@ class UserUpdatePasswordScreen extends StatelessWidget {
                                 color: Colors.black54,
                               ),
                               onPressed: () {
-                                confirmPassController.clear();
+                                confirmPasswordController.clear();
                                 model.confirmNewPassword = '';
                               },
                             ),

@@ -19,7 +19,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupEventDetailsModel>(
-      create: (_) => GroupEventDetailsModel()..init(event),
+      create: (_) => GroupEventDetailsModel()..init(event: event),
       child: Consumer<GroupEventDetailsModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -116,8 +116,8 @@ class GroupEventDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
-                          bool isDelete = await _confirmDeleteDialog(
-                              context, 'このイベントを削除しますか？');
+                          bool isDelete =
+                              await _confirmDeleteDialog(context, 'このイベントを削除しますか？');
                           if (isDelete == true) {
                             model.startLoading();
                             try {

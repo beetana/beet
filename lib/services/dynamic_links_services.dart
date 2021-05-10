@@ -25,8 +25,7 @@ class DynamicLinksServices {
       iosParameters: IosParameters(
         bundleId: 'com.beetana.beet',
         minimumVersion: '1',
-        fallbackUrl:
-            Uri.parse('https://apps.apple.com/jp/app/beet/id1562073325'),
+        fallbackUrl: Uri.parse('https://apps.apple.com/jp/app/beet/id1562073325'),
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
         title: 'beet',
@@ -37,8 +36,7 @@ class DynamicLinksServices {
     );
 
     final Uri link = await parameters.buildUrl();
-    final ShortDynamicLink shortenedLink =
-        await DynamicLinkParameters.shortenUrl(
+    final ShortDynamicLink shortenedLink = await DynamicLinkParameters.shortenUrl(
       link,
       DynamicLinkParametersOptions(
           shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
@@ -105,8 +103,7 @@ class DynamicLinksServices {
               ),
               onPressed: () async {
                 showIndicator(context: context);
-                final JoiningState joiningState =
-                    await joinGroup(groupId: groupId);
+                final JoiningState joiningState = await joinGroup(groupId: groupId);
                 if (joiningState == JoiningState.notYet) {
                   Navigator.pop(context);
                   Navigator.pushReplacement(
@@ -159,8 +156,7 @@ class DynamicLinksServices {
     JoiningState joiningState;
     final String userId = FirebaseAuth.instance.currentUser.uid;
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final DocumentReference userDocRef =
-        firestore.collection('users').doc(userId);
+    final DocumentReference userDocRef = firestore.collection('users').doc(userId);
     final DocumentReference groupDocRef =
         firestore.collection('groups').doc(groupId);
 
@@ -170,8 +166,10 @@ class DynamicLinksServices {
       final DocumentSnapshot joiningGroupDoc =
           await userDocRef.collection('joiningGroups').doc(groupId).get();
 
+      // すでに上限の8個までグループに参加している場合
       if (joiningGroupsQuery.size >= 8) {
         joiningState = JoiningState.noMore;
+        // 招待されたグループにすでに参加している場合
       } else if (joiningGroupDoc.exists) {
         joiningState = JoiningState.already;
       } else {

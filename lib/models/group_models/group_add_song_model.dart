@@ -6,6 +6,7 @@ class GroupAddSongModel extends ChangeNotifier {
   String songMemo = '';
   bool isLoading = false;
   int songPlayingTime = 0;
+  // 曲の演奏時間(分) とりあえず12分まであれば充分かと
   final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -23,12 +24,9 @@ class GroupAddSongModel extends ChangeNotifier {
     if (songTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
+
     try {
-      await _firestore
-          .collection('groups')
-          .doc(groupId)
-          .collection('songs')
-          .add({
+      await _firestore.collection('groups').doc(groupId).collection('songs').add({
         'title': songTitle,
         'minute': songPlayingTime,
         'memo': songMemo,

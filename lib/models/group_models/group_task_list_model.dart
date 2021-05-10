@@ -26,6 +26,7 @@ class GroupTaskListModel extends ChangeNotifier {
   Future<void> init({String groupId}) async {
     startLoading();
     groupDocRef = _firestore.collection('groups').doc(groupId);
+
     try {
       final QuerySnapshot membersQuery =
           await groupDocRef.collection('members').get();
@@ -45,14 +46,12 @@ class GroupTaskListModel extends ChangeNotifier {
     completedTasks = [];
     notCompletedTasks = [];
     changeStateTasks = [];
+
     try {
-      final QuerySnapshot tasksQuery =
-          await groupDocRef.collection('tasks').get();
+      final QuerySnapshot tasksQuery = await groupDocRef.collection('tasks').get();
       tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
       tasks.forEach((task) {
-        task.isCompleted
-            ? completedTasks.add(task)
-            : notCompletedTasks.add(task);
+        task.isCompleted ? completedTasks.add(task) : notCompletedTasks.add(task);
       });
       completedTasks.sort((a, b) => a.dueDate.compareTo(b.dueDate));
       notCompletedTasks.sort((a, b) => a.dueDate.compareTo(b.dueDate));
@@ -93,9 +92,12 @@ class GroupTaskListModel extends ChangeNotifier {
     try {
       await groupDocRef.collection('tasks').doc(task.id).delete();
       tasks.remove(task);
-      completedTasks.remove(task);
-      notCompletedTasks.remove(task);
-      changeStateTasks.remove(task);
+      completedTasks.contains(task)
+          ? completedTasks.remove(task)
+          : notCompletedTasks.remove(task);
+      if (changeStateTasks.contains(task)) {
+        changeStateTasks.remove(task);
+      }
     } catch (e) {
       print(e);
       throw ('エラーが発生しました');

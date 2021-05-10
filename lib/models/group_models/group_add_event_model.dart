@@ -39,6 +39,7 @@ class GroupAddEventModel extends ChangeNotifier {
 
   void switchIsAllDay({bool value}) {
     isAllDay = value;
+
     if (isAllDay) {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
@@ -139,6 +140,7 @@ class GroupAddEventModel extends ChangeNotifier {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
+
     String month = '';
     List<DateTime> dateList = [];
     List<String> monthList = [];
@@ -152,6 +154,7 @@ class GroupAddEventModel extends ChangeNotifier {
       startingDateTime.day,
       12,
     ).toUtc();
+
     for (int i = 0; i <= durationDays; i++) {
       final DateTime date = startingDate.add(Duration(days: i));
       dateList.add(date);
@@ -163,6 +166,7 @@ class GroupAddEventModel extends ChangeNotifier {
         monthList.add(month);
       }
     });
+
     if (isAllDay) {
       startingDateTime = DateTime(
         startingDateTime.year,
@@ -181,17 +185,13 @@ class GroupAddEventModel extends ChangeNotifier {
     }
 
     try {
-      await _firestore
-          .collection('groups')
-          .doc(groupId)
-          .collection('events')
-          .add({
+      await _firestore.collection('groups').doc(groupId).collection('events').add({
         'ownerId': groupId,
         'title': eventTitle,
         'place': eventPlace,
         'memo': eventMemo,
         'isAllDay': isAllDay,
-        'monthList': monthList,
+        'monthList': monthList, // カレンダー画面で月ごとにイベントを取得する際に必要
         'dateList': dateList,
         'start': Timestamp.fromDate(startingDateTime),
         'end': Timestamp.fromDate(endingDateTime),

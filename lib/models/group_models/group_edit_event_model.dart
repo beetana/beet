@@ -36,6 +36,8 @@ class GroupEditEventModel extends ChangeNotifier {
   }
 
   void init({Event event}) {
+    // イベントが終日の場合、startが0:00、endが23:59:59としてfirestoreに保存されているので
+    // 綺麗に表示されるよう12時に変更して整える
     if (event.isAllDay) {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
@@ -74,6 +76,7 @@ class GroupEditEventModel extends ChangeNotifier {
 
   void switchIsAllDay({bool value}) {
     isAllDay = value;
+
     if (isAllDay) {
       tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
       cupertinoDatePickerMode = CupertinoDatePickerMode.date;
@@ -100,6 +103,7 @@ class GroupEditEventModel extends ChangeNotifier {
       }
       startingDateTimePickerBox = Container(
         height: 100.0,
+        // DatePickerの細かい設定値に意味はない。必要なら変更可。
         child: CupertinoDatePicker(
           mode: cupertinoDatePickerMode,
           use24hFormat: true,
@@ -139,6 +143,7 @@ class GroupEditEventModel extends ChangeNotifier {
       }
       endingDateTimePickerBox = Container(
         height: 100.0,
+        // DatePickerの細かい設定値に意味はない。必要なら変更可。
         child: CupertinoDatePicker(
           mode: cupertinoDatePickerMode,
           use24hFormat: true,
@@ -174,6 +179,7 @@ class GroupEditEventModel extends ChangeNotifier {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
+
     String month = '';
     List<DateTime> dateList = [];
     List<String> monthList = [];
@@ -187,6 +193,7 @@ class GroupEditEventModel extends ChangeNotifier {
       startingDateTime.day,
       12,
     ).toUtc();
+
     for (int i = 0; i <= durationDays; i++) {
       final DateTime date = startingDate.add(Duration(days: i));
       dateList.add(date);
@@ -198,6 +205,7 @@ class GroupEditEventModel extends ChangeNotifier {
         monthList.add(month);
       }
     });
+
     if (isAllDay) {
       startingDateTime = DateTime(
         startingDateTime.year,

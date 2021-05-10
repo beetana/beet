@@ -33,14 +33,14 @@ class GroupMainModel extends ChangeNotifier {
   Future<void> fetchMainInfo({String groupId}) async {
     currentDateTime = DateTime.now();
     final Timestamp currentTimestamp = Timestamp.fromDate(currentDateTime);
+
     try {
       final QuerySnapshot tasksQuery = await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('tasks')
           .get();
-      final List<Task> tasks =
-          tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
+      final List<Task> tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
       final List<Task> notCompletedTasks =
           tasks.where((task) => !task.isCompleted).toList();
       notCompletedTasksCount = notCompletedTasks.length;

@@ -26,12 +26,14 @@ class GroupEditNameModel extends ChangeNotifier {
     if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
+
     final WriteBatch batch = _firestore.batch();
     final DocumentReference groupDocRef =
         _firestore.collection('groups').doc(groupId);
     batch.update(groupDocRef, {
       'name': groupName,
     });
+
     try {
       final QuerySnapshot membersQuery =
           await groupDocRef.collection('members').get();

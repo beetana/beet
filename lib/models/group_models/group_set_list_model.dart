@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GroupSetListModel extends ChangeNotifier {
-  List<dynamic> setList = [];
+  List<dynamic> setList = []; // setListに入るのはSongもしくはMC
   int songCount = 0;
   int totalPlayTime = 0;
 

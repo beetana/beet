@@ -25,7 +25,7 @@ class GroupEventDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init(Event event) {
+  void init({Event event}) {
     this.event = event;
     eventId = event.id;
     eventTitle = event.title;

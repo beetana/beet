@@ -11,9 +11,9 @@ class GroupAddTaskModel extends ChangeNotifier {
   String dueDateText = '';
   bool isDecidedDueDate = true;
   List<String> assignedMembersId = [];
-  List<String> usersId = [];
-  List<String> userNames = [];
-  List<String> userImageURLs = [];
+  List<String> membersId = [];
+  List<String> membersName = [];
+  List<String> membersImageURL = [];
   bool isLoading = false;
   bool isShowDueDatePicker = false;
   Widget dueDatePickerBox = const SizedBox();
@@ -37,16 +37,17 @@ class GroupAddTaskModel extends ChangeNotifier {
     this.groupId = groupId;
     dueDate = DateTime(now.year, now.month, now.day, 12);
     dueDateText = dateFormat.format(dueDate);
+
     try {
       final QuerySnapshot membersQuery = await _firestore
           .collection('groups')
           .doc(groupId)
           .collection('members')
           .get();
-      usersId = (membersQuery.docs.map((doc) => doc.id).toList());
-      userNames =
+      membersId = (membersQuery.docs.map((doc) => doc.id).toList());
+      membersName =
           (membersQuery.docs.map((doc) => doc['name'].toString()).toList());
-      userImageURLs =
+      membersImageURL =
           (membersQuery.docs.map((doc) => doc['imageURL'].toString()).toList());
     } catch (e) {
       print(e);
@@ -54,7 +55,7 @@ class GroupAddTaskModel extends ChangeNotifier {
     endLoading();
   }
 
-  void assignPerson(userId) {
+  void assignPerson({String userId}) {
     if (assignedMembersId.contains(userId)) {
       assignedMembersId.remove(userId);
     } else {
@@ -70,14 +71,14 @@ class GroupAddTaskModel extends ChangeNotifier {
         children: [
           Container(
             height: 100.0,
+            // DatePickerの細かい設定値に意味はない。必要なら変更可。
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
               initialDateTime: dueDate,
               minimumDate: DateTime(1980, 1, 1),
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
-                dueDate =
-                    DateTime(newDate.year, newDate.month, newDate.day, 12);
+                dueDate = DateTime(newDate.year, newDate.month, newDate.day, 12);
                 dueDateText = dateFormat.format(dueDate);
                 isDecidedDueDate = true;
               },
@@ -110,16 +111,13 @@ class GroupAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addTask() async {
+  Future<void> addTask() async {
     if (taskTitle.isEmpty) {
       throw ('やることを入力してください');
     }
+
     try {
-      await _firestore
-          .collection('groups')
-          .doc(groupId)
-          .collection('tasks')
-          .add({
+      await _firestore.collection('groups').doc(groupId).collection('tasks').add({
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,

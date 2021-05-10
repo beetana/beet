@@ -6,12 +6,12 @@ import 'package:nholiday_jp/nholiday_jp.dart';
 
 class GroupCalendarModel extends ChangeNotifier {
   String groupId = '';
-  DateTime first;
-  DateTime last;
+  DateTime first; // カレンダーに表示されている月の最初の日
+  DateTime last; // その月の最後の日
   DateTime selectedDay;
   List<Event> selectedEvents = [];
-  Map<DateTime, List> events = {};
-  Map<DateTime, List> holidays = {};
+  Map<DateTime, List> events = {}; // TableCalendarに表示するためには
+  Map<DateTime, List> holidays = {}; // Map<DateTime, List>の形にする必要がある
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -38,15 +38,13 @@ class GroupCalendarModel extends ChangeNotifier {
 
       final List<Event> eventList =
           eventsQuery.docs.map((doc) => Event.doc(doc)).toList();
-      eventList
-          .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
+      eventList.sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
 
       for (int i = 0; i <= durationDays; i++) {
         final DateTime date = firstDate.add(Duration(days: i));
-        final List<Event> eventsOfDay = eventList
-                .where((event) => event.dateList.contains(date))
-                .toList() ??
-            [];
+        final List<Event> eventsOfDay =
+            eventList.where((event) => event.dateList.contains(date)).toList() ??
+                [];
         events[date] = eventsOfDay;
       }
     } catch (e) {
@@ -62,6 +60,7 @@ class GroupCalendarModel extends ChangeNotifier {
     final List<String> holidaysList = NHolidayJp.getByMonth(year, month)
         .map((holiday) => holiday.toString())
         .toList();
+
     if (holidaysList.isNotEmpty) {
       holidaysList.forEach((holiday) {
         final List<String> splitHoliday = holiday.split(' ');
@@ -74,6 +73,7 @@ class GroupCalendarModel extends ChangeNotifier {
   }
 
   void showEventsOfDay() {
+    // selectedEventsの中身がカレンダーの下に表示される
     selectedEvents = events[selectedDay] ?? [];
     notifyListeners();
   }

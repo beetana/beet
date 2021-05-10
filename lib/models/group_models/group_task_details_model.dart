@@ -41,6 +41,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
     assignedMembersId = task.assignedMembersId;
     isCompleted = task.isCompleted;
     groupDocRef = _firestore.collection('groups').doc(groupId);
+
     try {
       final QuerySnapshot membersQuery =
           await groupDocRef.collection('members').get();

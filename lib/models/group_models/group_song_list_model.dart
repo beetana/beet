@@ -60,6 +60,36 @@ class GroupSongListModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void selectSong({Song song}) {
+    song.toggleCheckBoxState();
+    if (song.checkboxState == true) {
+      setList.add(song);
+      songCount += 1;
+      totalPlayTime += song.playingTime;
+    } else {
+      setList.remove(song);
+      songCount -= 1;
+      totalPlayTime -= song.playingTime;
+    }
+    notifyListeners();
+  }
+
+  // セトリ作成画面から戻ってきた際に呼ばれる
+  void reselectSongs({List<dynamic> setList}) {
+    this.setList = setList;
+    totalPlayTime = 0;
+
+    songs.forEach((song) {
+      if (setList.contains(song)) {
+        totalPlayTime += song.playingTime;
+      } else {
+        song.checkboxState = false;
+      }
+    });
+    songCount = setList.where((item) => item is Song).length;
+    notifyListeners();
+  }
+
   void changeMode() {
     isSetListMode = !isSetListMode;
     if (isSetListMode) {
@@ -87,34 +117,6 @@ class GroupSongListModel extends ChangeNotifier {
       );
       buttonAlignment = MainAxisAlignment.center;
     }
-    notifyListeners();
-  }
-
-  void selectSong({Song song}) {
-    song.toggleCheckBoxState();
-    if (song.checkboxState == true) {
-      setList.add(song);
-      songCount += 1;
-      totalPlayTime += song.playingTime;
-    } else {
-      setList.remove(song);
-      songCount -= 1;
-      totalPlayTime -= song.playingTime;
-    }
-    notifyListeners();
-  }
-
-  void reselectSongs({List<dynamic> setList}) {
-    this.setList = setList;
-    totalPlayTime = 0;
-    songs.forEach((song) {
-      if (setList.contains(song)) {
-        totalPlayTime += song.playingTime;
-      } else {
-        song.checkboxState = false;
-      }
-    });
-    songCount = setList.where((item) => item is Song).length;
     notifyListeners();
   }
 }

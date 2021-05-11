@@ -36,6 +36,7 @@ class UserUpdatePasswordModel extends ChangeNotifier {
     if (currentPassword == newPassword) {
       throw ('現在のパスワードとは異なるパスワードを作成してください');
     }
+
     try {
       await firebaseUser
           .reauthenticateWithCredential(Auth.EmailAuthProvider.credential(

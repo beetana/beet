@@ -28,6 +28,7 @@ class UserTaskListModel extends ChangeNotifier {
   Future<void> init() async {
     startLoading();
     userDocRef = _firestore.collection('users').doc(userId);
+
     try {
       final DocumentSnapshot userDoc = await userDocRef.get();
       joiningGroupMembers[userId] = User.doc(userDoc);
@@ -35,6 +36,7 @@ class UserTaskListModel extends ChangeNotifier {
           await userDocRef.collection('joiningGroups').get();
       final List<String> joiningGroupsId =
           joiningGroupsQuery.docs.map((doc) => doc.id).toList();
+
       joiningGroupsId.forEach((groupId) async {
         final QuerySnapshot membersQuery = await _firestore
             .collection('groups')
@@ -58,6 +60,7 @@ class UserTaskListModel extends ChangeNotifier {
     completedTasks = [];
     notCompletedTasks = [];
     changeStateTasks = [];
+
     try {
       final QuerySnapshot tasksQuery = await _firestore
           .collectionGroup('tasks')
@@ -65,9 +68,7 @@ class UserTaskListModel extends ChangeNotifier {
           .get();
       tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
       tasks.forEach((task) {
-        task.isCompleted
-            ? completedTasks.add(task)
-            : notCompletedTasks.add(task);
+        task.isCompleted ? completedTasks.add(task) : notCompletedTasks.add(task);
       });
       completedTasks.sort((a, b) => a.dueDate.compareTo(b.dueDate));
       notCompletedTasks.sort((a, b) => a.dueDate.compareTo(b.dueDate));
@@ -81,6 +82,7 @@ class UserTaskListModel extends ChangeNotifier {
   Future<void> updateCheckState() async {
     try {
       final WriteBatch batch = _firestore.batch();
+
       changeStateTasks.forEach((task) {
         final DocumentReference taskDocRef = task.ownerId == userId
             ? userDocRef.collection('tasks').doc(task.id)
@@ -101,14 +103,6 @@ class UserTaskListModel extends ChangeNotifier {
     }
   }
 
-  void toggleCheckState({Task task}) {
-    task.toggleCheckState();
-    changeStateTasks.contains(task)
-        ? changeStateTasks.remove(task)
-        : changeStateTasks.add(task);
-    notifyListeners();
-  }
-
   Future<void> deleteTask({Task task}) async {
     final DocumentReference taskDocRef = task.ownerId == userId
         ? userDocRef.collection('tasks').doc(task.id)
@@ -117,6 +111,7 @@ class UserTaskListModel extends ChangeNotifier {
             .doc(task.ownerId)
             .collection('tasks')
             .doc(task.id);
+
     try {
       await taskDocRef.delete();
       tasks.remove(task);
@@ -127,5 +122,13 @@ class UserTaskListModel extends ChangeNotifier {
       print(e);
       throw ('エラーが発生しました');
     }
+  }
+
+  void toggleCheckState({Task task}) {
+    task.toggleCheckState();
+    changeStateTasks.contains(task)
+        ? changeStateTasks.remove(task)
+        : changeStateTasks.add(task);
+    notifyListeners();
   }
 }

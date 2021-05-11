@@ -7,12 +7,12 @@ import 'package:beet/objects/content_owner.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserCalendarModel extends ChangeNotifier {
-  DateTime first;
-  DateTime last;
+  DateTime first; // カレンダーに表示されている月の最初の日
+  DateTime last; // その月の最後の日
   DateTime selectedDay;
   List<Event> selectedEvents = [];
-  Map<DateTime, List> events = {};
-  Map<DateTime, List> holidays = {};
+  Map<DateTime, List> events = {}; // TableCalendarに表示するためには
+  Map<DateTime, List> holidays = {}; // Map<DateTime, List>の形にする必要がある
   Map<String, ContentOwner> eventPlanner = {};
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
@@ -49,15 +49,13 @@ class UserCalendarModel extends ChangeNotifier {
 
       final List<Event> eventList =
           eventsQuery.docs.map((doc) => Event.doc(doc)).toList();
-      eventList
-          .sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
+      eventList.sort((a, b) => a.startingDateTime.compareTo(b.startingDateTime));
 
       for (int i = 0; i <= durationDays; i++) {
         final DateTime date = firstDate.add(Duration(days: i));
-        final List<Event> eventsOfDay = eventList
-                .where((event) => event.dateList.contains(date))
-                .toList() ??
-            [];
+        final List<Event> eventsOfDay =
+            eventList.where((event) => event.dateList.contains(date)).toList() ??
+                [];
         events[date] = eventsOfDay;
       }
     } catch (e) {
@@ -68,6 +66,7 @@ class UserCalendarModel extends ChangeNotifier {
 
   Future<void> fetchContentOwnerInfo({List<String> ownerIdList}) async {
     for (String id in ownerIdList) {
+      // FirebaseAuthのId(28桁)をそのままユーザーのIdとしているので桁数で判別できる
       if (id.length == 28) {
         final DocumentSnapshot userDoc =
             await _firestore.collection('users').doc(id).get();
@@ -82,6 +81,7 @@ class UserCalendarModel extends ChangeNotifier {
     }
   }
 
+  // https://pub.dev/packages/nholiday_jp
   void fetchHolidays() {
     holidays = {};
     final int year = first.year;
@@ -101,6 +101,7 @@ class UserCalendarModel extends ChangeNotifier {
   }
 
   void showEventsOfDay() {
+    // selectedEventsの中身がカレンダーの下に表示される
     selectedEvents = events[selectedDay] ?? [];
     notifyListeners();
   }

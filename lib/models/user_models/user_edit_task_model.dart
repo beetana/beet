@@ -47,11 +47,11 @@ class UserEditTaskModel extends ChangeNotifier {
     isCompleted = task.isCompleted;
     dueDate = task.dueDate;
     dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
-    assignedMembersId =
-        task.assignedMembersId.map((id) => id.toString()).toList();
+    assignedMembersId = task.assignedMembersId.map((id) => id.toString()).toList();
     ownerDocRef = ownerId == userId
         ? _firestore.collection('users').doc(userId)
         : _firestore.collection('groups').doc(ownerId);
+
     try {
       if (ownerId == userId) {
         final DocumentSnapshot userDoc = await ownerDocRef.get();
@@ -72,6 +72,26 @@ class UserEditTaskModel extends ChangeNotifier {
     endLoading();
   }
 
+  Future<void> updateTask() async {
+    if (taskTitle.isEmpty) {
+      throw ('やることを入力してください');
+    }
+
+    try {
+      await ownerDocRef.collection('tasks').doc(taskId).update({
+        'title': taskTitle,
+        'memo': taskMemo,
+        'isDecidedDueDate': isDecidedDueDate,
+        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
+        'assignedMembersId': assignedMembersId,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      print(e);
+      throw ('エラーが発生しました');
+    }
+  }
+
   void assignPerson({String userId}) {
     if (assignedMembersId.contains(userId)) {
       assignedMembersId.remove(userId);
@@ -88,14 +108,14 @@ class UserEditTaskModel extends ChangeNotifier {
         children: [
           Container(
             height: 100.0,
+            // DatePickerの細かい設定値に特別な理由はない。必要なら変更可。
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
               initialDateTime: dueDate,
               minimumDate: DateTime(1980, 1, 1),
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
-                dueDate =
-                    DateTime(newDate.year, newDate.month, newDate.day, 12);
+                dueDate = DateTime(newDate.year, newDate.month, newDate.day, 12);
                 dueDateText = dateFormat.format(dueDate);
                 isDecidedDueDate = true;
               },
@@ -126,24 +146,5 @@ class UserEditTaskModel extends ChangeNotifier {
     }
     isShowDueDatePicker = !isShowDueDatePicker;
     notifyListeners();
-  }
-
-  Future<void> updateTask() async {
-    if (taskTitle.isEmpty) {
-      throw ('やることを入力してください');
-    }
-    try {
-      await ownerDocRef.collection('tasks').doc(taskId).update({
-        'title': taskTitle,
-        'memo': taskMemo,
-        'isDecidedDueDate': isDecidedDueDate,
-        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
-        'assignedMembersId': assignedMembersId,
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-    } catch (e) {
-      print(e);
-      throw ('エラーが発生しました');
-    }
   }
 }

@@ -47,6 +47,7 @@ class UserEventDetailsModel extends ChangeNotifier {
     ownerDocRef = isOwn
         ? _firestore.collection('users').doc(ownerId)
         : _firestore.collection('groups').doc(ownerId);
+
     try {
       final DocumentSnapshot ownerDoc = await ownerDocRef.get();
       owner = ContentOwner.doc(ownerDoc);

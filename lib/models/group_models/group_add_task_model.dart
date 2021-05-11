@@ -55,6 +55,29 @@ class GroupAddTaskModel extends ChangeNotifier {
     endLoading();
   }
 
+  Future<void> addTask() async {
+    if (taskTitle.isEmpty) {
+      throw ('やることを入力してください');
+    }
+
+    try {
+      await _firestore.collection('groups').doc(groupId).collection('tasks').add({
+        'title': taskTitle,
+        'memo': taskMemo,
+        'isDecidedDueDate': isDecidedDueDate,
+        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
+        'assignedMembersId': assignedMembersId,
+        'ownerId': groupId,
+        'isCompleted': false,
+        'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      print(e);
+      throw ('エラーが発生しました');
+    }
+  }
+
   void assignPerson({String userId}) {
     if (assignedMembersId.contains(userId)) {
       assignedMembersId.remove(userId);
@@ -71,7 +94,7 @@ class GroupAddTaskModel extends ChangeNotifier {
         children: [
           Container(
             height: 100.0,
-            // DatePickerの細かい設定値に意味はない。必要なら変更可。
+            // DatePickerの細かい設定値に特別な理由はない。必要なら変更可。
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
               initialDateTime: dueDate,
@@ -109,28 +132,5 @@ class GroupAddTaskModel extends ChangeNotifier {
     }
     isShowDueDatePicker = !isShowDueDatePicker;
     notifyListeners();
-  }
-
-  Future<void> addTask() async {
-    if (taskTitle.isEmpty) {
-      throw ('やることを入力してください');
-    }
-
-    try {
-      await _firestore.collection('groups').doc(groupId).collection('tasks').add({
-        'title': taskTitle,
-        'memo': taskMemo,
-        'isDecidedDueDate': isDecidedDueDate,
-        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
-        'assignedMembersId': assignedMembersId,
-        'ownerId': groupId,
-        'isCompleted': false,
-        'createdAt': FieldValue.serverTimestamp(),
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-    } catch (e) {
-      print(e);
-      throw ('エラーが発生しました');
-    }
   }
 }

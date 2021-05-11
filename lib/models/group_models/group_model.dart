@@ -17,7 +17,7 @@ class GroupModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // 選択したタブのindex番号を代入することで画面が切り替わる
+  // 選択したタブのindex番号を代入すると、それに対応した画面に切り替わる
   void onTabTapped(int index) {
     if (currentIndex != index) {
       currentIndex = index;

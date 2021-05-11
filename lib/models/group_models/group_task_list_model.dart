@@ -65,6 +65,7 @@ class GroupTaskListModel extends ChangeNotifier {
   Future<void> updateCheckState() async {
     try {
       final WriteBatch batch = _firestore.batch();
+
       changeStateTasks.forEach((task) {
         final DocumentReference taskDocRef =
             groupDocRef.collection('tasks').doc(task.id);
@@ -78,14 +79,6 @@ class GroupTaskListModel extends ChangeNotifier {
       print(e);
       throw ('エラーが発生しました');
     }
-  }
-
-  void toggleCheckState({Task task}) {
-    task.toggleCheckState();
-    changeStateTasks.contains(task)
-        ? changeStateTasks.remove(task)
-        : changeStateTasks.add(task);
-    notifyListeners();
   }
 
   Future<void> deleteTask({Task task}) async {
@@ -102,5 +95,13 @@ class GroupTaskListModel extends ChangeNotifier {
       print(e);
       throw ('エラーが発生しました');
     }
+  }
+
+  void toggleCheckState({Task task}) {
+    task.toggleCheckState();
+    changeStateTasks.contains(task)
+        ? changeStateTasks.remove(task)
+        : changeStateTasks.add(task);
+    notifyListeners();
   }
 }

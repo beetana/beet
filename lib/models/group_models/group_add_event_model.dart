@@ -37,6 +37,75 @@ class GroupAddEventModel extends ChangeNotifier {
     endingDateTime = dateTime.add(const Duration(hours: 1));
   }
 
+  Future<void> addEvent({String groupId}) async {
+    if (eventTitle.isEmpty) {
+      throw ('タイトルを入力してください');
+    }
+
+    String month = '';
+    List<DateTime> dateList = [];
+    List<String> monthList = []; // カレンダー画面で月ごとにイベントを取得する際に必要
+    final String start = dateFormat.format(startingDateTime);
+    final String end = dateFormat.format(endingDateTime);
+    final int durationDays =
+        DateTime.parse(end).difference(DateTime.parse(start)).inDays;
+    final DateTime startingDate = DateTime(
+      startingDateTime.year,
+      startingDateTime.month,
+      startingDateTime.day,
+      12,
+    ).toUtc();
+
+    for (int i = 0; i <= durationDays; i++) {
+      final DateTime date = startingDate.add(Duration(days: i));
+      dateList.add(date);
+    }
+    dateList.forEach((date) {
+      final String monthForm = monthFormat.format(date);
+      if (monthForm != month) {
+        month = monthForm;
+        monthList.add(month);
+      }
+    });
+
+    // 終日の場合は0:00から23:59:59までとする
+    if (isAllDay) {
+      startingDateTime = DateTime(
+        startingDateTime.year,
+        startingDateTime.month,
+        startingDateTime.day,
+        0,
+      );
+      endingDateTime = DateTime(
+        endingDateTime.year,
+        endingDateTime.month,
+        endingDateTime.day,
+        23,
+        59,
+        59,
+      );
+    }
+
+    try {
+      await _firestore.collection('groups').doc(groupId).collection('events').add({
+        'ownerId': groupId,
+        'title': eventTitle,
+        'place': eventPlace,
+        'memo': eventMemo,
+        'isAllDay': isAllDay,
+        'monthList': monthList,
+        'dateList': dateList,
+        'start': Timestamp.fromDate(startingDateTime),
+        'end': Timestamp.fromDate(endingDateTime),
+        'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      print(e);
+      throw ('エラーが発生しました');
+    }
+  }
+
   void switchIsAllDay({bool value}) {
     isAllDay = value;
 
@@ -134,73 +203,5 @@ class GroupAddEventModel extends ChangeNotifier {
     }
     isShowEndingPicker = !isShowEndingPicker;
     notifyListeners();
-  }
-
-  Future<void> addEvent({String groupId}) async {
-    if (eventTitle.isEmpty) {
-      throw ('タイトルを入力してください');
-    }
-
-    String month = '';
-    List<DateTime> dateList = [];
-    List<String> monthList = [];
-    final String start = dateFormat.format(startingDateTime);
-    final String end = dateFormat.format(endingDateTime);
-    final int durationDays =
-        DateTime.parse(end).difference(DateTime.parse(start)).inDays;
-    final DateTime startingDate = DateTime(
-      startingDateTime.year,
-      startingDateTime.month,
-      startingDateTime.day,
-      12,
-    ).toUtc();
-
-    for (int i = 0; i <= durationDays; i++) {
-      final DateTime date = startingDate.add(Duration(days: i));
-      dateList.add(date);
-    }
-    dateList.forEach((date) {
-      final String monthForm = monthFormat.format(date);
-      if (monthForm != month) {
-        month = monthForm;
-        monthList.add(month);
-      }
-    });
-
-    if (isAllDay) {
-      startingDateTime = DateTime(
-        startingDateTime.year,
-        startingDateTime.month,
-        startingDateTime.day,
-        0,
-      );
-      endingDateTime = DateTime(
-        endingDateTime.year,
-        endingDateTime.month,
-        endingDateTime.day,
-        23,
-        59,
-        59,
-      );
-    }
-
-    try {
-      await _firestore.collection('groups').doc(groupId).collection('events').add({
-        'ownerId': groupId,
-        'title': eventTitle,
-        'place': eventPlace,
-        'memo': eventMemo,
-        'isAllDay': isAllDay,
-        'monthList': monthList, // カレンダー画面で月ごとにイベントを取得する際に必要
-        'dateList': dateList,
-        'start': Timestamp.fromDate(startingDateTime),
-        'end': Timestamp.fromDate(endingDateTime),
-        'createdAt': FieldValue.serverTimestamp(),
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-    } catch (e) {
-      print(e);
-      throw ('エラーが発生しました');
-    }
   }
 }

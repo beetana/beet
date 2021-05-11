@@ -43,12 +43,14 @@ class GroupProfileModel extends ChangeNotifier {
 
   Future<void> pickImageFile() async {
     imageFile = null;
+
     try {
       // 端末のギャラリーから画像を取得
       final PickedFile pickedFile =
           await _picker.getImage(source: ImageSource.gallery);
 
       // 取得した画像を1:1でトリミングし、アップロードするimageFileに代入
+      // 細かい設定値は必要に応じて変更可
       imageFile = await ImageCropper.cropImage(
         sourcePath: pickedFile.path,
         maxWidth: 160,
@@ -82,7 +84,9 @@ class GroupProfileModel extends ChangeNotifier {
     if (imageFile == null) {
       throw ('ファイルが選択されていません');
     }
+
     final WriteBatch batch = _firestore.batch();
+
     try {
       final TaskSnapshot snapshot =
           await _storage.ref().child("groupImage/$groupId").putFile(imageFile);
@@ -114,7 +118,9 @@ class GroupProfileModel extends ChangeNotifier {
     if (groupImageURL.isEmpty) {
       throw ('プロフィール画像が設定されていません');
     }
+
     final WriteBatch batch = _firestore.batch();
+
     try {
       await _storage.ref().child("groupImage/$groupId").delete();
       batch.update(groupDocRef, {

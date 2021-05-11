@@ -74,107 +74,6 @@ class GroupEditEventModel extends ChangeNotifier {
     endingDateTime = event.endingDateTime;
   }
 
-  void switchIsAllDay({bool value}) {
-    isAllDay = value;
-
-    if (isAllDay) {
-      tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
-      cupertinoDatePickerMode = CupertinoDatePickerMode.date;
-      startingDateTimePickerBox = const SizedBox();
-      endingDateTimePickerBox = const SizedBox();
-      isShowStartingPicker = false;
-      isShowEndingPicker = false;
-    } else {
-      tileDateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_JP');
-      cupertinoDatePickerMode = CupertinoDatePickerMode.dateAndTime;
-      startingDateTimePickerBox = const SizedBox();
-      endingDateTimePickerBox = const SizedBox();
-      isShowStartingPicker = false;
-      isShowEndingPicker = false;
-    }
-    notifyListeners();
-  }
-
-  void showStartingDateTimePicker() {
-    if (!isShowStartingPicker) {
-      if (isShowEndingPicker) {
-        isShowEndingPicker = false;
-        endingDateTimePickerBox = const SizedBox();
-      }
-      startingDateTimePickerBox = Container(
-        height: 100.0,
-        // DatePickerの細かい設定値に意味はない。必要なら変更可。
-        child: CupertinoDatePicker(
-          mode: cupertinoDatePickerMode,
-          use24hFormat: true,
-          minuteInterval: 5,
-          initialDateTime: startingDateTime,
-          minimumDate: DateTime(1980, 1, 1),
-          maximumDate: DateTime(2050, 12, 31),
-          onDateTimeChanged: (DateTime newDateTime) {
-            if (isAllDay == true) {
-              newDateTime = DateTime(
-                newDateTime.year,
-                newDateTime.month,
-                newDateTime.day,
-                12,
-              );
-            }
-            startingDateTime = newDateTime;
-            if (startingDateTime.isAfter(endingDateTime) ||
-                startingDateTime.isAtSameMomentAs(endingDateTime)) {
-              endingDateTime = startingDateTime.add(const Duration(hours: 1));
-            }
-          },
-        ),
-      );
-    } else {
-      startingDateTimePickerBox = const SizedBox();
-    }
-    isShowStartingPicker = !isShowStartingPicker;
-    notifyListeners();
-  }
-
-  void showEndingDateTimePicker() {
-    if (!isShowEndingPicker) {
-      if (isShowStartingPicker) {
-        isShowStartingPicker = false;
-        startingDateTimePickerBox = const SizedBox();
-      }
-      endingDateTimePickerBox = Container(
-        height: 100.0,
-        // DatePickerの細かい設定値に意味はない。必要なら変更可。
-        child: CupertinoDatePicker(
-          mode: cupertinoDatePickerMode,
-          use24hFormat: true,
-          minuteInterval: 5,
-          initialDateTime: endingDateTime,
-          minimumDate: startingDateTime.add(const Duration(minutes: 5)),
-          maximumDate: startingDateTime.add(const Duration(days: 1000)),
-          onDateTimeChanged: (DateTime newDateTime) {
-            if (isAllDay == true) {
-              newDateTime = DateTime(
-                newDateTime.year,
-                newDateTime.month,
-                newDateTime.day,
-                12,
-              );
-            }
-            endingDateTime = newDateTime;
-            if (startingDateTime.isAfter(endingDateTime) ||
-                startingDateTime.isAtSameMomentAs(endingDateTime)) {
-              endingDateTime = startingDateTime.add(const Duration(hours: 1));
-            }
-          },
-        ),
-      );
-    } else {
-      endingDateTimePickerBox = const SizedBox();
-    }
-    isShowEndingPicker = !isShowEndingPicker;
-    notifyListeners();
-  }
-
   Future<void> updateEvent({String groupId}) async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
@@ -198,6 +97,7 @@ class GroupEditEventModel extends ChangeNotifier {
       final DateTime date = startingDate.add(Duration(days: i));
       dateList.add(date);
     }
+
     dateList.forEach((date) {
       final String monthForm = monthFormat.format(date);
       if (monthForm != month) {
@@ -244,5 +144,106 @@ class GroupEditEventModel extends ChangeNotifier {
       print(e);
       throw ('エラーが発生しました');
     }
+  }
+
+  void switchIsAllDay({bool value}) {
+    isAllDay = value;
+
+    if (isAllDay) {
+      tileDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
+      cupertinoDatePickerMode = CupertinoDatePickerMode.date;
+      startingDateTimePickerBox = const SizedBox();
+      endingDateTimePickerBox = const SizedBox();
+      isShowStartingPicker = false;
+      isShowEndingPicker = false;
+    } else {
+      tileDateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_JP');
+      cupertinoDatePickerMode = CupertinoDatePickerMode.dateAndTime;
+      startingDateTimePickerBox = const SizedBox();
+      endingDateTimePickerBox = const SizedBox();
+      isShowStartingPicker = false;
+      isShowEndingPicker = false;
+    }
+    notifyListeners();
+  }
+
+  void showStartingDateTimePicker() {
+    if (!isShowStartingPicker) {
+      if (isShowEndingPicker) {
+        isShowEndingPicker = false;
+        endingDateTimePickerBox = const SizedBox();
+      }
+      startingDateTimePickerBox = Container(
+        height: 100.0,
+        // DatePickerの細かい設定値に特別な理由はない。必要なら変更可。
+        child: CupertinoDatePicker(
+          mode: cupertinoDatePickerMode,
+          use24hFormat: true,
+          minuteInterval: 5,
+          initialDateTime: startingDateTime,
+          minimumDate: DateTime(1980, 1, 1),
+          maximumDate: DateTime(2050, 12, 31),
+          onDateTimeChanged: (DateTime newDateTime) {
+            if (isAllDay == true) {
+              newDateTime = DateTime(
+                newDateTime.year,
+                newDateTime.month,
+                newDateTime.day,
+                12,
+              );
+            }
+            startingDateTime = newDateTime;
+            if (startingDateTime.isAfter(endingDateTime) ||
+                startingDateTime.isAtSameMomentAs(endingDateTime)) {
+              endingDateTime = startingDateTime.add(const Duration(hours: 1));
+            }
+          },
+        ),
+      );
+    } else {
+      startingDateTimePickerBox = const SizedBox();
+    }
+    isShowStartingPicker = !isShowStartingPicker;
+    notifyListeners();
+  }
+
+  void showEndingDateTimePicker() {
+    if (!isShowEndingPicker) {
+      if (isShowStartingPicker) {
+        isShowStartingPicker = false;
+        startingDateTimePickerBox = const SizedBox();
+      }
+      endingDateTimePickerBox = Container(
+        height: 100.0,
+        // DatePickerの細かい設定値に特別な理由はない。必要なら変更可。
+        child: CupertinoDatePicker(
+          mode: cupertinoDatePickerMode,
+          use24hFormat: true,
+          minuteInterval: 5,
+          initialDateTime: endingDateTime,
+          minimumDate: startingDateTime.add(const Duration(minutes: 5)),
+          maximumDate: startingDateTime.add(const Duration(days: 1000)),
+          onDateTimeChanged: (DateTime newDateTime) {
+            if (isAllDay == true) {
+              newDateTime = DateTime(
+                newDateTime.year,
+                newDateTime.month,
+                newDateTime.day,
+                12,
+              );
+            }
+            endingDateTime = newDateTime;
+            if (startingDateTime.isAfter(endingDateTime) ||
+                startingDateTime.isAtSameMomentAs(endingDateTime)) {
+              endingDateTime = startingDateTime.add(const Duration(hours: 1));
+            }
+          },
+        ),
+      );
+    } else {
+      endingDateTimePickerBox = const SizedBox();
+    }
+    isShowEndingPicker = !isShowEndingPicker;
+    notifyListeners();
   }
 }

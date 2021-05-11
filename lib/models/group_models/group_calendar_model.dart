@@ -53,6 +53,7 @@ class GroupCalendarModel extends ChangeNotifier {
     }
   }
 
+  // https://pub.dev/packages/nholiday_jp
   void fetchHolidays() {
     holidays = {};
     final int year = first.year;

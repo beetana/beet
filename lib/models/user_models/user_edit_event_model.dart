@@ -79,6 +79,73 @@ class UserEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateEvent() async {
+    if (eventTitle.isEmpty) {
+      throw ('タイトルを入力してください');
+    }
+
+    String month = '';
+    List<DateTime> dateList = [];
+    List<String> monthList = [];
+    final String start = dateFormat.format(startingDateTime);
+    final String end = dateFormat.format(endingDateTime);
+    final int durationDays =
+        DateTime.parse(end).difference(DateTime.parse(start)).inDays;
+    final DateTime startingDate = DateTime(
+      startingDateTime.year,
+      startingDateTime.month,
+      startingDateTime.day,
+      12,
+    ).toUtc();
+
+    for (int i = 0; i <= durationDays; i++) {
+      final DateTime date = startingDate.add(Duration(days: i));
+      dateList.add(date);
+    }
+
+    dateList.forEach((date) {
+      final String monthForm = monthFormat.format(date);
+      if (monthForm != month) {
+        month = monthForm;
+        monthList.add(month);
+      }
+    });
+
+    if (isAllDay) {
+      startingDateTime = DateTime(
+        startingDateTime.year,
+        startingDateTime.month,
+        startingDateTime.day,
+        0,
+      );
+      endingDateTime = DateTime(
+        endingDateTime.year,
+        endingDateTime.month,
+        endingDateTime.day,
+        23,
+        59,
+        59,
+      );
+    }
+
+    try {
+      await ownerDocRef.collection('events').doc(eventId).update({
+        'title': eventTitle,
+        'place': eventPlace,
+        'memo': eventMemo,
+        'isAllDay': isAllDay,
+        'monthList': monthList,
+        'dateList': dateList,
+        'start': Timestamp.fromDate(startingDateTime),
+        'end': Timestamp.fromDate(endingDateTime),
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      print(e);
+      throw ('エラーが発生しました');
+    }
+  }
+
   void switchIsAllDay({bool value}) {
     isAllDay = value;
     if (isAllDay) {
@@ -175,68 +242,5 @@ class UserEditEventModel extends ChangeNotifier {
     }
     isShowEndingPicker = !isShowEndingPicker;
     notifyListeners();
-  }
-
-  Future<void> updateEvent() async {
-    if (eventTitle.isEmpty) {
-      throw ('タイトルを入力してください');
-    }
-    String month = '';
-    List<DateTime> dateList = [];
-    List<String> monthList = [];
-    final String start = dateFormat.format(startingDateTime);
-    final String end = dateFormat.format(endingDateTime);
-    final int durationDays =
-        DateTime.parse(end).difference(DateTime.parse(start)).inDays;
-    final DateTime startingDate = DateTime(
-      startingDateTime.year,
-      startingDateTime.month,
-      startingDateTime.day,
-      12,
-    ).toUtc();
-    for (int i = 0; i <= durationDays; i++) {
-      final DateTime date = startingDate.add(Duration(days: i));
-      dateList.add(date);
-    }
-    dateList.forEach((date) {
-      final String monthForm = monthFormat.format(date);
-      if (monthForm != month) {
-        month = monthForm;
-        monthList.add(month);
-      }
-    });
-    if (isAllDay) {
-      startingDateTime = DateTime(
-        startingDateTime.year,
-        startingDateTime.month,
-        startingDateTime.day,
-        0,
-      );
-      endingDateTime = DateTime(
-        endingDateTime.year,
-        endingDateTime.month,
-        endingDateTime.day,
-        23,
-        59,
-        59,
-      );
-    }
-
-    try {
-      await ownerDocRef.collection('events').doc(eventId).update({
-        'title': eventTitle,
-        'place': eventPlace,
-        'memo': eventMemo,
-        'isAllDay': isAllDay,
-        'monthList': monthList,
-        'dateList': dateList,
-        'start': Timestamp.fromDate(startingDateTime),
-        'end': Timestamp.fromDate(endingDateTime),
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-    } catch (e) {
-      print(e);
-      throw ('エラーが発生しました');
-    }
   }
 }

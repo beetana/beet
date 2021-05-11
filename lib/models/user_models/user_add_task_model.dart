@@ -37,6 +37,29 @@ class UserAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addTask() async {
+    if (taskTitle.isEmpty) {
+      throw ('やることを入力してください');
+    }
+
+    try {
+      await _firestore.collection('users').doc(userId).collection('tasks').add({
+        'title': taskTitle,
+        'memo': taskMemo,
+        'isDecidedDueDate': isDecidedDueDate,
+        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
+        'assignedMembersId': assignedUserId,
+        'ownerId': userId,
+        'isCompleted': false,
+        'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      print(e);
+      throw ('エラーが発生しました');
+    }
+  }
+
   void showDueDatePicker() {
     if (!isShowDueDatePicker) {
       dueDatePickerBox = Column(
@@ -50,8 +73,7 @@ class UserAddTaskModel extends ChangeNotifier {
               minimumDate: DateTime(1980, 1, 1),
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
-                dueDate =
-                    DateTime(newDate.year, newDate.month, newDate.day, 12);
+                dueDate = DateTime(newDate.year, newDate.month, newDate.day, 12);
                 dueDateText = dateFormat.format(dueDate);
                 isDecidedDueDate = true;
               },
@@ -82,27 +104,5 @@ class UserAddTaskModel extends ChangeNotifier {
     }
     isShowDueDatePicker = !isShowDueDatePicker;
     notifyListeners();
-  }
-
-  Future<void> addTask() async {
-    if (taskTitle.isEmpty) {
-      throw ('やることを入力してください');
-    }
-    try {
-      await _firestore.collection('users').doc(userId).collection('tasks').add({
-        'title': taskTitle,
-        'memo': taskMemo,
-        'isDecidedDueDate': isDecidedDueDate,
-        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
-        'assignedMembersId': assignedUserId,
-        'ownerId': userId,
-        'isCompleted': false,
-        'createdAt': FieldValue.serverTimestamp(),
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-    } catch (e) {
-      print(e);
-      throw ('エラーが発生しました');
-    }
   }
 }

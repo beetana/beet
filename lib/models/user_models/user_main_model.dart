@@ -38,13 +38,13 @@ class UserMainModel extends ChangeNotifier {
     currentDateTime = DateTime.now();
     final Timestamp currentTimestamp = Timestamp.fromDate(currentDateTime);
     List<String> ownerIdList = [userId];
+
     try {
       final QuerySnapshot tasksQuery = await _firestore
           .collectionGroup('tasks')
           .where('assignedMembersId', arrayContains: userId)
           .get();
-      final List<Task> tasks =
-          tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
+      final List<Task> tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
       final List<Task> notCompletedTasks =
           tasks.where((task) => !task.isCompleted).toList();
       notCompletedTasksCount = notCompletedTasks.length;
@@ -73,6 +73,7 @@ class UserMainModel extends ChangeNotifier {
 
   Future<void> fetchContentOwnerInfo({List<String> ownerIdList}) async {
     for (String id in ownerIdList) {
+      // FirebaseAuthのId(28桁)をそのままユーザーのIdとしているので桁数で判別できる
       if (id.length == 28) {
         final DocumentSnapshot userDoc =
             await _firestore.collection('users').doc(id).get();

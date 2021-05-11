@@ -27,14 +27,16 @@ class UserEditNameModel extends ChangeNotifier {
     if (userName.isEmpty) {
       throw ('名前を入力してください');
     }
+
     final Auth.User firebaseUser = _auth.currentUser;
     final String userId = firebaseUser.uid;
     final WriteBatch batch = _firestore.batch();
-    final DocumentReference userDocRef =
-        _firestore.collection('users').doc(userId);
+    final DocumentReference userDocRef = _firestore.collection('users').doc(userId);
+
     batch.update(userDocRef, {
       'name': userName,
     });
+
     try {
       final QuerySnapshot joiningGroupsQuery =
           await userDocRef.collection('joiningGroups').get();

@@ -59,8 +59,7 @@ class UserEventDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -71,21 +70,26 @@ class UserEventDetailsScreen extends StatelessWidget {
                                       width: 32.0,
                                       height: 32.0,
                                       child: CircleAvatar(
-                                        backgroundImage: model.owner.imageURL ==
-                                                null
-                                            ? model.isOwn
-                                                ? const AssetImage(
-                                                    'images/user_profile.png')
-                                                : const AssetImage(
-                                                    'images/group_profile.png')
-                                            : model.owner.imageURL.isNotEmpty
-                                                ? NetworkImage(
-                                                    model.owner.imageURL)
-                                                : model.isOwn
+                                        backgroundImage:
+                                            model.owner.imageURL == null
+                                                ? model.isOwn
                                                     ? const AssetImage(
-                                                        'images/user_profile.png')
+                                                        'images/user_profile.png',
+                                                      )
                                                     : const AssetImage(
-                                                        'images/group_profile.png'),
+                                                        'images/group_profile.png',
+                                                      )
+                                                : model.owner.imageURL.isNotEmpty
+                                                    ? NetworkImage(
+                                                        model.owner.imageURL,
+                                                      )
+                                                    : model.isOwn
+                                                        ? const AssetImage(
+                                                            'images/user_profile.png',
+                                                          )
+                                                        : const AssetImage(
+                                                            'images/group_profile.png',
+                                                          ),
                                         backgroundColor: Colors.transparent,
                                       ),
                                     ),
@@ -120,8 +124,7 @@ class UserEventDetailsScreen extends StatelessWidget {
                           ),
                           Expanded(
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
                               child: Scrollbar(
                                 child: SingleChildScrollView(
                                   child: Container(

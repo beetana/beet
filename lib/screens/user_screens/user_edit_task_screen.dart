@@ -69,7 +69,7 @@ class UserEditTaskScreen extends StatelessWidget {
                                 border: InputBorder.none,
                               ),
                               onTap: () {
-                                if (model.isShowDueDatePicker == true) {
+                                if (model.isShowDueDatePicker) {
                                   model.showDueDatePicker();
                                 }
                               },
@@ -91,6 +91,7 @@ class UserEditTaskScreen extends StatelessWidget {
                             model.dueDatePickerBox,
                             BasicDivider(),
                             Visibility(
+                              // ユーザー個人のタスクの場合は表示しない
                               visible: model.ownerId != model.userId,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,34 +102,31 @@ class UserEditTaskScreen extends StatelessWidget {
                                     style: TextStyle(fontSize: 17.0),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4.0),
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 4.0),
                                     child: Container(
                                       height: 72,
-                                      child: NotificationListener<
-                                          ScrollNotification>(
+                                      child:
+                                          NotificationListener<ScrollNotification>(
+                                        // これをtrueにしないと親のScrollbarも同時に動いてしまう
                                         onNotification: (_) => true,
                                         child: Scrollbar(
                                           child: ListView.builder(
                                             scrollDirection: Axis.horizontal,
                                             physics: const ScrollPhysics(),
                                             itemExtent: 60.0,
-                                            itemCount:
-                                                model.groupMembers.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              String userId =
-                                                  model.usersId[index];
-                                              String userName = model
-                                                  .groupMembers[userId].name;
+                                            itemCount: model.groupMembers.length,
+                                            itemBuilder:
+                                                (BuildContext context, int index) {
+                                              String userId = model.usersId[index];
+                                              String userName =
+                                                  model.groupMembers[userId].name;
                                               String userImageURL = model
-                                                  .groupMembers[userId]
-                                                  .imageURL;
+                                                  .groupMembers[userId].imageURL;
                                               return AssignTaskListTile(
                                                 userName: userName,
                                                 userImageURL: userImageURL,
-                                                isChecked: model
-                                                    .assignedMembersId
+                                                isChecked: model.assignedMembersId
                                                     .contains(userId),
                                                 tileTappedCallback: () {
                                                   model.assignPerson(
@@ -146,6 +144,7 @@ class UserEditTaskScreen extends StatelessWidget {
                               ),
                             ),
                             NotificationListener<ScrollNotification>(
+                              // これをtrueにしないと親のScrollbarも同時に動いてしまう
                               onNotification: (_) => true,
                               child: Scrollbar(
                                 child: TextField(
@@ -157,14 +156,16 @@ class UserEditTaskScreen extends StatelessWidget {
                                     contentPadding: EdgeInsets.all(0.0),
                                   ),
                                   onTap: () async {
-                                    if (model.isShowDueDatePicker == true) {
+                                    if (model.isShowDueDatePicker) {
                                       model.showDueDatePicker();
                                     }
+                                    // 上手く動かないことがあるので少し待ってから
+                                    // Columnの一番下までスクロールする
                                     await Future.delayed(
                                       const Duration(milliseconds: 100),
                                     );
-                                    scrollController.jumpTo(scrollController
-                                        .position.maxScrollExtent);
+                                    scrollController.jumpTo(
+                                        scrollController.position.maxScrollExtent);
                                   },
                                   onChanged: (text) {
                                     model.taskMemo = text;

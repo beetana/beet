@@ -59,8 +59,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -71,21 +70,26 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                       width: 32.0,
                                       height: 32.0,
                                       child: CircleAvatar(
-                                        backgroundImage: model.owner.imageURL ==
-                                                null
-                                            ? model.isOwn
-                                                ? const AssetImage(
-                                                    'images/user_profile.png')
-                                                : const AssetImage(
-                                                    'images/group_profile.png')
-                                            : model.owner.imageURL.isNotEmpty
-                                                ? NetworkImage(
-                                                    model.owner.imageURL)
-                                                : model.isOwn
+                                        backgroundImage:
+                                            model.owner.imageURL == null
+                                                ? model.isOwn
                                                     ? const AssetImage(
-                                                        'images/user_profile.png')
+                                                        'images/user_profile.png',
+                                                      )
                                                     : const AssetImage(
-                                                        'images/group_profile.png'),
+                                                        'images/group_profile.png',
+                                                      )
+                                                : model.owner.imageURL.isNotEmpty
+                                                    ? NetworkImage(
+                                                        model.owner.imageURL,
+                                                      )
+                                                    : model.isOwn
+                                                        ? const AssetImage(
+                                                            'images/user_profile.png',
+                                                          )
+                                                        : const AssetImage(
+                                                            'images/group_profile.png',
+                                                          ),
                                         backgroundColor: Colors.transparent,
                                       ),
                                     ),
@@ -125,7 +129,8 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                             .name;
                                         return Padding(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 2.0),
+                                            horizontal: 2.0,
+                                          ),
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -136,15 +141,17 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                                 width: 40.0,
                                                 height: 40.0,
                                                 child: CircleAvatar(
-                                                  backgroundImage: imageURL ==
-                                                          null
+                                                  backgroundImage: imageURL == null
                                                       ? const AssetImage(
-                                                          'images/user_profile.png')
+                                                          'images/user_profile.png',
+                                                        )
                                                       : imageURL.isNotEmpty
                                                           ? NetworkImage(
-                                                              imageURL)
+                                                              imageURL,
+                                                            )
                                                           : const AssetImage(
-                                                              'images/user_profile.png'),
+                                                              'images/user_profile.png',
+                                                            ),
                                                   backgroundColor:
                                                       Colors.transparent,
                                                 ),
@@ -153,8 +160,8 @@ class UserTaskDetailsScreen extends StatelessWidget {
                                               Text(
                                                 name,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                    fontSize: 9.0),
+                                                style:
+                                                    const TextStyle(fontSize: 9.0),
                                               ),
                                             ],
                                           ),
@@ -171,8 +178,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
                           ),
                           Expanded(
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
                               child: Scrollbar(
                                 child: SingleChildScrollView(
                                   child: Container(
@@ -198,7 +204,7 @@ class UserTaskDetailsScreen extends StatelessWidget {
                               onPressed: () async {
                                 bool isDelete = await _confirmDeleteDialog(
                                     context, 'このタスクを削除しますか？');
-                                if (isDelete == true) {
+                                if (isDelete) {
                                   model.startLoading();
                                   try {
                                     await model.deleteTask();

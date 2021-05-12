@@ -54,17 +54,16 @@ class GroupMemberScreen extends StatelessWidget {
                                 isMe,
                                 userName,
                               );
-                              if (isDelete == true) {
+                              if (isDelete) {
                                 model.startLoading();
                                 try {
-                                  if (isMe == true) {
+                                  if (isMe) {
                                     final memberCount =
                                         await model.checkMemberCount();
+                                    // もし自分がグループの最後の一人ならグループごと削除する
                                     memberCount == 1
-                                        ? await model.deleteGroup(
-                                            userId: userId)
-                                        : await model.deleteMember(
-                                            userId: userId);
+                                        ? await model.deleteGroup(userId: userId)
+                                        : await model.deleteMember(userId: userId);
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
@@ -104,8 +103,7 @@ class GroupMemberScreen extends StatelessWidget {
                           groupName: model.groupName,
                         );
                         model.endLoading();
-                        await _inviteMemberDialog(
-                            context, link, model.groupName);
+                        await _inviteMemberDialog(context, link, model.groupName);
                       },
                     ),
                   ],
@@ -163,8 +161,7 @@ Future<bool> _showMemberBottomSheet(
                       backgroundColor: Colors.redAccent,
                     ),
                     onPressed: () async {
-                      isDelete =
-                          await _showConfirmDialog(context, isMe, userName);
+                      isDelete = await _showConfirmDialog(context, isMe, userName);
                       Navigator.pop(context);
                     },
                   ),

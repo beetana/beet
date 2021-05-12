@@ -25,6 +25,7 @@ class Event {
 
   factory Event.doc(DocumentSnapshot doc) {
     final data = doc.data();
+
     return Event._(
       doc.id,
       data['ownerId'],

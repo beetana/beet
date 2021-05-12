@@ -15,6 +15,7 @@ class InquiryScreen extends StatelessWidget {
       child: WillPopScope(
         onWillPop: () async {
           FocusScope.of(context).unfocus();
+          // キーボードを完全に閉じてから戻らないとUIが崩れることがあるので少し待つ
           await Future.delayed(
             const Duration(milliseconds: 80),
           );

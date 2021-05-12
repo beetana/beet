@@ -21,6 +21,7 @@ class RegisterScreen extends StatelessWidget {
       create: (_) => RegisterModel(),
       child: WillPopScope(
         onWillPop: () async {
+          // キーボードを完全に閉じてから戻らないとUIが崩れることがあるので少し待つ
           FocusScope.of(context).unfocus();
           await Future.delayed(
             const Duration(milliseconds: 80),

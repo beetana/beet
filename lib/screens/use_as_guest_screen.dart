@@ -39,9 +39,9 @@ class UseAsGuestScreen extends StatelessWidget {
                     ],
                   ),
                   onPressed: () {
+                    // セットリストを一枚の画像にバランス良く収めるための上限が14曲
                     model.setList.length >= 14
-                        ? showMessageDialog(
-                            context, '作成できるセットリストは14曲まで(MC含む)です。')
+                        ? showMessageDialog(context, '作成できるセットリストは14曲まで(MC含む)です。')
                         : model.addMC();
                   },
                 ),
@@ -53,6 +53,7 @@ class UseAsGuestScreen extends StatelessWidget {
                 ),
                 onPressed: () async {
                   FocusScope.of(context).unfocus();
+                  // キーボードを完全に閉じてから戻らないとUIが崩れることがあるので少し待つ
                   await Future.delayed(
                     const Duration(milliseconds: 80),
                   );
@@ -85,8 +86,7 @@ class UseAsGuestScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
                               child: TextField(
                                 controller: songTitleController,
                                 style: const TextStyle(
@@ -128,6 +128,7 @@ class UseAsGuestScreen extends StatelessWidget {
                             ),
                             onPressed: () {
                               if (model.title.isNotEmpty) {
+                                // セットリストを一枚の画像にバランス良く収めるための上限が14曲
                                 if (model.setList.length >= 14) {
                                   showMessageDialog(
                                       context, '作成できるセットリストは14曲まで(MC含む)です。');
@@ -149,8 +150,7 @@ class UseAsGuestScreen extends StatelessWidget {
                     child: Scrollbar(
                       child: ImplicitlyAnimatedReorderableList(
                         items: model.setList,
-                        areItemsTheSame: (oldItem, newItem) =>
-                            oldItem == newItem,
+                        areItemsTheSame: (oldItem, newItem) => oldItem == newItem,
                         onReorderFinished: (item, from, to, setList) {
                           model.setList = setList;
                         },

@@ -36,7 +36,7 @@ class GroupSetListScreen extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  // 一枚の画像にバランス良く収めるための上限
+                  // セットリストを一枚の画像にバランス良く収めるための上限が14曲
                   model.setList.length >= 14
                       ? showMessageDialog(context, '作成できるセットリストは14曲まで(MC含む)です。')
                       : model.addMC();

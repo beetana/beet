@@ -60,20 +60,21 @@ class TaskListTile extends StatelessWidget {
                               width: 24.0 * textScale,
                               height: 24.0 * textScale,
                               child: CircleAvatar(
-                                backgroundImage: users[
-                                            task.assignedMembersId[index]] ==
-                                        null
-                                    ? const AssetImage(
-                                        'images/user_profile.png')
-                                    : users[task.assignedMembersId[index]]
-                                            .imageURL
-                                            .isNotEmpty
-                                        ? NetworkImage(
-                                            users[task.assignedMembersId[index]]
-                                                .imageURL,
+                                backgroundImage:
+                                    users[task.assignedMembersId[index]] == null
+                                        ? const AssetImage(
+                                            'images/user_profile.png',
                                           )
-                                        : const AssetImage(
-                                            'images/user_profile.png'),
+                                        : users[task.assignedMembersId[index]]
+                                                .imageURL
+                                                .isNotEmpty
+                                            ? NetworkImage(
+                                                users[task.assignedMembersId[index]]
+                                                    .imageURL,
+                                              )
+                                            : const AssetImage(
+                                                'images/user_profile.png',
+                                              ),
                                 backgroundColor: Colors.transparent,
                               ),
                             );

@@ -72,6 +72,7 @@ class GroupSongListScreen extends StatelessWidget {
                               },
                               tileTappedCallback: () async {
                                 if (model.isSetListMode) {
+                                  // セットリストを一枚の画像にバランス良く収めるための上限が14曲
                                   model.setList.length >= 14 && !song.checkboxState
                                       ? showMessageDialog(
                                           context,

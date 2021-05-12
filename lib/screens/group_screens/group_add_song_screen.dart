@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 
 class GroupAddSongScreen extends StatelessWidget {
   final String groupId;
+  // 曲の演奏時間(分) とりあえず12分まであれば充分かと
+  final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   final TextEditingController songTitleController = TextEditingController();
   final TextEditingController songMemoController = TextEditingController();
   final ScrollController scrollController = ScrollController();
@@ -91,9 +93,9 @@ class GroupAddSongScreen extends StatelessWidget {
                                         useMagnifier: true,
                                         onSelectedItemChanged: (index) {
                                           model.songPlayingTime =
-                                              model.songPlayingTimes[index];
+                                              songPlayingTimes[index];
                                         },
-                                        children: model.songPlayingTimes
+                                        children: songPlayingTimes
                                             .map(
                                               (value) => Text(
                                                 '$value',
@@ -122,6 +124,7 @@ class GroupAddSongScreen extends StatelessWidget {
                           ),
                           BasicDivider(),
                           NotificationListener<ScrollNotification>(
+                            // これをtrueにしないと親のScrollbarも同時に動いてしまう
                             onNotification: (_) => true,
                             child: Scrollbar(
                               child: TextField(
@@ -133,11 +136,13 @@ class GroupAddSongScreen extends StatelessWidget {
                                   contentPadding: EdgeInsets.all(0.0),
                                 ),
                                 onTap: () async {
+                                  // 上手く動かないことがあるので少し待ってから
+                                  // Columnの一番下までスクロールする
                                   await Future.delayed(
                                     const Duration(milliseconds: 100),
                                   );
-                                  scrollController.jumpTo(scrollController
-                                      .position.maxScrollExtent);
+                                  scrollController.jumpTo(
+                                      scrollController.position.maxScrollExtent);
                                 },
                                 onChanged: (text) {
                                   model.songMemo = text;

@@ -9,8 +9,6 @@ class GroupEditSongModel extends ChangeNotifier {
   String songMemo = '';
   int songPlayingTime;
   bool isLoading = false;
-  // 曲の演奏時間(分) とりあえず12分まであれば充分かと
-  final List<int> songPlayingTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void init({String groupId, Song song}) {

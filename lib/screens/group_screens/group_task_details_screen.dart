@@ -20,8 +20,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupTaskDetailsModel>(
-      create: (_) =>
-          GroupTaskDetailsModel()..init(groupId: groupId, task: task),
+      create: (_) => GroupTaskDetailsModel()..init(groupId: groupId, task: task),
       child: Consumer<GroupTaskDetailsModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -63,8 +62,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -111,13 +109,11 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                                 width: 40.0,
                                                 height: 40.0,
                                                 child: CircleAvatar(
-                                                  backgroundImage: imageURL ==
-                                                          null
+                                                  backgroundImage: imageURL == null
                                                       ? const AssetImage(
                                                           'images/user_profile.png')
                                                       : imageURL.isNotEmpty
-                                                          ? NetworkImage(
-                                                              imageURL)
+                                                          ? NetworkImage(imageURL)
                                                           : const AssetImage(
                                                               'images/user_profile.png'),
                                                   backgroundColor:
@@ -128,8 +124,8 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                               Text(
                                                 name,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                    fontSize: 9.0),
+                                                style:
+                                                    const TextStyle(fontSize: 9.0),
                                               ),
                                             ],
                                           ),
@@ -146,8 +142,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                           ),
                           Expanded(
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
                               child: Scrollbar(
                                 child: SingleChildScrollView(
                                   child: Container(
@@ -173,7 +168,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                               onPressed: () async {
                                 bool isDelete = await _confirmDeleteDialog(
                                     context, 'このタスクを削除しますか？');
-                                if (isDelete == true) {
+                                if (isDelete) {
                                   model.startLoading();
                                   try {
                                     await model.deleteTask();

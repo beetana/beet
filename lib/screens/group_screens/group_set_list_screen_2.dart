@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSetListScreen2 extends StatelessWidget {
-  final List<dynamic> setList;
+  final List<dynamic> setList; // setListに入るのはSongもしくはMC
   final int songCount;
   final int totalPlayTime;
   final String groupId;
@@ -29,7 +29,7 @@ class GroupSetListScreen2 extends StatelessWidget {
       child: Consumer<GroupSetListModel2>(builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
-            if (model.isShowEventDatePicker == true) {
+            if (model.isShowEventDatePicker) {
               model.showEventDatePicker();
             }
             FocusScope.of(context).unfocus();
@@ -42,8 +42,8 @@ class GroupSetListScreen2 extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
@@ -54,7 +54,7 @@ class GroupSetListScreen2 extends StatelessWidget {
                               border: InputBorder.none,
                             ),
                             onTap: () {
-                              if (model.isShowEventDatePicker == true) {
+                              if (model.isShowEventDatePicker) {
                                 model.showEventDatePicker();
                               }
                             },
@@ -70,7 +70,7 @@ class GroupSetListScreen2 extends StatelessWidget {
                               border: InputBorder.none,
                             ),
                             onTap: () {
-                              if (model.isShowEventDatePicker == true) {
+                              if (model.isShowEventDatePicker) {
                                 model.showEventDatePicker();
                               }
                             },
@@ -92,7 +92,6 @@ class GroupSetListScreen2 extends StatelessWidget {
                             onTap: () async {
                               FocusScope.of(context).unfocus();
                               // AndroidでDatePickerを開く際にUIが崩れることがあるので少し待つ
-                              // 他にいい方法があるはず
                               await Future.delayed(
                                 const Duration(milliseconds: 80),
                               );

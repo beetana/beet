@@ -18,8 +18,7 @@ class GroupSongDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GroupSongDetailsModel>(
-      create: (_) =>
-          GroupSongDetailsModel()..init(groupId: groupId, song: song),
+      create: (_) => GroupSongDetailsModel()..init(groupId: groupId, song: song),
       child: Consumer<GroupSongDetailsModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -132,8 +131,10 @@ class GroupSongDetailsScreen extends StatelessWidget {
                         ),
                         onPressed: () async {
                           bool isDelete = await _confirmDeleteDialog(
-                              context, 'この曲を削除しますか？');
-                          if (isDelete == true) {
+                            context,
+                            'この曲を削除しますか？',
+                          );
+                          if (isDelete) {
                             model.startLoading();
                             try {
                               await model.deleteSong();

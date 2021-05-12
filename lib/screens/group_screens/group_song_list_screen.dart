@@ -59,6 +59,7 @@ class GroupSongListScreen extends StatelessWidget {
                       child: ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
                         itemExtent: 52.0 * textScale,
+                        // ListTileとFABが被らないよう一つ余分にitemを作ってSizedBoxを返す
                         itemCount: model.songs.length + 1,
                         itemBuilder: (context, index) {
                           if (index < model.songs.length) {
@@ -70,18 +71,18 @@ class GroupSongListScreen extends StatelessWidget {
                                 model.selectSong(song: song);
                               },
                               tileTappedCallback: () async {
-                                if (model.isSetListMode == true) {
-                                  model.setList.length >= 14 &&
-                                          !song.checkboxState
+                                if (model.isSetListMode) {
+                                  model.setList.length >= 14 && !song.checkboxState
                                       ? showMessageDialog(
-                                          context, '作成できるセットリストは14曲まで(MC含む)です。')
+                                          context,
+                                          '作成できるセットリストは14曲まで(MC含む)です。',
+                                        )
                                       : model.selectSong(song: song);
                                 } else {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          GroupSongDetailsScreen(
+                                      builder: (context) => GroupSongDetailsScreen(
                                         groupId: groupId,
                                         song: song,
                                       ),
@@ -135,19 +136,19 @@ class GroupSongListScreen extends StatelessWidget {
                             onPressed: model.setList.isEmpty
                                 ? null
                                 : () async {
+                                    // 曲を選び直すためにこの画面に戻ってきた際、
+                                    // 作成途中のセットリストがここに入る
                                     List<dynamic> returnedSetList =
                                         await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            GroupSetListScreen(
+                                        builder: (context) => GroupSetListScreen(
                                           setList: model.setList,
                                           groupId: groupId,
                                         ),
                                       ),
                                     );
-                                    model.reselectSongs(
-                                        setList: returnedSetList);
+                                    model.reselectSongs(setList: returnedSetList);
                                   },
                           ),
                         ),
@@ -164,8 +165,7 @@ class GroupSongListScreen extends StatelessWidget {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          GroupAddSongScreen(groupId: groupId),
+                      builder: (context) => GroupAddSongScreen(groupId: groupId),
                       fullscreenDialog: true,
                     ),
                   );

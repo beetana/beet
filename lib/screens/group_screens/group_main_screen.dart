@@ -121,8 +121,7 @@ class GroupMainScreen extends StatelessWidget {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        GroupEventDetailsScreen(
+                                    builder: (context) => GroupEventDetailsScreen(
                                       groupId: groupId,
                                       event: event,
                                     ),

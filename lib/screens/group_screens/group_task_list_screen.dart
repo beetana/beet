@@ -70,15 +70,13 @@ class GroupTaskListScreen extends StatelessWidget {
                                   }
                                 },
                                 child: ListView.builder(
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
+                                  physics: const AlwaysScrollableScrollPhysics(),
                                   itemExtent: 80.0 * textScale,
+                                  // ListTileとFABが被らないよう一つ余分にitemを作ってSizedBoxを返す
                                   itemCount: model.notCompletedTasks.length + 1,
                                   itemBuilder: (context, index) {
-                                    if (index <
-                                        model.notCompletedTasks.length) {
-                                      final task =
-                                          model.notCompletedTasks[index];
+                                    if (index < model.notCompletedTasks.length) {
+                                      final task = model.notCompletedTasks[index];
                                       return TaskListTile(
                                         task: task,
                                         users: model.members,
@@ -90,11 +88,10 @@ class GroupTaskListScreen extends StatelessWidget {
                                           bool isDelete =
                                               await _confirmDeleteDialog(
                                                   context, 'このタスクを削除しますか？');
-                                          if (isDelete == true) {
+                                          if (isDelete) {
                                             model.startLoading();
                                             try {
-                                              await model.deleteTask(
-                                                  task: task);
+                                              await model.deleteTask(task: task);
                                             } catch (e) {
                                               showMessageDialog(
                                                   context, e.toString());
@@ -154,9 +151,9 @@ class GroupTaskListScreen extends StatelessWidget {
                                   }
                                 },
                                 child: ListView.builder(
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
+                                  physics: const AlwaysScrollableScrollPhysics(),
                                   itemExtent: 80.0,
+                                  // ListTileとFABが被らないよう一つ余分にitemを作ってSizedBoxを返す
                                   itemCount: model.completedTasks.length + 1,
                                   itemBuilder: (context, index) {
                                     if (index < model.completedTasks.length) {
@@ -172,11 +169,10 @@ class GroupTaskListScreen extends StatelessWidget {
                                           bool isDelete =
                                               await _confirmDeleteDialog(
                                                   context, 'このタスクを削除しますか？');
-                                          if (isDelete == true) {
+                                          if (isDelete) {
                                             model.startLoading();
                                             try {
-                                              await model.deleteTask(
-                                                  task: task);
+                                              await model.deleteTask(task: task);
                                             } catch (e) {
                                               showMessageDialog(
                                                   context, e.toString());

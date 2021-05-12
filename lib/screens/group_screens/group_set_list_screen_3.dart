@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSetListScreen3 extends StatelessWidget {
-  final List<dynamic> setList;
+  final List<dynamic> setList; // setListに入るのはSongもしくはMC
   final String eventTitle;
   final String eventPlace;
   final String eventDateText;
@@ -54,6 +54,7 @@ class GroupSetListScreen3 extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 AspectRatio(
+                  // 一般的なコピー用紙の縦横比が 1 : 1.415
                   aspectRatio: 1.0 / 1.415,
                   child: RepaintBoundary(
                     key: model.globalKey,
@@ -71,8 +72,8 @@ class GroupSetListScreen3 extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       eventTitle,
-                                      style: TextStyle(
-                                          fontSize: eventTitleTextSize),
+                                      style:
+                                          TextStyle(fontSize: eventTitleTextSize),
                                       textScaleFactor: 1.0,
                                     ),
                                   ],
@@ -82,14 +83,14 @@ class GroupSetListScreen3 extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       eventDateText,
-                                      style: TextStyle(
-                                          fontSize: eventDetailsTextSize),
+                                      style:
+                                          TextStyle(fontSize: eventDetailsTextSize),
                                       textScaleFactor: 1.0,
                                     ),
                                     Text(
                                       ' $eventPlace',
-                                      style: TextStyle(
-                                          fontSize: eventDetailsTextSize),
+                                      style:
+                                          TextStyle(fontSize: eventDetailsTextSize),
                                       textScaleFactor: 1.0,
                                     ),
                                   ],

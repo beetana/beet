@@ -8,7 +8,7 @@ import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorder
 import 'package:provider/provider.dart';
 
 class GroupSetListScreen extends StatelessWidget {
-  final List<dynamic> setList;
+  final List<dynamic> setList; // setListに入るのはSongもしくはMC
   final String groupId;
 
   GroupSetListScreen({this.setList, this.groupId});
@@ -36,6 +36,7 @@ class GroupSetListScreen extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
+                  // 一枚の画像にバランス良く収めるための上限
                   model.setList.length >= 14
                       ? showMessageDialog(context, '作成できるセットリストは14曲まで(MC含む)です。')
                       : model.addMC();

@@ -118,7 +118,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                         onPressed: () async {
                           bool isDelete =
                               await _confirmDeleteDialog(context, 'このイベントを削除しますか？');
-                          if (isDelete == true) {
+                          if (isDelete) {
                             model.startLoading();
                             try {
                               await model.deleteEvent(groupId: groupId);

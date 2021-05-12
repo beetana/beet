@@ -66,7 +66,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                                 border: InputBorder.none,
                               ),
                               onTap: () {
-                                if (model.isShowDueDatePicker == true) {
+                                if (model.isShowDueDatePicker) {
                                   model.showDueDatePicker();
                                 }
                               },
@@ -97,6 +97,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                               child: Container(
                                 height: 72,
                                 child: NotificationListener<ScrollNotification>(
+                                  // これをtrueにしないと親のScrollbarも同時に動いてしまう
                                   onNotification: (_) => true,
                                   child: Scrollbar(
                                     child: ListView.builder(
@@ -104,7 +105,8 @@ class GroupAddTaskScreen extends StatelessWidget {
                                       physics: const ScrollPhysics(),
                                       itemExtent: 60.0,
                                       itemCount: model.membersName.length,
-                                      itemBuilder: (BuildContext context, int index) {
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
                                         String userId = model.membersId[index];
                                         String userName = model.membersName[index];
                                         String userImageURL =
@@ -112,8 +114,8 @@ class GroupAddTaskScreen extends StatelessWidget {
                                         return AssignTaskListTile(
                                           userName: userName,
                                           userImageURL: userImageURL,
-                                          isChecked:
-                                              model.assignedMembersId.contains(userId),
+                                          isChecked: model.assignedMembersId
+                                              .contains(userId),
                                           tileTappedCallback: () {
                                             model.assignPerson(userId: userId);
                                           },
@@ -126,6 +128,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                             ),
                             BasicDivider(),
                             NotificationListener<ScrollNotification>(
+                              // これをtrueにしないと親のScrollbarも同時に動いてしまう
                               onNotification: (_) => true,
                               child: Scrollbar(
                                 child: TextField(
@@ -137,9 +140,11 @@ class GroupAddTaskScreen extends StatelessWidget {
                                     contentPadding: EdgeInsets.all(0.0),
                                   ),
                                   onTap: () async {
-                                    if (model.isShowDueDatePicker == true) {
+                                    if (model.isShowDueDatePicker) {
                                       model.showDueDatePicker();
                                     }
+                                    // 上手く動かないことがあるので少し待ってから
+                                    // Columnの一番下までスクロールする
                                     await Future.delayed(
                                       const Duration(milliseconds: 100),
                                     );

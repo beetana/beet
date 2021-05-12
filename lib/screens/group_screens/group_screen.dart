@@ -40,8 +40,7 @@ class GroupScreen extends StatelessWidget {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            GroupSettingScreen(groupId: groupId),
+                        builder: (context) => GroupSettingScreen(groupId: groupId),
                         fullscreenDialog: true,
                       ),
                     );

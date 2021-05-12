@@ -40,6 +40,7 @@ class GroupCalendarScreen extends StatelessWidget {
                       child: ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
                         itemExtent: 64.0 * textScale,
+                        // ListTileとFABが被らないよう一つ余分にitemを作ってSizedBoxを返す
                         itemCount: model.selectedEvents.length + 1,
                         itemBuilder: (context, index) {
                           if (index < model.selectedEvents.length) {
@@ -50,8 +51,7 @@ class GroupCalendarScreen extends StatelessWidget {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        GroupEventDetailsScreen(
+                                    builder: (context) => GroupEventDetailsScreen(
                                       groupId: groupId,
                                       event: event,
                                     ),

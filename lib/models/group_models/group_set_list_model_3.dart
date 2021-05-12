@@ -6,12 +6,14 @@ import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class GroupSetListModel3 extends ChangeNotifier {
-  List<String> setList = []; // setListに入るのはSongもしくはMC
+  List<String> setList = [];
   List<String> songsNumText = [];
   final GlobalKey globalKey = GlobalKey();
 
+  // 引数のsetListの中身はSongもしくはMC
   void init({List<dynamic> setList}) {
     int num = 1;
+
     setList.forEach((item) {
       this.setList.add(item.title);
       if (item is Song) {

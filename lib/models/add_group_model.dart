@@ -25,17 +25,20 @@ class AddGroupModel extends ChangeNotifier {
     if (groupName.isEmpty) {
       throw ('グループ名を入力してください');
     }
-    final DocumentReference userDocRef =
-        _firestore.collection('users').doc(userId);
+
+    final DocumentReference userDocRef = _firestore.collection('users').doc(userId);
     final WriteBatch batch = _firestore.batch();
+
     try {
       final QuerySnapshot joiningGroupsQuery =
           await userDocRef.collection('joiningGroups').get();
 
+      // 参加できるグループ数の上限は8個
       if (joiningGroupsQuery.size < 8) {
         final DocumentSnapshot userDoc = await userDocRef.get();
         userName = userDoc['name'];
         userImageURL = userDoc['imageURL'];
+
         final DocumentReference newGroup =
             await _firestore.collection('groups').add({
           'name': groupName,
@@ -43,6 +46,7 @@ class AddGroupModel extends ChangeNotifier {
           'createdAt': FieldValue.serverTimestamp(),
         });
         groupId = newGroup.id;
+
         final DocumentReference memberDocRef = _firestore
             .collection('groups')
             .doc(groupId)
@@ -53,6 +57,7 @@ class AddGroupModel extends ChangeNotifier {
           'imageURL': userImageURL,
           'joinedAt': FieldValue.serverTimestamp(),
         });
+
         final DocumentReference joiningGroupDocRef =
             userDocRef.collection('joiningGroups').doc(groupId);
         batch.set(joiningGroupDocRef, {
@@ -60,6 +65,7 @@ class AddGroupModel extends ChangeNotifier {
           'imageURL': '',
           'joinedAt': FieldValue.serverTimestamp(),
         });
+
         await batch.commit();
       }
     } catch (e) {

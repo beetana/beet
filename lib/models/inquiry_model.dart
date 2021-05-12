@@ -22,6 +22,7 @@ class InquiryModel extends ChangeNotifier {
     if (inquiryContent.isEmpty) {
       throw ('お問い合わせ内容を入力してください');
     }
+
     try {
       await _firestore.collection('inquiries').add({
         'userId': userId,

@@ -26,6 +26,7 @@ class UserAddEventScreen extends StatelessWidget {
         return WillPopScope(
           onWillPop: () async {
             FocusScope.of(context).unfocus();
+            // キーボードを完全に閉じてから戻らないとUIが崩れることがあるので少し待つ
             await Future.delayed(
               const Duration(milliseconds: 80),
             );
@@ -75,10 +76,10 @@ class UserAddEventScreen extends StatelessWidget {
                                 border: InputBorder.none,
                               ),
                               onTap: () {
-                                if (model.isShowStartingPicker == true) {
+                                if (model.isShowStartingPicker) {
                                   model.showStartingDateTimePicker();
                                 }
-                                if (model.isShowEndingPicker == true) {
+                                if (model.isShowEndingPicker) {
                                   model.showEndingDateTimePicker();
                                 }
                               },
@@ -94,10 +95,10 @@ class UserAddEventScreen extends StatelessWidget {
                                 border: InputBorder.none,
                               ),
                               onTap: () {
-                                if (model.isShowStartingPicker == true) {
+                                if (model.isShowStartingPicker) {
                                   model.showStartingDateTimePicker();
                                 }
-                                if (model.isShowEndingPicker == true) {
+                                if (model.isShowEndingPicker) {
                                   model.showEndingDateTimePicker();
                                 }
                               },
@@ -136,6 +137,7 @@ class UserAddEventScreen extends StatelessWidget {
                             model.endingDateTimePickerBox,
                             BasicDivider(),
                             NotificationListener<ScrollNotification>(
+                              // これをtrueにしないと親のScrollbarも同時に動いてしまう
                               onNotification: (_) => true,
                               child: Scrollbar(
                                 child: TextField(
@@ -147,17 +149,19 @@ class UserAddEventScreen extends StatelessWidget {
                                     contentPadding: EdgeInsets.all(0.0),
                                   ),
                                   onTap: () async {
-                                    if (model.isShowStartingPicker == true) {
+                                    if (model.isShowStartingPicker) {
                                       model.showStartingDateTimePicker();
                                     }
-                                    if (model.isShowEndingPicker == true) {
+                                    if (model.isShowEndingPicker) {
                                       model.showEndingDateTimePicker();
                                     }
+                                    // 上手く動かないことがあるので少し待ってから
+                                    // Columnの一番下までスクロールする
                                     await Future.delayed(
                                       const Duration(milliseconds: 100),
                                     );
-                                    scrollController.jumpTo(scrollController
-                                        .position.maxScrollExtent);
+                                    scrollController.jumpTo(
+                                        scrollController.position.maxScrollExtent);
                                   },
                                   onChanged: (text) {
                                     model.eventMemo = text;

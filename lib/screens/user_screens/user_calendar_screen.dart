@@ -40,6 +40,7 @@ class UserCalendarScreen extends StatelessWidget {
                       child: ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
                         itemExtent: 96.0 * textScale,
+                        // ListTileとFABが被らないよう一つ余分にitemを作ってSizedBoxを返す
                         itemCount: model.selectedEvents.length + 1,
                         itemBuilder: (context, index) {
                           if (index < model.selectedEvents.length) {
@@ -47,8 +48,7 @@ class UserCalendarScreen extends StatelessWidget {
                             final bool isOwn = event.ownerId == model.userId;
                             return EventListTile(
                               event: event,
-                              imageURL:
-                                  model.eventPlanner[event.ownerId].imageURL,
+                              imageURL: model.eventPlanner[event.ownerId].imageURL,
                               name: model.eventPlanner[event.ownerId].name,
                               isOwn: isOwn,
                               textScale: textScale,

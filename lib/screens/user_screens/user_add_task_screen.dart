@@ -62,7 +62,7 @@ class UserAddTaskScreen extends StatelessWidget {
                                 border: InputBorder.none,
                               ),
                               onTap: () {
-                                if (model.isShowDueDatePicker == true) {
+                                if (model.isShowDueDatePicker) {
                                   model.showDueDatePicker();
                                 }
                               },
@@ -84,6 +84,7 @@ class UserAddTaskScreen extends StatelessWidget {
                             model.dueDatePickerBox,
                             BasicDivider(),
                             NotificationListener<ScrollNotification>(
+                              // これをtrueにしないと親のScrollbarも同時に動いてしまう
                               onNotification: (_) => true,
                               child: Scrollbar(
                                 child: TextField(
@@ -95,14 +96,16 @@ class UserAddTaskScreen extends StatelessWidget {
                                     contentPadding: EdgeInsets.all(0.0),
                                   ),
                                   onTap: () async {
-                                    if (model.isShowDueDatePicker == true) {
+                                    if (model.isShowDueDatePicker) {
                                       model.showDueDatePicker();
                                     }
+                                    // 上手く動かないことがあるので少し待ってから
+                                    // Columnの一番下までスクロールする
                                     await Future.delayed(
                                       const Duration(milliseconds: 100),
                                     );
-                                    scrollController.jumpTo(scrollController
-                                        .position.maxScrollExtent);
+                                    scrollController.jumpTo(
+                                        scrollController.position.maxScrollExtent);
                                   },
                                   onChanged: (text) {
                                     model.taskMemo = text;

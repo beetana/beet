@@ -13,6 +13,7 @@ class ContentOwner {
 
   factory ContentOwner.doc(DocumentSnapshot doc) {
     final data = doc.data();
+
     return ContentOwner._(
       doc.id,
       data['name'],

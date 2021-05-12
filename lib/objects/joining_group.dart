@@ -5,14 +5,17 @@ class JoiningGroup {
   final String name;
   final String imageURL;
   final DateTime joinedAt;
+
   JoiningGroup._(
     this.id,
     this.name,
     this.imageURL,
     this.joinedAt,
   );
+
   factory JoiningGroup.doc(DocumentSnapshot doc) {
     final data = doc.data();
+
     return JoiningGroup._(
       doc.id,
       data['name'],

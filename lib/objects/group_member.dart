@@ -5,14 +5,17 @@ class GroupMember {
   final String name;
   final String imageURL;
   final DateTime joinedAt;
+
   GroupMember._(
     this.id,
     this.name,
     this.imageURL,
     this.joinedAt,
   );
+
   factory GroupMember.doc(DocumentSnapshot doc) {
     final data = doc.data();
+
     return GroupMember._(
       doc.id,
       data['name'],

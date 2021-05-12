@@ -16,6 +16,7 @@ class Song {
 
   factory Song.doc(DocumentSnapshot doc) {
     final data = doc.data();
+
     return Song._(
       doc.id,
       data['title'],

@@ -23,6 +23,7 @@ class Task {
 
   factory Task.doc(DocumentSnapshot doc) {
     final data = doc.data();
+
     return Task._(
       doc.id,
       data['ownerId'],

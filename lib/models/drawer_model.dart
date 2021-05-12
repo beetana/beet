@@ -23,6 +23,7 @@ class DrawerModel extends ChangeNotifier {
 
   Future<void> init() async {
     startLoading();
+
     try {
       final DocumentReference userDocRef =
           _firestore.collection('users').doc(userId);

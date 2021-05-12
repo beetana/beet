@@ -6,7 +6,7 @@ void main() {
   // main内で非同期処理を呼び出す場合runApp前に初期化が必要
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp, //縦固定
+    DeviceOrientation.portraitUp, //端末の向きに関係なく縦画面に固定
   ]);
   runApp(MyApp());
 }

@@ -51,18 +51,13 @@ class GroupProfileScreen extends StatelessWidget {
                                       ? Image.file(model.imageFile)
                                       : model.groupImageURL.isNotEmpty
                                           ? CachedNetworkImage(
-                                              imageUrl:
-                                                  '${model.groupImageURL}',
+                                              imageUrl: '${model.groupImageURL}',
                                               placeholder: (context, url) =>
-                                                  Container(
-                                                      color: kDullWhiteColor),
-                                              errorWidget: (context, url,
-                                                      error) =>
-                                                  Container(
-                                                      color: kDullWhiteColor),
+                                                  Container(color: kDullWhiteColor),
+                                              errorWidget: (context, url, error) =>
+                                                  Container(color: kDullWhiteColor),
                                             )
-                                          : Image.asset(
-                                              'images/group_profile.png'),
+                                          : Image.asset('images/group_profile.png'),
                                 ),
                                 onTap: () async {
                                   ChangeImage changeImage =
@@ -76,8 +71,7 @@ class GroupProfileScreen extends StatelessWidget {
                                           context, e.toString());
                                     }
                                     model.endLoading();
-                                  } else if (changeImage ==
-                                      ChangeImage.select) {
+                                  } else if (changeImage == ChangeImage.select) {
                                     await model.pickImageFile();
                                     if (model.imageFile != null) {
                                       model.startLoading();
@@ -113,8 +107,7 @@ class GroupProfileScreen extends StatelessWidget {
                                             context, e.toString());
                                       }
                                       model.endLoading();
-                                    } else if (changeImage ==
-                                        ChangeImage.select) {
+                                    } else if (changeImage == ChangeImage.select) {
                                       await model.pickImageFile();
                                       if (model.imageFile != null) {
                                         model.startLoading();

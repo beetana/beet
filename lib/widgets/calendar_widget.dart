@@ -29,6 +29,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // カレンダーの細かい設定値は必要に応じて変更可
     return TableCalendar(
       startDay: DateTime(1980, 1, 1),
       endDay: DateTime(2050, 12, 31),
@@ -87,8 +88,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         },
       ),
       onDaySelected: (DateTime date, List events, List holidays) {
-        widget.model.selectedDay =
-            DateTime(date.year, date.month, date.day, 12);
+        widget.model.selectedDay = DateTime(date.year, date.month, date.day, 12);
         widget.model.showEventsOfDay();
       },
       onVisibleDaysChanged:

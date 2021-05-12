@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserUpdateEmailScreen extends StatelessWidget {
-  UserUpdateEmailScreen({this.email});
   final String email;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  UserUpdateEmailScreen({this.email});
 
   @override
   Widget build(BuildContext context) {

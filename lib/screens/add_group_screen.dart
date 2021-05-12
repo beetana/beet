@@ -43,8 +43,7 @@ class AddGroupScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               children: [
                                 TextField(
@@ -89,6 +88,8 @@ class AddGroupScreen extends StatelessWidget {
                               model.startLoading();
                               try {
                                 await model.addGroup();
+                                // addGroupが完了してもgroupIdが空ということは
+                                // すでに上限である8個のグループに参加している
                                 if (model.groupId.isNotEmpty) {
                                   await showMessageDialog(
                                       context, '新規グループを作成しました。');

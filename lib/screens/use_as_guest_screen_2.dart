@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UseAsGuestScreen2 extends StatelessWidget {
-  final List<dynamic> setList;
+  final List<dynamic> setList; // setListに入るのはMCもしくはString
   final TextEditingController eventTitleController = TextEditingController();
   final TextEditingController eventPlaceController = TextEditingController();
 
@@ -21,7 +21,7 @@ class UseAsGuestScreen2 extends StatelessWidget {
       child: Consumer<UseAsGuestModel2>(builder: (context, model, child) {
         return GestureDetector(
           onTap: () {
-            if (model.isShowEventDatePicker == true) {
+            if (model.isShowEventDatePicker) {
               model.showEventDatePicker();
             }
             FocusScope.of(context).unfocus();
@@ -34,8 +34,8 @@ class UseAsGuestScreen2 extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
@@ -46,7 +46,7 @@ class UseAsGuestScreen2 extends StatelessWidget {
                               border: InputBorder.none,
                             ),
                             onTap: () {
-                              if (model.isShowEventDatePicker == true) {
+                              if (model.isShowEventDatePicker) {
                                 model.showEventDatePicker();
                               }
                             },
@@ -62,7 +62,7 @@ class UseAsGuestScreen2 extends StatelessWidget {
                               border: InputBorder.none,
                             ),
                             onTap: () {
-                              if (model.isShowEventDatePicker == true) {
+                              if (model.isShowEventDatePicker) {
                                 model.showEventDatePicker();
                               }
                             },
@@ -84,7 +84,6 @@ class UseAsGuestScreen2 extends StatelessWidget {
                             onTap: () async {
                               FocusScope.of(context).unfocus();
                               // AndroidでDatePickerを開く際にUIが崩れることがあるので少し待つ
-                              // 他にいい方法があるはず
                               await Future.delayed(
                                 const Duration(milliseconds: 80),
                               );

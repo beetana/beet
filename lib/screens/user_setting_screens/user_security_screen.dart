@@ -78,15 +78,14 @@ class UserSecurityScreen extends StatelessWidget {
                       onPressed: () async {
                         bool isLogout =
                             await _confirmLogoutDialog(context, 'ログアウトしますか？');
-                        if (isLogout == true) {
+                        if (isLogout) {
                           model.startLoading();
                           try {
                             await model.logout();
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    WelcomeScreen(),
+                                builder: (BuildContext context) => WelcomeScreen(),
                               ),
                             );
                           } catch (e) {

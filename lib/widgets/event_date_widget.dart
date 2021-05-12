@@ -18,14 +18,14 @@ class EventDateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String startingDay = allDayDateFormat.format(startingDateTime);
     String endingDay = allDayDateFormat.format(endingDateTime);
-    if (isAllDay == false) {
+    if (!isAllDay) {
       return Column(
         children: <Widget>[
           Text('開始  ${dateFormat.format(startingDateTime)}'),
           Text('終了  ${dateFormat.format(endingDateTime)}'),
         ],
       );
-    } else if (isAllDay == true && startingDay == endingDay) {
+    } else if (isAllDay && startingDay == endingDay) {
       return Text(allDayDateFormat.format(startingDateTime));
     } else {
       return Column(

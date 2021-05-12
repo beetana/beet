@@ -19,6 +19,7 @@ class LoginScreen extends StatelessWidget {
       child: WillPopScope(
         onWillPop: () async {
           FocusScope.of(context).unfocus();
+          // キーボードを完全に閉じてから戻らないとUIが崩れることがあるので少し待つ
           await Future.delayed(
             const Duration(milliseconds: 80),
           );
@@ -50,8 +51,7 @@ class LoginScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
                               child: Column(
                                 children: [
                                   TextField(

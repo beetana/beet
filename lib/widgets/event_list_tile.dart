@@ -30,8 +30,7 @@ class EventListTile extends StatelessWidget {
         children: [
           this.imageURL != null
               ? Padding(
-                  padding:
-                      const EdgeInsets.only(top: 8.0, left: 20.0, right: 20.0),
+                  padding: const EdgeInsets.only(top: 8.0, left: 20.0, right: 20.0),
                   child: EventPlannerImage(
                     imageURL: imageURL,
                     name: name,
@@ -42,8 +41,7 @@ class EventListTile extends StatelessWidget {
               : const SizedBox(height: 8.0),
           Expanded(
             child: Padding(
-              padding:
-                  const EdgeInsets.only(bottom: 8.0, left: 24.0, right: 24.0),
+              padding: const EdgeInsets.only(bottom: 8.0, left: 24.0, right: 24.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -167,7 +165,7 @@ class EventDateTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (isAllDay == false) {
+    if (!isAllDay) {
       return Row(
         children: <Widget>[
           Column(

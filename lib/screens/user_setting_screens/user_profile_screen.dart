@@ -24,8 +24,7 @@ class UserProfileScreen extends StatelessWidget {
               body: LayoutBuilder(builder: (context, constraint) {
                 return SingleChildScrollView(
                   child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(minHeight: constraint.maxHeight),
+                    constraints: BoxConstraints(minHeight: constraint.maxHeight),
                     child: IntrinsicHeight(
                       child: SafeArea(
                         child: Column(
@@ -34,8 +33,7 @@ class UserProfileScreen extends StatelessWidget {
                               width: double.infinity,
                               color: kDullWhiteColor,
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                padding: const EdgeInsets.symmetric(vertical: 16.0),
                                 child: Center(
                                   child: Stack(
                                     children: [
@@ -47,39 +45,37 @@ class UserProfileScreen extends StatelessWidget {
                                             color: kPrimaryColor,
                                             width: 0.2,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(60),
+                                          borderRadius: BorderRadius.circular(60),
                                         ),
                                         child: InkWell(
                                           child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(60),
+                                            borderRadius: BorderRadius.circular(60),
                                             child: model.imageFile != null
                                                 ? Image.file(model.imageFile)
                                                 : model.userImageURL.isNotEmpty
                                                     ? CachedNetworkImage(
                                                         imageUrl:
                                                             '${model.userImageURL}',
-                                                        placeholder: (context,
-                                                                url) =>
-                                                            Container(
-                                                                color:
-                                                                    kDullWhiteColor),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            Container(
-                                                                color:
-                                                                    kDullWhiteColor),
+                                                        placeholder:
+                                                            (context, url) =>
+                                                                Container(
+                                                          color: kDullWhiteColor,
+                                                        ),
+                                                        errorWidget:
+                                                            (context, url, error) =>
+                                                                Container(
+                                                          color: kDullWhiteColor,
+                                                        ),
                                                       )
                                                     : Image.asset(
-                                                        'images/user_profile.png'),
+                                                        'images/user_profile.png',
+                                                      ),
                                           ),
                                           onTap: () async {
                                             ChangeImage changeImage =
                                                 await _showEditIconBottomSheet(
                                                     context);
-                                            if (changeImage ==
-                                                ChangeImage.delete) {
+                                            if (changeImage == ChangeImage.delete) {
                                               model.startLoading();
                                               try {
                                                 await model.deleteUserImage();
@@ -133,8 +129,7 @@ class UserProfileScreen extends StatelessWidget {
                                                 if (model.imageFile != null) {
                                                   model.startLoading();
                                                   try {
-                                                    await model
-                                                        .updateUserImage();
+                                                    await model.updateUserImage();
                                                   } catch (e) {
                                                     await showMessageDialog(
                                                         context, e.toString());
@@ -186,13 +181,11 @@ class UserProfileScreen extends StatelessWidget {
                               ),
                               onPressed: () async {
                                 String password =
-                                    await _showDeleteAccountBottomSheet(
-                                        context);
+                                    await _showDeleteAccountBottomSheet(context);
                                 if (password.isNotEmpty) {
                                   model.startLoading();
                                   try {
-                                    await model.deleteAccount(
-                                        password: password);
+                                    await model.deleteAccount(password: password);
                                     await showMessageDialog(
                                         context, 'アカウントを削除しました。');
                                     Navigator.pushReplacement(
@@ -203,8 +196,7 @@ class UserProfileScreen extends StatelessWidget {
                                       ),
                                     );
                                   } catch (e) {
-                                    await showMessageDialog(
-                                        context, e.toString());
+                                    await showMessageDialog(context, e.toString());
                                   }
                                   model.endLoading();
                                 }
@@ -286,9 +278,8 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     onPressed: () async {
-                      bool isDelete =
-                          await _showConfirmDialog(context, 'プロフィール画像');
-                      if (isDelete == true) {
+                      bool isDelete = await _showConfirmDialog(context, 'プロフィール画像');
+                      if (isDelete) {
                         changeImage = ChangeImage.delete;
                       } else {
                         changeImage = ChangeImage.cancel;
@@ -398,8 +389,7 @@ Future<String> _showDeleteAccountBottomSheet(BuildContext context) async {
                     ),
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
-                      bool isDelete =
-                          await _showConfirmDialog(context, 'このアカウント');
+                      bool isDelete = await _showConfirmDialog(context, 'このアカウント');
                       if (isDelete != true) {
                         password = '';
                       }

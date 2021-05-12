@@ -25,8 +25,8 @@ class ResetPasswordScreen extends StatelessWidget {
             return Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 32.0, horizontal: 16.0),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
@@ -39,8 +39,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               children: [
                                 TextField(

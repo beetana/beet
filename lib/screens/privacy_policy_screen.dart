@@ -11,7 +11,6 @@ class PrivacyPolicyScreen extends StatelessWidget {
       body: const SafeArea(
         child: WebView(
           initialUrl: 'https://beetana.github.io/beet-privacy-policy/',
-          javascriptMode: JavascriptMode.unrestricted,
         ),
       ),
     );

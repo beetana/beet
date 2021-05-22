@@ -143,7 +143,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
   }
 }
 
-Future _confirmDeleteDialog(context, message) async {
+Future<bool> _confirmDeleteDialog(context, message) async {
   bool _isDelete;
   _isDelete = await showDialog(
     context: context,

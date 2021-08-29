@@ -24,7 +24,7 @@ Future showAppInfoDialog(context) async {
                   ),
                 ),
                 const Text(
-                  '1.0.0',
+                  '1.0.2',
                   style: TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w300,

@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class UserTaskListScreen extends StatelessWidget {
   final double textScale;
 
-  UserTaskListScreen({this.textScale});
+  UserTaskListScreen({required this.textScale});
 
   @override
   Widget build(BuildContext context) {

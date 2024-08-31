@@ -13,14 +13,14 @@ class JoiningGroup {
     this.joinedAt,
   );
 
-  factory JoiningGroup.doc(DocumentSnapshot doc) {
+  factory JoiningGroup.doc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data();
 
     return JoiningGroup._(
       doc.id,
-      data['name'],
-      data['imageURL'],
-      data['joinedAt'].toDate(),
+      data?['name'],
+      data?['imageURL'],
+      data?['joinedAt'].toDate(),
     );
   }
 }

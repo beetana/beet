@@ -14,7 +14,11 @@ class GroupMainScreen extends StatelessWidget {
   final double textScale;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
-  GroupMainScreen({this.groupId, this.deviceWidth, this.textScale});
+  GroupMainScreen({
+    required this.groupId,
+    required this.deviceWidth,
+    required this.textScale,
+  });
 
   @override
   Widget build(BuildContext context) {

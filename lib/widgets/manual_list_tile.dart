@@ -6,8 +6,8 @@ class ManualListTile extends StatelessWidget {
   final String answer;
 
   ManualListTile({
-    @required this.question,
-    @required this.answer,
+    required this.question,
+    required this.answer,
   });
 
   @override
@@ -35,8 +35,7 @@ class ManualListTile extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   question,
                   style: const TextStyle(
@@ -49,8 +48,7 @@ class ManualListTile extends StatelessWidget {
             Container(
               width: double.infinity,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   answer,
                   style: const TextStyle(

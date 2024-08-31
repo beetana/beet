@@ -23,19 +23,19 @@ class Event {
     this.dateList,
   );
 
-  factory Event.doc(DocumentSnapshot doc) {
+  factory Event.doc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data();
 
     return Event._(
       doc.id,
-      data['ownerId'],
-      data['title'],
-      data['place'],
-      data['memo'],
-      data['isAllDay'],
-      data['start'].toDate(),
-      data['end'].toDate(),
-      data['dateList'].map((date) => date.toDate()).toList(),
+      data?['ownerId'],
+      data?['title'],
+      data?['place'],
+      data?['memo'],
+      data?['isAllDay'],
+      data?['start'].toDate(),
+      data?['end'].toDate(),
+      data?['dateList'].map((date) => date.toDate()).toList(),
     );
   }
 }

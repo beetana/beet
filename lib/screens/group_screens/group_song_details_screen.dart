@@ -1,11 +1,10 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_song_details_model.dart';
-import 'package:beet/screens/group_screens/group_edit_song_screen.dart';
 import 'package:beet/objects/song.dart';
+import 'package:beet/screens/group_screens/group_edit_song_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +12,7 @@ class GroupSongDetailsScreen extends StatelessWidget {
   final String groupId;
   final Song song;
 
-  GroupSongDetailsScreen({this.groupId, this.song});
+  GroupSongDetailsScreen({required this.groupId, required this.song});
 
   @override
   Widget build(BuildContext context) {

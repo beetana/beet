@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GroupSetListModel2 extends ChangeNotifier {
-  DateTime eventDate;
+  late DateTime eventDate;
   String eventTitle = '';
   String eventPlace = '';
   String eventDateText = '';

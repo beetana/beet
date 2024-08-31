@@ -1,11 +1,11 @@
 import 'package:beet/constants.dart';
 import 'package:beet/objects/task.dart';
 import 'package:beet/objects/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
 class UserEditTaskModel extends ChangeNotifier {
   String ownerId = '';
@@ -13,18 +13,18 @@ class UserEditTaskModel extends ChangeNotifier {
   String taskTitle = '';
   String taskMemo = '';
   String dueDateText = '';
-  bool isDecidedDueDate;
-  bool isCompleted;
+  late bool isDecidedDueDate;
+  late bool isCompleted;
   List<String> assignedMembersId = [];
   List<String> usersId = [];
   Map<String, User> groupMembers = {};
   bool isLoading = false;
   bool isShowDueDatePicker = false;
   Widget dueDatePickerBox = const SizedBox();
-  DateTime dueDate;
-  DocumentReference ownerDocRef;
+  DateTime? dueDate;
+  late DocumentReference ownerDocRef;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
-  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  final String userId = Auth.FirebaseAuth.instance.currentUser!.uid;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
@@ -37,7 +37,7 @@ class UserEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> init({Task task}) async {
+  Future<void> init({required Task task}) async {
     startLoading();
     taskId = task.id;
     ownerId = task.ownerId;
@@ -46,7 +46,7 @@ class UserEditTaskModel extends ChangeNotifier {
     isDecidedDueDate = task.isDecidedDueDate;
     isCompleted = task.isCompleted;
     dueDate = task.dueDate;
-    dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
+    dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate!) : '';
     assignedMembersId = task.assignedMembersId.map((id) => id.toString()).toList();
     ownerDocRef = ownerId == userId
         ? _firestore.collection('users').doc(userId)
@@ -54,14 +54,16 @@ class UserEditTaskModel extends ChangeNotifier {
 
     try {
       if (ownerId == userId) {
-        final DocumentSnapshot userDoc = await ownerDocRef.get();
-        groupMembers[userId] = User.doc(userDoc);
+        final userDoc = await ownerDocRef.get();
+        groupMembers[userId] =
+            User.doc(userDoc as DocumentSnapshot<Map<String, dynamic>>);
       } else {
         final QuerySnapshot membersQuery =
             await ownerDocRef.collection('members').get();
         usersId = membersQuery.docs.map((doc) => doc.id).toList();
-        final List<User> users =
-            membersQuery.docs.map((doc) => User.doc(doc)).toList();
+        final List<User> users = membersQuery.docs
+            .map((doc) => User.doc(doc as DocumentSnapshot<Map<String, dynamic>>))
+            .toList();
         users.forEach((user) {
           groupMembers[user.id] = user;
         });
@@ -82,7 +84,7 @@ class UserEditTaskModel extends ChangeNotifier {
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
-        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
+        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate!) : null,
         'assignedMembersId': assignedMembersId,
         'updatedAt': FieldValue.serverTimestamp(),
       });
@@ -92,7 +94,7 @@ class UserEditTaskModel extends ChangeNotifier {
     }
   }
 
-  void assignPerson({String userId}) {
+  void assignPerson({required String userId}) {
     if (assignedMembersId.contains(userId)) {
       assignedMembersId.remove(userId);
     } else {
@@ -116,7 +118,7 @@ class UserEditTaskModel extends ChangeNotifier {
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
                 dueDate = DateTime(newDate.year, newDate.month, newDate.day, 12);
-                dueDateText = dateFormat.format(dueDate);
+                dueDateText = dateFormat.format(dueDate!);
                 isDecidedDueDate = true;
               },
             ),

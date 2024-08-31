@@ -9,7 +9,7 @@ class UserUpdateEmailScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  UserUpdateEmailScreen({this.email});
+  UserUpdateEmailScreen({required this.email});
 
   @override
   Widget build(BuildContext context) {

@@ -14,9 +14,9 @@ class UserAddTaskModel extends ChangeNotifier {
   bool isLoading = false;
   bool isShowDueDatePicker = false;
   Widget dueDatePickerBox = const SizedBox();
-  DateTime dueDate;
+  DateTime? dueDate;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
-  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
@@ -33,7 +33,7 @@ class UserAddTaskModel extends ChangeNotifier {
     final DateTime now = DateTime.now();
     assignedUserId = [userId];
     dueDate = DateTime(now.year, now.month, now.day, 12);
-    dueDateText = dateFormat.format(dueDate);
+    dueDateText = dateFormat.format(dueDate!);
     notifyListeners();
   }
 
@@ -47,7 +47,7 @@ class UserAddTaskModel extends ChangeNotifier {
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
-        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
+        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate!) : null,
         'assignedMembersId': assignedUserId,
         'ownerId': userId,
         'isCompleted': false,
@@ -74,7 +74,7 @@ class UserAddTaskModel extends ChangeNotifier {
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
                 dueDate = DateTime(newDate.year, newDate.month, newDate.day, 12);
-                dueDateText = dateFormat.format(dueDate);
+                dueDateText = dateFormat.format(dueDate!);
                 isDecidedDueDate = true;
               },
             ),

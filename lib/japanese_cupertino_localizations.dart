@@ -3,16 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-class _CupertinoLocalizationDelegate
-    extends LocalizationsDelegate<CupertinoLocalizations> {
+class _CupertinoLocalizationDelegate extends LocalizationsDelegate<CupertinoLocalizations> {
   const _CupertinoLocalizationDelegate();
 
   @override
   bool isSupported(Locale locale) => locale.languageCode == 'ja';
 
   @override
-  Future<CupertinoLocalizations> load(Locale locale) =>
-      JapaneseCupertinoLocalizations.load(locale);
+  Future<CupertinoLocalizations> load(Locale locale) => JapaneseCupertinoLocalizations.load(locale);
 
   @override
   bool shouldReload(_CupertinoLocalizationDelegate old) => false;
@@ -71,7 +69,7 @@ class JapaneseCupertinoLocalizations implements CupertinoLocalizations {
   String datePickerMonth(int monthIndex) => _months[monthIndex - 1];
 
   @override
-  String datePickerDayOfMonth(int dayIndex) => '$dayIndex日';
+  String datePickerDayOfMonth(int dayIndex, [int? weekDay]) => '$dayIndex日';
 
   @override
   String datePickerHour(int hour) => hour.toString();
@@ -99,8 +97,7 @@ class JapaneseCupertinoLocalizations implements CupertinoLocalizations {
   DatePickerDateOrder get datePickerDateOrder => DatePickerDateOrder.ymd;
 
   @override
-  DatePickerDateTimeOrder get datePickerDateTimeOrder =>
-      DatePickerDateTimeOrder.date_time_dayPeriod;
+  DatePickerDateTimeOrder get datePickerDateTimeOrder => DatePickerDateTimeOrder.date_time_dayPeriod;
 
   @override
   String get anteMeridiemAbbreviation => '午前';
@@ -145,19 +142,17 @@ class JapaneseCupertinoLocalizations implements CupertinoLocalizations {
   String get todayLabel => '今日';
 
   static Future<CupertinoLocalizations> load(Locale locale) {
-    return SynchronousFuture<CupertinoLocalizations>(
-        const JapaneseCupertinoLocalizations());
+    return SynchronousFuture<CupertinoLocalizations>(const JapaneseCupertinoLocalizations());
   }
 
-  static const LocalizationsDelegate<CupertinoLocalizations> delegate =
-      _CupertinoLocalizationDelegate();
+  static const LocalizationsDelegate<CupertinoLocalizations> delegate = _CupertinoLocalizationDelegate();
 
   @override
   // TODO: implement modalBarrierDismissLabel
   String get modalBarrierDismissLabel => throw UnimplementedError();
 
   @override
-  String tabSemanticsLabel({int tabIndex, int tabCount}) {
+  String tabSemanticsLabel({int? tabIndex, int? tabCount}) {
     // TODO: implement tabSemanticsLabel
     throw UnimplementedError();
   }
@@ -177,4 +172,34 @@ class JapaneseCupertinoLocalizations implements CupertinoLocalizations {
   @override
   // TODO: implement timerPickerSecondLabels
   List<String> get timerPickerSecondLabels => throw UnimplementedError();
+
+  @override
+  // TODO: implement noSpellCheckReplacementsLabel
+  String get noSpellCheckReplacementsLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement clearButtonLabel
+  String get clearButtonLabel => throw UnimplementedError();
+
+  @override
+  String datePickerStandaloneMonth(int monthIndex) {
+    // TODO: implement datePickerStandaloneMonth
+    throw UnimplementedError();
+  }
+
+  @override
+  // TODO: implement lookUpButtonLabel
+  String get lookUpButtonLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement menuDismissLabel
+  String get menuDismissLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement searchWebButtonLabel
+  String get searchWebButtonLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement shareButtonLabel
+  String get shareButtonLabel => throw UnimplementedError();
 }

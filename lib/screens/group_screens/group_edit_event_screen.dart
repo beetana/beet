@@ -18,7 +18,7 @@ class GroupEditEventScreen extends StatelessWidget {
   final TextEditingController eventMemoController = TextEditingController();
   final ScrollController scrollController = ScrollController();
 
-  GroupEditEventScreen({this.groupId, this.event});
+  GroupEditEventScreen({required this.groupId, required this.event});
 
   @override
   Widget build(BuildContext context) {

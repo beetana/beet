@@ -72,11 +72,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                       child: TextButton(
                         style: TextButton.styleFrom(
+                          foregroundColor: Colors.white38,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           backgroundColor: kPrimaryColor,
-                          primary: Colors.white38,
                         ),
                         child: const Text(
                           'ログイン',

@@ -11,8 +11,8 @@ class GroupEditTaskModel extends ChangeNotifier {
   String taskTitle = '';
   String taskMemo = '';
   String dueDateText = '';
-  bool isDecidedDueDate;
-  bool isCompleted;
+  late bool isDecidedDueDate;
+  late bool isCompleted;
   List<String> assignedMembersId = [];
   List<String> membersId = [];
   List<String> membersName = [];
@@ -20,7 +20,7 @@ class GroupEditTaskModel extends ChangeNotifier {
   bool isLoading = false;
   bool isShowDueDatePicker = false;
   Widget dueDatePickerBox = const SizedBox();
-  DateTime dueDate;
+  late DateTime? dueDate;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -34,7 +34,7 @@ class GroupEditTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> init({String groupId, Task task}) async {
+  Future<void> init({required String groupId, required Task task}) async {
     startLoading();
     this.groupId = groupId;
     taskId = task.id;
@@ -43,7 +43,7 @@ class GroupEditTaskModel extends ChangeNotifier {
     isDecidedDueDate = task.isDecidedDueDate;
     isCompleted = task.isCompleted;
     dueDate = task.dueDate;
-    dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate) : '';
+    dueDateText = task.isDecidedDueDate ? dateFormat.format(dueDate!) : '';
     assignedMembersId = task.assignedMembersId.map((id) => id.toString()).toList();
 
     try {
@@ -78,7 +78,7 @@ class GroupEditTaskModel extends ChangeNotifier {
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
-        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
+        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate!) : null,
         'assignedMembersId': assignedMembersId,
         'updatedAt': FieldValue.serverTimestamp(),
       });
@@ -88,7 +88,7 @@ class GroupEditTaskModel extends ChangeNotifier {
     }
   }
 
-  void assignPerson({String userId}) {
+  void assignPerson({required String userId}) {
     if (assignedMembersId.contains(userId)) {
       assignedMembersId.remove(userId);
     } else {
@@ -112,7 +112,7 @@ class GroupEditTaskModel extends ChangeNotifier {
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
                 dueDate = DateTime(newDate.year, newDate.month, newDate.day, 12);
-                dueDateText = dateFormat.format(dueDate);
+                dueDateText = dateFormat.format(dueDate!);
                 isDecidedDueDate = true;
               },
             ),

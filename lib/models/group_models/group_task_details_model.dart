@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 
 class GroupTaskDetailsModel extends ChangeNotifier {
   String groupId = '';
-  Task task;
+  late Task task;
   String taskId = '';
   String taskTitle = '';
   String taskMemo = '';
-  bool isDecidedDueDate;
-  DateTime dueDate;
+  late bool isDecidedDueDate;
+  late DateTime dueDate;
   List<dynamic> assignedMembersId = [];
   Map<String, User> groupMembers = {};
-  bool isCompleted;
+  late bool isCompleted;
   bool isLoading = false;
-  DocumentReference groupDocRef;
+  late DocumentReference groupDocRef;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
@@ -29,7 +29,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> init({String groupId, Task task}) async {
+  Future<void> init({required String groupId, required Task task}) async {
     startLoading();
     this.groupId = groupId;
     this.task = task;
@@ -45,8 +45,9 @@ class GroupTaskDetailsModel extends ChangeNotifier {
     try {
       final QuerySnapshot membersQuery =
           await groupDocRef.collection('members').get();
-      final List<User> users =
-          membersQuery.docs.map((doc) => User.doc(doc)).toList();
+      final List<User> users = membersQuery.docs
+          .map((doc) => User.doc(doc as DocumentSnapshot<Map<String, dynamic>>))
+          .toList();
       users.forEach((user) {
         groupMembers[user.id] = user;
       });
@@ -60,7 +61,7 @@ class GroupTaskDetailsModel extends ChangeNotifier {
     try {
       final DocumentSnapshot taskDoc =
           await groupDocRef.collection('tasks').doc(taskId).get();
-      task = Task.doc(taskDoc);
+      task = Task.doc(taskDoc as DocumentSnapshot<Map<String, dynamic>>);
       taskTitle = task.title;
       taskMemo = task.memo;
       isDecidedDueDate = task.isDecidedDueDate;

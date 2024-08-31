@@ -1,8 +1,8 @@
 import 'package:beet/objects/task.dart';
 import 'package:beet/objects/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:flutter/material.dart';
 
 class UserTaskListModel extends ChangeNotifier {
   Map<String, User> joiningGroupMembers = {};
@@ -11,8 +11,8 @@ class UserTaskListModel extends ChangeNotifier {
   List<Task> notCompletedTasks = [];
   List<Task> changeStateTasks = [];
   bool isLoading = false;
-  DocumentReference userDocRef;
-  final String userId = Auth.FirebaseAuth.instance.currentUser.uid;
+  late DocumentReference userDocRef;
+  final String userId = Auth.FirebaseAuth.instance.currentUser!.uid;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
@@ -31,7 +31,8 @@ class UserTaskListModel extends ChangeNotifier {
 
     try {
       final DocumentSnapshot userDoc = await userDocRef.get();
-      joiningGroupMembers[userId] = User.doc(userDoc);
+      joiningGroupMembers[userId] =
+          User.doc(userDoc as DocumentSnapshot<Map<String, dynamic>>);
       final QuerySnapshot joiningGroupsQuery =
           await userDocRef.collection('joiningGroups').get();
       final List<String> joiningGroupsId =
@@ -43,8 +44,9 @@ class UserTaskListModel extends ChangeNotifier {
             .doc(groupId)
             .collection('members')
             .get();
-        final List<User> users =
-            membersQuery.docs.map((doc) => User.doc(doc)).toList();
+        final List<User> users = membersQuery.docs
+            .map((doc) => User.doc(doc as DocumentSnapshot<Map<String, dynamic>>))
+            .toList();
         users.forEach((user) {
           joiningGroupMembers[user.id] = user;
         });
@@ -66,7 +68,9 @@ class UserTaskListModel extends ChangeNotifier {
           .collectionGroup('tasks')
           .where('assignedMembersId', arrayContains: userId)
           .get();
-      tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
+      tasks = tasksQuery.docs
+          .map((doc) => Task.doc(doc as DocumentSnapshot<Map<String, dynamic>>))
+          .toList();
       tasks.forEach((task) {
         task.isCompleted ? completedTasks.add(task) : notCompletedTasks.add(task);
       });
@@ -103,7 +107,7 @@ class UserTaskListModel extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteTask({Task task}) async {
+  Future<void> deleteTask({required Task task}) async {
     final DocumentReference taskDocRef = task.ownerId == userId
         ? userDocRef.collection('tasks').doc(task.id)
         : _firestore
@@ -124,7 +128,7 @@ class UserTaskListModel extends ChangeNotifier {
     }
   }
 
-  void toggleCheckState({Task task}) {
+  void toggleCheckState({required Task task}) {
     task.toggleCheckState();
     changeStateTasks.contains(task)
         ? changeStateTasks.remove(task)

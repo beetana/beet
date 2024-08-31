@@ -7,7 +7,7 @@ class GroupEditNameModel extends ChangeNotifier {
   bool isLoading = false;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  void init({String groupId, String groupName}) {
+  void init({required String groupId, required String groupName}) {
     this.groupId = groupId;
     this.groupName = groupName;
   }

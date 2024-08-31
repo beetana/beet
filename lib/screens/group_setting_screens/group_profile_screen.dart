@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class GroupProfileScreen extends StatelessWidget {
   final String groupId;
 
-  GroupProfileScreen({this.groupId});
+  GroupProfileScreen({required this.groupId});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class GroupProfileScreen extends StatelessWidget {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(60),
                                   child: model.imageFile != null
-                                      ? Image.file(model.imageFile)
+                                      ? Image.file(model.imageFile!)
                                       : model.groupImageURL.isNotEmpty
                                           ? CachedNetworkImage(
                                               imageUrl: '${model.groupImageURL}',
@@ -171,14 +171,12 @@ class GroupProfileScreen extends StatelessWidget {
 
 enum ChangeImage {
   select,
-
   delete,
-
   cancel,
 }
 
 Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
-  ChangeImage changeImage;
+  ChangeImage changeImage = ChangeImage.cancel;
   await showModalBottomSheet(
     context: context,
     isScrollControlled: true,

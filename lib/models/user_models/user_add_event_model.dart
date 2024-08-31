@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,8 +7,8 @@ class UserAddEventModel extends ChangeNotifier {
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
-  DateTime startingDateTime;
-  DateTime endingDateTime;
+  late DateTime startingDateTime;
+  late DateTime endingDateTime;
   bool isLoading = false;
   bool isAllDay = false;
   bool isShowStartingPicker = false;
@@ -21,7 +20,7 @@ class UserAddEventModel extends ChangeNotifier {
   DateFormat tileDateFormat = DateFormat('y/M/d(E)    H:mm', 'ja_JP');
   final DateFormat dateFormat = DateFormat('y-MM-dd');
   final DateFormat monthFormat = DateFormat('y-MM');
-  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
@@ -34,7 +33,7 @@ class UserAddEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({DateTime dateTime}) {
+  void init({required DateTime dateTime}) {
     startingDateTime = dateTime;
     endingDateTime = dateTime.add(const Duration(hours: 1));
   }
@@ -107,7 +106,7 @@ class UserAddEventModel extends ChangeNotifier {
     }
   }
 
-  void switchIsAllDay({bool value}) {
+  void switchIsAllDay({required bool value}) {
     isAllDay = value;
 
     if (isAllDay) {

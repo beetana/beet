@@ -11,7 +11,7 @@ class MyAppModel {
   final _userStateStreamController = StreamController<UserState>();
   Stream<UserState> get userState => _userStateStreamController.stream;
 
-  UserState _state;
+  UserState? _state;
 
   MyAppModel() {
     _init(); // 初期化処理は非同期で行うためawaitしない
@@ -44,18 +44,15 @@ class MyAppModel {
         await Future.delayed(const Duration(milliseconds: 500));
       }
 
-      _userStateStreamController.sink.add(_state);
+      _userStateStreamController.sink.add(_state!);
     });
   }
 
-  Future<User> _fetchUser(Auth.User firebaseUser) async {
+  Future<User?> _fetchUser(Auth.User? firebaseUser) async {
     if (firebaseUser == null) {
       return null;
     }
-    final doc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(firebaseUser.uid)
-        .get();
+    final doc = await FirebaseFirestore.instance.collection('users').doc(firebaseUser.uid).get();
     if (!doc.exists) {
       return null;
     }

@@ -20,7 +20,7 @@ class UserUpdatePasswordModel extends ChangeNotifier {
   }
 
   Future<void> updatePassword() async {
-    final Auth.User firebaseUser = _auth.currentUser;
+    final firebaseUser = _auth.currentUser!;
     if (currentPassword.isEmpty) {
       throw ('現在のパスワードを入力してください');
     }
@@ -40,11 +40,11 @@ class UserUpdatePasswordModel extends ChangeNotifier {
     try {
       await firebaseUser
           .reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
-        email: firebaseUser.email,
+        email: firebaseUser.email!,
         password: currentPassword,
       ));
       await firebaseUser.updatePassword(newPassword);
-    } catch (e) {
+    } on Auth.FirebaseAuthException catch (e) {
       print(e.code);
       throw (convertErrorMessage(e.code));
     }

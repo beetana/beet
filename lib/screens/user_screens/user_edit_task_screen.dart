@@ -4,7 +4,6 @@ import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/assign_task_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +13,7 @@ class UserEditTaskScreen extends StatelessWidget {
   final TextEditingController taskMemoController = TextEditingController();
   final ScrollController scrollController = ScrollController();
 
-  UserEditTaskScreen({this.task});
+  UserEditTaskScreen({required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +119,9 @@ class UserEditTaskScreen extends StatelessWidget {
                                                 (BuildContext context, int index) {
                                               String userId = model.usersId[index];
                                               String userName =
-                                                  model.groupMembers[userId].name;
-                                              String userImageURL = model
-                                                  .groupMembers[userId].imageURL;
+                                                  model.groupMembers[userId]!.name;
+                                              String? userImageURL = model
+                                                  .groupMembers[userId]!.imageURL;
                                               return AssignTaskListTile(
                                                 userName: userName,
                                                 userImageURL: userImageURL,

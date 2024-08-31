@@ -51,19 +51,14 @@ class UserProfileScreen extends StatelessWidget {
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(60),
                                             child: model.imageFile != null
-                                                ? Image.file(model.imageFile)
+                                                ? Image.file(model.imageFile!)
                                                 : model.userImageURL.isNotEmpty
                                                     ? CachedNetworkImage(
-                                                        imageUrl:
-                                                            '${model.userImageURL}',
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                Container(
+                                                        imageUrl: '${model.userImageURL}',
+                                                        placeholder: (context, url) => Container(
                                                           color: kDullWhiteColor,
                                                         ),
-                                                        errorWidget:
-                                                            (context, url, error) =>
-                                                                Container(
+                                                        errorWidget: (context, url, error) => Container(
                                                           color: kDullWhiteColor,
                                                         ),
                                                       )
@@ -72,28 +67,23 @@ class UserProfileScreen extends StatelessWidget {
                                                       ),
                                           ),
                                           onTap: () async {
-                                            ChangeImage changeImage =
-                                                await _showEditIconBottomSheet(
-                                                    context);
+                                            ChangeImage changeImage = await _showEditIconBottomSheet(context);
                                             if (changeImage == ChangeImage.delete) {
                                               model.startLoading();
                                               try {
                                                 await model.deleteUserImage();
                                               } catch (e) {
-                                                await showMessageDialog(
-                                                    context, e.toString());
+                                                await showMessageDialog(context, e.toString());
                                               }
                                               model.endLoading();
-                                            } else if (changeImage ==
-                                                ChangeImage.select) {
+                                            } else if (changeImage == ChangeImage.select) {
                                               await model.pickImageFile();
                                               if (model.imageFile != null) {
                                                 model.startLoading();
                                                 try {
                                                   await model.updateUserImage();
                                                 } catch (e) {
-                                                  await showMessageDialog(
-                                                      context, e.toString());
+                                                  await showMessageDialog(context, e.toString());
                                                 }
                                                 model.endLoading();
                                               }
@@ -110,29 +100,23 @@ class UserProfileScreen extends StatelessWidget {
                                               size: 16.0,
                                             ),
                                             onPressed: () async {
-                                              ChangeImage changeImage =
-                                                  await _showEditIconBottomSheet(
-                                                      context);
-                                              if (changeImage ==
-                                                  ChangeImage.delete) {
+                                              ChangeImage changeImage = await _showEditIconBottomSheet(context);
+                                              if (changeImage == ChangeImage.delete) {
                                                 model.startLoading();
                                                 try {
                                                   await model.deleteUserImage();
                                                 } catch (e) {
-                                                  await showMessageDialog(
-                                                      context, e.toString());
+                                                  await showMessageDialog(context, e.toString());
                                                 }
                                                 model.endLoading();
-                                              } else if (changeImage ==
-                                                  ChangeImage.select) {
+                                              } else if (changeImage == ChangeImage.select) {
                                                 await model.pickImageFile();
                                                 if (model.imageFile != null) {
                                                   model.startLoading();
                                                   try {
                                                     await model.updateUserImage();
                                                   } catch (e) {
-                                                    await showMessageDialog(
-                                                        context, e.toString());
+                                                    await showMessageDialog(context, e.toString());
                                                   }
                                                   model.endLoading();
                                                 }
@@ -180,19 +164,16 @@ class UserProfileScreen extends StatelessWidget {
                                 style: kDeleteButtonTextStyle,
                               ),
                               onPressed: () async {
-                                String password =
-                                    await _showDeleteAccountBottomSheet(context);
+                                String password = await _showDeleteAccountBottomSheet(context);
                                 if (password.isNotEmpty) {
                                   model.startLoading();
                                   try {
                                     await model.deleteAccount(password: password);
-                                    await showMessageDialog(
-                                        context, 'アカウントを削除しました。');
+                                    await showMessageDialog(context, 'アカウントを削除しました。');
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            WelcomeScreen(),
+                                        builder: (BuildContext context) => WelcomeScreen(),
                                       ),
                                     );
                                   } catch (e) {
@@ -227,7 +208,7 @@ enum ChangeImage {
 }
 
 Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
-  ChangeImage changeImage;
+  ChangeImage changeImage = ChangeImage.cancel;
   await showModalBottomSheet(
     context: context,
     isScrollControlled: true,

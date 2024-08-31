@@ -1,7 +1,7 @@
 import 'package:beet/constants.dart';
-import 'package:beet/services/dynamic_links_services.dart';
 import 'package:beet/models/group_setting_models/group_member_model.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
+import 'package:beet/services/dynamic_links_services.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class GroupMemberScreen extends StatelessWidget {
   final String groupId;
   final DynamicLinksServices dynamicLinks = DynamicLinksServices();
 
-  GroupMemberScreen({this.groupId});
+  GroupMemberScreen({required this.groupId});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class GroupMemberScreen extends StatelessWidget {
                           return ListTile(
                             leading: CircleAvatar(
                               backgroundImage: userImageURL.isNotEmpty
-                                  ? NetworkImage(userImageURL)
+                                  ? NetworkImage(userImageURL) as ImageProvider
                                   : const AssetImage('images/user_profile.png'),
                               backgroundColor: Colors.transparent,
                             ),
@@ -121,7 +121,7 @@ class GroupMemberScreen extends StatelessWidget {
 Future<bool> _showMemberBottomSheet(
     BuildContext context, bool isMe, String userName) async {
   String buttonText = isMe ? 'グループを退会' : 'このメンバーを削除';
-  bool isDelete;
+  bool isDelete = false;
   await showModalBottomSheet(
     context: context,
     isScrollControlled: true,

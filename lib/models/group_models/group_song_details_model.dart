@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class GroupSongDetailsModel extends ChangeNotifier {
   String groupId = '';
-  Song song;
+  late Song song;
   String songId = '';
   String songTitle = '';
   String songMemo = '';
@@ -13,7 +13,7 @@ class GroupSongDetailsModel extends ChangeNotifier {
   bool isLoading = false;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  void init({String groupId, Song song}) {
+  void init({required String groupId, required Song song}) {
     this.groupId = groupId;
     this.song = song;
     songId = song.id;
@@ -41,7 +41,7 @@ class GroupSongDetailsModel extends ChangeNotifier {
           .collection('songs')
           .doc(songId)
           .get();
-      song = Song.doc(songDoc);
+      song = Song.doc(songDoc as DocumentSnapshot<Map<String, dynamic>>);
       songId = song.id;
       songTitle = song.title;
       songMemo = song.memo;

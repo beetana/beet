@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class GroupScreen extends StatelessWidget {
   final String groupId;
 
-  GroupScreen({this.groupId});
+  GroupScreen({required this.groupId});
 
   @override
   Widget build(BuildContext context) {

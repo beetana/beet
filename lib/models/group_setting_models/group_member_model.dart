@@ -12,7 +12,7 @@ class GroupMemberModel extends ChangeNotifier {
   List<String> usersName = [];
   List<String> usersImageURL = [];
   bool isLoading = false;
-  DocumentReference groupDocRef;
+  late DocumentReference groupDocRef;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -27,10 +27,10 @@ class GroupMemberModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> init({String groupId}) async {
+  Future<void> init({required String groupId}) async {
     startLoading();
     this.groupId = groupId;
-    myId = _auth.currentUser.uid;
+    myId = _auth.currentUser!.uid;
     groupDocRef = _firestore.collection('groups').doc(groupId);
 
     try {
@@ -72,7 +72,7 @@ class GroupMemberModel extends ChangeNotifier {
     return memberCount;
   }
 
-  Future<void> deleteMember({String userId}) async {
+  Future<void> deleteMember({required String userId}) async {
     final WriteBatch batch = _firestore.batch();
     final DocumentReference joiningGroupDocRef = _firestore
         .collection('users')
@@ -92,7 +92,7 @@ class GroupMemberModel extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteGroup({String userId}) async {
+  Future<void> deleteGroup({required String userId}) async {
     final joiningGroupDocRef = _firestore
         .collection('users')
         .doc(userId)

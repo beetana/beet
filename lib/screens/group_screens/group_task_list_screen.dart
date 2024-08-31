@@ -13,7 +13,7 @@ class GroupTaskListScreen extends StatelessWidget {
   final String groupId;
   final double textScale;
 
-  GroupTaskListScreen({this.groupId, this.textScale});
+  GroupTaskListScreen({required this.groupId, required this.textScale});
 
   @override
   Widget build(BuildContext context) {

@@ -7,10 +7,10 @@ class UserModel extends ChangeNotifier {
   String userName = '';
   int currentIndex = 0;
   final DynamicLinksServices dynamicLinks = DynamicLinksServices();
-  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> init({BuildContext context}) async {
+  Future<void> init({required BuildContext context}) async {
     dynamicLinks.fetchLinkData(context: context);
 
     final DocumentSnapshot userDoc =

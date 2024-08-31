@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class InquiryModel extends ChangeNotifier {
   String inquiryContent = '';
   bool isLoading = false;
-  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final userId = FirebaseAuth.instance.currentUser!.uid;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {

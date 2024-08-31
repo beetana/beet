@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 class AssignTaskListTile extends StatelessWidget {
   final String userName;
-  final String userImageURL;
+  final String? userImageURL;
   final bool isChecked;
-  final Function tileTappedCallback;
+  final Function() tileTappedCallback;
 
   AssignTaskListTile({
-    this.userName,
+    required this.userName,
     this.userImageURL,
-    this.isChecked,
-    this.tileTappedCallback,
+    required this.isChecked,
+    required this.tileTappedCallback,
   });
 
   @override
@@ -34,9 +34,11 @@ class AssignTaskListTile extends StatelessWidget {
                     width: 40.0,
                     height: 40.0,
                     child: CircleAvatar(
-                      backgroundImage: userImageURL.isNotEmpty
-                          ? NetworkImage(userImageURL)
-                          : const AssetImage('images/user_profile.png'),
+                      backgroundImage: userImageURL == null
+                          ? const AssetImage('images/user_profile.png')
+                          : userImageURL!.isNotEmpty
+                              ? NetworkImage(userImageURL!) as ImageProvider
+                              : const AssetImage('images/user_profile.png'),
                       backgroundColor: Colors.transparent,
                     ),
                   ),

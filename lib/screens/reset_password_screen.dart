@@ -25,8 +25,7 @@ class ResetPasswordScreen extends StatelessWidget {
             return Stack(
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
@@ -47,8 +46,7 @@ class ResetPasswordScreen extends StatelessWidget {
                                   decoration: const InputDecoration(
                                     hintText: 'メールアドレス',
                                     border: InputBorder.none,
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 18.0),
+                                    contentPadding: EdgeInsets.symmetric(vertical: 18.0),
                                   ),
                                   onChanged: (text) {
                                     model.email = text;
@@ -67,11 +65,11 @@ class ResetPasswordScreen extends StatelessWidget {
                           ),
                           child: TextButton(
                               style: TextButton.styleFrom(
+                                foregroundColor: Colors.white38,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 backgroundColor: kPrimaryColor,
-                                primary: Colors.white38,
                               ),
                               child: const Text(
                                 '送信',
@@ -84,8 +82,7 @@ class ResetPasswordScreen extends StatelessWidget {
                                 model.startLoading();
                                 try {
                                   await model.sendResetEmail();
-                                  await showMessageDialog(context,
-                                      'パスワード再設定用のメールを送信しました。メールに記載されているURLから再設定を行ってください。');
+                                  await showMessageDialog(context, 'パスワード再設定用のメールを送信しました。メールに記載されているURLから再設定を行ってください。');
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(

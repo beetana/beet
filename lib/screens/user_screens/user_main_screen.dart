@@ -14,7 +14,7 @@ class UserMainScreen extends StatelessWidget {
   final double textScale;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
-  UserMainScreen({this.deviceWidth, this.textScale});
+  UserMainScreen({required this.deviceWidth, required this.textScale});
 
   @override
   Widget build(BuildContext context) {
@@ -118,9 +118,8 @@ class UserMainScreen extends StatelessWidget {
                             final isOwn = event.ownerId == model.userId;
                             return EventListTile(
                               event: event,
-                              imageURL:
-                                  model.eventOwners[event.ownerId].imageURL,
-                              name: model.eventOwners[event.ownerId].name,
+                              imageURL: model.eventOwners[event.ownerId]!.imageURL,
+                              name: model.eventOwners[event.ownerId]!.name,
                               isOwn: isOwn,
                               textScale: textScale,
                               onTap: () async {

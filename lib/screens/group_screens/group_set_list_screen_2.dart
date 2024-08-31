@@ -1,14 +1,14 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_set_list_model_2.dart';
+import 'package:beet/objects/set_list.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen_3.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/thin_divider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSetListScreen2 extends StatelessWidget {
-  final List<dynamic> setList; // setListに入るのはSongもしくはMC
+  final List<SetList> setList; // setListに入るのはSongもしくはMC
   final int songCount;
   final int totalPlayTime;
   final String groupId;
@@ -16,10 +16,10 @@ class GroupSetListScreen2 extends StatelessWidget {
   final TextEditingController eventPlaceController = TextEditingController();
 
   GroupSetListScreen2({
-    this.setList,
-    this.songCount,
-    this.totalPlayTime,
-    this.groupId,
+    required this.setList,
+    required this.songCount,
+    required this.totalPlayTime,
+    required this.groupId,
   });
 
   @override
@@ -42,8 +42,7 @@ class GroupSetListScreen2 extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
@@ -80,8 +79,7 @@ class GroupSetListScreen2 extends StatelessWidget {
                           ),
                           BasicDivider(),
                           ListTile(
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 0.0),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
                             title: const Text(
                               '日付',
                               style: TextStyle(

@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 class GroupSettingScreen extends StatelessWidget {
   final String groupId;
 
-  GroupSettingScreen({this.groupId});
+  GroupSettingScreen({required this.groupId});
 
   @override
   Widget build(BuildContext context) {

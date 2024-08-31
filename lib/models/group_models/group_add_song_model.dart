@@ -18,7 +18,7 @@ class GroupAddSongModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addSong({String groupId}) async {
+  Future<void> addSong({required String groupId}) async {
     if (songTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }

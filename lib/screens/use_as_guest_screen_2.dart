@@ -1,5 +1,6 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/use_as_guest_model_2.dart';
+import 'package:beet/objects/set_list.dart';
 import 'package:beet/screens/use_as_guest_screen_3.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/thin_divider.dart';
@@ -8,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UseAsGuestScreen2 extends StatelessWidget {
-  final List<dynamic> setList; // setListに入るのはMCもしくはString
+  final List<SetList> setList; // setListに入るのはMCもしくはString
   final TextEditingController eventTitleController = TextEditingController();
   final TextEditingController eventPlaceController = TextEditingController();
 
-  UseAsGuestScreen2({this.setList});
+  UseAsGuestScreen2({required this.setList});
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,7 @@ class UseAsGuestScreen2 extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
@@ -72,8 +72,7 @@ class UseAsGuestScreen2 extends StatelessWidget {
                           ),
                           BasicDivider(),
                           ListTile(
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 0.0),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
                             title: const Text(
                               '日付',
                               style: TextStyle(
@@ -109,6 +108,7 @@ class UseAsGuestScreen2 extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
+                      print(111);
                       FocusScope.of(context).unfocus();
                       Navigator.push(
                         context,

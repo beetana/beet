@@ -59,8 +59,7 @@ class LoginScreen extends StatelessWidget {
                                     decoration: const InputDecoration(
                                       hintText: 'メールアドレス',
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 18.0),
+                                      contentPadding: EdgeInsets.symmetric(vertical: 18.0),
                                     ),
                                     onChanged: (text) {
                                       model.email = text;
@@ -73,8 +72,7 @@ class LoginScreen extends StatelessWidget {
                                     decoration: const InputDecoration(
                                       hintText: 'パスワード',
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 18.0),
+                                      contentPadding: EdgeInsets.symmetric(vertical: 18.0),
                                     ),
                                     onChanged: (text) {
                                       model.password = text;
@@ -93,11 +91,11 @@ class LoginScreen extends StatelessWidget {
                             ),
                             child: TextButton(
                               style: TextButton.styleFrom(
+                                foregroundColor: Colors.white38,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 backgroundColor: kPrimaryColor,
-                                primary: Colors.white38,
                               ),
                               child: const Text(
                                 'ログイン',
@@ -113,8 +111,7 @@ class LoginScreen extends StatelessWidget {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          UserScreen(),
+                                      builder: (BuildContext context) => UserScreen(),
                                     ),
                                   );
                                 } catch (e) {

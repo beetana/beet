@@ -17,7 +17,7 @@ class GroupAddTaskModel extends ChangeNotifier {
   bool isLoading = false;
   bool isShowDueDatePicker = false;
   Widget dueDatePickerBox = const SizedBox();
-  DateTime dueDate;
+  DateTime? dueDate;
   final DateFormat dateFormat = DateFormat('y/M/d(E)', 'ja_JP');
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -31,12 +31,12 @@ class GroupAddTaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> init({String groupId}) async {
+  Future<void> init({required String groupId}) async {
     startLoading();
     final DateTime now = DateTime.now();
     this.groupId = groupId;
     dueDate = DateTime(now.year, now.month, now.day, 12);
-    dueDateText = dateFormat.format(dueDate);
+    dueDateText = dateFormat.format(dueDate!);
 
     try {
       final QuerySnapshot membersQuery = await _firestore
@@ -65,7 +65,7 @@ class GroupAddTaskModel extends ChangeNotifier {
         'title': taskTitle,
         'memo': taskMemo,
         'isDecidedDueDate': isDecidedDueDate,
-        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate) : null,
+        'dueDate': isDecidedDueDate ? Timestamp.fromDate(dueDate!) : null,
         'assignedMembersId': assignedMembersId,
         'ownerId': groupId,
         'isCompleted': false,
@@ -78,7 +78,7 @@ class GroupAddTaskModel extends ChangeNotifier {
     }
   }
 
-  void assignPerson({String userId}) {
+  void assignPerson({required String userId}) {
     if (assignedMembersId.contains(userId)) {
       assignedMembersId.remove(userId);
     } else {
@@ -102,7 +102,7 @@ class GroupAddTaskModel extends ChangeNotifier {
               maximumDate: DateTime(2050, 12, 31),
               onDateTimeChanged: (DateTime newDate) {
                 dueDate = DateTime(newDate.year, newDate.month, newDate.day, 12);
-                dueDateText = dateFormat.format(dueDate);
+                dueDateText = dateFormat.format(dueDate!);
                 isDecidedDueDate = true;
               },
             ),

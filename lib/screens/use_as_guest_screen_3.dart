@@ -1,5 +1,6 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/use_as_guest_model_3.dart';
+import 'package:beet/objects/set_list.dart';
 import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/set_list_tile.dart';
@@ -9,16 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UseAsGuestScreen3 extends StatelessWidget {
-  final List<dynamic> setList; // setListに入るのはMCもしくはString
+  final List<SetList> setList; // setListに入るのはMCもしくはString
   final String eventTitle;
   final String eventPlace;
   final String eventDateText;
 
   UseAsGuestScreen3({
-    this.setList,
-    this.eventTitle,
-    this.eventPlace,
-    this.eventDateText,
+    required this.setList,
+    required this.eventTitle,
+    required this.eventPlace,
+    required this.eventDateText,
   });
 
   @override
@@ -57,8 +58,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(
-                                top: wideGap, left: wideGap, right: wideGap),
+                            padding: EdgeInsets.only(top: wideGap, left: wideGap, right: wideGap),
                             child: Column(
                               children: <Widget>[
                                 Row(
@@ -66,8 +66,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       eventTitle,
-                                      style:
-                                          TextStyle(fontSize: eventTitleTextSize),
+                                      style: TextStyle(fontSize: eventTitleTextSize),
                                       textScaleFactor: 1.0,
                                     ),
                                   ],
@@ -77,14 +76,12 @@ class UseAsGuestScreen3 extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       eventDateText,
-                                      style:
-                                          TextStyle(fontSize: eventDetailsTextSize),
+                                      style: TextStyle(fontSize: eventDetailsTextSize),
                                       textScaleFactor: 1.0,
                                     ),
                                     Text(
                                       ' $eventPlace',
-                                      style:
-                                          TextStyle(fontSize: eventDetailsTextSize),
+                                      style: TextStyle(fontSize: eventDetailsTextSize),
                                       textScaleFactor: 1.0,
                                     ),
                                   ],
@@ -153,8 +150,7 @@ class UseAsGuestScreen3 extends StatelessWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      WelcomeScreen(),
+                                  builder: (BuildContext context) => WelcomeScreen(),
                                 ),
                               );
                             }

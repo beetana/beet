@@ -7,11 +7,11 @@ class GroupEditSongModel extends ChangeNotifier {
   String songId = '';
   String songTitle = '';
   String songMemo = '';
-  int songPlayingTime;
+  late int songPlayingTime;
   bool isLoading = false;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  void init({String groupId, Song song}) {
+  void init({required String groupId, required Song song}) {
     this.groupId = groupId;
     songId = song.id;
     songTitle = song.title;

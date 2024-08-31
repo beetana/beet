@@ -8,7 +8,7 @@ class AddGroupModel extends ChangeNotifier {
   String groupName = '';
   String groupId = '';
   bool isLoading = false;
-  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {

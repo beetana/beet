@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 class SongListTile extends StatelessWidget {
   final Song song;
   final bool isVisible;
-  final Function checkboxCallback;
-  final Function tileTappedCallback;
+  final Function(bool?) checkboxCallback;
+  final Function() tileTappedCallback;
 
   SongListTile({
-    @required this.song,
-    @required this.isVisible,
-    @required this.checkboxCallback,
-    @required this.tileTappedCallback,
+    required this.song,
+    required this.isVisible,
+    required this.checkboxCallback,
+    required this.tileTappedCallback,
   });
 
   @override

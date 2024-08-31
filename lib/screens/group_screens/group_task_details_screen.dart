@@ -5,7 +5,6 @@ import 'package:beet/screens/group_screens/group_edit_task_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +14,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
   final Task task;
   final DateFormat dueDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
-  GroupTaskDetailsScreen({this.groupId, this.task});
+  GroupTaskDetailsScreen({required this.groupId, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +87,13 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                       itemCount: model.assignedMembersId.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        String imageURL = model
+                                        String? imageURL = model
                                             .groupMembers[
                                                 model.assignedMembersId[index]]
-                                            .imageURL;
+                                            ?.imageURL;
                                         String name = model
                                             .groupMembers[
-                                                model.assignedMembersId[index]]
+                                                model.assignedMembersId[index]]!
                                             .name;
                                         return Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -114,6 +113,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                                           'images/user_profile.png')
                                                       : imageURL.isNotEmpty
                                                           ? NetworkImage(imageURL)
+                                                              as ImageProvider
                                                           : const AssetImage(
                                                               'images/user_profile.png'),
                                                   backgroundColor:

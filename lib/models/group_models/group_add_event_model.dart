@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GroupAddEventModel extends ChangeNotifier {
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
-  DateTime startingDateTime;
-  DateTime endingDateTime;
+  late DateTime startingDateTime;
+  late DateTime endingDateTime;
   bool isLoading = false;
   bool isAllDay = false;
   bool isShowStartingPicker = false;
@@ -32,12 +31,12 @@ class GroupAddEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({DateTime dateTime}) {
+  void init({required DateTime dateTime}) {
     startingDateTime = dateTime;
     endingDateTime = dateTime.add(const Duration(hours: 1));
   }
 
-  Future<void> addEvent({String groupId}) async {
+  Future<void> addEvent({required String groupId}) async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
@@ -106,7 +105,7 @@ class GroupAddEventModel extends ChangeNotifier {
     }
   }
 
-  void switchIsAllDay({bool value}) {
+  void switchIsAllDay({required bool value}) {
     isAllDay = value;
 
     if (isAllDay) {

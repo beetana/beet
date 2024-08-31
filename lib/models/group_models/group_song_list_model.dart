@@ -1,12 +1,13 @@
 import 'package:beet/constants.dart';
+import 'package:beet/objects/set_list.dart';
 import 'package:beet/objects/song.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class GroupSongListModel extends ChangeNotifier {
   String groupId = '';
   List<Song> songs = [];
-  List<dynamic> setList = [];
+  List<SetList> setList = [];
   int songCount = 0;
   int totalPlayTime = 0;
   bool isLoading = false;
@@ -34,7 +35,7 @@ class GroupSongListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> init({String groupId}) async {
+  Future<void> init({required String groupId}) async {
     startLoading();
     this.groupId = groupId;
     await fetchSongs();
@@ -43,13 +44,8 @@ class GroupSongListModel extends ChangeNotifier {
 
   Future<void> fetchSongs() async {
     try {
-      final QuerySnapshot songsQuery = await _firestore
-          .collection('groups')
-          .doc(groupId)
-          .collection('songs')
-          .orderBy('createdAt', descending: false)
-          .get();
-      songs = songsQuery.docs.map((doc) => Song.doc(doc)).toList();
+      final QuerySnapshot songsQuery = await _firestore.collection('groups').doc(groupId).collection('songs').orderBy('createdAt', descending: false).get();
+      songs = songsQuery.docs.map((doc) => Song.doc(doc as DocumentSnapshot<Map<String, dynamic>>)).toList();
       setList = [];
       songCount = 0;
       totalPlayTime = 0;
@@ -60,7 +56,7 @@ class GroupSongListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectSong({Song song}) {
+  void selectSong({required Song song}) {
     song.toggleCheckBoxState();
     if (song.checkboxState == true) {
       setList.add(song);
@@ -75,7 +71,7 @@ class GroupSongListModel extends ChangeNotifier {
   }
 
   // セトリ作成画面から戻ってきた際に呼ばれる
-  void reselectSongs({List<dynamic> setList}) {
+  void reselectSongs({required List<SetList> setList}) {
     this.setList = setList;
     totalPlayTime = 0;
 

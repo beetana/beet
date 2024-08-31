@@ -6,7 +6,7 @@ class GroupModel extends ChangeNotifier {
   int currentIndex = 0; // 今現在表示している画面のindex
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> init({String groupId}) async {
+  Future<void> init({required String groupId}) async {
     try {
       final DocumentSnapshot groupDoc =
           await _firestore.collection('groups').doc(groupId).get();

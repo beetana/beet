@@ -19,7 +19,7 @@ class UserEditNameModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String userName}) {
+  void init({required String userName}) {
     this.userName = userName;
   }
 
@@ -28,8 +28,8 @@ class UserEditNameModel extends ChangeNotifier {
       throw ('名前を入力してください');
     }
 
-    final Auth.User firebaseUser = _auth.currentUser;
-    final String userId = firebaseUser.uid;
+    final Auth.User? firebaseUser = _auth.currentUser;
+    final String userId = firebaseUser!.uid;
     final WriteBatch batch = _firestore.batch();
     final DocumentReference userDocRef = _firestore.collection('users').doc(userId);
 

@@ -19,12 +19,12 @@ class UserUpdateEmailModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({String email}) {
+  void init({required String email}) {
     this.email = email;
   }
 
   Future<void> updateEmail() async {
-    final Auth.User firebaseUser = _auth.currentUser;
+    final firebaseUser = _auth.currentUser!;
 
     if (email.isEmpty || email == firebaseUser.email) {
       throw ('新しいメールアドレスを入力してください');
@@ -34,12 +34,12 @@ class UserUpdateEmailModel extends ChangeNotifier {
       if (isAuthRequired) {
         await firebaseUser
             .reauthenticateWithCredential(Auth.EmailAuthProvider.credential(
-          email: firebaseUser.email,
+          email: firebaseUser.email!,
           password: password,
         ));
       }
       await firebaseUser.updateEmail(email);
-    } catch (e) {
+    } on Auth.FirebaseAuthException catch (e) {
       print(e.code);
       // 再認証が必要な場合はこのエラーコードが返ってくる
       if (e.code == 'requires-recent-login') {

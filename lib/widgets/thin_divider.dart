@@ -4,7 +4,7 @@ class ThinDivider extends StatelessWidget {
   final double indent;
   final double endIndent;
 
-  ThinDivider({this.indent, this.endIndent});
+  ThinDivider({this.indent = 0, this.endIndent = 0});
 
   @override
   Widget build(BuildContext context) {

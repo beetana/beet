@@ -13,7 +13,7 @@ class GroupAddTaskScreen extends StatelessWidget {
   final TextEditingController taskMemoController = TextEditingController();
   final ScrollController scrollController = ScrollController();
 
-  GroupAddTaskScreen({this.groupId});
+  GroupAddTaskScreen({required this.groupId});
 
   @override
   Widget build(BuildContext context) {

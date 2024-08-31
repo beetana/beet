@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DarkLoadingIndicator extends StatelessWidget {
   final bool isLoading;
 
-  DarkLoadingIndicator({@required this.isLoading});
+  DarkLoadingIndicator({required this.isLoading});
 
   @override
   Widget build(BuildContext context) {

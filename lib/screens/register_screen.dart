@@ -62,8 +62,7 @@ class RegisterScreen extends StatelessWidget {
                                     decoration: const InputDecoration(
                                       hintText: 'アカウント名',
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 18.0),
+                                      contentPadding: EdgeInsets.symmetric(vertical: 18.0),
                                     ),
                                     onChanged: (text) {
                                       model.name = text;
@@ -75,8 +74,7 @@ class RegisterScreen extends StatelessWidget {
                                     decoration: const InputDecoration(
                                       hintText: 'メールアドレス',
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 18.0),
+                                      contentPadding: EdgeInsets.symmetric(vertical: 18.0),
                                     ),
                                     onChanged: (text) {
                                       model.email = text;
@@ -89,8 +87,7 @@ class RegisterScreen extends StatelessWidget {
                                     decoration: const InputDecoration(
                                       hintText: 'パスワード（6文字以上）',
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 18.0),
+                                      contentPadding: EdgeInsets.symmetric(vertical: 18.0),
                                     ),
                                     onChanged: (text) {
                                       model.password = text;
@@ -103,8 +100,7 @@ class RegisterScreen extends StatelessWidget {
                                     decoration: const InputDecoration(
                                       hintText: 'パスワード（確認用）',
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 18.0),
+                                      contentPadding: EdgeInsets.symmetric(vertical: 18.0),
                                     ),
                                     onChanged: (text) {
                                       model.confirmPassword = text;
@@ -171,13 +167,11 @@ class RegisterScreen extends StatelessWidget {
                             ),
                             child: TextButton(
                               style: TextButton.styleFrom(
+                                foregroundColor: Colors.white38,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                backgroundColor: model.isAgree
-                                    ? kPrimaryColor
-                                    : kTransparentPrimaryColor,
-                                primary: Colors.white38,
+                                backgroundColor: model.isAgree ? kPrimaryColor : kTransparentPrimaryColor,
                               ),
                               child: const Text(
                                 '新規登録',
@@ -195,8 +189,7 @@ class RegisterScreen extends StatelessWidget {
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                UserScreen(),
+                                            builder: (BuildContext context) => UserScreen(),
                                           ),
                                         );
                                       } catch (e) {

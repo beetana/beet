@@ -1,15 +1,15 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_set_list_model_3.dart';
+import 'package:beet/objects/set_list.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/set_list_tile.dart';
 import 'package:beet/widgets/thin_divider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GroupSetListScreen3 extends StatelessWidget {
-  final List<dynamic> setList; // setListに入るのはSongもしくはMC
+  final List<SetList> setList; // setListに入るのはSongもしくはMC
   final String eventTitle;
   final String eventPlace;
   final String eventDateText;
@@ -18,13 +18,13 @@ class GroupSetListScreen3 extends StatelessWidget {
   final String groupId;
 
   GroupSetListScreen3({
-    this.setList,
-    this.eventTitle,
-    this.eventPlace,
-    this.eventDateText,
-    this.songCount,
-    this.totalPlayTime,
-    this.groupId,
+    required this.setList,
+    required this.eventTitle,
+    required this.eventPlace,
+    required this.eventDateText,
+    required this.songCount,
+    required this.totalPlayTime,
+    required this.groupId,
   });
 
   @override
@@ -63,8 +63,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(
-                                top: wideGap, left: wideGap, right: wideGap),
+                            padding: EdgeInsets.only(top: wideGap, left: wideGap, right: wideGap),
                             child: Column(
                               children: <Widget>[
                                 Row(
@@ -72,8 +71,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       eventTitle,
-                                      style:
-                                          TextStyle(fontSize: eventTitleTextSize),
+                                      style: TextStyle(fontSize: eventTitleTextSize),
                                       textScaleFactor: 1.0,
                                     ),
                                   ],
@@ -83,14 +81,12 @@ class GroupSetListScreen3 extends StatelessWidget {
                                   children: <Widget>[
                                     Text(
                                       eventDateText,
-                                      style:
-                                          TextStyle(fontSize: eventDetailsTextSize),
+                                      style: TextStyle(fontSize: eventDetailsTextSize),
                                       textScaleFactor: 1.0,
                                     ),
                                     Text(
                                       ' $eventPlace',
-                                      style:
-                                          TextStyle(fontSize: eventDetailsTextSize),
+                                      style: TextStyle(fontSize: eventDetailsTextSize),
                                       textScaleFactor: 1.0,
                                     ),
                                   ],
@@ -169,8 +165,7 @@ class GroupSetListScreen3 extends StatelessWidget {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    GroupScreen(groupId: groupId),
+                                builder: (BuildContext context) => GroupScreen(groupId: groupId),
                               ),
                             );
                           },

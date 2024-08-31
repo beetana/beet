@@ -6,32 +6,32 @@ Future showAppInfoDialog(context) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Row(
+        title: const Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               backgroundImage: AssetImage('images/app_icon.png'),
             ),
-            const SizedBox(width: 16.0),
+            SizedBox(width: 16.0),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'beet',
                   style: TextStyle(
                     fontSize: 26.0,
                     fontWeight: FontWeight.normal,
                   ),
                 ),
-                const Text(
+                Text(
                   '1.0.2',
                   style: TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w300,
                   ),
                 ),
-                const SizedBox(height: 16.0),
-                const Text(
+                SizedBox(height: 16.0),
+                Text(
                   '2021  Kohei Tanabe',
                   style: TextStyle(
                     fontSize: 14.0,

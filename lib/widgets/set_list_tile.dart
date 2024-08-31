@@ -7,10 +7,10 @@ class SetListTile extends StatelessWidget {
   final double padding;
 
   SetListTile({
-    this.item,
-    this.songNum,
-    this.fontSize,
-    this.padding,
+    required this.item,
+    required this.songNum,
+    required this.fontSize,
+    required this.padding,
   });
 
   @override

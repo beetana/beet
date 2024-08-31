@@ -1,7 +1,9 @@
+import 'package:beet/objects/set_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Song {
+class Song implements SetList {
   final String id;
+  @override
   final String title;
   final String memo;
   final int playingTime;
@@ -14,14 +16,14 @@ class Song {
     this.playingTime,
   );
 
-  factory Song.doc(DocumentSnapshot doc) {
+  factory Song.doc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data();
 
     return Song._(
       doc.id,
-      data['title'],
-      data['memo'],
-      data['minute'],
+      data?['title'],
+      data?['memo'],
+      data?['minute'],
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_song_list_model.dart';
+import 'package:beet/objects/set_list.dart';
 import 'package:beet/screens/group_screens/group_add_song_screen.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen.dart';
 import 'package:beet/screens/group_screens/group_song_details_screen.dart';
@@ -15,7 +16,7 @@ class GroupSongListScreen extends StatelessWidget {
   final String groupId;
   final double textScale;
 
-  GroupSongListScreen({this.groupId, this.textScale});
+  GroupSongListScreen({required this.groupId, required this.textScale});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class GroupSongListScreen extends StatelessWidget {
                         icon: model.buttonIcon,
                         label: model.buttonText,
                         style: TextButton.styleFrom(
-                          primary: Colors.white,
+                          foregroundColor: Colors.white,
                         ),
                         onPressed: () {
                           model.changeMode();
@@ -128,9 +129,7 @@ class GroupSongListScreen extends StatelessWidget {
                             child: Text(
                               '決定',
                               style: TextStyle(
-                                color: model.setList.isEmpty
-                                    ? kInvalidEnterButtonColor
-                                    : kEnterButtonColor,
+                                color: model.setList.isEmpty ? kInvalidEnterButtonColor : kEnterButtonColor,
                                 fontSize: 16.0,
                               ),
                             ),
@@ -139,8 +138,7 @@ class GroupSongListScreen extends StatelessWidget {
                                 : () async {
                                     // 曲を選び直すためにこの画面に戻ってきた際、
                                     // 作成途中のセットリストがここに入る
-                                    List<dynamic> returnedSetList =
-                                        await Navigator.push(
+                                    List<SetList> returnedSetList = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => GroupSetListScreen(

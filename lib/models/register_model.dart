@@ -1,7 +1,7 @@
 import 'package:beet/utilities/convert_error_message.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:flutter/material.dart';
 
 class RegisterModel extends ChangeNotifier {
   String name = '';
@@ -46,11 +46,14 @@ class RegisterModel extends ChangeNotifier {
     }
 
     try {
-      final Auth.User user = (await _auth.createUserWithEmailAndPassword(
+      final user = (await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       ))
-          .user;
+          .user!;
+
+      // ユーザーが登録後に確認メールを送信
+      await user.sendEmailVerification();
       await user.updateProfile(displayName: name);
       final String userId = user.uid;
       await _firestore.collection('users').doc(userId).set({
@@ -58,7 +61,7 @@ class RegisterModel extends ChangeNotifier {
         'imageURL': '',
         'createdAt': FieldValue.serverTimestamp(),
       });
-    } catch (e) {
+    } on Auth.FirebaseAuthException catch (e) {
       print(e.code);
       throw (convertErrorMessage(e.code));
     }

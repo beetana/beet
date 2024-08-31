@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 
 class EventListTile extends StatelessWidget {
   final Event event;
-  final Function onTap;
-  final String imageURL;
+  final Function() onTap;
+  final String? imageURL;
   final String name;
   final bool isOwn;
   final double textScale;
@@ -14,12 +14,12 @@ class EventListTile extends StatelessWidget {
   final DateFormat timeFormat = DateFormat('H:mm');
 
   EventListTile({
-    @required this.event,
-    @required this.onTap,
+    required this.event,
+    required this.onTap,
     this.imageURL,
-    this.name,
-    this.isOwn,
-    this.textScale,
+    this.name = '',
+    this.isOwn = false,
+    this.textScale = 0,
   });
 
   @override
@@ -70,12 +70,17 @@ class EventListTile extends StatelessWidget {
 }
 
 class EventPlannerImage extends StatelessWidget {
-  final String imageURL;
+  final String? imageURL;
   final String name;
   final double textScale;
   final bool isOwn;
 
-  EventPlannerImage({this.imageURL, this.name, this.textScale, this.isOwn});
+  EventPlannerImage({
+    this.imageURL,
+    required this.name,
+    required this.textScale,
+    required this.isOwn,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +90,8 @@ class EventPlannerImage extends StatelessWidget {
           width: 32.0 * textScale,
           height: 32.0 * textScale,
           child: CircleAvatar(
-            backgroundImage: imageURL.isNotEmpty
-                ? NetworkImage(imageURL)
+            backgroundImage: imageURL != null
+                ? NetworkImage(imageURL!) as ImageProvider
                 : isOwn
                     ? const AssetImage('images/user_profile.png')
                     : const AssetImage('images/group_profile.png'),
@@ -108,8 +113,8 @@ class EventPlannerImage extends StatelessWidget {
 
 class EventOverView extends StatelessWidget {
   EventOverView({
-    @required this.eventTitle,
-    @required this.eventPlace,
+    required this.eventTitle,
+    required this.eventPlace,
   });
 
   final String eventTitle;
@@ -150,11 +155,11 @@ class EventOverView extends StatelessWidget {
 
 class EventDateTime extends StatelessWidget {
   EventDateTime({
-    @required this.isAllDay,
-    @required this.dateFormat,
-    @required this.startingDateTime,
-    @required this.endingDateTime,
-    @required this.timeFormat,
+    required this.isAllDay,
+    required this.dateFormat,
+    required this.startingDateTime,
+    required this.endingDateTime,
+    required this.timeFormat,
   });
 
   final bool isAllDay;
@@ -187,8 +192,7 @@ class EventDateTime extends StatelessWidget {
           ),
         ],
       );
-    } else if (dateFormat.format(startingDateTime) ==
-        dateFormat.format(endingDateTime)) {
+    } else if (dateFormat.format(startingDateTime) == dateFormat.format(endingDateTime)) {
       return Text(dateFormat.format(startingDateTime));
     } else {
       return Column(

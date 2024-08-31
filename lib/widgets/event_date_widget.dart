@@ -9,9 +9,9 @@ class EventDateWidget extends StatelessWidget {
   final DateFormat allDayDateFormat = DateFormat('y/M/d(E)', 'ja_JP');
 
   EventDateWidget({
-    this.isAllDay,
-    this.startingDateTime,
-    this.endingDateTime,
+    required this.isAllDay,
+    required this.startingDateTime,
+    required this.endingDateTime,
   });
 
   @override

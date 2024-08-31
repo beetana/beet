@@ -4,14 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GroupEventDetailsModel extends ChangeNotifier {
-  Event event;
+  late Event event;
   String eventId = '';
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
   bool isAllDay = false;
-  DateTime startingDateTime;
-  DateTime endingDateTime;
+  late DateTime startingDateTime;
+  late DateTime endingDateTime;
   bool isLoading = false;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -25,7 +25,7 @@ class GroupEventDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({Event event}) {
+  void init({required Event event}) {
     this.event = event;
     eventId = event.id;
     eventTitle = event.title;
@@ -36,7 +36,7 @@ class GroupEventDetailsModel extends ChangeNotifier {
     endingDateTime = event.endingDateTime;
   }
 
-  Future<void> fetchEvent({String groupId}) async {
+  Future<void> fetchEvent({required String groupId}) async {
     try {
       final DocumentSnapshot eventDoc = await _firestore
           .collection('groups')
@@ -44,7 +44,7 @@ class GroupEventDetailsModel extends ChangeNotifier {
           .collection('events')
           .doc(eventId)
           .get();
-      event = Event.doc(eventDoc);
+      event = Event.doc(eventDoc as DocumentSnapshot<Map<String, dynamic>>);
       eventId = event.id;
       eventTitle = event.title;
       eventPlace = event.place;
@@ -59,7 +59,7 @@ class GroupEventDetailsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteEvent({String groupId}) async {
+  Future<void> deleteEvent({required String groupId}) async {
     try {
       await _firestore
           .collection('groups')

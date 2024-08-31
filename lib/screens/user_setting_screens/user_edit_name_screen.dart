@@ -8,7 +8,7 @@ class UserEditNameScreen extends StatelessWidget {
   final String userName;
   final TextEditingController userNameController = TextEditingController();
 
-  UserEditNameScreen({this.userName});
+  UserEditNameScreen({required this.userName});
 
   @override
   Widget build(BuildContext context) {

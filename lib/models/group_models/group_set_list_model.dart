@@ -1,14 +1,15 @@
 import 'package:beet/objects/mc.dart';
+import 'package:beet/objects/set_list.dart';
 import 'package:beet/objects/song.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GroupSetListModel extends ChangeNotifier {
-  List<dynamic> setList = []; // setListに入るのはSongもしくはMC
+  List<SetList> setList = []; // setListに入るのはSongもしくはMC
   int songCount = 0;
   int totalPlayTime = 0;
 
-  void init({List<dynamic> setList}) {
+  void init({required List<SetList> setList}) {
     this.setList = setList;
     songCount = setList.where((item) => item is Song).length;
     setList.forEach((item) {
@@ -19,7 +20,12 @@ class GroupSetListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItem({dynamic item}) {
+  void addMC() {
+    setList.add(MC());
+    notifyListeners();
+  }
+
+  void removeItem({required SetList item}) {
     setList.remove(item);
     if (item is Song) {
       songCount -= 1;
@@ -28,8 +34,12 @@ class GroupSetListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addMC() {
-    setList.add(MC());
+  void reorderItems({required int oldIndex, required int newIndex}) {
+    if (newIndex > oldIndex) {
+      newIndex -= 1;
+    }
+    final item = setList.removeAt(oldIndex);
+    setList.insert(newIndex, item);
     notifyListeners();
   }
 }

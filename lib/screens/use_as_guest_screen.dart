@@ -1,12 +1,10 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/use_as_guest_model.dart';
-import 'package:beet/objects/mc.dart';
 import 'package:beet/screens/use_as_guest_screen_2.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
-import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:provider/provider.dart';
 
 class UseAsGuestScreen extends StatelessWidget {
@@ -26,13 +24,13 @@ class UseAsGuestScreen extends StatelessWidget {
               title: const Text('セットリスト'),
               actions: [
                 TextButton(
-                  child: Row(
+                  child: const Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.add,
                         color: Colors.white,
                       ),
-                      const Text(
+                      Text(
                         'MC',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -40,9 +38,7 @@ class UseAsGuestScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     // セットリストを一枚の画像にバランス良く収めるための上限が14曲
-                    model.setList.length >= 14
-                        ? showMessageDialog(context, '作成できるセットリストは14曲まで(MC含む)です。')
-                        : model.addMC();
+                    model.setList.length >= 14 ? showMessageDialog(context, '作成できるセットリストは14曲まで(MC含む)です。') : model.addMC();
                   },
                 ),
               ],
@@ -112,12 +108,12 @@ class UseAsGuestScreen extends StatelessWidget {
                           ),
                           child: TextButton(
                             style: TextButton.styleFrom(
+                              foregroundColor: Colors.white38,
                               padding: const EdgeInsets.all(0.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               backgroundColor: kPrimaryColor,
-                              primary: Colors.white38,
                             ),
                             child: const Text(
                               '追加',
@@ -130,8 +126,7 @@ class UseAsGuestScreen extends StatelessWidget {
                               if (model.title.isNotEmpty) {
                                 // セットリストを一枚の画像にバランス良く収めるための上限が14曲
                                 if (model.setList.length >= 14) {
-                                  showMessageDialog(
-                                      context, '作成できるセットリストは14曲まで(MC含む)です。');
+                                  showMessageDialog(context, '作成できるセットリストは14曲まで(MC含む)です。');
                                 } else {
                                   model.addSong();
                                   songTitleController.clear();
@@ -148,37 +143,39 @@ class UseAsGuestScreen extends StatelessWidget {
                   BasicDivider(),
                   Expanded(
                     child: Scrollbar(
-                      child: ImplicitlyAnimatedReorderableList(
-                        items: model.setList,
-                        areItemsTheSame: (oldItem, newItem) => oldItem == newItem,
-                        onReorderFinished: (item, from, to, setList) {
-                          model.setList = setList;
-                        },
-                        itemBuilder: (context, animation, item, index) {
-                          return Reorderable(
-                            key: ValueKey(item),
-                            builder: (context, animation, bool) {
-                              return Material(
-                                type: MaterialType.transparency,
-                                child: ListTile(
-                                  title: Text(
-                                    item is MC ? item.title : item,
-                                    maxLines: 1,
-                                  ),
-                                  trailing: const Handle(
-                                    delay: Duration(milliseconds: 100),
-                                    child: Icon(
-                                      Icons.list,
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                  onLongPress: () {
-                                    model.removeItem(item: item);
-                                  },
+                      child: ReorderableListView(
+                        children: List.generate(
+                          model.setList.length,
+                          (index) {
+                            final item = model.setList[index];
+                            return Dismissible(
+                              key: ValueKey(item),
+                              direction: DismissDirection.endToStart,
+                              onDismissed: (direction) {
+                                model.removeItem(item: item);
+                              },
+                              background: Container(
+                                color: Colors.red,
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: const Icon(Icons.delete, color: Colors.white),
+                              ),
+                              child: ListTile(
+                                key: ValueKey(item),
+                                title: Text(
+                                  item.title,
+                                  maxLines: 1,
                                 ),
-                              );
-                            },
-                          );
+                                trailing: ReorderableDragStartListener(
+                                  index: index,
+                                  child: const Icon(Icons.drag_handle),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        onReorder: (int oldIndex, int newIndex) {
+                          model.reorderItems(oldIndex: oldIndex, newIndex: newIndex);
                         },
                       ),
                     ),
@@ -188,9 +185,7 @@ class UseAsGuestScreen extends StatelessWidget {
                     child: Text(
                       '次へ',
                       style: TextStyle(
-                        color: model.setList.isEmpty
-                            ? kInvalidEnterButtonColor
-                            : kEnterButtonColor,
+                        color: model.setList.isEmpty ? kInvalidEnterButtonColor : kEnterButtonColor,
                         fontSize: 16.0,
                       ),
                     ),
@@ -201,8 +196,7 @@ class UseAsGuestScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    UseAsGuestScreen2(setList: model.setList),
+                                builder: (context) => UseAsGuestScreen2(setList: model.setList),
                               ),
                             );
                           },

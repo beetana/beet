@@ -9,7 +9,7 @@ class GroupEditNameScreen extends StatelessWidget {
   final String groupName;
   final TextEditingController groupNameController = TextEditingController();
 
-  GroupEditNameScreen({this.groupId, this.groupName});
+  GroupEditNameScreen({required this.groupId, required this.groupName});
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,7 @@
-import 'dart:ui' as ui;
 import 'dart:typed_data';
+import 'dart:ui' as ui;
+
+import 'package:beet/objects/set_list.dart';
 import 'package:beet/objects/song.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -11,7 +13,7 @@ class GroupSetListModel3 extends ChangeNotifier {
   final GlobalKey globalKey = GlobalKey();
 
   // 引数のsetListの中身はSongもしくはMC
-  void init({List<dynamic> setList}) {
+  void init({required List<SetList> setList}) {
     int num = 1;
 
     setList.forEach((item) {
@@ -30,13 +32,11 @@ class GroupSetListModel3 extends ChangeNotifier {
   // globalKeyを持っているWidget(この場合はセットリストの部分)を画像として端末に保存する
   // https://www.egao-inc.co.jp/programming/flutter-convert-widget-to-image/
   Future<void> saveSetListImage() async {
-    final RenderRepaintBoundary boundary =
-        globalKey.currentContext.findRenderObject();
+    final boundary = globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
     // pixelRatioの値はバランス的にとりあえず3.0とする。必要に応じて変更可。
     final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-    final ByteData byteData =
-        await image.toByteData(format: ui.ImageByteFormat.png);
-    final Uint8List pngBytes = byteData.buffer.asUint8List();
+    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List pngBytes = byteData!.buffer.asUint8List();
     await ImageGallerySaver.saveImage(pngBytes);
     notifyListeners();
   }

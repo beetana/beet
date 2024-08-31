@@ -7,17 +7,17 @@ class TaskListTile extends StatelessWidget {
   final Task task;
   final Map<String, User> users;
   final double textScale;
-  final Function checkboxCallback;
-  final Function longPressedCallBack;
-  final Function tileTappedCallback;
+  final Function(bool?) checkboxCallback;
+  final Function() longPressedCallBack;
+  final Function() tileTappedCallback;
 
   TaskListTile({
-    @required this.task,
-    @required this.users,
-    @required this.textScale,
-    @required this.checkboxCallback,
-    @required this.longPressedCallBack,
-    @required this.tileTappedCallback,
+    required this.task,
+    required this.users,
+    required this.textScale,
+    required this.checkboxCallback,
+    required this.longPressedCallBack,
+    required this.tileTappedCallback,
   });
 
   @override
@@ -56,25 +56,18 @@ class TaskListTile extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: task.assignedMembersId.length,
                           itemBuilder: (context, index) {
+                            final user = users[task.assignedMembersId[index]];
                             return Container(
                               width: 24.0 * textScale,
                               height: 24.0 * textScale,
                               child: CircleAvatar(
-                                backgroundImage:
-                                    users[task.assignedMembersId[index]] == null
-                                        ? const AssetImage(
-                                            'images/user_profile.png',
-                                          )
-                                        : users[task.assignedMembersId[index]]
-                                                .imageURL
-                                                .isNotEmpty
-                                            ? NetworkImage(
-                                                users[task.assignedMembersId[index]]
-                                                    .imageURL,
-                                              )
-                                            : const AssetImage(
-                                                'images/user_profile.png',
-                                              ),
+                                backgroundImage: user == null
+                                    ? const AssetImage('images/user_profile.png')
+                                    : user.imageURL == null
+                                        ? const AssetImage('images/user_profile.png')
+                                        : user.imageURL!.isNotEmpty
+                                            ? NetworkImage(user.imageURL!) as ImageProvider
+                                            : const AssetImage('images/user_profile.png'),
                                 backgroundColor: Colors.transparent,
                               ),
                             );

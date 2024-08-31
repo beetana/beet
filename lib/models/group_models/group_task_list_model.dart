@@ -10,7 +10,7 @@ class GroupTaskListModel extends ChangeNotifier {
   List<Task> notCompletedTasks = [];
   List<Task> changeStateTasks = [];
   bool isLoading = false;
-  DocumentReference groupDocRef;
+  late DocumentReference groupDocRef;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void startLoading() {
@@ -23,15 +23,13 @@ class GroupTaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> init({String groupId}) async {
+  Future<void> init({required String groupId}) async {
     startLoading();
     groupDocRef = _firestore.collection('groups').doc(groupId);
 
     try {
-      final QuerySnapshot membersQuery =
-          await groupDocRef.collection('members').get();
-      final List<User> users =
-          membersQuery.docs.map((doc) => User.doc(doc)).toList();
+      final QuerySnapshot membersQuery = await groupDocRef.collection('members').get();
+      final List<User> users = membersQuery.docs.map((doc) => User.doc(doc as DocumentSnapshot<Map<String, dynamic>>)).toList();
       users.forEach((user) {
         members[user.id] = user;
       });
@@ -49,7 +47,7 @@ class GroupTaskListModel extends ChangeNotifier {
 
     try {
       final QuerySnapshot tasksQuery = await groupDocRef.collection('tasks').get();
-      tasks = tasksQuery.docs.map((doc) => Task.doc(doc)).toList();
+      tasks = tasksQuery.docs.map((doc) => Task.doc(doc as DocumentSnapshot<Map<String, dynamic>>)).toList();
       tasks.forEach((task) {
         task.isCompleted ? completedTasks.add(task) : notCompletedTasks.add(task);
       });
@@ -67,8 +65,7 @@ class GroupTaskListModel extends ChangeNotifier {
       final WriteBatch batch = _firestore.batch();
 
       changeStateTasks.forEach((task) {
-        final DocumentReference taskDocRef =
-            groupDocRef.collection('tasks').doc(task.id);
+        final DocumentReference taskDocRef = groupDocRef.collection('tasks').doc(task.id);
         batch.update(taskDocRef, {
           'isCompleted': task.isCompleted,
           'updatedAt': FieldValue.serverTimestamp(),
@@ -81,13 +78,11 @@ class GroupTaskListModel extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteTask({Task task}) async {
+  Future<void> deleteTask({required Task task}) async {
     try {
       await groupDocRef.collection('tasks').doc(task.id).delete();
       tasks.remove(task);
-      completedTasks.contains(task)
-          ? completedTasks.remove(task)
-          : notCompletedTasks.remove(task);
+      completedTasks.contains(task) ? completedTasks.remove(task) : notCompletedTasks.remove(task);
       if (changeStateTasks.contains(task)) {
         changeStateTasks.remove(task);
       }
@@ -97,11 +92,9 @@ class GroupTaskListModel extends ChangeNotifier {
     }
   }
 
-  void toggleCheckState({Task task}) {
+  void toggleCheckState({required Task task}) {
     task.toggleCheckState();
-    changeStateTasks.contains(task)
-        ? changeStateTasks.remove(task)
-        : changeStateTasks.add(task);
+    changeStateTasks.contains(task) ? changeStateTasks.remove(task) : changeStateTasks.add(task);
     notifyListeners();
   }
 }

@@ -21,15 +21,15 @@ class Task {
     this.isCompleted,
   );
 
-  factory Task.doc(DocumentSnapshot doc) {
+  factory Task.doc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data();
 
     return Task._(
       doc.id,
-      data['ownerId'],
-      data['title'],
-      data['memo'],
-      data['isDecidedDueDate'],
+      data?['ownerId'],
+      data?['title'],
+      data?['memo'],
+      data?['isDecidedDueDate'],
       doc['isDecidedDueDate'] ? doc['dueDate'].toDate() : DateTime.now(),
       doc['assignedMembersId'],
       doc['isCompleted'],

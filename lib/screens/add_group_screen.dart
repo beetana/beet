@@ -51,8 +51,7 @@ class AddGroupScreen extends StatelessWidget {
                                   decoration: const InputDecoration(
                                     hintText: 'グループ名',
                                     border: InputBorder.none,
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 18.0),
+                                    contentPadding: EdgeInsets.symmetric(vertical: 18.0),
                                   ),
                                   onChanged: (text) {
                                     model.groupName = text;
@@ -71,11 +70,11 @@ class AddGroupScreen extends StatelessWidget {
                           ),
                           child: TextButton(
                             style: TextButton.styleFrom(
+                              foregroundColor: Colors.white38,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               backgroundColor: kPrimaryColor,
-                              primary: Colors.white38,
                             ),
                             child: const Text(
                               '決定',
@@ -91,20 +90,17 @@ class AddGroupScreen extends StatelessWidget {
                                 // addGroupが完了してもgroupIdが空ということは
                                 // すでに上限である8個のグループに参加している
                                 if (model.groupId.isNotEmpty) {
-                                  await showMessageDialog(
-                                      context, '新規グループを作成しました。');
+                                  await showMessageDialog(context, '新規グループを作成しました。');
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          GroupScreen(
+                                      builder: (BuildContext context) => GroupScreen(
                                         groupId: model.groupId,
                                       ),
                                     ),
                                   );
                                 } else {
-                                  await showMessageDialog(
-                                      context, '参加できるグループの数は8個までです。');
+                                  await showMessageDialog(context, '参加できるグループの数は8個までです。');
                                   Navigator.pop(context);
                                 }
                               } catch (e) {

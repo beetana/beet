@@ -1,6 +1,6 @@
 import 'package:beet/utilities/convert_error_message.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class LoginModel extends ChangeNotifier {
   String email = '';
@@ -31,7 +31,7 @@ class LoginModel extends ChangeNotifier {
         email: email,
         password: password,
       );
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       print(e.code);
       throw (convertErrorMessage(e.code));
     }

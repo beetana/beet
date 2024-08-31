@@ -2,7 +2,7 @@ import 'package:beet/constants.dart';
 import 'package:flutter/material.dart';
 
 class AddFloatingActionButton extends StatelessWidget {
-  final Function onPressed;
+  final Function()? onPressed;
 
   AddFloatingActionButton({this.onPressed});
 

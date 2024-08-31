@@ -7,8 +7,8 @@ class UserSecurityModel extends ChangeNotifier {
   final Auth.FirebaseAuth _auth = Auth.FirebaseAuth.instance;
 
   void init() {
-    final Auth.User firebaseUser = _auth.currentUser;
-    email = firebaseUser.email;
+    final firebaseUser = _auth.currentUser!;
+    email = firebaseUser.email!;
     notifyListeners();
   }
 

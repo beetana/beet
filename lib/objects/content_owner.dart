@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ContentOwner {
   final String id;
   final String name;
-  final String imageURL;
+  final String? imageURL;
 
   ContentOwner._(
     this.id,
@@ -11,13 +11,13 @@ class ContentOwner {
     this.imageURL,
   );
 
-  factory ContentOwner.doc(DocumentSnapshot doc) {
+  factory ContentOwner.doc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data();
 
     return ContentOwner._(
       doc.id,
-      data['name'],
-      data['imageURL'],
+      data?['name'],
+      data?['imageURL'],
     );
   }
 }

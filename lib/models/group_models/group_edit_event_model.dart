@@ -10,8 +10,8 @@ class GroupEditEventModel extends ChangeNotifier {
   String eventTitle = '';
   String eventPlace = '';
   String eventMemo = '';
-  DateTime startingDateTime;
-  DateTime endingDateTime;
+  late DateTime startingDateTime;
+  late DateTime endingDateTime;
   bool isLoading = false;
   bool isAllDay = false;
   bool isShowStartingPicker = false;
@@ -35,7 +35,7 @@ class GroupEditEventModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init({Event event}) {
+  void init({required Event event}) {
     // イベントが終日の場合、startが0:00、endが23:59:59としてfirestoreに保存されているので
     // 綺麗に表示されるよう12時に変更して整える
     if (event.isAllDay) {
@@ -74,7 +74,7 @@ class GroupEditEventModel extends ChangeNotifier {
     endingDateTime = event.endingDateTime;
   }
 
-  Future<void> updateEvent({String groupId}) async {
+  Future<void> updateEvent({required String groupId}) async {
     if (eventTitle.isEmpty) {
       throw ('タイトルを入力してください');
     }
@@ -146,7 +146,7 @@ class GroupEditEventModel extends ChangeNotifier {
     }
   }
 
-  void switchIsAllDay({bool value}) {
+  void switchIsAllDay({required bool value}) {
     isAllDay = value;
 
     if (isAllDay) {

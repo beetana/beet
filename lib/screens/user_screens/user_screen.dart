@@ -1,10 +1,10 @@
 import 'package:beet/constants.dart';
 import 'package:beet/models/user_models/user_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
-import 'package:beet/screens/user_screens/user_task_list_screen.dart';
-import 'package:beet/screens/user_setting_screens/user_setting_screen.dart';
 import 'package:beet/screens/user_screens/user_calendar_screen.dart';
 import 'package:beet/screens/user_screens/user_main_screen.dart';
+import 'package:beet/screens/user_screens/user_task_list_screen.dart';
+import 'package:beet/screens/user_setting_screens/user_setting_screen.dart';
 import 'package:beet/utilities/will_pop_callback.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +39,7 @@ class UserScreen extends StatelessWidget {
                         fullscreenDialog: true,
                       ),
                     );
-                    model.init();
+                    model.init(context: context);
                   },
                 ),
               ],

@@ -1,12 +1,11 @@
 import 'package:beet/constants.dart';
-import 'package:beet/objects/event.dart';
 import 'package:beet/models/group_models/group_event_details_model.dart';
+import 'package:beet/objects/event.dart';
 import 'package:beet/screens/group_screens/group_edit_event_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/event_date_widget.dart';
 import 'package:beet/widgets/loading_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +13,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
   final String groupId;
   final Event event;
 
-  GroupEventDetailsScreen({this.groupId, this.event});
+  GroupEventDetailsScreen({required this.groupId, required this.event});
 
   @override
   Widget build(BuildContext context) {

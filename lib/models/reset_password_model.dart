@@ -22,7 +22,7 @@ class ResetPasswordModel extends ChangeNotifier {
       await _auth.sendPasswordResetEmail(
         email: email,
       );
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       print(e.code);
       throw (convertErrorMessage(e.code));
     }

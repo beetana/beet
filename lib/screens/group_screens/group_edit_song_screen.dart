@@ -17,7 +17,7 @@ class GroupEditSongScreen extends StatelessWidget {
   final TextEditingController songMemoController = TextEditingController();
   final ScrollController scrollController = ScrollController();
 
-  GroupEditSongScreen({this.groupId, this.song});
+  GroupEditSongScreen({required this.groupId, required this.song});
 
   @override
   Widget build(BuildContext context) {

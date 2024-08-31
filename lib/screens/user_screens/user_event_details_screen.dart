@@ -1,19 +1,18 @@
 import 'package:beet/constants.dart';
-import 'package:beet/objects/event.dart';
 import 'package:beet/models/user_models/user_event_details_model.dart';
+import 'package:beet/objects/event.dart';
 import 'package:beet/screens/user_screens/user_edit_event_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/event_date_widget.dart';
 import 'package:beet/widgets/loading_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserEventDetailsScreen extends StatelessWidget {
   final Event event;
 
-  UserEventDetailsScreen({this.event});
+  UserEventDetailsScreen({required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +36,7 @@ class UserEventDetailsScreen extends StatelessWidget {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              UserEditEventScreen(event: model.event),
+                          builder: (context) => UserEditEventScreen(event: model.event),
                           fullscreenDialog: true,
                         ),
                       );
@@ -70,31 +68,30 @@ class UserEventDetailsScreen extends StatelessWidget {
                                       width: 32.0,
                                       height: 32.0,
                                       child: CircleAvatar(
-                                        backgroundImage:
-                                            model.owner.imageURL == null
-                                                ? model.isOwn
+                                        backgroundImage: model.owner!.imageURL == null
+                                            ? model.isOwn
+                                                ? const AssetImage(
+                                                    'images/user_profile.png',
+                                                  )
+                                                : const AssetImage(
+                                                    'images/group_profile.png',
+                                                  )
+                                            : model.owner!.imageURL!.isNotEmpty
+                                                ? NetworkImage(
+                                                    model.owner!.imageURL!,
+                                                  ) as ImageProvider
+                                                : model.isOwn
                                                     ? const AssetImage(
                                                         'images/user_profile.png',
                                                       )
                                                     : const AssetImage(
                                                         'images/group_profile.png',
-                                                      )
-                                                : model.owner.imageURL.isNotEmpty
-                                                    ? NetworkImage(
-                                                        model.owner.imageURL,
-                                                      )
-                                                    : model.isOwn
-                                                        ? const AssetImage(
-                                                            'images/user_profile.png',
-                                                          )
-                                                        : const AssetImage(
-                                                            'images/group_profile.png',
-                                                          ),
+                                                      ),
                                         backgroundColor: Colors.transparent,
                                       ),
                                     ),
                                     const SizedBox(width: 8.0),
-                                    Text(model.owner.name),
+                                    Text(model.owner!.name),
                                   ],
                                 ),
                                 const SizedBox(height: 8.0),
@@ -148,8 +145,7 @@ class UserEventDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () async {
-                                bool isDelete = await _confirmDeleteDialog(
-                                    context, 'このイベントを削除しますか？');
+                                bool isDelete = await _confirmDeleteDialog(context, 'このイベントを削除しますか？');
                                 if (isDelete == true) {
                                   model.startLoading();
                                   try {

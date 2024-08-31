@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class User {
   final String id;
   final String name;
-  final String imageURL;
+  final String? imageURL;
 
   User._(
     this.id,
@@ -11,13 +11,13 @@ class User {
     this.imageURL,
   );
 
-  factory User.doc(DocumentSnapshot doc) {
+  factory User.doc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data();
 
     return User._(
       doc.id,
-      data['name'],
-      data['imageURL'],
+      data?['name'],
+      data?['imageURL'],
     );
   }
 }

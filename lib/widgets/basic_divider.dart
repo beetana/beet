@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class BasicDivider extends StatelessWidget {
-  final double indent;
-  final double endIndent;
+  final double? indent;
+  final double? endIndent;
 
   BasicDivider({this.indent, this.endIndent});
 

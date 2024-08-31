@@ -13,14 +13,14 @@ class GroupMember {
     this.joinedAt,
   );
 
-  factory GroupMember.doc(DocumentSnapshot doc) {
+  factory GroupMember.doc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data();
 
     return GroupMember._(
       doc.id,
-      data['name'],
-      data['imageURL'],
-      data['joinedAt'].toDate(),
+      data?['name'],
+      data?['imageURL'],
+      data?['joinedAt'].toDate(),
     );
   }
 }

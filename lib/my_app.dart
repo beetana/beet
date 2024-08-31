@@ -18,8 +18,9 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        DefaultCupertinoLocalizations.delegate,
-        JapaneseCupertinoLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        // DefaultCupertinoLocalizations.delegate,
+        // JapaneseCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
         const Locale('ja', 'JA'),
@@ -35,16 +36,13 @@ class MyApp extends StatelessWidget {
               fontFamily: 'MPLUS1p',
               bodyColor: Colors.white,
             ),
-        primaryIconTheme:
-            Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
+        primaryIconTheme: Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
-          //Brightness.lightにするとテキストが黒くなり、Brightness.darkにするとテキストが白くなる
-          brightness: Brightness.dark,
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            primary: Colors.grey,
+            foregroundColor: Colors.grey,
           ),
         ),
         dialogTheme: const DialogTheme(
@@ -60,17 +58,26 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.normal,
           ),
         ),
-        accentColor: kTransparentPrimaryColor,
+        colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: kPrimaryColor,
+          onPrimary: Colors.white,
+          secondary: kTransparentPrimaryColor,
+          onSecondary: Colors.white,
+          error: Colors.white,
+          onError: Colors.white,
+          background: Colors.white,
+          onBackground: Colors.white,
+          surface: Colors.white,
+          onSurface: Colors.white,
+        ),
         scaffoldBackgroundColor: kBackGroundColor,
       ),
       home: StreamBuilder(
         stream: model.userState,
         initialData: UserState.waiting,
         builder: (context, AsyncSnapshot<UserState> snapshot) {
-          final UserState state =
-              snapshot.connectionState == ConnectionState.waiting
-                  ? UserState.waiting
-                  : snapshot.data;
+          final UserState? state = snapshot.connectionState == ConnectionState.waiting ? UserState.waiting : snapshot.data;
           print("MyApp(): userState = $state");
           return _convertPage(state: state);
         },
@@ -78,7 +85,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _convertPage({UserState state}) {
+  Widget _convertPage({UserState? state}) {
     switch (state) {
       case UserState.waiting: // 初期化中
         return SplashScreen();

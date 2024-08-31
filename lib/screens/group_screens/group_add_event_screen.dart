@@ -3,7 +3,6 @@ import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/allday_switch_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,7 @@ class GroupAddEventScreen extends StatelessWidget {
   final TextEditingController eventMemoController = TextEditingController();
   final ScrollController scrollController = ScrollController();
 
-  GroupAddEventScreen({this.groupId, this.dateTime});
+  GroupAddEventScreen({required this.groupId, required this.dateTime});
 
   @override
   Widget build(BuildContext context) {
@@ -117,8 +116,7 @@ class GroupAddEventScreen extends StatelessWidget {
                             BasicDivider(),
                             ListTile(
                               title: const Text('開始'),
-                              trailing: Text(model.tileDateFormat
-                                  .format(model.startingDateTime)),
+                              trailing: Text(model.tileDateFormat.format(model.startingDateTime)),
                               onTap: () {
                                 FocusScope.of(context).unfocus();
                                 model.showStartingDateTimePicker();
@@ -128,8 +126,7 @@ class GroupAddEventScreen extends StatelessWidget {
                             BasicDivider(),
                             ListTile(
                               title: const Text('終了'),
-                              trailing: Text(model.tileDateFormat
-                                  .format(model.endingDateTime)),
+                              trailing: Text(model.tileDateFormat.format(model.endingDateTime)),
                               onTap: () {
                                 FocusScope.of(context).unfocus();
                                 model.showEndingDateTimePicker();
@@ -161,8 +158,7 @@ class GroupAddEventScreen extends StatelessWidget {
                                     await Future.delayed(
                                       const Duration(milliseconds: 100),
                                     );
-                                    scrollController.jumpTo(
-                                        scrollController.position.maxScrollExtent);
+                                    scrollController.jumpTo(scrollController.position.maxScrollExtent);
                                   },
                                   onChanged: (text) {
                                     model.eventMemo = text;

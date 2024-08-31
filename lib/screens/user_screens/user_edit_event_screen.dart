@@ -1,10 +1,9 @@
-import 'package:beet/objects/event.dart';
 import 'package:beet/models/user_models/user_edit_event_model.dart';
+import 'package:beet/objects/event.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/allday_switch_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,7 @@ class UserEditEventScreen extends StatelessWidget {
   final TextEditingController eventMemoController = TextEditingController();
   final ScrollController scrollController = ScrollController();
 
-  UserEditEventScreen({this.event});
+  UserEditEventScreen({required this.event});
 
   @override
   Widget build(BuildContext context) {

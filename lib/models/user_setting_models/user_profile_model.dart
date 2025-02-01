@@ -58,18 +58,23 @@ class UserProfileModel extends ChangeNotifier {
         maxWidth: 160,
         maxHeight: 160,
         aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-        ],
-        cropStyle: CropStyle.circle,
         compressFormat: ImageCompressFormat.jpg,
         compressQuality: 90,
         uiSettings: [
-          AndroidUiSettings(toolbarTitle: 'プロフィール画像', toolbarColor: Colors.blue, toolbarWidgetColor: Colors.white, lockAspectRatio: true),
+          AndroidUiSettings(
+            toolbarTitle: 'プロフィール画像',
+            toolbarColor: Colors.blue,
+            toolbarWidgetColor: Colors.white,
+            lockAspectRatio: true,
+            aspectRatioPresets: [CropAspectRatioPreset.square],
+            cropStyle: CropStyle.circle,
+          ),
           IOSUiSettings(
             title: 'プロフィール画像',
             doneButtonTitle: '完了',
             cancelButtonTitle: 'キャンセル',
+            aspectRatioPresets: [CropAspectRatioPreset.square],
+            cropStyle: CropStyle.circle,
           ),
         ],
       ));

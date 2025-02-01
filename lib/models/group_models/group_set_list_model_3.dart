@@ -5,7 +5,7 @@ import 'package:beet/objects/set_list.dart';
 import 'package:beet/objects/song.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 
 class GroupSetListModel3 extends ChangeNotifier {
   List<String> setList = [];
@@ -37,7 +37,7 @@ class GroupSetListModel3 extends ChangeNotifier {
     final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
     final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     final Uint8List pngBytes = byteData!.buffer.asUint8List();
-    await ImageGallerySaver.saveImage(pngBytes);
+    await ImageGallerySaverPlus.saveImage(pngBytes);
     notifyListeners();
   }
 }

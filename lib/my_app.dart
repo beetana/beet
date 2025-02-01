@@ -5,9 +5,7 @@ import 'package:beet/screens/splash_screen.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:beet/user_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:beet/japanese_cupertino_localizations.dart';
 
 class MyApp extends StatelessWidget {
   final model = MyAppModel();
@@ -38,6 +36,8 @@ class MyApp extends StatelessWidget {
             ),
         primaryIconTheme: Theme.of(context).primaryIconTheme.copyWith(color: Colors.white),
         appBarTheme: const AppBarTheme(
+          backgroundColor: kPrimaryColor,
+          foregroundColor: Colors.white,
           centerTitle: true,
         ),
         textButtonTheme: TextButtonThemeData(
@@ -64,14 +64,14 @@ class MyApp extends StatelessWidget {
           onPrimary: Colors.white,
           secondary: kTransparentPrimaryColor,
           onSecondary: Colors.white,
-          error: Colors.white,
+          error: Colors.red,
           onError: Colors.white,
           background: Colors.white,
-          onBackground: Colors.white,
+          onBackground: Colors.black12,
           surface: Colors.white,
-          onSurface: Colors.white,
+          onSurface: Colors.black87,
         ),
-        scaffoldBackgroundColor: kBackGroundColor,
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: StreamBuilder(
         stream: model.userState,

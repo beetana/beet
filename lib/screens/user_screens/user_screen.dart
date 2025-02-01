@@ -46,7 +46,6 @@ class UserScreen extends StatelessWidget {
             ),
             body: _userScreenBody(context, deviceWidth, textScale),
             bottomNavigationBar: BottomNavigationBar(
-              backgroundColor: kBackGroundColor,
               selectedItemColor: Colors.black,
               onTap: model.onTabTapped,
               currentIndex: model.currentIndex,
@@ -71,8 +70,7 @@ class UserScreen extends StatelessWidget {
     );
   }
 
-  Widget _userScreenBody(
-      BuildContext context, double deviceWidth, double textScale) {
+  Widget _userScreenBody(BuildContext context, double deviceWidth, double textScale) {
     final model = Provider.of<UserModel>(context);
     final currentIndex = model.currentIndex;
     return Stack(

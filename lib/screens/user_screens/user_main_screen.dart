@@ -126,8 +126,7 @@ class UserMainScreen extends StatelessWidget {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        UserEventDetailsScreen(event: event),
+                                    builder: (context) => UserEventDetailsScreen(event: event),
                                   ),
                                 );
                                 try {

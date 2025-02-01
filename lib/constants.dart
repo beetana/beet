@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 const Color kPrimaryColor = Color(0xFF424242); // beetのイメージカラー
 const Color kSlightlyTransparentPrimaryColor = Color(0xCC424242); // ちょっと透けてる
 const Color kTransparentPrimaryColor = Color(0x55424242); // 透けてる
-const Color kBackGroundColor = Color(0xFFFFFFFF); // 白
 const Color kDullGreenColor = Color(0xFF415C59); // くすんだ緑
 const Color kDullWhiteColor = Color(0xFFF5F5F5); // くすんだ白
 const Color kTransparentDullWhiteColor = Color(0x55E5E5E5); // 透けてるくすんだ白

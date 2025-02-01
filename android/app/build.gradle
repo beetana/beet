@@ -33,6 +33,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+    namespace = "com.beetana.beet"
     compileSdkVersion 34
 
     sourceSets {
@@ -64,13 +65,18 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-
             // release or debug
             signingConfig signingConfigs.release
 //            signingConfig signingConfigs.debug
         }
+    }
+    
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
 }
 

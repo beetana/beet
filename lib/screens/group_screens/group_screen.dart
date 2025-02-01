@@ -52,7 +52,6 @@ class GroupScreen extends StatelessWidget {
             body: _groupScreenBody(context, deviceWidth, textScale),
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              backgroundColor: kBackGroundColor,
               selectedItemColor: Colors.black,
               onTap: model.onTabTapped,
               currentIndex: model.currentIndex,
@@ -81,8 +80,7 @@ class GroupScreen extends StatelessWidget {
     );
   }
 
-  Widget _groupScreenBody(
-      BuildContext context, double deviceWidth, double textScale) {
+  Widget _groupScreenBody(BuildContext context, double deviceWidth, double textScale) {
     final model = Provider.of<GroupModel>(context);
     final currentIndex = model.currentIndex;
     return Stack(

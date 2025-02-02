@@ -3,6 +3,7 @@ import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/allday_switch_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -39,8 +40,8 @@ class GroupAddEventScreen extends StatelessWidget {
             child: Stack(
               children: [
                 Scaffold(
-                  appBar: AppBar(
-                    title: const Text('イベントを追加'),
+                  appBar: SizedAppBar(
+                    title: 'イベントを追加',
                     actions: [
                       TextButton(
                         child: const Text(

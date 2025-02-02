@@ -1,6 +1,7 @@
 import 'package:beet/models/group_setting_models/group_edit_name_model.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/dark_loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +16,7 @@ class GroupEditNameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     groupNameController.text = groupName;
     return ChangeNotifierProvider<GroupEditNameModel>(
-      create: (_) =>
-          GroupEditNameModel()..init(groupId: groupId, groupName: groupName),
+      create: (_) => GroupEditNameModel()..init(groupId: groupId, groupName: groupName),
       child: Consumer<GroupEditNameModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -25,8 +25,8 @@ class GroupEditNameScreen extends StatelessWidget {
                 FocusScope.of(context).unfocus();
               },
               child: Scaffold(
-                appBar: AppBar(
-                  title: const Text('グループ名を変更'),
+                appBar: SizedAppBar(
+                  title: 'グループ名を変更',
                   actions: [
                     TextButton(
                       child: const Text(

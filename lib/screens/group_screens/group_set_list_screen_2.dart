@@ -3,6 +3,7 @@ import 'package:beet/models/group_models/group_set_list_model_2.dart';
 import 'package:beet/objects/set_list.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen_3.dart';
 import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,8 +36,8 @@ class GroupSetListScreen2 extends StatelessWidget {
             FocusScope.of(context).unfocus();
           },
           child: Scaffold(
-            appBar: AppBar(
-              title: const Text('詳細'),
+            appBar: SizedAppBar(
+              title: '詳細',
             ),
             body: SafeArea(
               child: Column(

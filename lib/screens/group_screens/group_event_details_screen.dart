@@ -6,6 +6,7 @@ import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/event_date_widget.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +24,8 @@ class GroupEventDetailsScreen extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              appBar: AppBar(
-                title: const Text('イベントの詳細'),
+              appBar: SizedAppBar(
+                title: 'イベントの詳細',
                 actions: [
                   TextButton(
                     child: const Text(
@@ -115,8 +116,7 @@ class GroupEventDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
-                          bool isDelete =
-                              await _confirmDeleteDialog(context, 'このイベントを削除しますか？');
+                          bool isDelete = await _confirmDeleteDialog(context, 'このイベントを削除しますか？');
                           if (isDelete) {
                             model.startLoading();
                             try {

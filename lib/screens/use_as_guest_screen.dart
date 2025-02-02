@@ -3,6 +3,7 @@ import 'package:beet/models/use_as_guest_model.dart';
 import 'package:beet/screens/use_as_guest_screen_2.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +21,8 @@ class UseAsGuestScreen extends StatelessWidget {
             FocusScope.of(context).unfocus();
           },
           child: Scaffold(
-            appBar: AppBar(
-              title: const Text('セットリスト'),
+            appBar: SizedAppBar(
+              title: 'セットリスト',
               actions: [
                 TextButton(
                   child: const Row(

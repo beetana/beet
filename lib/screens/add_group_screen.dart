@@ -2,6 +2,7 @@ import 'package:beet/constants.dart';
 import 'package:beet/screens/group_screens/group_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/dark_loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beet/models/add_group_model.dart';
@@ -23,8 +24,8 @@ class AddGroupScreen extends StatelessWidget {
             FocusScope.of(context).unfocus();
           },
           child: Scaffold(
-            appBar: AppBar(
-              title: const Text('グループを作成'),
+            appBar: SizedAppBar(
+              title: 'グループを作成',
             ),
             body: Consumer<AddGroupModel>(builder: (context, model, child) {
               return Stack(

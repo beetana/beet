@@ -5,6 +5,7 @@ import 'package:beet/screens/group_screens/group_edit_task_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -24,8 +25,8 @@ class GroupTaskDetailsScreen extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              appBar: AppBar(
-                title: const Text('タスクの詳細'),
+              appBar: SizedAppBar(
+                title: 'タスクの詳細',
                 actions: [
                   TextButton(
                     child: const Text(
@@ -73,10 +74,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                model.isDecidedDueDate
-                                    ? Text(
-                                        '期限  ${dueDateFormat.format(model.dueDate)}')
-                                    : const Text('期限なし'),
+                                model.isDecidedDueDate ? Text('期限  ${dueDateFormat.format(model.dueDate)}') : const Text('期限なし'),
                                 Container(
                                   height: 72.0,
                                   child: Scrollbar(
@@ -85,47 +83,32 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                       physics: const ScrollPhysics(),
                                       itemExtent: 60.0,
                                       itemCount: model.assignedMembersId.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        String? imageURL = model
-                                            .groupMembers[
-                                                model.assignedMembersId[index]]
-                                            ?.imageURL;
-                                        String name = model
-                                            .groupMembers[
-                                                model.assignedMembersId[index]]!
-                                            .name;
+                                      itemBuilder: (BuildContext context, int index) {
+                                        String? imageURL = model.groupMembers[model.assignedMembersId[index]]?.imageURL;
+                                        String name = model.groupMembers[model.assignedMembersId[index]]!.name;
                                         return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 2.0),
+                                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               Container(
                                                 width: 40.0,
                                                 height: 40.0,
                                                 child: CircleAvatar(
                                                   backgroundImage: imageURL == null
-                                                      ? const AssetImage(
-                                                          'images/user_profile.png')
+                                                      ? const AssetImage('images/user_profile.png')
                                                       : imageURL.isNotEmpty
-                                                          ? NetworkImage(imageURL)
-                                                              as ImageProvider
-                                                          : const AssetImage(
-                                                              'images/user_profile.png'),
-                                                  backgroundColor:
-                                                      Colors.transparent,
+                                                          ? NetworkImage(imageURL) as ImageProvider
+                                                          : const AssetImage('images/user_profile.png'),
+                                                  backgroundColor: Colors.transparent,
                                                 ),
                                               ),
                                               const SizedBox(height: 2.0),
                                               Text(
                                                 name,
                                                 overflow: TextOverflow.ellipsis,
-                                                style:
-                                                    const TextStyle(fontSize: 9.0),
+                                                style: const TextStyle(fontSize: 9.0),
                                               ),
                                             ],
                                           ),
@@ -166,8 +149,7 @@ class GroupTaskDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () async {
-                                bool isDelete = await _confirmDeleteDialog(
-                                    context, 'このタスクを削除しますか？');
+                                bool isDelete = await _confirmDeleteDialog(context, 'このタスクを削除しますか？');
                                 if (isDelete) {
                                   model.startLoading();
                                   try {

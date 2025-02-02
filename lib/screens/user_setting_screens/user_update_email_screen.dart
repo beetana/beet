@@ -1,6 +1,7 @@
 import 'package:beet/models/user_setting_models/user_update_email_model.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/dark_loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +25,8 @@ class UserUpdateEmailScreen extends StatelessWidget {
                 FocusScope.of(context).unfocus();
               },
               child: Scaffold(
-                appBar: AppBar(
-                  title: const Text('メールアドレスを変更'),
+                appBar: SizedAppBar(
+                  title: 'メールアドレスを変更',
                   actions: [
                     TextButton(
                       child: const Text(

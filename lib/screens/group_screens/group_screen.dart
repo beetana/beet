@@ -1,4 +1,3 @@
-import 'package:beet/constants.dart';
 import 'package:beet/models/group_models/group_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
 import 'package:beet/screens/group_screens/group_calendar_screen.dart';
@@ -7,6 +6,7 @@ import 'package:beet/screens/group_screens/group_song_list_screen.dart';
 import 'package:beet/screens/group_screens/group_task_list_screen.dart';
 import 'package:beet/screens/group_setting_screens/group_setting_screen.dart';
 import 'package:beet/utilities/will_pop_callback.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,11 +28,8 @@ class GroupScreen extends StatelessWidget {
           onWillPop: willPopCallback,
           child: Scaffold(
             drawer: DrawerScreen(),
-            appBar: AppBar(
-              title: Text(
-                model.groupName,
-                textAlign: TextAlign.center,
-              ),
+            appBar: SizedAppBar(
+              title: model.groupName,
               actions: [
                 IconButton(
                   icon: const Icon(Icons.settings),
@@ -49,7 +46,43 @@ class GroupScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: _groupScreenBody(context, deviceWidth, textScale),
+            body: Stack(
+              children: <Widget>[
+                Visibility(
+                  visible: model.currentIndex == 0,
+                  maintainState: true,
+                  child: GroupMainScreen(
+                    groupId: groupId,
+                    deviceWidth: deviceWidth,
+                    textScale: textScale,
+                  ),
+                ),
+                Visibility(
+                  visible: model.currentIndex == 1,
+                  maintainState: true,
+                  child: GroupCalendarScreen(
+                    groupId: groupId,
+                    textScale: textScale,
+                  ),
+                ),
+                Visibility(
+                  visible: model.currentIndex == 2,
+                  maintainState: true,
+                  child: GroupTaskListScreen(
+                    groupId: groupId,
+                    textScale: textScale,
+                  ),
+                ),
+                Visibility(
+                  visible: model.currentIndex == 3,
+                  maintainState: true,
+                  child: GroupSongListScreen(
+                    groupId: groupId,
+                    textScale: textScale,
+                  ),
+                ),
+              ],
+            ),
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               selectedItemColor: Colors.black,
@@ -77,56 +110,6 @@ class GroupScreen extends StatelessWidget {
           ),
         );
       }),
-    );
-  }
-
-  Widget _groupScreenBody(BuildContext context, double deviceWidth, double textScale) {
-    final model = Provider.of<GroupModel>(context);
-    final currentIndex = model.currentIndex;
-    return Stack(
-      children: <Widget>[
-        _tabScreen(
-          currentIndex,
-          0,
-          GroupMainScreen(
-            groupId: groupId,
-            deviceWidth: deviceWidth,
-            textScale: textScale,
-          ),
-        ),
-        _tabScreen(
-          currentIndex,
-          1,
-          GroupCalendarScreen(
-            groupId: groupId,
-            textScale: textScale,
-          ),
-        ),
-        _tabScreen(
-          currentIndex,
-          2,
-          GroupTaskListScreen(
-            groupId: groupId,
-            textScale: textScale,
-          ),
-        ),
-        _tabScreen(
-          currentIndex,
-          3,
-          GroupSongListScreen(
-            groupId: groupId,
-            textScale: textScale,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _tabScreen(int currentIndex, int tabIndex, StatelessWidget screen) {
-    return Visibility(
-      visible: currentIndex == tabIndex,
-      maintainState: true,
-      child: screen,
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:beet/screens/reset_password_screen.dart';
 import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/dark_loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,8 +31,8 @@ class LoginScreen extends StatelessWidget {
             FocusScope.of(context).unfocus();
           },
           child: Scaffold(
-            appBar: AppBar(
-              title: const Text('ログイン'),
+            appBar: SizedAppBar(
+              title: 'ログイン',
             ),
             body: Consumer<LoginModel>(builder: (context, model, child) {
               return Stack(

@@ -5,6 +5,7 @@ import 'package:beet/screens/user_setting_screens/user_update_email_screen.dart'
 import 'package:beet/screens/user_setting_screens/user_update_password_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/dark_loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +19,8 @@ class UserSecurityScreen extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              appBar: AppBar(
-                title: const Text('ログインとセキュリティ'),
+              appBar: SizedAppBar(
+                title: 'ログインとセキュリティ',
               ),
               body: SafeArea(
                 child: Column(
@@ -76,8 +77,7 @@ class UserSecurityScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () async {
-                        bool isLogout =
-                            await _confirmLogoutDialog(context, 'ログアウトしますか？');
+                        bool isLogout = await _confirmLogoutDialog(context, 'ログアウトしますか？');
                         if (isLogout) {
                           model.startLoading();
                           try {

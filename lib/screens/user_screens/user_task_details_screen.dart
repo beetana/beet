@@ -5,6 +5,7 @@ import 'package:beet/screens/user_screens/user_edit_task_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +24,8 @@ class UserTaskDetailsScreen extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              appBar: AppBar(
-                title: const Text('タスクの詳細'),
+              appBar: SizedAppBar(
+                title: 'タスクの詳細',
                 actions: [
                   TextButton(
                     child: const Text(

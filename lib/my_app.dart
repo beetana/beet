@@ -38,6 +38,10 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: kPrimaryColor,
           foregroundColor: Colors.white,
+          titleTextStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
           centerTitle: true,
         ),
         textButtonTheme: TextButtonThemeData(

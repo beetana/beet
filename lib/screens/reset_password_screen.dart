@@ -3,6 +3,7 @@ import 'package:beet/models/reset_password_model.dart';
 import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/dark_loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +19,8 @@ class ResetPasswordScreen extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text('パスワード再設定'),
+          appBar: SizedAppBar(
+            title: 'パスワード再設定',
           ),
           body: Consumer<ResetPasswordModel>(builder: (context, model, child) {
             return Stack(

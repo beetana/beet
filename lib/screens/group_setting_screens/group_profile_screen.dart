@@ -4,6 +4,7 @@ import 'package:beet/screens/group_setting_screens/group_edit_name_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,8 @@ class GroupProfileScreen extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              appBar: AppBar(
-                title: const Text('グループ情報'),
+              appBar: SizedAppBar(
+                title: 'グループ情報',
               ),
               body: Column(
                 children: [
@@ -52,23 +53,19 @@ class GroupProfileScreen extends StatelessWidget {
                                       : model.groupImageURL.isNotEmpty
                                           ? CachedNetworkImage(
                                               imageUrl: '${model.groupImageURL}',
-                                              placeholder: (context, url) =>
-                                                  Container(color: kDullWhiteColor),
-                                              errorWidget: (context, url, error) =>
-                                                  Container(color: kDullWhiteColor),
+                                              placeholder: (context, url) => Container(color: kDullWhiteColor),
+                                              errorWidget: (context, url, error) => Container(color: kDullWhiteColor),
                                             )
                                           : Image.asset('images/group_profile.png'),
                                 ),
                                 onTap: () async {
-                                  ChangeImage changeImage =
-                                      await _showEditIconBottomSheet(context);
+                                  ChangeImage changeImage = await _showEditIconBottomSheet(context);
                                   if (changeImage == ChangeImage.delete) {
                                     model.startLoading();
                                     try {
                                       await model.deleteGroupImage();
                                     } catch (e) {
-                                      await showMessageDialog(
-                                          context, e.toString());
+                                      await showMessageDialog(context, e.toString());
                                     }
                                     model.endLoading();
                                   } else if (changeImage == ChangeImage.select) {
@@ -78,8 +75,7 @@ class GroupProfileScreen extends StatelessWidget {
                                       try {
                                         await model.updateGroupImage();
                                       } catch (e) {
-                                        await showMessageDialog(
-                                            context, e.toString());
+                                        await showMessageDialog(context, e.toString());
                                       }
                                       model.endLoading();
                                     }
@@ -96,15 +92,13 @@ class GroupProfileScreen extends StatelessWidget {
                                     size: 16.0,
                                   ),
                                   onPressed: () async {
-                                    ChangeImage changeImage =
-                                        await _showEditIconBottomSheet(context);
+                                    ChangeImage changeImage = await _showEditIconBottomSheet(context);
                                     if (changeImage == ChangeImage.delete) {
                                       model.startLoading();
                                       try {
                                         await model.deleteGroupImage();
                                       } catch (e) {
-                                        await showMessageDialog(
-                                            context, e.toString());
+                                        await showMessageDialog(context, e.toString());
                                       }
                                       model.endLoading();
                                     } else if (changeImage == ChangeImage.select) {
@@ -114,8 +108,7 @@ class GroupProfileScreen extends StatelessWidget {
                                         try {
                                           await model.updateGroupImage();
                                         } catch (e) {
-                                          await showMessageDialog(
-                                              context, e.toString());
+                                          await showMessageDialog(context, e.toString());
                                         }
                                         model.endLoading();
                                       }
@@ -228,9 +221,7 @@ Future<ChangeImage> _showEditIconBottomSheet(BuildContext context) async {
                     ),
                     onPressed: () async {
                       bool isDelete = await _showConfirmDialog(context);
-                      isDelete
-                          ? changeImage = ChangeImage.delete
-                          : changeImage = ChangeImage.cancel;
+                      isDelete ? changeImage = ChangeImage.delete : changeImage = ChangeImage.cancel;
                       Navigator.pop(context);
                     },
                   ),

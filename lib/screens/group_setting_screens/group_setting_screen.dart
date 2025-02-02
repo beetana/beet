@@ -7,6 +7,7 @@ import 'package:beet/screens/manual_screen.dart';
 import 'package:beet/screens/privacy_policy_screen.dart';
 import 'package:beet/screens/terms_screen.dart';
 import 'package:beet/utilities/show_app_info_dialog.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,8 @@ class GroupSettingScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => GroupSettingModel(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('設定'),
+        appBar: SizedAppBar(
+          title: '設定',
         ),
         body: Consumer<GroupSettingModel>(builder: (context, model, child) {
           return Column(

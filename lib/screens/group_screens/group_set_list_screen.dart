@@ -3,6 +3,7 @@ import 'package:beet/models/group_models/group_set_list_model.dart';
 import 'package:beet/objects/set_list.dart';
 import 'package:beet/screens/group_screens/group_set_list_screen_2.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,8 @@ class GroupSetListScreen extends StatelessWidget {
       create: (_) => GroupSetListModel()..init(setList: setList),
       child: Consumer<GroupSetListModel>(builder: (context, model, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('セットリスト'),
+          appBar: SizedAppBar(
+            title: 'セットリスト',
             actions: [
               TextButton(
                 child: const Row(

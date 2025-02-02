@@ -2,6 +2,7 @@ import 'package:beet/constants.dart';
 import 'package:beet/models/inquiry_model.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/dark_loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,8 +27,8 @@ class InquiryScreen extends StatelessWidget {
             FocusScope.of(context).unfocus();
           },
           child: Scaffold(
-            appBar: AppBar(
-              title: const Text('ご意見・お問い合わせ'),
+            appBar: SizedAppBar(
+              title: 'ご意見・お問い合わせ',
             ),
             body: Consumer<InquiryModel>(builder: (context, model, child) {
               return Stack(

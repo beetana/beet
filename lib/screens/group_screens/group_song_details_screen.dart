@@ -5,6 +5,7 @@ import 'package:beet/screens/group_screens/group_edit_song_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,8 +23,8 @@ class GroupSongDetailsScreen extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              appBar: AppBar(
-                title: const Text('曲の詳細'),
+              appBar: SizedAppBar(
+                title: '曲の詳細',
                 actions: [
                   TextButton(
                     child: const Text(

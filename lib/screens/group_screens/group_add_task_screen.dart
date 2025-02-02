@@ -3,6 +3,7 @@ import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/assign_task_list_tile.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,8 +28,8 @@ class GroupAddTaskScreen extends StatelessWidget {
                 FocusScope.of(context).unfocus();
               },
               child: Scaffold(
-                appBar: AppBar(
-                  title: const Text('タスクを追加'),
+                appBar: SizedAppBar(
+                  title: 'タスクを追加',
                   actions: [
                     TextButton(
                       child: const Text(
@@ -78,8 +79,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                             ListTile(
                               title: const Text('いつまでに'),
                               trailing: Text(model.dueDateText),
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 0.0),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
                               onTap: () {
                                 FocusScope.of(context).unfocus();
                                 model.showDueDatePicker();
@@ -105,17 +105,14 @@ class GroupAddTaskScreen extends StatelessWidget {
                                       physics: const ScrollPhysics(),
                                       itemExtent: 60.0,
                                       itemCount: model.membersName.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
+                                      itemBuilder: (BuildContext context, int index) {
                                         String userId = model.membersId[index];
                                         String userName = model.membersName[index];
-                                        String userImageURL =
-                                            model.membersImageURL[index];
+                                        String userImageURL = model.membersImageURL[index];
                                         return AssignTaskListTile(
                                           userName: userName,
                                           userImageURL: userImageURL,
-                                          isChecked: model.assignedMembersId
-                                              .contains(userId),
+                                          isChecked: model.assignedMembersId.contains(userId),
                                           tileTappedCallback: () {
                                             model.assignPerson(userId: userId);
                                           },
@@ -148,8 +145,7 @@ class GroupAddTaskScreen extends StatelessWidget {
                                     await Future.delayed(
                                       const Duration(milliseconds: 100),
                                     );
-                                    scrollController.jumpTo(
-                                        scrollController.position.maxScrollExtent);
+                                    scrollController.jumpTo(scrollController.position.maxScrollExtent);
                                   },
                                   onChanged: (text) {
                                     model.taskMemo = text;

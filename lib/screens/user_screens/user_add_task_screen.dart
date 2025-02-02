@@ -2,6 +2,7 @@ import 'package:beet/models/user_models/user_add_task_model.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +24,8 @@ class UserAddTaskScreen extends StatelessWidget {
                 FocusScope.of(context).unfocus();
               },
               child: Scaffold(
-                appBar: AppBar(
-                  title: const Text('タスクを追加'),
+                appBar: SizedAppBar(
+                  title: 'タスクを追加',
                   actions: [
                     TextButton(
                       child: const Text(
@@ -74,8 +75,7 @@ class UserAddTaskScreen extends StatelessWidget {
                             ListTile(
                               title: const Text('いつまでに'),
                               trailing: Text(model.dueDateText),
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 0.0),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
                               onTap: () {
                                 FocusScope.of(context).unfocus();
                                 model.showDueDatePicker();
@@ -104,8 +104,7 @@ class UserAddTaskScreen extends StatelessWidget {
                                     await Future.delayed(
                                       const Duration(milliseconds: 100),
                                     );
-                                    scrollController.jumpTo(
-                                        scrollController.position.maxScrollExtent);
+                                    scrollController.jumpTo(scrollController.position.maxScrollExtent);
                                   },
                                   onChanged: (text) {
                                     model.taskMemo = text;

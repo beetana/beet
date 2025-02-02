@@ -3,6 +3,7 @@ import 'package:beet/models/group_models/group_add_song_model.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,8 +30,8 @@ class GroupAddSongScreen extends StatelessWidget {
           child: Stack(
             children: [
               Scaffold(
-                appBar: AppBar(
-                  title: const Text('曲を追加'),
+                appBar: SizedAppBar(
+                  title: '曲を追加',
                   actions: [
                     TextButton(
                       child: const Text(
@@ -92,8 +93,7 @@ class GroupAddSongScreen extends StatelessWidget {
                                         magnification: 1.2,
                                         useMagnifier: true,
                                         onSelectedItemChanged: (index) {
-                                          model.songPlayingTime =
-                                              songPlayingTimes[index];
+                                          model.songPlayingTime = songPlayingTimes[index];
                                         },
                                         children: songPlayingTimes
                                             .map(
@@ -141,8 +141,7 @@ class GroupAddSongScreen extends StatelessWidget {
                                   await Future.delayed(
                                     const Duration(milliseconds: 100),
                                   );
-                                  scrollController.jumpTo(
-                                      scrollController.position.maxScrollExtent);
+                                  scrollController.jumpTo(scrollController.position.maxScrollExtent);
                                 },
                                 onChanged: (text) {
                                   model.songMemo = text;

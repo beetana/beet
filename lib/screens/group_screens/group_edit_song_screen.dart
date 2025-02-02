@@ -4,6 +4,7 @@ import 'package:beet/objects/song.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/basic_divider.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,7 @@ class GroupEditSongScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timePickerController =
-        FixedExtentScrollController(initialItem: song.playingTime);
+    final timePickerController = FixedExtentScrollController(initialItem: song.playingTime);
     songTitleController.text = song.title;
     songMemoController.text = song.memo;
     return ChangeNotifierProvider<GroupEditSongModel>(
@@ -35,8 +35,8 @@ class GroupEditSongScreen extends StatelessWidget {
           child: Stack(
             children: [
               Scaffold(
-                appBar: AppBar(
-                  title: const Text('曲を編集'),
+                appBar: SizedAppBar(
+                  title: '曲を編集',
                   actions: [
                     TextButton(
                       child: const Text(
@@ -109,8 +109,7 @@ class GroupEditSongScreen extends StatelessWidget {
                                         magnification: 1.2,
                                         useMagnifier: true,
                                         onSelectedItemChanged: (index) {
-                                          model.songPlayingTime =
-                                              songPlayingTimes[index];
+                                          model.songPlayingTime = songPlayingTimes[index];
                                         },
                                         children: songPlayingTimes
                                             .map(
@@ -158,8 +157,7 @@ class GroupEditSongScreen extends StatelessWidget {
                                   await Future.delayed(
                                     const Duration(milliseconds: 100),
                                   );
-                                  scrollController.jumpTo(
-                                      scrollController.position.maxScrollExtent);
+                                  scrollController.jumpTo(scrollController.position.maxScrollExtent);
                                 },
                                 onChanged: (text) {
                                   model.songMemo = text;

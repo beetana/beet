@@ -4,6 +4,7 @@ import 'package:beet/screens/user_screens/user_screen.dart';
 import 'package:beet/services/dynamic_links_services.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +23,8 @@ class GroupMemberScreen extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              appBar: AppBar(
-                title: const Text('メンバー'),
+              appBar: SizedAppBar(
+                title: 'メンバー',
               ),
               body: SafeArea(
                 child: Column(
@@ -38,9 +39,8 @@ class GroupMemberScreen extends StatelessWidget {
                           String userImageURL = model.usersImageURL[index];
                           return ListTile(
                             leading: CircleAvatar(
-                              backgroundImage: userImageURL.isNotEmpty
-                                  ? NetworkImage(userImageURL) as ImageProvider
-                                  : const AssetImage('images/user_profile.png'),
+                              backgroundImage:
+                                  userImageURL.isNotEmpty ? NetworkImage(userImageURL) as ImageProvider : const AssetImage('images/user_profile.png'),
                               backgroundColor: Colors.transparent,
                             ),
                             title: Text(
@@ -58,17 +58,13 @@ class GroupMemberScreen extends StatelessWidget {
                                 model.startLoading();
                                 try {
                                   if (isMe) {
-                                    final memberCount =
-                                        await model.checkMemberCount();
+                                    final memberCount = await model.checkMemberCount();
                                     // もし自分がグループの最後の一人ならグループごと削除する
-                                    memberCount == 1
-                                        ? await model.deleteGroup(userId: userId)
-                                        : await model.deleteMember(userId: userId);
+                                    memberCount == 1 ? await model.deleteGroup(userId: userId) : await model.deleteMember(userId: userId);
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            UserScreen(),
+                                        builder: (BuildContext context) => UserScreen(),
                                       ),
                                     );
                                   } else {
@@ -118,8 +114,7 @@ class GroupMemberScreen extends StatelessWidget {
   }
 }
 
-Future<bool> _showMemberBottomSheet(
-    BuildContext context, bool isMe, String userName) async {
+Future<bool> _showMemberBottomSheet(BuildContext context, bool isMe, String userName) async {
   String buttonText = isMe ? 'グループを退会' : 'このメンバーを削除';
   bool isDelete = false;
   await showModalBottomSheet(

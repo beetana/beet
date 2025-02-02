@@ -4,6 +4,7 @@ import 'package:beet/screens/user_setting_screens/user_edit_name_screen.dart';
 import 'package:beet/screens/welcome_screen.dart';
 import 'package:beet/utilities/show_message_dialog.dart';
 import 'package:beet/widgets/loading_indicator.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:beet/widgets/thin_divider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,8 @@ class UserProfileScreen extends StatelessWidget {
         return Stack(
           children: [
             Scaffold(
-              appBar: AppBar(
-                title: const Text('アカウント情報'),
+              appBar: SizedAppBar(
+                title: 'アカウント情報',
               ),
               body: LayoutBuilder(builder: (context, constraint) {
                 return SingleChildScrollView(

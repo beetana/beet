@@ -1,4 +1,3 @@
-import 'package:beet/constants.dart';
 import 'package:beet/models/user_models/user_model.dart';
 import 'package:beet/screens/drawer_screen.dart';
 import 'package:beet/screens/user_screens/user_calendar_screen.dart';
@@ -6,6 +5,7 @@ import 'package:beet/screens/user_screens/user_main_screen.dart';
 import 'package:beet/screens/user_screens/user_task_list_screen.dart';
 import 'package:beet/screens/user_setting_screens/user_setting_screen.dart';
 import 'package:beet/utilities/will_pop_callback.dart';
+import 'package:beet/widgets/sized_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,11 +23,8 @@ class UserScreen extends StatelessWidget {
           onWillPop: willPopCallback,
           child: Scaffold(
             drawer: DrawerScreen(),
-            appBar: AppBar(
-              title: Text(
-                model.userName,
-                textAlign: TextAlign.center,
-              ),
+            appBar: SizedAppBar(
+              title: model.userName,
               actions: [
                 IconButton(
                   icon: const Icon(Icons.settings),
@@ -44,7 +41,26 @@ class UserScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: _userScreenBody(context, deviceWidth, textScale),
+            body: Stack(
+              children: <Widget>[
+                Visibility(
+                  visible: model.currentIndex == 0,
+                  maintainState: true,
+                  child: UserMainScreen(deviceWidth: deviceWidth, textScale: textScale),
+                ),
+                Visibility(
+                  visible: model.currentIndex == 1,
+                  maintainState: true,
+                  child: UserCalendarScreen(textScale: textScale),
+                ),
+                Visibility(
+                  visible: model.currentIndex == 2,
+                  maintainState: true,
+                  child: UserTaskListScreen(textScale: textScale),
+                ),
+              ],
+            ),
+            // ボトムナビゲーション
             bottomNavigationBar: BottomNavigationBar(
               selectedItemColor: Colors.black,
               onTap: model.onTabTapped,
@@ -67,38 +83,6 @@ class UserScreen extends StatelessWidget {
           ),
         );
       }),
-    );
-  }
-
-  Widget _userScreenBody(BuildContext context, double deviceWidth, double textScale) {
-    final model = Provider.of<UserModel>(context);
-    final currentIndex = model.currentIndex;
-    return Stack(
-      children: <Widget>[
-        _tabScreen(
-          currentIndex,
-          0,
-          UserMainScreen(deviceWidth: deviceWidth, textScale: textScale),
-        ),
-        _tabScreen(
-          currentIndex,
-          1,
-          UserCalendarScreen(textScale: textScale),
-        ),
-        _tabScreen(
-          currentIndex,
-          2,
-          UserTaskListScreen(textScale: textScale),
-        ),
-      ],
-    );
-  }
-
-  Widget _tabScreen(int currentIndex, int tabIndex, StatelessWidget screen) {
-    return Visibility(
-      visible: currentIndex == tabIndex,
-      maintainState: true,
-      child: screen,
     );
   }
 }
